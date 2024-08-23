@@ -1,0 +1,5 @@
+double navbarsize = 1000;
+double mobilescreen = 800;
+
+List<String> navtitles = ["Dashboard","Analytics","Add Members","Services"];
+List<String> dayslist = ["Week","Months","Year"];
