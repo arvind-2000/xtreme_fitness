@@ -79,9 +79,11 @@ bool toggless = false;
               toggle();
           }, icon: Icon(toggless?Icons.visibility_off:Icons.visibility)):const SizedBox(),
         filled: false,
-          focusColor: Theme.of(context).colorScheme.secondary,      
+          focusColor: Theme.of(context).colorScheme.secondary,
+                
           prefixIcon:widget.icon,
-          fillColor: Theme.of(context).colorScheme.background,
+
+          fillColor: Theme.of(context).colorScheme.primary,
         hintText: widget.hint,
 
         border: const OutlineInputBorder(

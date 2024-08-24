@@ -2,12 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+
 
 
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
-import '../../../widgets/titletext.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -92,10 +91,19 @@ class _SignUpPageState extends State<SignUpPage> {
           const SizedBox(
                                       height: 30,
                                     ),
-              const HeadingText(
-                                      'Sign Up',
-                                        size: 20,
-                                    ),
+              Row(
+                children: [
+                     IconButton(onPressed: (){
+
+                  Get.offAndToNamed('/home');
+                }, icon: Icon(Icons.arrow_back)),
+                SizedBox(height: 10,),
+                  const HeadingText(
+                                          'Sign Up',
+                                            size: 20,
+                                        ),
+                ],
+              ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -242,7 +250,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              authctrl.changeAuthPage(0);
+                              Get.offNamed('/login');
                             },
                             child: Text('Log In',
                                 style: TextStyle(

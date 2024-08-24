@@ -10,10 +10,10 @@ class AnalyticsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
+    return  const SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: const Column(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                  Padding(
@@ -23,34 +23,35 @@ class AnalyticsScreen extends StatelessWidget {
             SizedBox(
               height: 500,
               child: CardwithShadow(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: EdgeInsets.symmetric(vertical: 8),
                 child: Center(child: TitleText("Analytics 1"),)),
             ),
                    SizedBox(
               height: 500,
               child: CardwithShadow(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: EdgeInsets.symmetric(vertical: 8),
                 child: Center(child: TitleText("Analytics 2"),)),
             ),
                    SizedBox(
               height: 500,
               child: CardwithShadow(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: EdgeInsets.symmetric(vertical: 8),
                 child: Center(child: TitleText("Analytics 3"),)),
             ),
                    SizedBox(
               height: 500,
               child: CardwithShadow(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                
+                margin: EdgeInsets.symmetric(vertical: 8),
                 child: Center(child: TitleText("Analytics 4"),)),
             ),
                    SizedBox(
               height: 500,
               child: CardwithShadow(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: EdgeInsets.symmetric(vertical: 8),
                 child: Center(child: TitleText("Analytics 5"),)),
             ),
-                const SizedBox(height: 100,)
+                SizedBox(height: 40,)
           ],
         ),
       ),

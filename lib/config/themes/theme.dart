@@ -6,7 +6,8 @@ final ThemeData darkThemeData = ThemeData(
   colorScheme: customDarkColorScheme,
  
   scaffoldBackgroundColor: const Color.fromARGB(255, 19, 18, 18),
-  fontFamily: "Merriweather",
+
+  fontFamily: "NotoSans",
   textTheme:const TextTheme(
     headlineLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
     headlineMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),

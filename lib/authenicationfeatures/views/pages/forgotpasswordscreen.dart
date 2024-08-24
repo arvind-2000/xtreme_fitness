@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
-import '../../../widgets/titletext.dart';
+
 
 
 
@@ -69,16 +68,27 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                   const Row(
-                      children: [
-                        Icon(Icons.lock,size: 16,),
-                        SizedBox(width: 10,),
-                HeadingText(
-                                    'Forgot Password',
-                                      size: 20,
-                                  ),
-                      ],
-                    ),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       const Row(
+                          children: [
+                            Icon(Icons.lock,size: 16,),
+                            SizedBox(width: 10,),
+                                       HeadingText(
+                                        'Forgot Password',
+                                          size: 20,
+                                      ),
+                          ],
+                        ),
+
+                          IconButton(onPressed: (){
+
+                  Get.offAndToNamed('/login');
+                }, icon: Icon(Icons.close)),
+                SizedBox(height: 10,),
+                     ],
+                   ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -158,7 +168,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                         ),
                         InkWell(
                           onTap: (){
-                          authctrl.changeAuthPage(0);
+                            Get.offNamed('/login');
                           },
                           child: Text('Log In',
                               style: TextStyle(

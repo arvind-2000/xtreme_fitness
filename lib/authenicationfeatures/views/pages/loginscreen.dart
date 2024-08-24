@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/widgets/card.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -68,10 +69,19 @@ Future<bool> validateform(String email,String pass)  async{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-             HeadingText(
-                                  'Log In',
-                                    size: 20,
-                                ),
+             Row(
+               children: [
+                IconButton(onPressed: (){
+
+                  Get.offAndToNamed('/home');
+                }, icon: Icon(Icons.arrow_back)),
+                SizedBox(height: 10,),
+                 const HeadingText(
+                                      'Log In',
+                                        size: 20,
+                                    ),
+               ],
+             ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -127,7 +137,7 @@ Future<bool> validateform(String email,String pass)  async{
                       children: [
                         InkWell(
                           onTap: (){
-                             authctrl.changeAuthPage(2);
+                              Get.offNamed('/forgotpassword');
                           },
                           child: Text(
                             "Forgot Password?",
@@ -143,19 +153,30 @@ Future<bool> validateform(String email,String pass)  async{
                   const SizedBox(
                     height: 20,
                   ),
-                  MaterialButton(
-                    disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                    onPressed:(){
-                        authctrl.authenticate();
-
-                    },
-                    color: Theme.of(context).colorScheme.secondary,
-                    minWidth: double.infinity,
-                    padding:const EdgeInsets.all(16),
-                    child:authctrl.loginloading?const CircularProgressIndicator(color: Colors.white,backgroundColor: Colors.transparent,):const Text('Log in',
-                        style: TextStyle(
-                          color: Colors.white,
-                        )),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Cardonly(
+                          margin: EdgeInsets.zero,
+                      // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                      onpress:authctrl.loginloading?null:(){
+                          authctrl.authenticate(_emailcontroller.text,_passwordcontroller.text).then((value) {
+                           if(!value.entries.first.key){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Logging in",)));
+                           }
+                          },);
+                    
+                      },
+                      color: Theme.of(context).colorScheme.secondary,
+                     
+                      padding:const EdgeInsets.all(16),
+                      child:Center(
+                        child:                           authctrl.loginloading?const CircularProgressIndicator(color: Colors.white,backgroundColor: Colors.transparent,):const Text('Log in',
+                              style: TextStyle(
+                                color: Colors.white,
+                              )),
+                      
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -169,15 +190,15 @@ Future<bool> validateform(String email,String pass)  async{
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .colorScheme
-                                .surface
+                                .onSurface
                                 .withOpacity(0.8)),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       InkWell(
-                        onTap: (){
-                        authctrl.changeAuthPage(1);
+                        onTap:(){
+                        Get.offNamed('/signup');
                         },
                         child: Text('Sign Up',
                             style: TextStyle(

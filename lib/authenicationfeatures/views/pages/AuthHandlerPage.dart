@@ -5,19 +5,37 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/forgotpasswords
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/loginscreen.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/signup.dart';
 
-import '../../../widgets/cardswithshadow.dart';
+class AuthHandlerPage extends StatefulWidget {
+  const AuthHandlerPage({super.key, this.index});
+  final int? index;
 
-class AuthHandlerPage extends StatelessWidget {
-  const AuthHandlerPage({super.key});
+  @override
+  State<AuthHandlerPage> createState() => _AuthHandlerPageState();
+}
 
+class _AuthHandlerPageState extends State<AuthHandlerPage> {
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            if(widget.index!=null){
+            Get.find<GetxAuthController>().changeAuthPage(widget.index??0);
+          }
+    },);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(
+      
       builder: (authctrl) {
+    
         return Scaffold(
           body: Center(
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 1500),
+              constraints: const BoxConstraints(maxWidth: 1500),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: authctrl.changeAuthindex==0? const LoginScreen():authctrl.changeAuthindex==1?const SignUpPage():const ForgotPassWordScreen(),

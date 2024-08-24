@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../../../widgets/cardswithshadow.dart';
 import '../dashboardchilds/dashboardchild1.dart';
 import '../dashboardchilds/dashboardchild2.dart';
 import '../dashboardchilds/dashboardchild3.dart';
@@ -24,22 +22,22 @@ class DashboardMobileScreen extends StatelessWidget {
                    SizedBox(
                      
                      height: 400,
-                     child: CardwithShadow(child: DashboardChild1(),)),
-                   SizedBox(height: 10,),
+                     child: DashboardChild1()),
+                   SizedBox(height: 24,),
                    SizedBox(
                                  height: 400,
-                     child: CardwithShadow(child: DashboardChild2(),)),
-                     SizedBox(height: 10,),
+                     child: DashboardChild2()),
+                      SizedBox(height: 24,),
                    SizedBox(
-                                 height: 400,child: CardwithShadow(child: DashboardChild3(),)),
+                                 height: 400,child: DashboardChild3()),
                                   SizedBox(height: 10,),
                                      SizedBox(
                                           height: 400,
-                                       child: CardwithShadow(child: DashboardChild4(),)),
-                       SizedBox(height: 10,),
+                                       child: DashboardChild4()),
+                        SizedBox(height: 24,),
                    SizedBox(
                         height: 400,
-                     child: CardwithShadow(child: Dashboardchild5(),)),
+                     child: Dashboardchild5()),
                     ],
               ),
       ),
