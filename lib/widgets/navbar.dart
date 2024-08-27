@@ -1,5 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/dialogswidget.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -191,8 +195,8 @@ class NavBar extends StatelessWidget {
                           const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                       child: const NavTiles(
                       
-                        icon: Icons.design_services,
-                        title: 'Renewal',
+                        icon: Icons.person_2,
+                        title: 'Xtremers',
                       )),
               
                           Cardonly(
@@ -207,8 +211,8 @@ class NavBar extends StatelessWidget {
                       margin:
                           const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                       child: const NavTiles(
-                        icon: Icons.design_services,
-                        title: 'Edit Member',
+                        icon: Icons.settings,
+                        title: 'Settings',
                       )),
                   
                 ],
@@ -222,28 +226,36 @@ class NavBar extends StatelessWidget {
                           if (MediaQuery.sizeOf(context).width < mobilescreen) {
                         drawers(context);
                       }
-                        showDialog(context: context, builder:(c)=>AlertDialog(backgroundColor: Theme.of(context).colorScheme.primary,
-                        
-                          title: const TitleText("Log Out",size: 16,),
-                        content: authctrl.loginloading?const CircularProgressIndicator(): const Text('Are you sure you want to logout ?'),
-                        actions: [
-                          Cardonly(
-                                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
-                            color: Colors.green,
-                            onpress: (){
+                        showDialog(context: context, builder:(c)=>PageDialog(
+                          heights: 300,
+                        no: () {
+                           
+                           
                             Navigator.pop(context);
-                            },
-                            child: Text("No")),
-                            SizedBox(width: 20,),
-                             Cardonly(
-                               padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
-                            color: Theme.of(context).colorScheme.error,
-                            onpress: (){
-                            //do logouts
-                            authctrl.logout();
-                            },
-                            child: const Text("Yes")),
-                        ],));
+                          
+                     
+                        },
+                        yes: () {
+                                 authctrl.logout();
+                        },
+                   
+                          
+                       child:Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.logout),
+                              SizedBox(width: 5,),
+                              HeadingText("Log Out",
+                              size: 20,),
+                            ],
+                          ),
+                          SizedBox(height: 30,),
+                  
+                          Center(child: Text("Are you sure you want to logout?\nPress yes to confirm",style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,))
+                        ],
+                       )));
                     },
                     margin:
                         const EdgeInsets.symmetric(vertical: 16, horizontal: 16),

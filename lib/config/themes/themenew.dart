@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 // primary:Color.fromARGB(255, 219, 215, 215)
 final ThemeData lightThemes = ThemeData(
-  colorScheme: facebookColorScheme,
-  // scaffoldBackgroundColor: Color.fromARGB(255, 24, 23, 23),
-  scaffoldBackgroundColor: Color.fromARGB(255, 209, 208, 206),
 
+  colorScheme:facebookColorScheme,
+
+  // scaffoldBackgroundColor: Color.fromARGB(255, 24, 23, 23),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 209, 208, 206),
   fontFamily: "NotoSans",
 
 );
@@ -21,16 +22,16 @@ class FacebookColors {
 
 
  ColorScheme facebookColorScheme =  ColorScheme(
-  primary: Color.fromARGB(255, 236, 232, 232),
+  primary: const Color.fromARGB(255, 236, 232, 232),
   primaryContainer: FacebookColors.facebookLightBlue,
   // secondary: FacebookColors.facebookDarkBlue,
     secondary: Colors.red[800]!,
   secondaryContainer: FacebookColors.facebookGray,
   surface: FacebookColors.facebookWhite,
   background: FacebookColors.facebookWhite,
-  error: Color.fromARGB(255, 37, 21, 20), // Define a color for error states
+  error: const Color.fromARGB(255, 37, 21, 20), // Define a color for error states
   onPrimary: const Color.fromARGB(255, 24, 23, 23), // Text color on primary color
-  onSecondary: Color.fromARGB(255, 241, 238, 238), // Text color on secondary color
+  onSecondary: const Color.fromARGB(255, 241, 238, 238), // Text color on secondary color
   onSurface: const Color.fromARGB(255, 24, 23, 23), // Text color on surface
   onBackground: const Color.fromARGB(255, 24, 23, 23), // Text color on background
   onError: FacebookColors.facebookWhite, // Text color on error color

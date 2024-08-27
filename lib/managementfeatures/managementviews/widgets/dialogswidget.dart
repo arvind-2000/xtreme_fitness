@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 class PageDialog extends StatelessWidget {
-  const PageDialog({super.key, required this.child, required this.no, required this.yes});
+  const PageDialog({super.key, required this.child, required this.no, required this.yes, this.heights});
   final Widget child;
   final VoidCallback no;
   final VoidCallback yes;
+  final double? heights;
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
-        height: 600,
+        height: heights??600,
         width: 400,
         child: Padding(
           padding: const EdgeInsets.all(24.0),

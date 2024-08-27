@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
       theme:lightThemes,
+      // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
 
