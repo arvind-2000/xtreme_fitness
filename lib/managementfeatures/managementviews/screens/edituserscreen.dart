@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../widgets/headingtext.dart';
 import '../../managementdomain/entities.dart/user.dart';
+import '../../managementdomain/entities.dart/xtremer.dart';
 
 class EditUserScreen extends StatefulWidget {
   const EditUserScreen({super.key});
@@ -25,8 +26,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
     Get.find<ManagementController>().getxtremer();
   }
 
-  User? _user;
-  void changeuser(User us){
+  Xtremer? _user;
+  void changeuser(Xtremer us){
     _user = us;
   }
   @override
@@ -45,7 +46,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 ),
               Expanded(child:managectrl.getallXtremer.isEmpty?const NodataScreen(title: "Xtremer", desc: "No users added") :ListView.builder(
                 itemCount: managectrl.getallXtremer.length,
-                itemBuilder: (c,i)=> ListCard(designation: managectrl.getallXtremer[i].roleid.rolename, name: managectrl.getallXtremer[i].name, phone: managectrl.getallXtremer[i].phone,user: managectrl.getallXtremer[i],userss: changeuser,).animate().slideX(begin: 1,end: 0))),
+                itemBuilder: (c,i)=> ListCard(designation: "Member", name: managectrl.getallXtremer[i].firstName!, phone: managectrl.getallXtremer[i].mobileNumber!,user: managectrl.getallXtremer[i],userss: changeuser,).animate().slideX(begin: 1,end: 0))),
                          const SizedBox(height: 40,)
               ],
             );
@@ -63,8 +64,8 @@ class ListCard extends StatelessWidget {
   final String name;
   final String phone;
   final String designation;
-  final Function(User) userss;
-  final User user;
+  final Function(Xtremer) userss;
+  final Xtremer user;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(

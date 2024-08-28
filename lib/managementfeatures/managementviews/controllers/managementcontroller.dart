@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/user.dart';
+import '../../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementController extends GetxController{
 
@@ -33,6 +34,7 @@ class ManagementController extends GetxController{
 
     super.onInit();
     getplans();
+    getxtremer();
     getStaff();
     getallServices();
     getTrainer();

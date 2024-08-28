@@ -4,7 +4,7 @@ class Logics{
 
    static double totalamounts(List<Paymententity> payment,DateTime date){
         double total = 0;
-        List<Paymententity> d =  payment.where((element) => element.datetime.day == date.day).toList();
+        List<Paymententity> d =  payment.where((element) => element.paymentDate.day == date.day).toList();
         for(Paymententity x in d){
             total += x.amount;
 

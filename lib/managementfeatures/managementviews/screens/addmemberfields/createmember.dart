@@ -183,7 +183,7 @@ class _CreateMemberState extends State<CreateMember> {
                                           Navigator.pop(context);
                                         },
                                         yes: () {
-                                          addmemberctrl.addXtremer();
+                                          addmemberctrl.addXtremer(username.text,password.text);
                                           // ScaffoldMessenger.of(context)
                                           //     .showSnackBar(const SnackBar(
                                           //   content:

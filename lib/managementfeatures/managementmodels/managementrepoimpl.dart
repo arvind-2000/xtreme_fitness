@@ -10,6 +10,8 @@ import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
@@ -17,11 +19,13 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart'
 
 import 'package:http/http.dart' as http;
 
+import '../managementdomain/entities.dart/xtremer.dart';
+
 class ManagementrepoImpl implements ManagementRepo {
   @override
   Future<String> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid) async {
-    dummyxtremer.add(xtremer);
+    // dummyxtremer.add(xtremer);
     print("In add member : userid $userid");
 
     // Create the multipart request
@@ -30,38 +34,38 @@ class ManagementrepoImpl implements ManagementRepo {
 
     // Add fields to the request
     request.fields.addAll({
-      'UserId': "5",
-      'FirstName': xtremer.name,
-      // 'Surname': xtremer.surname ?? '',
-      // 'DateOfBirth': xtremer.dateOfBirth ?? '',
-      // 'Address': xtremer.address ?? '',
-      // 'Postcode': xtremer.postcode ?? '',
-      // 'Occupation': xtremer.occupation ?? '',
-      // 'HomeNumber': xtremer.homeNumber ?? '',
-      // 'MobileNumber': xtremer.mobileNumber ?? '',
-      // 'Email': xtremer.email ?? '',
-      // 'Disability': xtremer.disability ?? '',
-      // 'TrainerName': xtremer.trainerName ?? '',
-      // 'PreferTiming': xtremer.preferTiming ?? '',
-      // 'ContactName': xtremer.contactName ?? '',
-      // 'ContactNumber': xtremer.contactNumber ?? '',
-      // 'Relationship': xtremer.relationship ?? '',
-      // 'UnableToExercise': xtremer.unableToExercise ?? '',
-      // 'PhysicianAdvisedAgainst': xtremer.physicianAdvisedAgainst ?? '',
-      // 'CardiacIssues': xtremer.cardiacIssues ?? '',
-      // 'RespiratoryDifficulties': xtremer.respiratoryDifficulties ?? '',
-      // 'FaintingMigraines': xtremer.faintingMigraines ?? '',
-      // 'BoneJointMuscleIssues': xtremer.boneJointMuscleIssues ?? '',
-      // 'FamilyHeartDisease': xtremer.familyHeartDisease ?? '',
-      // 'ChestPain': xtremer.chestPain ?? '',
-      // 'HighBloodPressure': xtremer.highBloodPressure ?? '',
-      // 'ElevatedCholesterol': xtremer.elevatedCholesterol ?? '',
-      // 'PrescribedMedication': xtremer.prescribedMedication ?? '',
-      // 'DoctorName': xtremer.doctorName ?? '',
-      // 'SurgeryName': xtremer.surgeryName ?? '',
-      // 'SurgeryNumber': xtremer.surgeryNumber ?? '',
-      // 'SurgeryAddress': xtremer.surgeryAddress ?? '',
-      // 'Declaration': xtremer.declaration?.toString() ?? 'false',
+      'UserId': xtremer.XtremerId.toString(),
+      'FirstName': xtremer.firstName!,
+      'Surname': xtremer.surname ?? '',
+      'DateOfBirth': xtremer.dateOfBirth.toString(),
+      'Address': xtremer.address ?? '',
+      'Postcode': xtremer.postcode ?? '',
+      'Occupation': xtremer.occupation ?? '',
+      'HomeNumber': xtremer.homeNumber ?? '',
+      'MobileNumber': xtremer.homeNumber ?? '',
+      'Email': xtremer.email ?? '',
+      'Disability': xtremer.disability ?? '',
+      'TrainerName': xtremer.trainerName ?? '',
+      'PreferTiming': xtremer.preferTiming ?? '',
+      'ContactName': xtremer.contactName ?? '',
+      'ContactNumber': xtremer.contactNumber ?? '',
+      'Relationship': xtremer.relationship ?? '',
+      'UnableToExercise': xtremer.unableToExercise.toString(),
+      'PhysicianAdvisedAgainst': xtremer.physicianAdvisedAgainst.toString(),
+      'CardiacIssues': xtremer.cardiacIssues.toString(),
+      'RespiratoryDifficulties': xtremer.respiratoryDifficulties.toString(),
+      'FaintingMigraines': xtremer.faintingMigraines.toString(),
+      'BoneJointMuscleIssues': xtremer.boneJointMuscleIssues.toString(),
+      'FamilyHeartDisease': xtremer.familyHeartDisease.toString(),
+      'ChestPain': xtremer.chestPain.toString(),
+      'HighBloodPressure': xtremer.highBloodPressure.toString(),
+      'ElevatedCholesterol': xtremer.elevatedCholesterol.toString(),
+      'PrescribedMedication': xtremer.prescribedMedication.toString(),
+      'DoctorName': xtremer.doctorName ?? '',
+      'SurgeryName': xtremer.surgeryName ?? '',
+      'SurgeryNumber': xtremer.surgeryNumber ?? '',
+      'SurgeryAddress': xtremer.surgeryAddress ?? '',
+      'Declaration': xtremer.declaration?.toString() ?? 'false',
     });
 
     // Add the file to the request
@@ -108,7 +112,25 @@ class ManagementrepoImpl implements ManagementRepo {
 
   @override
   Future<List<Xtremer>> viewMember() async {
-    return dummyxtremer;
+     try{
+         final res = await http.get(Uri.parse("$api/api/Xtremers"));
+          // Plan p = Plan.fromJson(jsonDecode(res.body));
+        if (res.statusCode >= 200 && res.statusCode<300) {
+    // Parse JSON data
+    final List<dynamic> jsonList = jsonDecode(res.body);
+    print("In Xtremer list : ${jsonList.length}");
+    print(jsonList);
+    // Convert JSON data to List<Plan>
+    return jsonList.map((json) => Xtremer.fromJson(json)).toList();
+  } else {
+    
+  }
+      }catch(e){
+
+            print("cant load Xtremer : $e");
+      }
+
+      return [];
   }
 
   @override
@@ -342,55 +364,84 @@ return false;
 
   //payments
   @override
-  Future<String> addPayments(Paymententity payment,{bool isonline = false}) async {
+  Future<String> addPayments(Paymententity payment,{bool isonline = false,required String userid}) async {
    
       //online
-    try {
-      var headers = {'Content-Type': 'application/json'};
-      var request = http.Request(
-          'POST', Uri.parse('$api/api/Payments/OnlinePayment'));
-      request.body = json.encode({ 
+    if (isonline) {
   
-  // "amount": payment.amount,
-  // "discountPercentage": 0,
-  "receivedAmount": 1000,
-  // "paymentDate": DateTime.now(),
-  // "transactionId": Random().nextInt(9999999999),
-  // "paymentStatus": "Initiated",
-  // "paymentMethod": "Online",
-  // "paymentType": "Membership",
-  // "subscriptionId": 0,
-  // "serviceUsageId": 0
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST', Uri.parse('$api/api/Payments/OnlinePayment'));
+    request.body = json.encode({ 
+    
+    payment.toJson()
+    
+    });
+    request.headers.addAll(headers);
   
-  });
-      request.headers.addAll(headers);
-
-      http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        var url = await response.stream.bytesToString();
-        if (await canLaunchUrl(Uri.parse(url))) {
-          await launchUrl(
-
-           Uri.parse(url)
-            // forceSafariVC: true,
-            // forceWebView: true,
-            // enableJavaScript: true,
-            // webOnlyWindowName: '_self',
-          );
-        } else {
-          throw 'Could not launch $url';
-        }
+    http.StreamedResponse response = await request.send();
+  
+    if (response.statusCode == 200) {
+      var url = await response.stream.bytesToString();
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(
+  
+         Uri.parse(url)
+          // forceSafariVC: true,
+          // forceWebView: true,
+          // enableJavaScript: true,
+          // webOnlyWindowName: '_self',
+        );
       } else {
-        print(response.reasonPhrase);
+        throw 'Could not launch $url';
       }
-    } on Exception catch (e) {
-      print(e.toString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  
+}else{
+var headers = {'Content-Type': 'application/json'};
+    var response = await http.post(
+      headers: headers,
+        Uri.parse('$api/api/Payments/CashPayment'),body:json.encode({ 
+    // "userId":21,
+    // "amount": payment.amount.toString(),
+    // "discountPercentage": payment.discountPercentage.toString(),
+    // "receivedAmount": payment.receivedAmount.toString(),
+    // "paymentDate": payment.paymentDate.toString(),
+    // "transactionId": payment.transactionId,
+    // "paymentStatus": "Success",
+    // "paymentMethod": payment.paymentMethod.toString(),
+    // "paymentType": payment.paymentType.toString(),
+    // "subscriptionId": payment.subscriptionId.toString(),
+    // "serviceUsageId": payment.serviceUsageId.toString()
+
+  "userId": 21,
+  "amount": "0",
+  "discountPercentage": "0",
+  "receivedAmount": "0",
+  "paymentDate": "2024-08-28T10:07:20.376Z",
+  "transactionId": "string",
+  "paymentStatus": "string",
+  "paymentMethod": "string",
+  "paymentType": "string",
+  "subscriptionId": "0",
+  "serviceUsageId": "0"
+    
+    }) );
+
+  
+
+  
+    if (response.statusCode == 200) {
+          print("payment added : ${response.statusCode}");
+          return "Payment Successfull";
+    } else {
+      print(response.reasonPhrase);
     }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-  
-    return "added";
+}
+  return "Payment failed";
   }
 
   @override
@@ -485,5 +536,198 @@ return false;
       }
 
       return [];
+  }
+  
+  @override
+  Future<int> addUser(User user,String pass) async{
+
+   final uri = Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
+
+  // Convert the User instance to JSON
+  final body = jsonEncode({
+  "mobileNumber": user.phone,
+  "userName": user.username,
+  "passwordHash": pass,
+    "roleName":user.roleid.rolename,
+  "createdAt": DateTime.now().toString(),
+  });
+
+  // Send the POST request
+  final response = await http.post(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  // Check the response status
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('User added successfully.');
+  } else {
+    print('Failed to add user. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+    return response.statusCode;
+
+  }
+  
+  @override
+  Future<String?> viewUser(String username,String pass) async {
+      print("in login auth");
+  String? uid = "";
+  String message = "login error";
+    // Uri url =Uri.parse("http://10.10.1.96/api/Users/login?username=user1&password=userpass");
+    Uri url =Uri.parse("$api/api/Users/login");
+
+    final query = {
+      "userName":username,
+      "passwordHash":pass
+    };
+      try {
+  final response = await http.post(
+    url,
+    headers: {
+  //    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+  // // "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+  // "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+  // "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Content-Type":"application/json"
+    },
+    body:jsonEncode({
+     "userName":username,
+      "passwordHash":pass
+    })
+
+  );
+  print(response.body);
+  var d = jsonDecode( response.body);
+  // message = d["Message"]??d;
+  uid = d["Data"]["UserId"].toString();
+  
+  print(response.body);
+   return uid;
+
+} on Exception catch (e) {
+  print(e);
+  
+
+}
+
+return null;
+  }
+
+
+///service schedules add
+  @override
+  Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule) async{
+   final uri = Uri.parse('$api/api/ServiceUsages'); // Replace with your API endpoint
+
+  // Convert the User instance to JSON
+  final body = jsonEncode({
+    serviceschedule.toJson()
+  });
+
+  // Send the POST request
+  final response = await http.post(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  // Check the response status
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('Service schedule added successfully.');
+        return ServiceSchedule.fromJson(jsonDecode(response.body));
+  } else {
+    print('Failed to add service schedule. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  return null;
+  }
+
+    @override
+  Future<ServiceSchedule?> getServiceUsage(int id)async {
+    final uri = Uri.parse('$api/api/ServiceUsages/$id'); // Replace with your API endpoint
+
+  final response = await http.get(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('service schedule get successfully.');
+        return ServiceSchedule.fromJson(jsonDecode(response.body));
+  } else {
+    print('Failed to get service schedule. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  return null;
+  }
+  /// subscription page
+  @override
+  Future<Subscription?> addSubscription(Subscription subs) async{
+
+   final uri = Uri.parse('$api/api/Subscriptions'); // Replace with your API endpoint
+
+  // Convert the User instance to JSON
+  final body = jsonEncode({
+  "userId": subs.userId,
+  "planId": subs.planId,
+  "startDate": subs.startDate.toString(),
+  "endDate": subs.endDate.toString(),
+  "status": subs.status,
+  });
+
+  // Send the POST request
+  final response = await http.post(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  // Check the response status
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('Subscription added successfully.');
+        return Subscription.fromJson(jsonDecode(response.body));
+  } else {
+    print('Failed to add subscription. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  return null;
+
+  }
+
+  @override
+  Future<Subscription?> getSubscription(int id) async{
+    final uri = Uri.parse('$api/api/Subscriptions/$id'); // Replace with your API endpoint
+
+  final response = await http.get(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+
+  // Check the response status
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('Subscription get successfully.');
+    print(response.body);
+        return Subscription.fromJson(jsonDecode(response.body));
+  } else {
+    print('Failed to get subscription. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  return null;
   }
 }

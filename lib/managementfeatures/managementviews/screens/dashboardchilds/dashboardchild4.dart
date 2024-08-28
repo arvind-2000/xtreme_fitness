@@ -41,11 +41,11 @@ class DashboardChild4 extends StatelessWidget {
             return     Padding(
               padding: const EdgeInsets.all(16),
               child: Row(children: [
-              Expanded(child: Text("${managectrl.getallpayments[i].transactionid}")),
-              Expanded(child: Text("${managectrl.getallpayments[i].paymentmethod}")),
+              Expanded(child: Text("${managectrl.getallpayments[i].transactionId}")),
+              Expanded(child: Text("${managectrl.getallpayments[i].paymentMethod}")),
               Expanded(child: Text("${managectrl.getallpayments[i].amount}")),
-              Expanded(child: Text("${managectrl.getallpayments[i].datetime}")),
-              Expanded(child: Text("Paid" )),
+              Expanded(child: Text("${managectrl.getallpayments[i].paymentDate}")),
+              Expanded(child: Text("Paid")),
                  
                     ],),
             );

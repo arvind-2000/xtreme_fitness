@@ -6,9 +6,11 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../managementdomain/entities.dart/xtremer.dart';
+
 class MemberProfilescreen extends StatelessWidget {
   const MemberProfilescreen({super.key, this.user});
-  final User? user;
+  final Xtremer? user;
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.sizeOf(context).width;
@@ -61,23 +63,23 @@ class MemberProfilescreen extends StatelessWidget {
 
                               const Text("Name"),
                               const SizedBox(height: 10,),
-                              Text(user!.name,style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.firstName!,style: const TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Phone"),
                                  const SizedBox(height: 10,),
-                              Text(user!.phone,style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.mobileNumber!,style: const TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Designation"),
                                  const SizedBox(height: 10,),
-                              Text(user!.roleid.rolename,style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text("Member",style: const TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Address"),
                                  const SizedBox(height: 10,),
-                              const Text("Shfjhfjfh",style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.address!,style: TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Email"),
                                  const SizedBox(height: 10,),
-                              const Text("adudada@gmail.com",style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.email!,style: TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 16,),
                                 CardwithShadow(
                                   color: Colors.blue[300],

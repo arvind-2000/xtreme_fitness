@@ -192,13 +192,13 @@ final FocusNode _otherFocusNode = FocusNode();
                   children: [
                     Expanded(
                       
-                      child: TextFieldWidget(hint: "Home Number", controller: _phonecontroller,focusnode: _homephoneFocusNode, nextfocusnode: _phoneFocusNode,validator:(){
+                      child: TextFieldWidget(hint: "Home Number", controller: _homephonecontroller,focusnode: _homephoneFocusNode, nextfocusnode: _phoneFocusNode,validator:(){
                         return  authusecase.phoneAuth(_homephonecontroller.text);
                       })),
                          SizedBox(width:  size<mobilescreen?0:16,),
                       size<mobilescreen?const SizedBox(): Expanded(
                     
-                      child: TextFieldWidget(hint: "Mobile Number", controller: _homephonecontroller,focusnode: _phoneFocusNode,nextfocusnode: _emergencynameFocusNode,validator:(){
+                      child: TextFieldWidget(hint: "Mobile Number", controller: _phonecontroller,focusnode: _phoneFocusNode,nextfocusnode: _emergencynameFocusNode,validator:(){
                         return authusecase.phoneAuth(_phonecontroller.text);
                       } )),
                   ],

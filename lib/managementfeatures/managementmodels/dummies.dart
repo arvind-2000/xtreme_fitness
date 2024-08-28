@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 
 import '../managementdomain/entities.dart/planentity.dart';
 import '../managementdomain/entities.dart/user.dart';
+import '../managementdomain/entities.dart/xtremer.dart';
 
 // List<Plan> dummyplan = [
 

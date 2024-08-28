@@ -11,6 +11,7 @@ import 'package:printing/printing.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/imageusecase.dart';
@@ -19,23 +20,12 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 
 import '../../managementdomain/entities.dart/planentity.dart';
+import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/managementrepo.dart';
 
 class AddMemberController extends GetxController {
   Plan? selectedplan;
-  final Xtremer xtremer = Xtremer(
-      doctorname: "",
-      doctorsurgeryno: "",
-      doctorsurgeryname: "",
-      emergencyname: "",
-      emergencycontact: "",
-      emergencyrelation: "Brother",
-      uid: Random().nextInt(199).toString(),
-      name: "",
-      phone: "",
-      username: "",
-      roleid: Role(roleid: "4", rolename: "Member"),
-      isactive: true);
+ Xtremer xtremer = Xtremer(surname:"",firstName: "", dateOfBirth: DateTime.now(), address: "", postcode:"", occupation:"", homeNumber: "", mobileNumber: "", email: "", profilePhotoPath: "", disability: "", trainerName: "", preferTiming: "", contactName: "", contactNumber: "", relationship: "", unableToExercise: true, physicianAdvisedAgainst: false, cardiacIssues: false, respiratoryDifficulties: false, faintingMigraines: false, boneJointMuscleIssues: false, familyHeartDisease: false, chestPain: false, highBloodPressure:false, elevatedCholesterol: false, prescribedMedication: false, doctorName: "", surgeryName: "", surgeryNumber: "", surgeryAddress:"", declaration: true,);
   DoctorDetails? doctorDetails;
   Paymententity? paymentdetails;
   DateTime dob = DateTime.now();
@@ -81,22 +71,43 @@ class AddMemberController extends GetxController {
     update();
   }
 
-  void addXtremer() async {
-    // String res =
-    //     await repo.addMember(xtremer, _imageData, authctrl.userid ?? "");
+  void addXtremer(String? username,String? pass) async {
+    
+    String? userid;
+   
+   int res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!);
+   if(res>=200 && res<300){
+
+        userid = await repo.viewUser(username, pass);
+        print("in user create in create member: ${userid!}");
+        xtremer.XtremerId = int.tryParse(userid);
+      update();
+   } 
+
+    if(userid!=null){
+      Subscription subs = Subscription(userId:userid, planId: selectedplan!.id, startDate: DateTime.now(), endDate: DateTime.now().add(Duration(days: selectedplan!.durationInMonths*3)), status: "active");
+      Subscription? subss = await repo.addSubscription(subs);
+
+      if(subss != null)
+      {
+          
+      Paymententity payments = Paymententity(id: 0, userId: xtremer.XtremerId!, amount: admissionfees!.price + selectedplan!.price, discountPercentage: selectedplan!.price, receivedAmount: admissionfees!.price + (selectedplan!.price - (selectedplan!.price * (selectedplan!.discountPercentage/100))) , paymentDate: DateTime.now(), transactionId: DateTime.timestamp().toString()+xtremer.XtremerId.toString(), paymentStatus:"Initiated", paymentMethod: "Cash", paymentType: "Membership", subscriptionId: selectedplan!.id, serviceUsageId: 0);
+      print("adding payments");
+      await repo.addPayments(payments,userid: xtremer.XtremerId.toString());
+      String res = await repo.addMember(xtremer, _imageData,userid);
+      }
+      else
+      {
+
+       print("error");
+
+      }
+
+
     // print("$res  ${dummyxtremer.length}");
     // print(admissionfees!.price);
     // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
-   print("adding payments");
-   
-    await repo.addPayments(Paymententity(ispaymentcash ? "Cash" : "Online",
-        paymentid: Random().nextInt(1000).toString(),
-        transactionid: Random().nextInt(1000).toString(),
-        uid: xtremer.uid,
-        amount: 1000,
-        // amount: admissionfees!.price +
-        //     percentprice(selectedplan!.price, selectedplan!.discountPercentage),
-        datetime: DateTime.now()));
+    }
 
   }
 
@@ -111,15 +122,16 @@ class AddMemberController extends GetxController {
     required String emergencycontact,
     required String emergencyname,
   }) {
-    xtremer.name = name;
-    xtremer.phone = phone;
-    xtremer.homephone = homephone;
-    xtremer.postalcode = postalcode;
+     xtremer.firstName = name;
+    xtremer.contactNumber = phone;
+    xtremer.homeNumber = homephone;
+    xtremer.postcode = postalcode;
     xtremer.occupation = occupation;
     xtremer.address = address;
-    xtremer.emergencyrelation = relation[relationship]!;
-    xtremer.emergencycontact = emergencycontact;
-    xtremer.emergencyname = emergencyname;
+    xtremer.relationship = relation[relationship]!;
+    xtremer.contactNumber = emergencycontact;
+    xtremer.contactName = emergencyname;
+    update();
   }
 
   void setpaymentmethod(bool v) {
@@ -163,9 +175,10 @@ class AddMemberController extends GetxController {
 
   void addDoctor(
       String doctorname, String surgeryno, String surgeryname, String t) {
-    this.doctorname = doctorname;
-    this.surgeryname = surgeryname;
-    this.surgeryno = surgeryno;
+    xtremer.doctorName = doctorname;
+    xtremer.surgeryName = surgeryname;
+    xtremer.surgeryNumber = surgeryno;
+    xtremer.surgeryAddress = "Imphal";
     update();
   }
 

@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -56,123 +57,125 @@ class _PlansScreenState extends State<PlansScreen> {
                 ],
               ),
             ),
-           _isplanadd? AddPlanFields(onpress: isaddplan,): managementcontroller.getallplans.isEmpty?NodataScreen(title: "No Plans", desc: "No plans to show",onpress: isaddplan,): GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            
-            crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
-            mainAxisSpacing: 10,
-                   
-            childAspectRatio:  size<500?1: 3/4,
-                   
-            ),
-            shrinkWrap: true,
-            children: managementcontroller.getallplans.asMap().entries.map((e) => CardwithShadow(
-              margin: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     HeadingText(e.value.category,size: 24,),
-                     Row(
-                      children: [
-                        IconButton(onPressed: (){
-                            managementcontroller.deletplans(e.value);
-                        }, icon: const Icon(Icons.edit,size: 12,)),
-                        const SizedBox(width: 10,),
-                        IconButton(onPressed: (){
-           
-              showDialog(context: context, builder: (context) => PageDialog(
-                          no: () {
-                            Navigator.pop(context);
-                          },
-                          yes: () async{
-                          managementcontroller.deletplans(e.value);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Plan Deleted"),duration: Durations.extralong1,));
-                          Navigator.pop(context);
-                          },
-           
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TitleText("Delete Plans"),
-                                IconButton(onPressed: (){
-                                  Navigator.pop(context);
-                                }, icon: const Icon(Icons.close))
-                              ],
-                            ),
-                            const SizedBox(height: 20,),
-                            const Text("Plan Name",style: TextStyle(fontSize: 14),),
-                            const SizedBox(height: 5,),
-                            Text(e.value.name,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            const SizedBox(height: 16,),
-                              const Text("Plan Amount",style: TextStyle(fontSize: 14),),
-                            const SizedBox(height: 5,),
-                            Text(e.value.price.toString(),style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            const SizedBox(height: 16,),
-                                  const Text("Plan Duration",style: TextStyle(fontSize: 14),),
-                            const SizedBox(height: 5,),
-                            Text("${e.value.durationInMonths} months",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            const SizedBox(height: 16,),
-                                const Text("Plan Discount",style: TextStyle(fontSize: 14),),
-                            const SizedBox(height: 5,),
-                            Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            const SizedBox(height: 16,),
-                                const Text("Plan Category",style: TextStyle(fontSize: 14),),
-                            const SizedBox(height: 5,),
-                            Text(e.value.category,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            const SizedBox(height: 16,),
-                            Row(
-                              children: [
-                                Expanded(child: CardwithShadow(
-                                  color: Theme.of(context).colorScheme.error.withOpacity(0.6),
-                                  margin: const EdgeInsets.all(16),
-                                  child: const Text("Press Yes to confirm",textAlign: TextAlign.center,)))
-                              ],
-                            )
-                          ],
-                                                  )),);
-           
-                  
-                        }, icon: const Icon(Icons.delete,size: 12,)),
-                      ],
-                     )
-                   ],
-                 ),
-                 SizedBox(height: 20,),
-           
-                 Expanded(
-                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+           _isplanadd? AddPlanFields(onpress: isaddplan,): managementcontroller.getallplans.isEmpty?NodataScreen(title: "No Plans", desc: "No plans to show",onpress: isaddplan,): Expanded(
+             child: GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              
+              crossAxisCount: size<500?1:size<mobilescreen?1:size>mobilescreen && size<800?2:size>800 && size<1200?3:4,
+              mainAxisSpacing: 10,
+                     
+              childAspectRatio:  size<500?1:size<mobilescreen? 1.5/1.3:3/4,
+                     
+              ),
+              shrinkWrap: true,
+              children: managementcontroller.getallplans.asMap().entries.map((e) => CardwithShadow(
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       const Text("Price"),
-                       Text(e.value.price.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                       const SizedBox(height: 10,),
-                                       const Text("Discount"),
-                       Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                       const SizedBox(height: 10,),
-                                   const Text("Actual Price"),
-                                      HeadingText("${e.value.price - (e.value.price * (e.value.discountPercentage/100))}"  ,size: 24,),
+                       HeadingText(e.value.category,size: 24,),
+                       Row(
+                        children: [
+                          IconButton(onPressed: (){
+                              managementcontroller.deletplans(e.value);
+                          }, icon: const Icon(Icons.edit,size: 12,)),
+                          const SizedBox(width: 10,),
+                          IconButton(onPressed: (){
+             
+                showDialog(context: context, builder: (context) => PageDialog(
+                            no: () {
+                              Navigator.pop(context);
+                            },
+                            yes: () async{
+                            managementcontroller.deletplans(e.value);
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Plan Deleted"),duration: Durations.extralong1,));
+                            Navigator.pop(context);
+                            },
+             
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const TitleText("Delete Plans"),
+                                  IconButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, icon: const Icon(Icons.close))
+                                ],
+                              ),
+                              const SizedBox(height: 20,),
+                              const Text("Plan Name",style: TextStyle(fontSize: 14),),
+                              const SizedBox(height: 5,),
+                              Text(e.value.name,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                              const SizedBox(height: 16,),
+                                const Text("Plan Amount",style: TextStyle(fontSize: 14),),
+                              const SizedBox(height: 5,),
+                              Text(e.value.price.toString(),style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                              const SizedBox(height: 16,),
+                                    const Text("Plan Duration",style: TextStyle(fontSize: 14),),
+                              const SizedBox(height: 5,),
+                              Text("${e.value.durationInMonths} months",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                              const SizedBox(height: 16,),
+                                  const Text("Plan Discount",style: TextStyle(fontSize: 14),),
+                              const SizedBox(height: 5,),
+                              Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                              const SizedBox(height: 16,),
+                                  const Text("Plan Category",style: TextStyle(fontSize: 14),),
+                              const SizedBox(height: 5,),
+                              Text(e.value.category,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                              const SizedBox(height: 16,),
+                              Row(
+                                children: [
+                                  Expanded(child: CardwithShadow(
+                                    color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+                                    margin: const EdgeInsets.all(16),
+                                    child: const Text("Press Yes to confirm",textAlign: TextAlign.center,)))
+                                ],
+                              )
+                            ],
+                                                    )),);
+             
+                    
+                          }, icon: const Icon(Icons.delete,size: 12,)),
+                        ],
+                       )
                      ],
                    ),
-                 ),
-           
-                    CardwithShadow(
-                      color: Colors.green[300],
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Icon(Icons.add,color: Colors.white,),
-                      SizedBox(width: 10,),
-           
-                      Text("CheckOut",style: TextStyle(color: Colors.white),)
-                    ],))
-                ],
-              )),).toList()
-            ),
+                   SizedBox(height: 20,),
+             
+                   Expanded(
+                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         const Text("Price"),
+                         Text(e.value.price.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                         const SizedBox(height: 10,),
+                                         const Text("Discount"),
+                         Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                         const SizedBox(height: 10,),
+                                     const Text("Actual Price"),
+                                        HeadingText("${e.value.price - (e.value.price * (e.value.discountPercentage/100))}"  ,size: 24,),
+                       ],
+                     ),
+                   ),
+             
+                      CardwithShadow(
+                        color: Colors.green[300],
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        Icon(Icons.add,color: Colors.white,),
+                        SizedBox(width: 10,),
+             
+                        Text("CheckOut",style: TextStyle(color: Colors.white),)
+                      ],))
+                  ],
+                )),).toList()
+              ),
+           ),
               
                const SizedBox(height: 40,)
           ],

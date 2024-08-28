@@ -15,25 +15,7 @@ final String rolename;
 
 }
 
-class Xtremer extends User{
- bool isactive;
- String doctorname;
- String doctorsurgeryno;
-String doctorsurgeryname;
 
- String emergencyname;
- String emergencycontact;
-String emergencyrelation;
-
-
-String? occupation;
-String? homephone;
-String? postalcode;
-String? address;
-
-  Xtremer({required this.doctorname,required this.doctorsurgeryno,required this.doctorsurgeryname,required this.emergencyname,required this.emergencycontact,required this.emergencyrelation,this.homephone,this.occupation,this.address,required super.uid, required super.name, required super.phone, required super.username, required super.roleid,required this.isactive, });
-
-}
 
 
 
