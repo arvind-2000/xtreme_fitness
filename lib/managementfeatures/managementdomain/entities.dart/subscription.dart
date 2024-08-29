@@ -18,9 +18,9 @@ class Subscription {
   // Factory method to create a Subscription instance from a JSON map
   factory Subscription.fromJson(Map<String, dynamic> json) {
     return Subscription(
-      id:int.tryParse( json['Id'])??0,
+      id: json['Id'],
       userId: json['UserId'].toString(),
-      planId: int.tryParse(json['PlanId'])??0,
+      planId:json['PlanId'],
       startDate: DateTime.parse(json['StartDate']),
       endDate: DateTime.parse(json['EndDate']),
       status: json['Status'].toString(),

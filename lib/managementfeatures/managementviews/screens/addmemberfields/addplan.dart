@@ -26,7 +26,7 @@ class PlanSelectionField extends StatelessWidget {
                       
               children: [
               
-                managectrl.getallplans.isEmpty? const NodataScreen(title: "No Plans", desc: "Add a plan first",onpress: null,): GridView(
+                managectrl.getallplans.isEmpty? const NodataScreen(title: "No Plans", desc: "No plans to show.",onpress: null,): GridView(
                  shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
@@ -147,13 +147,19 @@ class PlanSelectionField extends StatelessWidget {
                   onpress: (){
                     if(addmemberctrl.selectedplan!=null){
 
+
                            if(addmemberctrl.selectedplan!.category!=plancategory[0]){
                               pagectrl.changeaddMemberPage(2);
                            }else{
                             if(addmemberctrl.gettrainer!=null){
                               pagectrl.changeaddMemberPage(2);
+                            }else{
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a Trainer for personal plan before proceeding")));
                             }
                            }
+                    }else{
+
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a plan before proceeding")));
                     }
               
                

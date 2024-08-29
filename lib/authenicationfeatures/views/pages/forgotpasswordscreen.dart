@@ -86,7 +86,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
 
                   Get.offAndToNamed('/login');
                 }, icon: Icon(Icons.close)),
-                SizedBox(height: 10,),
+                // SizedBox(height: 10,),
                      ],
                    ),
                     const SizedBox(
@@ -160,7 +160,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context)
                                   .colorScheme
-                                  .surface
+                                  .onSurface
                                   .withOpacity(0.6)),
                         ),
                         const SizedBox(

@@ -29,9 +29,8 @@ class Questionnare extends StatelessWidget {
     return  GetBuilder<AddMemberController>(
       builder: (addmemberctrl) {
         return Cardonly(
-            // onpress: (){
-            //   pagectrl.changeaddMemberPage(3);
-            // },
+          color: Colors.transparent,
+     
 
           
         
@@ -86,7 +85,14 @@ class Questionnare extends StatelessWidget {
                   const SizedBox(height: 10,),
                     RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue:addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
                   const SizedBox(height: 10,),
-                      
+                   SizedBox(
+                    width: double.maxFinite,
+                     child: Cardonly(
+                          onpress: (){
+                                   pagectrl.changeaddMemberPage(3);
+                                 },
+                      child: Text("Go to Next")),
+                   )   
                 ],
               ),
             ),

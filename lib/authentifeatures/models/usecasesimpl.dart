@@ -1,9 +1,11 @@
 
 
+import '../../config/const.dart';
 import '../config/regex.dart';
 import '../domain/domainusecases.dart';
 
-class AuthenticateUseCase implements AuthUseCases{
+
+class AuthenticateUseCases implements AuthUseCases{
   @override
   String? emailAuth(String data) {
       if(data.trim().isEmpty){
@@ -11,7 +13,7 @@ class AuthenticateUseCase implements AuthUseCases{
       }
 
       // log(' email authentication ${email.hasMatch(data)}');
-      return usernameregex.hasMatch(data)?null:"should be xx@xx.xxx";
+      return email.hasMatch(data)?null:"Email should XX@XXXXX.XXX";
   }
   
   @override
@@ -44,6 +46,7 @@ class AuthenticateUseCase implements AuthUseCases{
        }
         return phoneregex.hasMatch(phone)?null:"Phone must have 10 digits";
   }
+  
   @override
  String? forgotpassOTP(String otp, String mins) {
    return "MOBEDS: One-time-Password (OTP) to access the MOBEDS Recruitment Portal is $otp valid till $mins mins. CubeTen technologies";
@@ -53,7 +56,6 @@ class AuthenticateUseCase implements AuthUseCases{
   String? registerOTP(String otp, String mins) {
       return "MOBEDS: One-time-Password (OTP) to access the MOBEDS Recruitment Portal is $otp valid till 5 mins. CubeTen technologies";
   }
-
 
 
 

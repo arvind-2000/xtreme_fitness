@@ -11,6 +11,7 @@ import '../../widgets/card.dart';
 import '../../widgets/cardswithshadow.dart';
 
 
+import 'gallery.dart';
 import 'landingnavbarpage.dart';
 import 'landingpage.dart';
 import 'pricingpage.dart';
@@ -151,6 +152,7 @@ class _LandingHomePageState extends State<LandingHomePage> {
                       size<=1000?const SizedBox():   const LandingNavBar(),
                       //body
                       landingctrl.page == 2?const ServicePage():
+                      landingctrl.page == 3?const GalleryPage():
                       landingctrl.page == 1? const PricingPage():
                        const LandingPage(),
                       // ContactFooter()

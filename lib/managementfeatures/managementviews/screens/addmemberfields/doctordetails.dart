@@ -68,11 +68,15 @@ void dispose() {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TitleText("Doctor's Details"),
-                          CardBorder(child: Text("Skip"))
+                          CardBorder(
+                            onpress: (){
+                                  widget.pagectrl.changeaddMemberPage(4);
+                            },
+                            child: Text("Skip"))
                         ],
                       ),
                       const SizedBox(height: 16,),

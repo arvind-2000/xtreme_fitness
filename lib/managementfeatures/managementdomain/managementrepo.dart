@@ -21,7 +21,7 @@ abstract class ManagementRepo{
 
 
   ///adding members
-  Future<String> addMember(Xtremer xtremer,Uint8List? filepath,String userid);
+  Future<Map<String,dynamic>> addMember(Xtremer xtremer,Uint8List? filepath,String userid);
   Future<String> updateMember(Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
@@ -62,10 +62,11 @@ abstract class ManagementRepo{
 
   //payments api
 
-  Future<String> addPayments(Paymententity payment,{bool isonline,required String userid});
+  Future<Map<String,dynamic>> addPayments(Paymententity payment,{bool isonline,required String userid});
   Future<String> deletePayment(Paymententity payment);
   Future<String> updatePayment(Paymententity payment);
   Future<List<Paymententity>> viewpayment();
+  Future<Paymententity?> getpayment(String transcationid);
 
   ///users api
   Future<int> addUser(User user,String pass);

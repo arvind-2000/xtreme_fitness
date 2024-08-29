@@ -1,5 +1,6 @@
-import 'dart:developer';
-
+import 'dart:async';
+import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/handlerpage.dart';
@@ -22,6 +23,8 @@ class GetxAuthController extends GetxController{
   String? userid;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = false;
+  int? otp;
+  bool otploading = false;
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index){
     changeAuthindex = index;
@@ -35,14 +38,18 @@ class GetxAuthController extends GetxController{
     _user = UserEntity(id: 0, email: "", pass: "");
 
     try {
-      log('in email authenticate');
+      debugPrint('in email authenticate');
+
       d = await authrepo.emailAuthentication(email: email,pass: pass);
-      log(d.toString());
+
+
+      debugPrint(d.toString());
+      
       if (d.isNotEmpty) {
         _authentication = d.entries.first.key!.isNotEmpty;
         print(d.entries.first.key);
          userid = d.entries.first.key;
-        log(_authentication.toString());
+       debugPrint(_authentication.toString());
        loginloading = false;
         _user = User(id: 0, email: email, pass: pass);
         if(_authentication){
@@ -57,7 +64,7 @@ class GetxAuthController extends GetxController{
 
       
     } catch (e) {
-      log('in sign up catch');
+      debugPrint('in sign up catch');
       _authentication = false;
       loginloading = false;
       update();
@@ -94,4 +101,21 @@ class GetxAuthController extends GetxController{
   }
 
 
+  void sendotp(String phone){
+    int rand = Random().nextInt(9000) + 1000;
+    otp = rand;
+    debugPrint(otp.toString());
+  //  authrepo.sendOTP(rand.toString(), "10",phone);
+    
+  }
+
+  bool confirmotp(String confirmotp){
+    otploading = true;
+    update();
+    Timer(const Duration(seconds: 2),(){
+      otploading = false;
+      update();
+    });
+    return confirmotp == otp.toString();
+  }
 }

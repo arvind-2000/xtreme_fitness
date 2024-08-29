@@ -85,7 +85,7 @@ bool toggless = false;
 
           fillColor: Theme.of(context).colorScheme.primary,
         hintText: widget.hint,
-
+        hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))
                           

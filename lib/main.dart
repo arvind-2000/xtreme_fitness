@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
-      theme:lightThemes,
+      theme: ThemeData(colorScheme: darkColorSchemes,
+      scaffoldBackgroundColor: Color.fromARGB(255, 24, 23, 23),
+      ),
+      // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
         GetPage(name: '/pricing', page: () => const LandingHomePage(index: 1,),transition: Transition.noTransition),
         GetPage(name: '/services', page: () => const LandingHomePage(index: 2,),transition: Transition.noTransition),
+        GetPage(name: '/gallery', page: () => const LandingHomePage(index: 3,),transition: Transition.noTransition),
   
 
       GetPage(name: '/login', page: () => const AuthHandlerPage(index: 0,)),

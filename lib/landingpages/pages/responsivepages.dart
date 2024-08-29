@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/config/const.dart';
 
 class ResponsivePages extends StatelessWidget {

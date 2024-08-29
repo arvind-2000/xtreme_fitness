@@ -23,7 +23,7 @@ import '../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
   @override
-  Future<String> addMember(
+  Future<Map<String,dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid) async {
     // dummyxtremer.add(xtremer);
     print("In add member : userid $userid");
@@ -81,22 +81,22 @@ class ManagementrepoImpl implements ManagementRepo {
     try {
       var response = await request.send();
 
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode<300) {
         String responseBody = await response.stream.bytesToString();
         print('Upload successful: $responseBody');
-        return responseBody;
+        return {"response":responseBody};
       } else if (response.statusCode == 409) {
         String responseBody = await response.stream.bytesToString();
         print('Conflict Error: $responseBody');
-        return 'Conflict Error';
+        return {"response":response.reasonPhrase};
       } else {
         print('Request failed with status: ${response.statusCode}');
         print('Reason: ${response.reasonPhrase}');
-        return 'Failed';
+        return {"response":response.reasonPhrase};
       }
     } catch (e) {
       print('Error occurred: $e');
-      return 'Error';
+      return {"response":e};
     }
   }
 
@@ -364,7 +364,7 @@ return false;
 
   //payments
   @override
-  Future<String> addPayments(Paymententity payment,{bool isonline = false,required String userid}) async {
+  Future<Map<String,dynamic>> addPayments(Paymententity payment,{bool isonline = false,required String userid}) async {
    
       //online
     if (isonline) {
@@ -374,7 +374,17 @@ return false;
         'POST', Uri.parse('$api/api/Payments/OnlinePayment'));
     request.body = json.encode({ 
     
-    payment.toJson()
+     "userId": userid,
+  "amount": 0,
+  "discountPercentage": 0,
+  "receivedAmount": 120,
+  "paymentDate": "2024-08-29T09:08:33.847Z",
+  "transactionId": "string",
+  "paymentStatus": "string",
+  "paymentMethod": "string",
+  "paymentType": "string",
+  "subscriptionId": 0,
+  "serviceUsageId": 0
     
     });
     request.headers.addAll(headers);
@@ -404,29 +414,20 @@ var headers = {'Content-Type': 'application/json'};
     var response = await http.post(
       headers: headers,
         Uri.parse('$api/api/Payments/CashPayment'),body:json.encode({ 
-    // "userId":21,
-    // "amount": payment.amount.toString(),
-    // "discountPercentage": payment.discountPercentage.toString(),
-    // "receivedAmount": payment.receivedAmount.toString(),
-    // "paymentDate": payment.paymentDate.toString(),
-    // "transactionId": payment.transactionId,
-    // "paymentStatus": "Success",
-    // "paymentMethod": payment.paymentMethod.toString(),
-    // "paymentType": payment.paymentType.toString(),
-    // "subscriptionId": payment.subscriptionId.toString(),
-    // "serviceUsageId": payment.serviceUsageId.toString()
+            // payment.toJson()
 
-  "userId": 21,
-  "amount": "0",
-  "discountPercentage": "0",
-  "receivedAmount": "0",
-  "paymentDate": "2024-08-28T10:07:20.376Z",
+  
+  "userId": userid,
+  "amount": 0,
+  "discountPercentage": 0,
+  "receivedAmount": 0,
+  "paymentDate": DateTime.now().toString(),
   "transactionId": "string",
   "paymentStatus": "string",
   "paymentMethod": "string",
   "paymentType": "string",
-  "subscriptionId": "0",
-  "serviceUsageId": "0"
+  "subscriptionId": 0,
+  "serviceUsageId": 0
     
     }) );
 
@@ -435,13 +436,13 @@ var headers = {'Content-Type': 'application/json'};
   
     if (response.statusCode == 200) {
           print("payment added : ${response.statusCode}");
-          return "Payment Successfull";
+          return {"response":"Successfull"};
     } else {
       print(response.reasonPhrase);
     }
 
 }
-  return "Payment failed";
+  return {"response":"Payment failed"};
   }
 
   @override
@@ -553,6 +554,7 @@ var headers = {'Content-Type': 'application/json'};
   });
 
   // Send the POST request
+  try {
   final response = await http.post(
     uri,
     headers: {
@@ -560,15 +562,24 @@ var headers = {'Content-Type': 'application/json'};
     },
     body: body,
   );
-
+  
   // Check the response status
   if (response.statusCode >= 200 && response.statusCode<300) {
     print('User added successfully.');
+      return response.statusCode;
   } else {
     print('Failed to add user. Status code: ${response.statusCode}');
     print('Response body: ${response.body}');
+      return response.statusCode;
   }
-    return response.statusCode;
+} on Exception catch (e) {
+  // TODO
+  print("Error in user registrer: $e");
+    return 0;
+}
+
+
+  
 
   }
   
@@ -725,6 +736,30 @@ return null;
         return Subscription.fromJson(jsonDecode(response.body));
   } else {
     print('Failed to get subscription. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  return null;
+  }
+  
+  @override
+  Future<Paymententity?> getpayment(String transactionid) async{
+      final uri = Uri.parse('$api/api/Payments/$transactionid'); // Replace with your API endpoint
+
+  final response = await http.get(
+    uri,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+
+  // Check the response status
+  if (response.statusCode >= 200 && response.statusCode<300) {
+    print('Payment get successfully.');
+    print(response.body);
+        return Paymententity.fromJson(jsonDecode(response.body));
+  } else {
+    print('Failed to get payment. Status code: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
 

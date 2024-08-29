@@ -58,7 +58,13 @@ class LandingNavBar extends StatelessWidget {
                               },
                               child: Text("Services",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,  color: Theme.of(context).colorScheme.onSecondary),)),
                             const SizedBox(width: 30,),
-                             Text("Gallery",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSecondary),),
+                             Cardonly(
+                                        color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                              onpress: (){
+                                  landingctrl.changelandingpage(3);
+                                Get.toNamed("/gallery");
+                              },
+                               child: Text("Gallery",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSecondary),)),
                           ],
                         ),
                      ),
@@ -73,19 +79,18 @@ class LandingNavBar extends StatelessWidget {
                               },
                               color: Colors.red[800],
                               child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 4),
                               child: Text("Log In",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.red[800],),),
                             ), 
                             ),
                             const SizedBox(width: 10,),
                             CardwithShadow(
-                            
                               onpress: (){
                                 authctrl.changeAuthPage(1);
                                 Get.toNamed("/signup");
                               },
                               color: Colors.red[800],
-                             padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
+                             padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 12),
                               child:  const Text("Sign Up",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),), 
                             ),
                                                

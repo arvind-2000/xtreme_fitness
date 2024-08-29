@@ -1,13 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
+
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
 import '../../widgets/gridviewwidget.dart';
@@ -59,16 +57,16 @@ class LandingPage extends StatelessWidget {
                                   Get.toNamed("/pricing");
 
                               },
-                              padding: EdgeInsets.symmetric(vertical: 16,horizontal: 32),
+                              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 32),
                                color: Theme.of(context).colorScheme.secondary,
                                child:const Text("Get Started",style: TextStyle(color: Colors.white),) ),
-                               SizedBox(height: 60,),
+                               const SizedBox(height: 60,),
 
                               SizedBox(
                               
                                 child: CardwithShadow(
                                    margin: EdgeInsets.zero,
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                                   child: Column(
                               
@@ -85,7 +83,7 @@ class LandingPage extends StatelessWidget {
                                         HeadingText("Timing",size: 24,color: Colors.white60,),
                                       ],
                                     ),
-                                    SizedBox(height: 20,),
+                                    const SizedBox(height: 20,),
                                   MediaQuery.sizeOf(context).width<=mobilescreen?  Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -97,11 +95,11 @@ class LandingPage extends StatelessWidget {
                                             Text("5:00 AM - 11:00 AM",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                                           ],
                                         ),
-                                        SizedBox(width: 10,),
+                                        const SizedBox(width: 10,),
                                         Container(
-                                          margin: EdgeInsets.symmetric(vertical: 8),
+                                          margin: const EdgeInsets.symmetric(vertical: 8),
                                           width:50,height: 1, color: Colors.white54,),
-                                         SizedBox(width: 10,),
+                                         const SizedBox(width: 10,),
                                         const Column(
                                              crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -172,9 +170,9 @@ class LandingPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                     HeadingText("${e.key<10?"0":""}${e.key+1}",size: 40,),
-                    SizedBox(height: 25,),
+                    const SizedBox(height: 25,),
                      HeadingText(e.value.name,size: 24,),
-                     SizedBox(height: 20,),
+                     const SizedBox(height: 20,),
                
                      Expanded(
                        child: Column(
@@ -227,8 +225,11 @@ class LandingPage extends StatelessWidget {
                                 TextSpan(text: "Exclusive Offer: Free BMI Service for First-time members only.",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)),
                                                     
                                                     ])),
-                                SizedBox(height: 16,),
+                                const SizedBox(height: 16,),
                                                     Cardonly(
+                                                        onpress: (){
+                                                          Get.toNamed("/signup");
+                                                        },
                                                         margin: EdgeInsets.zero,
                                                       color: Theme.of(context).colorScheme.secondary,
                                                       child: const Text("Claim Now",style: TextStyle(color: Colors.white),))
@@ -245,6 +246,9 @@ class LandingPage extends StatelessWidget {
                                                     ])),
                       
                                                     Cardonly(
+                                                          onpress: (){
+                                                          Get.toNamed("/signup");
+                                                        },
                                                         margin: EdgeInsets.zero,
                                                       color: Theme.of(context).colorScheme.secondary,
                                                       child: const Text("Claim Now",style: TextStyle(color: Colors.white),))
@@ -257,7 +261,7 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 60,),
+                const SizedBox(height: 60,),
         //plan pages
           
                 ResponsivePages(
@@ -287,13 +291,13 @@ class LandingPage extends StatelessWidget {
                                                    children:managectrl.getallplans.asMap().entries.map((e) =>  SizedBox(
                                                  width: 400,
                              child: CardwithShadow(
-                              margin: EdgeInsets.symmetric(vertical: 32,horizontal: 16),
+                              margin: const EdgeInsets.symmetric(vertical: 32,horizontal: 16),
                               padding: const EdgeInsets.symmetric(vertical: 16,horizontal:32),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                  HeadingText(e.value.category,size: 16,color: Colors.white60,),
-                                 SizedBox(height: 20,),
+                                 const SizedBox(height: 20,),
                                                   
                                  Expanded(
                                    child: Column(
@@ -313,11 +317,11 @@ class LandingPage extends StatelessWidget {
                                         const Text("Price",style: TextStyle(color: Colors.white60,),),
                                                       HeadingText("Rs ${e.value.price - (e.value.price * (e.value.discountPercentage/100))}"  ,size: 24,),
                                                           const SizedBox(height: 10,),
-                                                   e.value.discountPercentage<=0? SizedBox():const Text("Discount",style: TextStyle(color: Colors.white60,),),
-                                       e.value.discountPercentage<=0? SizedBox():Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                                   e.value.discountPercentage<=0? const SizedBox():const Text("Discount",style: TextStyle(color: Colors.white60,),),
+                                       e.value.discountPercentage<=0? const SizedBox():Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                                        const SizedBox(height: 10,),
-                                              e.value.discountPercentage<=0? SizedBox():      const Text("Actual Price",style: TextStyle(color: Colors.white60,),),
-                                              e.value.discountPercentage<=0? SizedBox():         HeadingText("Rs ${e.value.price}"  ,size: 24,),
+                                              e.value.discountPercentage<=0? const SizedBox():      const Text("Actual Price",style: TextStyle(color: Colors.white60,),),
+                                              e.value.discountPercentage<=0? const SizedBox():         HeadingText("Rs ${e.value.price}"  ,size: 24,),
                                      ],
                                    ),
                                  ),
@@ -339,7 +343,7 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
           //Footer
-          ContactFooter()
+          const ContactFooter()
         
               ],
             ),

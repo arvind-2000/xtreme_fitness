@@ -49,6 +49,9 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final TextEditingController _othercontroller= TextEditingController();
 
 
+  
+
+
 
 final FocusNode _fullnameFocusNode = FocusNode();
 final FocusNode _emailFocusNode = FocusNode();

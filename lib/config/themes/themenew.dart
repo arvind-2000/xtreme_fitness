@@ -40,7 +40,7 @@ class FacebookColors {
 
 // Define a custom ColorScheme for dark theme
 final darkColorSchemes = ColorScheme(
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   primary: Colors.black87, // Primary color
   secondary: Colors.red[800]!, // Secondary color
   surface: Colors.black87, // Surface color (e.g., cards, dialogs)
