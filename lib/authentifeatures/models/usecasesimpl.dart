@@ -1,6 +1,5 @@
 
 
-import '../../config/const.dart';
 import '../config/regex.dart';
 import '../domain/domainusecases.dart';
 
@@ -19,8 +18,8 @@ class AuthenticateUseCases implements AuthUseCases{
   @override
   String? passwordAuth(String data) {
 
-      if(data.trim().length<5 || data.trim().length>20){
-          return "Password must be between 8  to 20 characters.";
+      if(data.trim().length<5 || data.trim().length>10){
+          return "Password must be between 8  to 10 characters.";
       }
       return null;
         // log(' password auth ${passregex.hasMatch(data)}');

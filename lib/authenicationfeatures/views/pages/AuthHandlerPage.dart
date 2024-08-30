@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -58,12 +57,12 @@ class _AuthHandlerPageState extends State<AuthHandlerPage> {
     color: const Color.fromARGB(255, 17, 17, 17),
     gradient: LinearGradient(
       tileMode: TileMode.mirror,
-       stops: [0.4, 0.6,1],
+       stops: const [0.4, 0.6,1],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
    
       colors: [
-       const Color.fromARGB(255, 17, 17, 17),
+       const Color.fromARGB(255, 29, 28, 28),
        Theme.of(context).colorScheme.secondary.withOpacity(0.09),
         const Color.fromARGB(255, 17, 17, 17).withOpacity(0.3),
     ])

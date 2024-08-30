@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
 
-       initialRoute: '/',
+       initialRoute: '/home',
       getPages: [
 
         // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),

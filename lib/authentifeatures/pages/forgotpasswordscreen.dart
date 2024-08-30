@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../SnackbarFeature/snarckbar.dart';
 import '../../widgets/titletext.dart';
-import '../models/usecases.dart';
+import '../models/usecasesimpl.dart';
 import '../provider/authprovider.dart';
 import '../provider/screenprovider.dart';
 import '../widgets/textformwidget.dart';
@@ -25,7 +25,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
   final FocusNode _passwordfocus = FocusNode();
   final FocusNode _emailfocus = FocusNode();
 
-  final AuthenticateUseCase _authUseCases = AuthenticateUseCase();
+  final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
     void validateform(AuthProvider prov,String email,String pass,)  async{
     // Validate returns true if the form is valid, or false otherwise.
       if (_formkey.currentState!.validate()) {

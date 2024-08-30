@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 
+import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
 import 'entities.dart/serviceusage.dart';
 import 'entities.dart/subscription.dart';
@@ -66,10 +67,10 @@ abstract class ManagementRepo{
   Future<String> deletePayment(Paymententity payment);
   Future<String> updatePayment(Paymententity payment);
   Future<List<Paymententity>> viewpayment();
-  Future<Paymententity?> getpayment(String transcationid);
+  Future<PaymentDetails?>getpayment(String transcationid);
 
   ///users api
-  Future<int> addUser(User user,String pass);
+  Future<int> addUser(User user,String pass,String phone);
   Future<String?> viewUser(String username,String pass);
 
   ///subscription api

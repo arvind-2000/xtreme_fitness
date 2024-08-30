@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/config/const.dart';
 
 class ResponsivePages extends StatelessWidget {
-  const ResponsivePages({super.key, required this.child1, this.child2, this.screenheight, this.colors});
+  const ResponsivePages({super.key, required this.child1, this.child2, this.screenheight, this.colors,this.issize = true});
   final Widget child1;
   final Widget? child2;
   final double? screenheight;
   final Color? colors;
+  final bool issize;
   @override
   Widget build(BuildContext context) {
 
@@ -30,10 +31,10 @@ class ResponsivePages extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1600),
             child: Row(children: [
-                const SizedBox(width: 100,),
+           SizedBox(width: issize?100:0,),
                 Expanded(child: child1),
                child2!=null?Expanded(child: child2!):const SizedBox(),
-                 const SizedBox(width: 100,),
+                  SizedBox(width: issize?100:0,),
             ],),
           ),
         ),

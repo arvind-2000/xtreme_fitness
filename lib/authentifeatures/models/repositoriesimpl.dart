@@ -6,7 +6,7 @@ import 'package:xtreme_fitness/config/apis.dart';
 
 import '../domain/domainrepositories.dart';
 import '../domain/userentity.dart';
-import 'usecases.dart';
+import 'usecasesimpl.dart';
 
 class AuthenticationRepositoryImpl  implements AuthenticationRepository{
   //extends httprepositoriesImpl class for getting http responses
@@ -145,7 +145,7 @@ class AuthenticationRepositoryImpl  implements AuthenticationRepository{
   @override
   Future<String> sendOTP(String otp,String mins,String phone)async{
     //send otp to api 
-    AuthenticateUseCase useCase = AuthenticateUseCase();
+    AuthenticateUseCases useCase = AuthenticateUseCases();
     Uri url = Uri.parse("$otpapi?apikey=$smsapikey&numbers=$phone&message=${useCase.registerOTP(otp, mins)}&sender=CUBETN");
     final res = await http.post(url);
 

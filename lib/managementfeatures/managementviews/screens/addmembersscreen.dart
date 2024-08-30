@@ -118,7 +118,8 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
               ),
             CardBorder(
                 color: Colors.transparent,
-                margin: const EdgeInsets.all(16),
+                // margin: const EdgeInsets.all(16),
+                margin: EdgeInsets.zero,
                 child: Form(
                       key:_globalkey,
                   child: pagectrl.addmemberpages==0?PersonaldetailsField( pagectrl: pagectrl,):pagectrl.addmemberpages==1?PlanSelectionField(pagectrl: pagectrl,):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):const CreateMember())),

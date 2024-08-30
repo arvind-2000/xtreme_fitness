@@ -33,7 +33,7 @@ class _CreateMemberState extends State<CreateMember> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 600),
-              child: Column(
+              child:addmemberctrl.paymentstatus!=0?PaymentStatusCard():Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //upload image
@@ -185,10 +185,10 @@ class _CreateMemberState extends State<CreateMember> {
                           CardwithShadow(
                               onpress:addmemberctrl.isloading?null:() async {
 
-                                   showDialog(context: context, builder:(context) => Dialog(
+                                  //  showDialog(context: context, builder:(context) => Dialog(
                                   
-                                    child: PaymentStatusCard(status: 1,),
-                                   ));
+                                  //   child: PaymentStatusCard(status: 1,),
+                                  //  ));
                                   if(_formkey.currentState!.validate()){
 
                                       if (await addmemberctrl.createuser(

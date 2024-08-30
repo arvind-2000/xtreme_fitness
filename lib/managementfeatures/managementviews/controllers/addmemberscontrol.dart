@@ -20,6 +20,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 
+import '../../managementdomain/entities.dart/paymentdetails.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/managementrepo.dart';
@@ -40,6 +41,8 @@ class AddMemberController extends GetxController {
   bool setallquestionaire = false;
   Plan? admissionfees;
 
+
+  PaymentDetails? paymentsdetails;
   String doctorname = "";
   String surgeryname = "";
   String surgeryno = "";
@@ -82,7 +85,8 @@ dynamic _scheduler;
   Future<bool> createuser(String? username,String? pass)async{
       isloading = true;
       update();
-       int res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!);
+
+      int res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!,xtremer.mobileNumber!);
    if(res>=200 && res<300){
 
         _userid = await repo.viewUser(username, pass);
@@ -113,21 +117,33 @@ dynamic _scheduler;
       if(subss != null)
       {
           
-      Paymententity payments = Paymententity(id: 0, userId: xtremer.XtremerId!, amount: admissionfees!.price + selectedplan!.price, discountPercentage: selectedplan!.price, receivedAmount: admissionfees!.price + (selectedplan!.price - (selectedplan!.price * (selectedplan!.discountPercentage/100))) , paymentDate: DateTime.now(), transactionId: "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}", paymentStatus:"Initiated", paymentMethod: "Cash", paymentType: "Membership", subscriptionId: selectedplan!.id, serviceUsageId: 0);
+      Paymententity payments = Paymententity(id: 0, userId: xtremer.XtremerId!, amount: admissionfees!.price + selectedplan!.price, discountPercentage: selectedplan!.discountPercentage, receivedAmount: admissionfees!.price + (selectedplan!.price - (selectedplan!.price * (selectedplan!.discountPercentage/100))) , paymentDate: DateTime.now(), transactionId: "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}", paymentStatus:"Initiated", paymentMethod: ispaymentcash?"Cash":"Online", paymentType: "Membership", subscriptionId: selectedplan!.id, serviceUsageId: 0);
+      paymentdetails = payments;
       print("adding payments");
-      var d = await repo.addPayments(payments,userid: xtremer.XtremerId.toString(),isonline: !ispaymentcash);
-      Map<String,dynamic> res = await repo.addMember(xtremer, _imageData,xtremer.XtremerId.toString());
-      try{
-               xtremer = Xtremer.fromJson(jsonDecode( res["response"]));
-              usercreated = true;
-              createAndPrintPdf();
-              isloading = false;
-              update();
-      }catch(e){
-            usercreated = false;
-  isloading = false;
-              update();
+      //online
+      if(!ispaymentcash){
+        var d = await repo.addPayments(payments,userid: xtremer.XtremerId.toString(),isonline:true);  
+        if(d["response"] == 200){
+          print("in response: 200");
+          
+          checkpayment();
+        }     
+      //wait with dialog options
+   
+      
+      }else{
+
+          var d = await repo.addPayments(payments,userid: xtremer.XtremerId.toString(),isonline: false);
+             if(d["response"] == 200){
+      
+          creatextremer();
+        }  
       }
+    
+
+      
+      //cash
+ 
       
       }
       else
@@ -149,6 +165,25 @@ dynamic _scheduler;
     
   }
 
+
+  void creatextremer()async{
+     
+      Map<String,dynamic> res = await repo.addMember(xtremer, _imageData,xtremer.XtremerId.toString());
+      try{
+               xtremer = Xtremer.fromJson(jsonDecode( res["response"]));
+              usercreated = true;
+              // createAndPrintPdf();
+              isloading = false;
+              update();
+      }catch(e){
+            usercreated = false;
+  isloading = false;
+              update();
+      }
+
+  }
+
+
   void addpersonaldetails({
     required String name,
     required String phone,
@@ -161,7 +196,7 @@ dynamic _scheduler;
     required String emergencyname,
   }) {
      xtremer.firstName = name;
-    xtremer.contactNumber = phone;
+    xtremer.mobileNumber = phone;
     xtremer.homeNumber = homephone;
     xtremer.postcode = postalcode;
     xtremer.occupation = occupation;
@@ -354,24 +389,50 @@ dynamic _scheduler;
   }
 
 void checkpayment() async{
+      print("payments checking");
   if(paymentdetails!=null){
+    print("in payment start");
     int t = 0;
-_scheduler  = Timer.periodic(Duration(seconds: 2), (timer)async {
-t = t +2;
-paymentstatus = 3;
-if(t>60){
-  cancelscheduler();
-  print("payment check cancel");
+    paymentstatus = 3;
+    update();
+_scheduler  = Timer.periodic(const Duration(seconds: 5), (timer)async {
+t = t +5;
+
+///timeout 
+if(t>(60*5)){
+ 
+   paymentstatus = 4;
+   update();
+   cancelscheduler();
 }
- Paymententity? pay = await repo.getpayment(paymentdetails!.transactionId);
-if(pay!=null){
-if(pay.paymentStatus.toLowerCase()=="success"){
+
+
+ paymentsdetails = await repo.getpayment(paymentdetails!.transactionId);
+if(paymentsdetails!=null){
+
+if(paymentsdetails!.paymentStatus.toLowerCase()=="success"){
     paymentstatus = 1;
     update();
-}else if(pay.paymentStatus.toLowerCase()=="failed"){
-
+    creatextremer();
+    cancelscheduler();
+}else if(paymentsdetails!.paymentStatus.toLowerCase()=="failed"){
  paymentstatus = 2;
   update();
+  cancelscheduler();
+}
+else if(paymentsdetails!.paymentStatus.toLowerCase()=="initiated"){
+  paymentstatus = 3;
+    update();
+}
+else {
+  if(paymentsdetails!.paymentStatus.toLowerCase()=="canceled"){
+  paymentstatus = 4;
+  
+  }
+  paymentstatus = 4;
+  update();
+  cancelscheduler();
+
 }
 } 
 },);
@@ -384,10 +445,16 @@ if(pay.paymentStatus.toLowerCase()=="success"){
 }
 
 void cancelscheduler(){
-  paymentstatus = 0;
- 
   _scheduler.cancel();
+    isloading = false;
    update();
+  print("in payment");
+
+}
+
+void changepaymentstatus(int i){
+  paymentstatus = i;
+  update();
 }
 
 }

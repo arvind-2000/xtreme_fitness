@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authentifeatures/provider/screenprovider.dart';
 import '../../SnackbarFeature/snarckbar.dart';
 import '../../widgets/titletext.dart';
-import '../models/usecases.dart';
+import '../models/usecasesimpl.dart';
 import '../provider/authprovider.dart';
 import '../widgets/textformwidget.dart';
 
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode _emailfocus = FocusNode();
   final FocusNode _namefocus = FocusNode();
 
-  final AuthenticateUseCase _authUseCases = AuthenticateUseCase();
+  final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
 
   Future<bool> validateform(AuthProvider prov, String email, String pass,
       String phone, String name) async {

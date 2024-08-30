@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
-import '../../../authentifeatures/models/usecases.dart';
+import '../../../authentifeatures/models/usecasesimpl.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -31,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
   // final FocusNode _emailfocus = FocusNode();
   // final FocusNode _namefocus = FocusNode();
 
-  final AuthenticateUseCase _authUseCases = AuthenticateUseCase();
+  final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
 
   Future<bool> validateform(
       String email, String pass, String phone, String name) async {
@@ -198,7 +199,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               if (_formkey.currentState!.validate()) {
                                 if (authctrl.otp != null) {
                                   if (authctrl.confirmotp(_confirmotp.text)) {
-                                     Get.toNamed("/");
+                                     Get.to(()=>const CreateXtremers());
                                      
                                   setState(() {
                                     otpcorrect = true;

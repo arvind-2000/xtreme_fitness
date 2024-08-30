@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/gridviewwidget.dart';
+import 'dart:html';
 
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
@@ -131,12 +133,14 @@ class _GalleryPageState extends State<GalleryPage> {
                                               padding: EdgeInsets.zero,
                                               child: SizedBox(
                                                 width: double.maxFinite,
-                                                child:Image.network(
-                                          loadingBuilder: (context, child, loadingProgress) => const Center(child: CircularProgressIndicator(),),
-                                          errorBuilder: (context, error, stackTrace) =>  const Center(child: CircularProgressIndicator(),) ,
-                                          "https://wallpaperaccess.com/full/2465431.jpg",
-                                          fit: BoxFit.cover,
-                                        ),
+                                                child: Image.network("http://wallpaperaccess.com/full/2465431.jpg",width: 100,height: 100,headers:{'Access-Control-Allow-Origin': '*',},)
+                                        //         child:Image.network(
+                                        //            headers: {"Cache-Control": "no-cache"},
+                                        //   loadingBuilder: (context, child, loadingProgress) => const Center(child: CircularProgressIndicator(),),
+                                        //   errorBuilder: (context, error, stackTrace) =>  const Center(child: CircularProgressIndicator(),) ,
+                                        //   "https://wallpaperaccess.com/full/2465431.jpg",
+                                        //   fit: BoxFit.cover,
+                                        // ),
                                               )),
                                                     Positioned(
                                      top: 0,

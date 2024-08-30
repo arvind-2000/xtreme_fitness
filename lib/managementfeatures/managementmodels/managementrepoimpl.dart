@@ -19,6 +19,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart'
 
 import 'package:http/http.dart' as http;
 
+import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
@@ -119,7 +120,6 @@ class ManagementrepoImpl implements ManagementRepo {
     // Parse JSON data
     final List<dynamic> jsonList = jsonDecode(res.body);
     print("In Xtremer list : ${jsonList.length}");
-    print(jsonList);
     // Convert JSON data to List<Plan>
     return jsonList.map((json) => Xtremer.fromJson(json)).toList();
   } else {
@@ -365,7 +365,17 @@ return false;
   //payments
   @override
   Future<Map<String,dynamic>> addPayments(Paymententity payment,{bool isonline = false,required String userid}) async {
-   
+   double amount = payment.amount;
+   double discount = payment.discountPercentage;
+   double receivedAmount = payment.receivedAmount;
+   String transid = payment.transactionId;
+   String status = payment.paymentStatus;
+   String method = payment.paymentMethod;
+   String type = payment.paymentType;
+   int subsid = payment.subscriptionId;
+   String dates = payment.paymentDate.toString();
+
+   print("$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
       //online
     if (isonline) {
   
@@ -373,25 +383,23 @@ return false;
     var request = http.Request(
         'POST', Uri.parse('$api/api/Payments/OnlinePayment'));
     request.body = json.encode({ 
-    
-     "userId": userid,
-  "amount": 0,
-  "discountPercentage": 0,
-  "receivedAmount": 120,
-  "paymentDate": "2024-08-29T09:08:33.847Z",
-  "transactionId": "string",
-  "paymentStatus": "string",
-  "paymentMethod": "string",
-  "paymentType": "string",
-  "subscriptionId": 0,
-  "serviceUsageId": 0
-    
+
+      "userId": userid,
+  "amount": amount,
+  "discountPercentage": discount.round(),
+  "receivedAmount": receivedAmount,
+  "paymentDate": dates,
+  "transactionId": transid,
+  "paymentStatus": status,
+  "paymentMethod": method,
+  "paymentType":  type,
+  "subscriptionId": subsid,
     });
     request.headers.addAll(headers);
   
     http.StreamedResponse response = await request.send();
   
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode<300) {
       var url = await response.stream.bytesToString();
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(
@@ -402,47 +410,52 @@ return false;
           // enableJavaScript: true,
           // webOnlyWindowName: '_self',
         );
+
+           return {"response":200};
       } else {
-        throw 'Could not launch $url';
+          return {"response":response.statusCode};
+        
       }
     } else {
       print(response.reasonPhrase);
     }
-  
+     return {"response":response.statusCode};
 }else{
 var headers = {'Content-Type': 'application/json'};
+    
+    print("in payment cash : $payment");
     var response = await http.post(
       headers: headers,
-        Uri.parse('$api/api/Payments/CashPayment'),body:json.encode({ 
+        Uri.parse('$api/api/Payments/CashPayment'),body:jsonEncode({ 
             // payment.toJson()
 
-  
+   
   "userId": userid,
-  "amount": 0,
-  "discountPercentage": 0,
-  "receivedAmount": 0,
-  "paymentDate": DateTime.now().toString(),
-  "transactionId": "string",
-  "paymentStatus": "string",
-  "paymentMethod": "string",
-  "paymentType": "string",
-  "subscriptionId": 0,
-  "serviceUsageId": 0
+  "amount": amount,
+  "discountPercentage": discount.round(),
+  "receivedAmount": receivedAmount,
+  "paymentDate": dates,
+  "transactionId": transid,
+  "paymentStatus": status,
+  "paymentMethod": method,
+  "paymentType":  type,
+  "subscriptionId": subsid,
     
     }) );
 
   
 
   
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 &&response.statusCode<300) {
           print("payment added : ${response.statusCode}");
-          return {"response":"Successfull"};
+          return {"response":200};
     } else {
       print(response.reasonPhrase);
+        return {"response":response.statusCode};
     }
 
 }
-  return {"response":"Payment failed"};
+
   }
 
   @override
@@ -540,7 +553,7 @@ var headers = {'Content-Type': 'application/json'};
   }
   
   @override
-  Future<int> addUser(User user,String pass) async{
+  Future<int> addUser(User user,String pass,String phone) async{
 
    final uri = Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
 
@@ -587,22 +600,15 @@ var headers = {'Content-Type': 'application/json'};
   Future<String?> viewUser(String username,String pass) async {
       print("in login auth");
   String? uid = "";
-  String message = "login error";
-    // Uri url =Uri.parse("http://10.10.1.96/api/Users/login?username=user1&password=userpass");
     Uri url =Uri.parse("$api/api/Users/login");
 
-    final query = {
-      "userName":username,
-      "passwordHash":pass
-    };
+
+ 
       try {
   final response = await http.post(
     url,
     headers: {
-  //    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-  // // "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
-  // "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-  // "Access-Control-Allow-Methods": "POST, OPTIONS",
+
       "Content-Type":"application/json"
     },
     body:jsonEncode({
@@ -743,8 +749,8 @@ return null;
   }
   
   @override
-  Future<Paymententity?> getpayment(String transactionid) async{
-      final uri = Uri.parse('$api/api/Payments/$transactionid'); // Replace with your API endpoint
+  Future<PaymentDetails?> getpayment(String transactionid) async{
+      final uri = Uri.parse('$api/api/Payments/GetByTranId?transactionId=$transactionid'); // Replace with your API endpoint
 
   final response = await http.get(
     uri,
@@ -757,7 +763,7 @@ return null;
   if (response.statusCode >= 200 && response.statusCode<300) {
     print('Payment get successfully.');
     print(response.body);
-        return Paymententity.fromJson(jsonDecode(response.body));
+        return PaymentDetails.fromJson(jsonDecode(response.body));
   } else {
     print('Failed to get payment. Status code: ${response.statusCode}');
     print('Response body: ${response.body}');

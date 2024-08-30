@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 
 import '../../../../config/const.dart';
+import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/cardswithshadow.dart';
 import '../../../../widgets/headingtext.dart';
 import '../../../../widgets/titletext.dart';
@@ -30,13 +31,13 @@ class PlanSelectionField extends StatelessWidget {
                  shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
-                    mainAxisSpacing: 10,
-                
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
                     childAspectRatio:  size<500?1:size<700?4/6.2:3/4,
                 
                     ),
                     children: managectrl.getallplans.asMap().entries.map((e) => CardwithShadow(
-                      margin: const EdgeInsets.all(16),
+                      // margin: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -59,7 +60,7 @@ class PlanSelectionField extends StatelessWidget {
                            ),
                          ),
                         
-                            CardwithShadow(
+                            CardBorder(
                               onpress: (){
                                 addmemberctrl.addplan(e.value);
                               },
@@ -70,7 +71,7 @@ class PlanSelectionField extends StatelessWidget {
                               Icon(addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?Icons.check:Icons.add,color: Colors.white,),
                               const SizedBox(width: 10,),
                         
-                            addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?const Text("PLan Added",style: TextStyle(color: Colors.white)):Text("Add Plan",style: TextStyle(color: Colors.white),)
+                            addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?const Text("Plan Added",style: TextStyle(color: Colors.white)):Text("Add Plan",style: TextStyle(color: Colors.white),)
                             ],))
                         ],
                       )),).toList()
@@ -87,12 +88,12 @@ class PlanSelectionField extends StatelessWidget {
                             const SizedBox(height: 6,),
                             DropdownMenu(
                               
-                            menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white,)),
+                            menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)),
                               onSelected: (index){
                                   addmemberctrl.addTrainer(index!);
                               },  
                               dropdownMenuEntries:managectrl.getalltrainer.map((e)=>DropdownMenuEntry(value: e, label: e.name,style: ButtonStyle(
-                                backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white,)
+                                backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)
                               ))).toList()),
                           ],
                         ),
