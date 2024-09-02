@@ -96,11 +96,7 @@ class _GalleryPageState extends State<GalleryPage> {
                                         child: SizedBox(
                                           height: 300,
                                           width: double.maxFinite,
-                                          child: Image.asset(
-                                            // loadingBuilder: (context, child, loadingProgress) => Center(child: CircularProgressIndicator(color: Colors.white54,),),
-                                            "assets/backg.jpg",
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child:  ImageWidget()
                                         )),
                                      Positioned(
                                        top: 0,
@@ -133,7 +129,7 @@ class _GalleryPageState extends State<GalleryPage> {
                                               padding: EdgeInsets.zero,
                                               child: SizedBox(
                                                 width: double.maxFinite,
-                                                child: Image.network("http://wallpaperaccess.com/full/2465431.jpg",width: 100,height: 100,headers:{'Access-Control-Allow-Origin': '*',},)
+                                                child: ImageWidget()
                                         //         child:Image.network(
                                         //            headers: {"Cache-Control": "no-cache"},
                                         //   loadingBuilder: (context, child, loadingProgress) => const Center(child: CircularProgressIndicator(),),

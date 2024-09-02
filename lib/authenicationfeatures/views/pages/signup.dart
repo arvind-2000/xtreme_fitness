@@ -118,21 +118,26 @@ class _SignUpPageState extends State<SignUpPage> {
                             icon: const Icon(Icons.phone),
                             controller: _phonecontroller,
                             focusnode: _phonefocus,
+                            enabletext: !authctrl.otploading,
                             // nextfocusnode: _passwordfocus,
                             validator: () {
                               return _authUseCases
                                   .phoneAuth(_phonecontroller.text.trim());
                             },
+                            fieldsubmitted:(){
+                                    authctrl.signup(_phonecontroller.text);
+                              
+                            },
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          authctrl.numberexists!=null && authctrl.numberexists!?AnimatedOpacity(
+                          authctrl.signuperror!=null?AnimatedOpacity(
                             duration: Durations.extralong1,
                             opacity: authctrl.numberexists!?1:0,
                             child: Cardonly(
                               color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                              child: const Text("The number already exists. Try another number !",))):const SizedBox(),
+                              child: Text(authctrl.signuperror!,textAlign: TextAlign.center,))):const SizedBox(),
                           authctrl.numberexists!=null&&authctrl.numberexists==false?Column(
                                 children: [
                                   const Text("We have send an OTP to your number").animate().slideY(begin: 1,end: 0),
@@ -146,7 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   constraints: const BoxConstraints(maxWidth: 300),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
-                                    child: TextFieldWidget(hint: 'OTP', controller:_confirmotp),
+                                    child: TextFieldWidget(hint: 'OTP', controller:_confirmotp,enabletext:   !authctrl.otploading,),
                                   ),
                                 ),
                              ):const SizedBox(),
@@ -202,7 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             width: double.maxFinite,
                             child: Cardonly(
                               margin: EdgeInsets.zero,
-                              onpress: () async {
+                              onpress:authctrl.otploading?null: () async {
                                  
                                 if (_formkey.currentState!.validate()) {
                                   if (authctrl.otp != null) {
@@ -222,7 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     //confirm otp
                                   } else {
                                     //send otp
-                                    authctrl.sendotp(_phonecontroller.text);
+                                    authctrl.signup(_phonecontroller.text);
                                     setState(() {
                                       otpshow = true;
                                     });
@@ -234,7 +239,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               padding: const EdgeInsets.all(16),
                               child: Center(
                                 child: authctrl.otploading
-                                    ? const CircularProgressIndicator()
+                                    ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onSecondary,)
                                     : Text(
                                         authctrl.otp == null
                                             ? "Send OTP"
@@ -265,7 +270,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     width: 10,
                   ),
                   InkWell(
-                    onTap: () {
+                    onTap:authctrl.otploading?null: () {
                       Get.offNamed('/login');
                     },
                     child: Text('Log In',

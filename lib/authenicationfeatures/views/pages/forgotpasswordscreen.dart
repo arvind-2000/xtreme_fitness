@@ -1,190 +1,416 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/widgets/cardborder.dart';
 
+import '../../../authentifeatures/models/usecasesimpl.dart';
+import '../../../widgets/card.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
-
-
-
-
-
+import 'createmembers.dart';
 
 class ForgotPassWordScreen extends StatefulWidget {
-  const ForgotPassWordScreen({super.key});  
+  const ForgotPassWordScreen({super.key});
 
   @override
   State<ForgotPassWordScreen> createState() => _ForgotPassWordScreenState();
 }
 
 class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
-    final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
+  final _formkeyrenewpass = GlobalKey<FormState>();
+  bool? _otpcorrect;
 
-  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _phonecontroller = TextEditingController();
+  final TextEditingController _otpcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
+  final TextEditingController _confirmpasswordcontroller =
+      TextEditingController();
   final FocusNode _passwordfocus = FocusNode();
-  final FocusNode _emailfocus = FocusNode();
-
+  final FocusNode _confirmpasswordfocus = FocusNode();
+  final FocusNode _phonefocus = FocusNode();
+  final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
   // final AuthenticateUseCase _authUseCases = AuthenticateUseCase();
-    void validateform(String email,String pass,)  async{
+  void validateotp() {}
 
-  }
-
-@override
+  @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) { 
-
-        
-          _emailfocus.requestFocus();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _phonefocus.requestFocus();
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _emailcontroller.dispose();
+    _phonecontroller.dispose();
     _passwordcontroller.dispose();
+    _confirmpasswordcontroller.dispose();
+    _confirmpasswordfocus.dispose();
     _passwordfocus.dispose();
-    _emailfocus.dispose();
+    _phonefocus.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-  
-    return GetBuilder<GetxAuthController>(
-      builder: (authctrl) {
-        return Container(
-        
-          padding: const EdgeInsets.all(16),
-          // color: Theme.of(context).colorScheme.primary,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-          
-              SizedBox(
-                width:MediaQuery.sizeOf(context).width>300?400:null,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                   Row(
+    return GetBuilder<GetxAuthController>(builder: (authctrl) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        // color: Theme.of(context).colorScheme.primary,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       const Row(
-                          children: [
-                            Icon(Icons.lock,size: 16,),
-                            SizedBox(width: 10,),
-                                       HeadingText(
-                                        'Forgot Password',
-                                          size: 20,
-                                      ),
-                          ],
-                        ),
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.lock,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          HeadingText(
+                            'Forgot Password',
+                            size: 20,
+                          ),
+                        ],
+                      ),
 
-                          IconButton(onPressed: (){
-
-                  Get.offAndToNamed('/login');
-                }, icon: Icon(Icons.close)),
-                // SizedBox(height: 10,),
-                     ],
-                   ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                        key: _formkey,
-                        child: Column(
-                          children: [
-                            TextFieldWidget(
-                              hint: "Email",
-                              icon: const Icon(Icons.mail),
-                              controller: _emailcontroller,
-                              focusnode: _emailfocus,
-                              nextfocusnode: _passwordfocus,
-                              validator: () {
-                                // return _authUseCases
-                                //     .emailAuth(_emailcontroller.text.trim());
-                              },
-                            ),
-              
-                            const SizedBox(
-                              height: 20,
-                            ),
-              
-                            TextFieldWidget(
-                              hint: "New Password",
-                              focusnode: _passwordfocus,
-                              icon: const Icon(Icons.lock),
-                              obscure: true,
-                              
-                              fieldsubmitted:(){
-                                validateform(_emailcontroller.text,_passwordcontroller.text);
-                              },
-                              controller: _passwordcontroller,
-                              validator: () {
-                                // return _authUseCases.passwordAuth(
-                                //     _passwordcontroller.text.trim());
-                              },
-                            ),
-                            
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-               
-                    MaterialButton(
+                      IconButton(
+                          onPressed: authctrl.otploading
+                              ? null
+                              : () {
+                                  Get.offAndToNamed('/login');
+                                },
+                          icon: Icon(Icons.close)),
+                      // SizedBox(height: 10,),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+              authctrl.forgotpass!=null && authctrl.forgotpass==true?Center(
+                child: Cardonly(
+                  child:Column(
                     
-                      onPressed: () {
-                        
-                        validateform(_emailcontroller.text,_passwordcontroller.text);
-                      },
-                      color: Theme.of(context).colorScheme.secondary,
-                      minWidth: double.infinity,
-                      padding:const EdgeInsets.all(16),
-                      child:const Text('Change Password',
-                          style: TextStyle(
-                            color: Colors.white,
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Go to ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.6)),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          onTap: (){
-                            Get.offNamed('/login');
-                          },
-                          child: Text('Log In',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.secondary,
-                              )),
-                        )
-                      ],
-                    ),
-                  ],
+                    children: [
+                        Icon(Icons.check,size: 40,),
+                        SizedBox(height: 20,),
+                        Text("Password Change Successfully",style: TextStyle(fontSize: 20),),
+                        SizedBox(height: 30,),
+                        // CardBorder(child: Text("Login Now"))
+                    ]
+                  )
                 ),
+              ):_otpcorrect != null && _otpcorrect!
+                      ? Form(
+                          key: _formkeyrenewpass,
+                          child: Center(
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                TextFieldWidget(
+                                  hint: "Password",
+                                  icon: const Icon(Icons.lock),
+                                  controller: _passwordcontroller,
+                                  focusnode: _confirmpasswordfocus,
+                                  enabletext: !authctrl.otploading,
+                                  nextfocusnode: _confirmpasswordfocus,
+                                  validator: () {
+                                    return _authUseCases.passwordAuth(
+                                        _passwordcontroller.text.trim());
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextFieldWidget(
+                                  hint: "Confirm Password",
+                                  icon: const Icon(Icons.lock),
+                                  controller: _confirmpasswordcontroller,
+                                  focusnode: _passwordfocus,
+                                  enabletext: !authctrl.otploading,
+                                  nextfocusnode: _confirmpasswordfocus,
+                                  validator: () {
+                                    return _passwordcontroller.text !=
+                                            _confirmpasswordcontroller.text
+                                        ? "Not matched with password"
+                                        : null;
+                                  },
+                                  fieldsubmitted: () {
+                                    if (_formkeyrenewpass.currentState!
+                                        .validate()) {
+                      
+                                      authctrl.changepassword(_passwordcontroller.text.trim());
+                                    }
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                        child: Text(
+                                  "Error changing password. Try again",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
+                                ).animate().slideY(begin: 1, end: 0))
+                                    .animate()
+                                    .fadeIn(),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  width: double.maxFinite,
+                                  child: Cardonly(
+                                    margin: EdgeInsets.zero,
+                                    onpress: authctrl.otploading
+                                        ? null
+                                        : () async {
+                                            if (_formkeyrenewpass.currentState!
+                                                .validate()) {
+                                              authctrl.changepassword(_passwordcontroller.text.trim());
+                                            }
+                                          },
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    padding: const EdgeInsets.all(16),
+                                    child: Center(
+                                      child: authctrl.otploading
+                                          ? CircularProgressIndicator(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary,
+                                            )
+                                          : const Text("Change Password",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              )),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
+                      : Form(
+                          key: _formkey,
+                          child: Center(
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+
+                                authctrl.numberexists != null
+                                    ? const SizedBox()
+                                    : TextFieldWidget(
+                                        hint: "Phone",
+                                        icon: const Icon(Icons.phone),
+                                        controller: _phonecontroller,
+                                        focusnode: _phonefocus,
+                                        enabletext: !authctrl.otploading,
+                                        // nextfocusnode: _passwordfocus,
+                                        validator: () {
+                                          return _authUseCases.phoneAuth(
+                                              _phonecontroller.text.trim());
+                                        },
+                                        fieldsubmitted: () {
+                                          authctrl.passwordrenew(
+                                              _phonecontroller.text);
+                                        },
+                                      ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                authctrl.signuperror != null
+                                    ? AnimatedOpacity(
+                                        duration: Durations.extralong1,
+                                        opacity: authctrl.numberexists! ? 1 : 0,
+                                        child: Cardonly(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary
+                                                .withOpacity(0.5),
+                                            child: Text(
+                                              authctrl.signuperror!,
+                                              textAlign: TextAlign.center,
+                                            )))
+                                    : const SizedBox(),
+                                authctrl.numberexists != null &&
+                                        authctrl.numberexists!
+                                    ? Column(
+                                        children: [
+                                          const Text(
+                                                  "We have send an OTP to your number")
+                                              .animate()
+                                              .slideY(begin: 1, end: 0),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(_phonecontroller.text)
+                                              .animate()
+                                              .slideY(begin: 1, end: 0),
+                                        ],
+                                      )
+                                    : const SizedBox(),
+                                authctrl.numberexists != null &&
+                                        authctrl.numberexists!
+                                    ? Center(
+                                        child: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                              maxWidth: 300),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: TextFieldWidget(
+                                                hint: 'OTP',
+                                                controller: _otpcontroller,
+                                                enabletext:
+                                                    !authctrl.otploading,
+                                                fieldsubmitted: () {
+                                                  if (authctrl.otp != null) {
+                                                    if (authctrl.confirmotp(
+                                                        _otpcontroller.text)) {
+                                                      Get.to(() =>
+                                                          const CreateXtremers());
+
+                                                      setState(() {
+                                                        _otpcorrect = true;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        _otpcorrect = false;
+                                                      });
+                                                    }
+                                                  }
+                                                }),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+
+                                !authctrl.otploading &&
+                                        _otpcorrect != null &&
+                                        _otpcorrect == false
+                                    ? Center(
+                                            child: Text(
+                                        "You have entered a wrong number. Try again",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error),
+                                      ).animate().slideY(begin: 1, end: 0))
+                                        .animate()
+                                        .fadeIn()
+                                    : const SizedBox(),
+                           
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  width: double.maxFinite,
+                                  child: Cardonly(
+                                    margin: EdgeInsets.zero,
+                                    onpress: authctrl.otploading
+                                        ? null
+                                        : () async {
+                                            if (_formkey.currentState!
+                                                .validate()) {
+                                              if (authctrl.otp != null) {
+                                                if (authctrl.confirmotp(
+                                                    _otpcontroller.text)) {
+                                                  setState(() {
+                                                    _otpcorrect = true;
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    _otpcorrect = false;
+                                                  });
+                                                }
+                                                //confirm otp
+                                              } else {
+                                                //send otp
+                                                authctrl.passwordrenew(
+                                                    _phonecontroller.text);
+                                              }
+                                            }
+                                          },
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    padding: const EdgeInsets.all(16),
+                                    child: Center(
+                                      child: authctrl.otploading
+                                          ? CircularProgressIndicator(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary,
+                                            )
+                                          : Text(
+                                              authctrl.otp == null
+                                                  ? "Send OTP"
+                                                  : 'Confirm OTP',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              )),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Go to ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.6)),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.offNamed('/login');
+                        },
+                        child: Text('Log In',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                            )),
+                      )
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/servicespage.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
+import 'dart:html' as html;
 
 
 import '../../widgets/card.dart';
@@ -25,12 +26,15 @@ class LandingHomePage extends StatefulWidget {
 }
 
 class _LandingHomePageState extends State<LandingHomePage> {
+  ScrollController _scrollController = ScrollController();
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     
+   
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
+        // _scrollController = ScrollController();
         Get.find<GetxLandingcontroller>().onInit();
            if(widget.index!=null){
 
@@ -40,11 +44,14 @@ class _LandingHomePageState extends State<LandingHomePage> {
     },);
   }
 
+  Offset pos = Offset(0, 0);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context).width;
-    
+
+
+  
     return  GetBuilder<GetxAuthController>(
       builder: (authctrl) {
         return GetBuilder<GetxLandingcontroller>(
@@ -139,29 +146,41 @@ class _LandingHomePageState extends State<LandingHomePage> {
                   ),
                 ),
               ),
-              body: SafeArea(child: 
-              RefreshIndicator(
-                onRefresh: () async{
-                  landingctrl.onInit();
+              body: MouseRegion(
+                onHover: (event) {
+                  setState(() {
+                    pos = event.localPosition;
+                  });
                 },
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //navbar
-                      size<=1000?const SizedBox():   const LandingNavBar(),
-                      //body
-                      landingctrl.page == 2?const ServicePage():
-                      landingctrl.page == 3?const GalleryPage():
-                      landingctrl.page == 1? const PricingPage():
-                       const LandingPage(),
-                      // ContactFooter()
-                      // Footer()
+                child: SafeArea(child: 
+                RefreshIndicator(
+                  backgroundColor: Colors.transparent,
+                  color: Theme.of(context).colorScheme.secondary,
+                  onRefresh: () async{
+                    html.window.location.reload();
+                    // landingctrl.onInit();
+                  },
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
                     
-                    ],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //navbar
+                        size<=1000?const SizedBox():   const LandingNavBar(),
+                        //body
+                        landingctrl.page == 2?const ServicePage():
+                        landingctrl.page == 3?const GalleryPage():
+                        landingctrl.page == 1? const PricingPage():
+                         const LandingPage(),
+                        // ContactFooter()
+                        // Footer()
+                      
+                      ],
+                    ),
                   ),
+                )
                 ),
-              )
               ),
             );
           }

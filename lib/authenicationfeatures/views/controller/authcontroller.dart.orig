@@ -1,12 +1,7 @@
-import 'dart:developer';
-
-import 'package:get/get.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-
 import 'package:xtreme_fitness/handlerpage.dart';
 
 import '../../../authentifeatures/domain/domainrepositories.dart';
@@ -18,20 +13,20 @@ class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
   int changeAuthindex = 0;
   String? cookies;
- String? signuperror;
- int? signups;
+
   bool _authentication = false;
   bool loginloading = false;
-  String? loginerrortext;
+
   UserEntity? _user;
   UserEntity? get getuser => _user;
   String? userid;
+
   bool? numberexists;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = true;
   int? otp;
   bool otploading = false;
-  bool? forgotpass;
+
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     changeAuthindex = index;
@@ -42,7 +37,6 @@ class GetxAuthController extends GetxController {
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
-    loginerrortext = null;
     update();
     Map<String?, String> d;
     _user = UserEntity(id: 0, userName: "", passwordHash: "");
@@ -53,13 +47,18 @@ class GetxAuthController extends GetxController {
       d = await authrepo.emailAuthentication(email: email, pass: pass);
 
       debugPrint(d.toString());
-      loginerrortext = d.entries.first.value;
+
       if (d.isNotEmpty) {
         if (d.entries.first.key != null) {
-
           _authentication = true;
           userid = d.entries.first.key;
-            if (userid != null) {
+        } else {
+          _authentication = false;
+        }
+
+        debugPrint(_authentication.toString());
+
+        if (userid != null) {
           print("In authentication check");
           Map<UserEntity?, String> v =
               await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
@@ -75,15 +74,6 @@ class GetxAuthController extends GetxController {
             print("user null");
           }
         }
-        } else {
-          _authentication = false;
-           loginloading = false;
-                   update();
-        }
-
-        debugPrint(_authentication.toString());
-
-    
         loginloading = false;
         update();
 
@@ -128,8 +118,9 @@ class GetxAuthController extends GetxController {
     }
   }
 
-  void signup(String phone) async{
-    signuperror = null;
+  void signup() {}
+
+  void sendotp(String phone)async {
     otploading = true;
     update();
 var d = await authrepo.getUserbyNumber(phone);
@@ -137,71 +128,6 @@ var d = await authrepo.getUserbyNumber(phone);
     if( d.entries.first.key==null){
         numberexists = false;
          otploading =false;
-          sendotp(phone);
-      
-      }else{
-    if(d.entries.first.key!>0){
-       
-        signuperror = "A user with the number already exists.\nTry another number";
-    }else{
-        if(d.entries.first.key==-1){
-        
-            signuperror = "There is an issue at our end.\nWe will get back to you as soon as possible.";
-        }else{
-              signuperror = "There  may be an issue with the connection or with the browser.\nTry again.";
-        }
-    }    
-    otploading =false;
-
-      numberexists = true;
-      otp = null;
-      update();
-    }
-    otploading =false;
-    update();
-  
-  
-  }
-
-  void passwordrenew(String phone) async{
-    signuperror = null;
-    otploading = true;
-    update();
-var d = await authrepo.getUserbyNumber(phone);
-    // if( d.entries.first.key!>0){
-    if( d.entries.first.key!=null){
-        numberexists = true;
-         otploading =false;
-          sendotp(phone);
-      
-      }else{
-    if(d.entries.first.key == null){
-       
-        signuperror = "No user with the number exists.\nTry another number";
-    }else{
-        if(d.entries.first.key==-1){
-        
-            signuperror = "There is an issue at our end.\nWe will get back to you as soon as possible.";
-        }else{
-              signuperror = "There  may be an issue with the connection or with the browser.\nTry again.";
-        }
-    }    
-    otploading =false;
-
-      numberexists = true;
-      otp = null;
-      update();
-    }
-    otploading =false;
-    update();
-  
-  
-  }
-
-
-  void sendotp(String phone)async {
-
-
         int rand = Random().nextInt(9000) + 1000;
         otp = rand;
         update();
@@ -210,6 +136,15 @@ var d = await authrepo.getUserbyNumber(phone);
 
 
 
+    }else{
+    otploading =false;
+
+      numberexists = true;
+      otp = null;
+      update();
+    }
+    otploading =false;
+    update();
   }
 
   bool confirmotp(String confirmotp) {
@@ -229,23 +164,5 @@ var d = await authrepo.getUserbyNumber(phone);
       numberexists = null;
       update();
 
-  }
-
-  void changepassword(String newpass){
-    otploading = true;
-    update();
-    Future.delayed(Duration(seconds: 2)).then((value) {
-        otploading = false;
-        otp = null;
-        forgotpass = true;
-        update();
-          // Get.offAllNamed("/login");
-    },);
-      // change pass
-
-      //add api call here
-
-
-    
   }
 }

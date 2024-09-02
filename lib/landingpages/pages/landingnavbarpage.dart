@@ -43,28 +43,28 @@ class LandingNavBar extends StatelessWidget {
                             ),
                             const SizedBox(width: 50,),
                             Cardonly(
-                              color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                              color: Colors.transparent,
                               onpress: (){
                                   landingctrl.changelandingpage(1);
                                 Get.toNamed("/pricing");
                               },
-                              child: Text("Pricing",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSecondary),)),
+                              child: Text("Pricing",style: TextStyle(fontSize: 14, color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:null),)),
                             const SizedBox(width: 30,),
                             Cardonly(
-                                       color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                                       color: Colors.transparent,
                               onpress: (){
                                   landingctrl.changelandingpage(2);
                                 Get.toNamed("/services");
                               },
-                              child: Text("Services",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,  color: Theme.of(context).colorScheme.onSecondary),)),
+                              child: Text("Services",style: TextStyle(fontSize: 14,  color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:null),)),
                             const SizedBox(width: 30,),
                              Cardonly(
-                                        color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                                        color: Colors.transparent,
                               onpress: (){
                                   landingctrl.changelandingpage(3);
                                 Get.toNamed("/gallery");
                               },
-                               child: Text("Gallery",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSecondary),)),
+                               child: Text("Gallery",style: TextStyle(fontSize: 14, color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:null),)),
                           ],
                         ),
                      ),

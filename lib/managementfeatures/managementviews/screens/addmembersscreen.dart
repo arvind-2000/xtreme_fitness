@@ -4,6 +4,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember.dart';
+import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
@@ -64,13 +65,12 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       children: [
                     
                         Column(children: [
-                        
-                           CardwithShadow(
-                             margin: EdgeInsets.zero,
+                          CardwithShadow(
+                          
                             onpress: (){
                               pagectrl.changeaddMemberPage(0);
                             },
-                            color: pagectrl.addmemberpages>=0?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                            color: pagectrl.addmemberpages>=0?Theme.of(context).colorScheme.secondary:null,
                             child:  Center(child: Text("1",style: TextStyle(color:pagectrl.addmemberpages>0?Colors.white:null ),))),
                           // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():const  Text("Personal Details")
                         ],),
@@ -79,18 +79,17 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                              duration:Durations.extralong1,
                              opacity: pagectrl.addmemberpages>0?1:0,
                              child: Container(
-                                 width:MediaQuery.sizeOf(context).width<mobilescreen?20: 50,
+                                 width: 50,
                                                        height: 1,
                                                        color: Theme.of(context).colorScheme.secondary,
                                                      ),
                            ),
                                  Column(children: [
                           CardwithShadow(
-                               margin: EdgeInsets.zero,
                                  onpress: (){
                               pagectrl.changeaddMemberPage(1);
                             },
-                               color: pagectrl.addmemberpages==1?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>1?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                               color: pagectrl.addmemberpages==1?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>1?Theme.of(context).colorScheme.secondary:null,
                             child: Center(child: Text("2",style: TextStyle(color:pagectrl.addmemberpages>1?Colors.white:null ),))),
                               //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Plan")
                         ],),
@@ -99,18 +98,17 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                              duration:Durations.extralong1,
                              opacity: pagectrl.addmemberpages>1?1:0,
                              child: Container(
-                                 width:MediaQuery.sizeOf(context).width<mobilescreen?20: 50,
+                                 width: 50,
                                                        height: 1,
                                                        color: Theme.of(context).colorScheme.secondary,
                                                      ),
                            ),        
                          Column(children: [
                           CardwithShadow(
-                               margin: EdgeInsets.zero,
                                  onpress: (){
                               pagectrl.changeaddMemberPage(2);
                             },
-                               color: pagectrl.addmemberpages==2?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>2?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                               color: pagectrl.addmemberpages==2?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>2?Theme.of(context).colorScheme.secondary:null,
                             child: Center(child: Text("3",style: TextStyle(color:pagectrl.addmemberpages>2?Colors.white:null ),))),
                                 // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Questionnare (PARQ)")
                         ],),
@@ -119,18 +117,17 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                              duration:Durations.extralong1,
                              opacity: pagectrl.addmemberpages>2?1:0,
                              child: Container(
-                               width:MediaQuery.sizeOf(context).width<mobilescreen?20: 50,
+                                 width: 50,
                                                        height: 1,
                                                        color: Theme.of(context).colorScheme.secondary,
                                                      ),
                            ),   
                          Column(children: [
                           CardwithShadow(
-                            margin: EdgeInsets.zero,
                                  onpress: (){
                               pagectrl.changeaddMemberPage(3);
                             },
-                               color: pagectrl.addmemberpages==3?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>3?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                               color: pagectrl.addmemberpages==3?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>3?Theme.of(context).colorScheme.secondary:null,
                             child: Center(child: Text("4",style: TextStyle(color:pagectrl.addmemberpages>3?Colors.white:null ),))),
                                 // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Doctor Details")
                         ],),
@@ -139,7 +136,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                              duration:Durations.extralong1,
                              opacity: pagectrl.addmemberpages>3?1:0,
                              child: Container(
-                                 width:MediaQuery.sizeOf(context).width<mobilescreen?20: 50,
+                                 width: 50,
                                                        height: 1,
                                                        color: Theme.of(context).colorScheme.secondary,
                                                      ),),
@@ -150,20 +147,17 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                             onpress: (){
                               pagectrl.changeaddMemberPage(4);
                             },
-                            color: pagectrl.addmemberpages==4?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>4?Theme.of(context).colorScheme.secondary:Colors.transparent,
+                            color: pagectrl.addmemberpages==4?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>4?Theme.of(context).colorScheme.secondary:null,
                             child:  Center(child: Text("5",style: TextStyle(color:pagectrl.addmemberpages>4?Colors.white:null ),))),
                               //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():  const Text("Create Membership")
-               
-                        
-                        ]), 
+                        ],),
                     ],),
                   ),
                 ),
               ),
             CardBorder(
                 color: Colors.transparent,
-                // margin: const EdgeInsets.all(16),
-                margin: EdgeInsets.zero,
+                margin: const EdgeInsets.all(16),
                 child: Form(
                       key:_globalkey,
                   child: pagectrl.addmemberpages==0?PersonaldetailsField( pagectrl: pagectrl,):pagectrl.addmemberpages==1?PlanSelectionField(pagectrl: pagectrl,):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):const CreateMember())),

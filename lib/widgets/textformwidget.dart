@@ -12,7 +12,7 @@ class TextFieldWidget extends StatefulWidget {
     this.icon,
     this.interactivetext,
     this.obscure = false, 
-    this.autovalidateMode = AutovalidateMode.onUserInteraction
+    this.autovalidateMode = AutovalidateMode.onUserInteraction, this.enabletext = true
   });
   final String hint;
   final Icon? icon;
@@ -24,6 +24,7 @@ class TextFieldWidget extends StatefulWidget {
   final Function? fieldsubmitted;
   final bool? interactivetext;
   final AutovalidateMode autovalidateMode;
+  final bool enabletext;
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
 }
@@ -71,6 +72,7 @@ bool toggless = false;
        }
      
       },
+      enabled: widget.enabletext ,
       enableInteractiveSelection: widget.interactivetext,
       autovalidateMode:widget.autovalidateMode,
       obscureText: toggless,

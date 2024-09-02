@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       getPages: [
 
         // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
-        GetPage(name: '/', page: () => const HandlerPage(),transition: Transition.noTransition),
+        GetPage(name: '/dashboard', page: () => const HandlerPage(),transition: Transition.noTransition),
         GetPage(name: '/home', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
         GetPage(name: '/pricing', page: () => const LandingHomePage(index: 1,),transition: Transition.noTransition),
         GetPage(name: '/services', page: () => const LandingHomePage(index: 2,),transition: Transition.noTransition),

@@ -63,7 +63,7 @@ Future<bool> validateform(String email,String pass)  async{
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 100,),
+         
                    Row(
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
@@ -89,16 +89,22 @@ Future<bool> validateform(String email,String pass)  async{
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                          AnimatedOpacity(opacity: authctrl.loginerrortext==null?0:1, duration: Durations.extralong1,child: SizedBox(
+                            width: double.maxFinite,
+                            child: Cardonly(
+                              margin: EdgeInsets.symmetric(vertical: 8),
+                              color: Theme.of(context).colorScheme.secondary,
+                              child: Center(child: Text(authctrl.loginerrortext??""))),
+                          ),),
+
                         TextFieldWidget(
                           hint: "Username",
                             icon: const Icon(Icons.mail),
                           controller: _emailcontroller,
                           focusnode: _emailfocus,
+                          enabletext: !authctrl.loginloading,
                           nextfocusnode: _passwordfocus,
-                          validator: () {
-                            // return tapcontroller.authusecase
-                            //     .emailAuth(_emailcontroller.text.trim());
-                          },
+                         
                         ),
                     
                         const SizedBox(
@@ -110,18 +116,21 @@ Future<bool> validateform(String email,String pass)  async{
                           focusnode: _passwordfocus,
                           icon: const Icon(Icons.lock),
                           obscure: true,
-                          
+                          enabletext: !authctrl.loginloading,
                           fieldsubmitted:() {
-                         validateform(_emailcontroller.text,_passwordcontroller.text);
+                                            if (_formkey.currentState!.validate()) {
+  authctrl.authenticate(_emailcontroller.text,_passwordcontroller.text).then((value) {
+   if(!value.entries.first.key){
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Logging in",)));
+   }
+  },);}
+
                            
                             
                           
                           },
                           controller: _passwordcontroller,
-                          validator: () {
-                            // return tapcontroller.authusecase.passwordAuth(
-                            //     _passwordcontroller.text.trim());
-                          },
+                      
                         ),
                            const SizedBox(
                 height: 10,
@@ -133,9 +142,13 @@ Future<bool> validateform(String email,String pass)  async{
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap:authctrl.loginloading?null:(){
                           Get.offNamed('/forgotpassword');
                       },
+
+                    
+
+
                       child: Text(
                         "Forgot Password?",
                         textAlign: TextAlign.end,
@@ -156,11 +169,13 @@ Future<bool> validateform(String email,String pass)  async{
                       margin: EdgeInsets.zero,
                   // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
                   onpress:authctrl.loginloading?null:(){
-                      authctrl.authenticate(_emailcontroller.text,_passwordcontroller.text).then((value) {
-                       if(!value.entries.first.key){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Logging in",)));
-                       }
-                      },);
+                      if (_formkey.currentState!.validate()) {
+  authctrl.authenticate(_emailcontroller.text,_passwordcontroller.text).then((value) {
+   if(!value.entries.first.key){
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Logging in",)));
+   }
+  },);
+}
                 
                   },
                   color: Theme.of(context).colorScheme.secondary,
@@ -199,7 +214,7 @@ Future<bool> validateform(String email,String pass)  async{
                     width: 10,
                   ),
                   InkWell(
-                    onTap:(){
+                    onTap:authctrl.loginloading?null:(){
                     Get.offNamed('/signup');
                     },
                     child: Text('Sign Up',
@@ -210,7 +225,7 @@ Future<bool> validateform(String email,String pass)  async{
                   )
                 ],
               ),
-               const SizedBox(height: 100,),
+            
           
             ],
           ),
