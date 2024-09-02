@@ -80,6 +80,12 @@ bool toggless = false;
           }, icon: Icon(toggless?Icons.visibility_off:Icons.visibility)):const SizedBox(),
         filled: false,
           focusColor: Theme.of(context).colorScheme.secondary,
+          focusedBorder:  OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+                         
+                          
+      ),
                 
           prefixIcon:widget.icon,
 

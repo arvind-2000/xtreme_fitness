@@ -28,7 +28,7 @@ class AuthProvider  extends GetxController {
     isLogging = true;
     update();
     Map<String?, String> d;
-    _user = UserEntity(id: 0, email: "", pass: "");
+    _user = UserEntity(id: 0, userName: "", passwordHash: "");
 
     try {
       log('in email authenticate');
@@ -39,7 +39,8 @@ class AuthProvider  extends GetxController {
         print(d.entries.first.key);
         log(_isAuth.toString());
         isLogging = false;
-        _user = User(id: 0, email: email, pass: pass);
+        
+        _user = User(userName: email, passwordHash: pass);
         if(_isAuth){
             Get.to(()=>const HandlerPage());
         }
@@ -71,7 +72,7 @@ class AuthProvider  extends GetxController {
   Future<bool> userReg(
       String email, String name, String pass, String phone) async {
     Map<String, int> d;
-    _user = UserEntity(id: 0, email: "", pass: "");
+    _user = UserEntity(id: 0, userName: "", passwordHash: "");
 
     try {
       d = await authrepo.userRegistration(

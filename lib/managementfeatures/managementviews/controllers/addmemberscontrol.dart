@@ -291,19 +291,22 @@ dynamic _scheduler;
     try {
       final result = await ImagePickerWeb.getImageAsBytes();
       if (result != null && recognizeImageFormat(result) != "Unknown format") {
-        _imageData = await resizeImage(result, 100, 100);
-        // if(await isImageSizeExceeds(_imageData!)){
 
-        //     _imageData = result;
-        //     isimagesize = true;
-        // }else{
-        //          _imageData = null;
-        //     isimagesize = false;
-        // }
+      print("in image formaat");
+        // _imageData = await resizeImage(result, 100, 100);
+        if(await isImageSizeExceeds(result)==false){
+
+            _imageData = result;
+            isimagesize = true;
+        }else{
+                 _imageData = null;
+            isimagesize = false;
+        }
 
         isImageloading = false;
         update();
       } else {
+          print("error in images");
         _imageData = null;
         isImageloading = false;
         update();

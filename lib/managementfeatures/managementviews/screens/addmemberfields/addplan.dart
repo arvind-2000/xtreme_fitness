@@ -33,7 +33,7 @@ class PlanSelectionField extends StatelessWidget {
                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,
-                    childAspectRatio:  size<500?1:size<700?4/6.2:3/4,
+                    childAspectRatio:  size<500?1:size<700?4/7.2:3/5,
                 
                     ),
                     children: managectrl.getallplans.asMap().entries.map((e) => CardwithShadow(

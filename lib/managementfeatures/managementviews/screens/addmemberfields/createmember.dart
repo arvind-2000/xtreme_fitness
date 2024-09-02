@@ -100,7 +100,7 @@ class _CreateMemberState extends State<CreateMember> {
                                       .colorScheme
                                       .error
                                       .withOpacity(0.5),
-                                  child: Text(
+                                  child: const Text(
                                       "Username Already exists! Try another one"))
                               : SizedBox(),
                           const Text(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addservicesfields/addservicefield.dart';
 
+import '../../../widgets/cardborder.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/titletext.dart';
@@ -34,9 +35,24 @@ class _ServicesScreenState extends State<ServicesScreen> {
                crossAxisAlignment: CrossAxisAlignment.start,
         
           children: [
-          const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: HeadingText("Service",size: 30,),
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const HeadingText("Service",size: 30,),
+               CardBorder(
+                    onpress: isaddservice,
+                    padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                    child: Row(
+                    children: [
+                   _isserviceadd?Icon(Icons.person,size: 12,):Icon(Icons.add,size: 12,),
+                      SizedBox(width: 6,),
+                    _isserviceadd?const Text("View Services"):const Text("Add Service")
+                    ],
+                  ))
+                ],
+              ),
             ),
            _isserviceadd? AddServiceField(onpress: isaddservice,): Expanded(
              child: GridView(
@@ -138,7 +154,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                      ),
                    ),
              
-                      CardwithShadow(
+                      CardBorder(
                         color: Colors.green[300],
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -149,23 +165,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         Text("CheckOut",style: TextStyle(color: Colors.white),)
                       ],))
                   ],
-                )),).toList()..add(CardwithShadow(
-                  color:Colors.blue,
-                  onpress: (){
-                  
-                    isaddservice();
-                     
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Add Service"),));
-                  },
-                margin: const EdgeInsets.all(16),
-                child: const Center(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add,size: 14,),
-                    SizedBox(width: 5,),
-                    Text("Add Service",style: TextStyle(fontSize: 20),),
-                  ],
-                ),)))
+                )),).toList()
               ),
            ),
               

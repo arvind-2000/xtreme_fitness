@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmembersscreen.dart';
 
 import '../../../managementfeatures/managementviews/controllers/managementcontroller.dart';
+import '../../../widgets/cardborderhover.dart';
 
 class CreateXtremers extends StatefulWidget {
   const CreateXtremers({super.key});
@@ -26,7 +27,16 @@ class _CreateXtremersState extends State<CreateXtremers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AddMemberScreen(),
+      body: Center(
+        child: ConstrainedBox(
+            constraints:  const BoxConstraints(maxWidth:1000),
+           child: Column(
+             children: [
+              SizedBox(height: 100,child: Center(child: Image.asset(height: 60,width: 60,"assets/logo1.png"),),),
+               Expanded(child: CardBorderHover(child: AddMemberScreen())),
+             ],
+           )),
+      ),
     );
   }
 }

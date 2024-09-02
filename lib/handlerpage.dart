@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
+import 'package:xtreme_fitness/widgets/navbarmember.dart';
 import 'widgets/navbar.dart';
 
 
@@ -20,7 +21,12 @@ class _HandlerPageState extends State<HandlerPage> {
   void initState() {
 
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          Get.find<GetxAuthController>().authentications();
+    },);
+
     Get.put(ManagementController());
+    
   }
 
   @override
@@ -39,11 +45,11 @@ class _HandlerPageState extends State<HandlerPage> {
                 surfaceTintColor: Colors.transparent,
                 backgroundColor: Theme.of(context).colorScheme.primary,
 
-                child: NavBar(pagectrl:pagectrl, authctrl: authctrl,),
+                child:authctrl.ismember? NavBarMember(pagectrl: pagectrl, authctrl: authctrl): NavBar(pagectrl:pagectrl, authctrl: authctrl,),
               ):null,
               body: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1900),
-                child:const SafeArea(child: DashBoardScreen())
+                child:SafeArea(child:authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):DashBoardScreen())
                 ),
             );
           }

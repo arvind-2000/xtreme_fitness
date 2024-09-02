@@ -63,7 +63,7 @@ class _PlansScreenState extends State<PlansScreen> {
               crossAxisCount: size<500?1:size<mobilescreen?1:size>mobilescreen && size<800?2:size>800 && size<1200?3:4,
               mainAxisSpacing: 10,
                      
-              childAspectRatio:  size<500?1:size<mobilescreen? 1.5/1.3:3/4,
+              childAspectRatio:  size<500?1:size<mobilescreen? 1.5/1.8:3/4,
                      
               ),
               shrinkWrap: true,
@@ -162,7 +162,7 @@ class _PlansScreenState extends State<PlansScreen> {
                      ),
                    ),
              
-                      CardwithShadow(
+                      CardBorder(
                         color: Colors.green[300],
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +170,7 @@ class _PlansScreenState extends State<PlansScreen> {
                         Icon(Icons.add,color: Colors.white,),
                         SizedBox(width: 10,),
              
-                        Text("CheckOut",style: TextStyle(color: Colors.white),)
+                        Text("Checkout",style: TextStyle(color: Colors.white),)
                       ],))
                   ],
                 )),).toList()

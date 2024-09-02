@@ -296,11 +296,11 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                               }),);
                                             },
                                         padding: const EdgeInsets.all(8),
-                                      color: Colors.red[300]!.withOpacity(0.3),
+                                      color: const Color.fromARGB(255, 14, 11, 11)!.withOpacity(0.3),
                                       child: const Icon(Icons.delete,color: Colors.white,size: 12,)),
                                 ],),
                                 const SizedBox(height: 16,),
-                                 CardwithShadow(
+                                 CardBorder(
                                   onpress: (){
                                     _user = managectrl.getalltrainer[i];
                                       pagectrl.changeviewprofile();

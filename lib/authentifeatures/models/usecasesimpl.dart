@@ -33,7 +33,7 @@ class AuthenticateUseCases implements AuthUseCases{
           return "Name empty";
 
        }
-        return nameregex.hasMatch(name)?null:"Name must be alphabet";
+        return nameregex.hasMatch(name)?null:"Name must be alphabet or must be less than 20 characters";
   }
   
   @override

@@ -148,37 +148,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                     Expanded(child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          children: [
-                                            CircleAvatar(
-                                              backgroundColor: Colors.black38,
-                                              child:Image.network(
-  'http://10.10.1.76/ProfilePhotos/6318ded4-7a57-4b0e-b5ef-648ea62d72be_2023-06-04.png',  // Replace with your image URL
-  fit: BoxFit.cover,  // Adjust the image's box fit
-  width:80,  // Optional width
-  height: 80,  // Optional height
-  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-    if (loadingProgress == null) {
-      return child;  // Return the image if fully loaded
-    } else {
-      return Center(
-        child: CircularProgressIndicator(
-          value: loadingProgress.expectedTotalBytes != null
-              ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-              : null,
-        ),
-      );  // Show a loading indicator while loading
-    }
-  },
-  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-    return Icon(Icons.error);  // Display error message if image loading fails
-  },
-),
-                                            ),
-                                            SizedBox(width: 10,),
-                                            Text(managectrl.getallXtremer[index].firstName!,style:TextStyle(fontSize: 14),),
-                                          ],
-                                        ),
+                                        SizedBox(height: 10,),
+                                        Text(managectrl.getallXtremer[index].firstName!,style:const TextStyle(fontSize: 14),),
                                            MediaQuery.sizeOf(context).width<=mobilescreen?Cardonly(
                                               margin: EdgeInsets.only(top: 4),
                                               padding: EdgeInsets.symmetric(vertical: 4,horizontal: 16),
