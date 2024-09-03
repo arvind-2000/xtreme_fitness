@@ -187,7 +187,7 @@ class LandingPage extends StatelessWidget {
                            const SizedBox(height: 10,),
                       const Text("Non Xtremer"),
                             RichText(text: TextSpan(children: [  
-                            TextSpan(text:"Rs ${e.value.memberPrice}",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+                            TextSpan(text:"Rs ${e.value.nonMemberPrice}",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
                             TextSpan(text:"/ ${e.value.durationInMinutes} mins",style: const TextStyle(fontSize: 14,color: Colors.white38),),
                             
                             ],)),

@@ -70,7 +70,7 @@ abstract class ManagementRepo{
   Future<PaymentDetails?>getpayment(String transcationid);
 
   ///users api
-  Future<int> addUser(User user,String pass,String phone);
+  Future<Map<int,String>> addUser(User user,String pass,String phone);
   Future<String?> viewUser(String username,String pass);
 
   ///subscription api

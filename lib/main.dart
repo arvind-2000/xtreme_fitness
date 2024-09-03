@@ -38,21 +38,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
 
-       initialRoute: '/home',
+       initialRoute: '/',
       getPages: [
 
-        // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
+        GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
         GetPage(name: '/dashboard', page: () => const HandlerPage(),transition: Transition.noTransition),
         GetPage(name: '/home', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
         GetPage(name: '/pricing', page: () => const LandingHomePage(index: 1,),transition: Transition.noTransition),
         GetPage(name: '/services', page: () => const LandingHomePage(index: 2,),transition: Transition.noTransition),
         GetPage(name: '/gallery', page: () => const LandingHomePage(index: 3,),transition: Transition.noTransition),
-  
 
       GetPage(name: '/login', page: () => const AuthHandlerPage(index: 0,)),
       GetPage(name: '/signup', page: () => const AuthHandlerPage(index: 1,)),
       GetPage(name: '/forgotpassword', page: () => const AuthHandlerPage(index: 2,)),
       ],
+             
     );
   }
 }

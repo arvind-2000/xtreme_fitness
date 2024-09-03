@@ -51,6 +51,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
     _confirmpasswordfocus.dispose();
     _passwordfocus.dispose();
     _phonefocus.dispose();
+    Get.find<GetxAuthController>().disposeforgotpass();
   }
 
   @override
@@ -100,14 +101,14 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-              authctrl.forgotpass!=null && authctrl.forgotpass==true?Center(
+              authctrl.forgotpass!=null?Center(
                 child: Cardonly(
                   child:Column(
                     
                     children: [
-                        Icon(Icons.check,size: 40,),
+                        Icon(authctrl.forgotpass!?Icons.check:Icons.error,size: 40,),
                         SizedBox(height: 20,),
-                        Text("Password Change Successfully",style: TextStyle(fontSize: 20),),
+                        Text(authctrl.forgotpasserrormessage??"Error",style: TextStyle(fontSize: 20),),
                         SizedBox(height: 30,),
                         // CardBorder(child: Text("Login Now"))
                     ]
@@ -162,15 +163,15 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Center(
+                              authctrl.forgotpasserrormessage!=null?Center(
                                         child: Text(
-                                  "Error changing password. Try again",
+                                  authctrl.forgotpasserrormessage!,
                                   style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.error),
                                 ).animate().slideY(begin: 1, end: 0))
                                     .animate()
-                                    .fadeIn(),
+                                    .fadeIn():const SizedBox(),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -216,7 +217,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                   height: 30,
                                 ),
 
-                                authctrl.numberexists != null
+                                authctrl.otp!=null
                                     ? const SizedBox()
                                     : TextFieldWidget(
                                         hint: "Phone",
@@ -251,8 +252,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                               textAlign: TextAlign.center,
                                             )))
                                     : const SizedBox(),
-                                authctrl.numberexists != null &&
-                                        authctrl.numberexists!
+                                authctrl.otp!=null
                                     ? Column(
                                         children: [
                                           const Text(
@@ -268,8 +268,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         ],
                                       )
                                     : const SizedBox(),
-                                authctrl.numberexists != null &&
-                                        authctrl.numberexists!
+                                authctrl.otp!=null
                                     ? Center(
                                         child: ConstrainedBox(
                                           constraints: const BoxConstraints(

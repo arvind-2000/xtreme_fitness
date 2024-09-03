@@ -8,8 +8,8 @@ import '../../../managementfeatures/managementviews/controllers/managementcontro
 import '../../../widgets/cardborderhover.dart';
 
 class CreateXtremers extends StatefulWidget {
-  const CreateXtremers({super.key});
-
+  const CreateXtremers({super.key, this.phonenumber});
+  final String? phonenumber;
   @override
   State<CreateXtremers> createState() => _CreateXtremersState();
 }
@@ -18,7 +18,6 @@ class _CreateXtremersState extends State<CreateXtremers> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
         Get.put(ManagementController());
         Get.put(AddMemberController());
@@ -33,7 +32,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
            child: Column(
              children: [
               SizedBox(height: 100,child: Center(child: Image.asset(height: 60,width: 60,"assets/logo1.png"),),),
-               Expanded(child: CardBorderHover(child: AddMemberScreen())),
+               Expanded(child: CardBorderHover(child: AddMemberScreen(phonenumber: widget.phonenumber,))),
              ],
            )),
       ),

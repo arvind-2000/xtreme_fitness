@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:xtreme_fitness/authentifeatures/config/apis.dart';
 import 'package:xtreme_fitness/config/apis.dart';
-import 'package:dio/dio.dart';
-import 'dart:html' as html;
 import '../domain/domainrepositories.dart';
 import '../domain/userentity.dart';
 import 'usecasesimpl.dart';
@@ -15,7 +13,7 @@ class AuthenticationRepositoryImpl  implements AuthenticationRepository{
    
   print("in login auth");
   String? uid = "";
-  String message = "login error";
+  String message = "";
     Uri url =Uri.parse("$api/api/Users/login");
 
     final query = {
@@ -36,22 +34,28 @@ class AuthenticationRepositoryImpl  implements AuthenticationRepository{
 
   );
 
-
+  if(response.statusCode>=200 && response.statusCode<300){
   var d = jsonDecode( response.body);
+  
+
   message = d["Message"]??d;
   uid = d["Data"]["UserId"].toString();
-  
+
+  }else if (response.statusCode>=400 && response.statusCode<500){
+
   print(response.body);
-   return {uid:message};
+  return {uid:response.body};
+
+  }else if(response.statusCode>500){
+      return {uid:"There is an internal Error\n We will get back soon."};
+  }
 
 } on Exception catch (e) {
   print(e);
-   return {uid!:message};
-
+ return {uid!:"Session tiome out\nTry again"};
 }
       // print(response.body);
-
-       
+   return {uid:"Session time out.Try again"}; 
   }
 
 
@@ -223,7 +227,8 @@ on Exception catch (e) {
 }else{
   if(response.statusCode >= 500){
   return {-1:"User not found or error with the connection"};
-  }else{
+  }
+  else{
      return {-3:"User not found or error with the connection"};
   }
 } }
@@ -234,5 +239,40 @@ on Exception catch (e) {
 }
 
   }
+  
+  @override
+  Future<Map<int?, String?>> changePass(int id, String password)async {
+        Uri url = Uri.parse("$api/api/Users/$id");
+         print("password  change status code user id $id    $password");
+        try {
+  var res = await http.put(url,body: jsonEncode({
+  "Id": id,
+  "PasswordHash":password,
+  }),
+  
+     headers:{'Content-Type': 'application/json'}
+  );
+     print("password  change status code ${res.statusCode}");
+    if(res.statusCode>=200 && res.statusCode<300){
+ 
+        return {res.statusCode:"The password is successfully changed."};
+
+    }else if(res.statusCode>=500){
+    
+        return {res.statusCode:"There is some internal error on our side.\n We will get back to you soon."};
+    }else if(res.statusCode>=400 &&res.statusCode<500){
+      
+      return {res.statusCode:"Error in changing password. Try again later"};
+    }else{
+         return {res.statusCode:"Something went wrong. Check your interney connection\nTry again"};
+    }
+
+} on Exception catch (e) {
+   return {0:"Error while changing your password.\n Try again after some time"};  
+}
+  }
+
+  
+
 }
 

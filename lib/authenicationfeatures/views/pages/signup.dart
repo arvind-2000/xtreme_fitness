@@ -21,17 +21,12 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formkey = GlobalKey<FormState>();
 
-  // final TextEditingController _emailcontroller = TextEditingController();
-  // final TextEditingController _namecontroller = TextEditingController();
-  // final TextEditingController _passwordcontroller = TextEditingController();
+
   final TextEditingController _confirmotp = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
   final FocusNode _confirmotpfocus = FocusNode();
-  // final FocusNode _confirmpasswordfocus = FocusNode();
+ 
   final FocusNode _phonefocus = FocusNode();
-  // final FocusNode _emailfocus = FocusNode();
-  // final FocusNode _namefocus = FocusNode();
-
   final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
 
   Future<bool> validateform(
@@ -39,7 +34,6 @@ class _SignUpPageState extends State<SignUpPage> {
     // Validate returns true if the form is valid, or false otherwise.
     if (_formkey.currentState!.validate()) {
       // If the form is valid, display a snackbar. In the real world
-
       return false;
     } else {
       return false;
@@ -212,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 if (_formkey.currentState!.validate()) {
                                   if (authctrl.otp != null) {
                                     if (authctrl.confirmotp(_confirmotp.text)) {
-                                       Get.to(()=>const CreateXtremers());
+                                       Get.to(()=>CreateXtremers(phonenumber: _phonecontroller.text,));
                                        
                                     setState(() {
                                       otpcorrect = true;

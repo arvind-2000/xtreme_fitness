@@ -553,7 +553,7 @@ var headers = {'Content-Type': 'application/json'};
   }
   
   @override
-  Future<int> addUser(User user,String pass,String phone) async{
+  Future<Map<int,String>> addUser(User user,String pass,String phone) async{
 
    final uri = Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
 
@@ -579,16 +579,16 @@ var headers = {'Content-Type': 'application/json'};
   // Check the response status
   if (response.statusCode >= 200 && response.statusCode<300) {
     print('User added successfully.');
-      return response.statusCode;
+      return {200:response.body};
   } else {
     print('Failed to add user. Status code: ${response.statusCode}');
     print('Response body: ${response.body}');
-      return response.statusCode;
+     return {response.statusCode:response.body};
   }
 } on Exception catch (e) {
   // TODO
   print("Error in user registrer: $e");
-    return 0;
+    return {0:"Error in user register"};
 }
 
 

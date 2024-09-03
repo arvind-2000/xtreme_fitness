@@ -40,8 +40,8 @@ class AddMemberController extends GetxController {
   Uint8List? get getprofile => _imageData;
   bool setallquestionaire = false;
   Plan? admissionfees;
-
-
+  bool checkdeclaration = false;
+  String? usererrormessage;
   PaymentDetails? paymentsdetails;
   String doctorname = "";
   String surgeryname = "";
@@ -83,12 +83,13 @@ dynamic _scheduler;
 
 
   Future<bool> createuser(String? username,String? pass)async{
+     usererrormessage  = null;
       isloading = true;
       update();
 
-      int res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!,xtremer.mobileNumber!);
-   if(res>=200 && res<300){
-
+      Map<int,String> res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!,xtremer.mobileNumber!);
+   if(res.entries.first.key>=200 && res.entries.first.key<300){
+        usererrormessage  = res.entries.first.value;
         _userid = await repo.viewUser(username, pass);
         print("in user create in create member: ${_userid!}");
         xtremer.XtremerId = int.tryParse(_userid!);
@@ -98,6 +99,7 @@ dynamic _scheduler;
       return true;
    }else{
     print("in user create in create member: failed to create");
+      usererrormessage  = res.entries.first.value;
      userexist = true;
      isloading = false;
       update();
@@ -114,7 +116,7 @@ dynamic _scheduler;
       Subscription subs = Subscription(userId:xtremer.XtremerId.toString(), planId: selectedplan!.id, startDate: DateTime.now(), endDate: DateTime.now().add(Duration(days: selectedplan!.durationInMonths*3)), status: "active");
       Subscription? subss = await repo.addSubscription(subs);
 
-      if(subss != null)
+      if(subss != null && checkdeclaration)
       {
           
       Paymententity payments = Paymententity(id: 0, userId: xtremer.XtremerId!, amount: admissionfees!.price + selectedplan!.price, discountPercentage: selectedplan!.discountPercentage, receivedAmount: admissionfees!.price + (selectedplan!.price - (selectedplan!.price * (selectedplan!.discountPercentage/100))) , paymentDate: DateTime.now(), transactionId: "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}", paymentStatus:"Initiated", paymentMethod: ispaymentcash?"Cash":"Online", paymentType: "Membership", subscriptionId: selectedplan!.id, serviceUsageId: 0);
@@ -172,8 +174,9 @@ dynamic _scheduler;
       try{
                xtremer = Xtremer.fromJson(jsonDecode( res["response"]));
               usercreated = true;
-              // createAndPrintPdf();
+              createAndPrintPdf();
               isloading = false;
+              Get.toNamed("/login");
               update();
       }catch(e){
             usercreated = false;
@@ -228,6 +231,7 @@ dynamic _scheduler;
 
   void addTrainer(TrainerEntity trainere) {
     _trainer = trainere;
+    xtremer.trainerName = trainere.name;
     update();
   }
 
@@ -282,6 +286,7 @@ dynamic _scheduler;
     relationship = 4;
     _trainer = null;
     _imageData = null;
+    usererrormessage = null;
     super.onClose();
   }
 
@@ -447,6 +452,11 @@ else {
 
 }
 
+
+void changedeclaration(bool val){
+    checkdeclaration = val;
+    update();
+}
 void cancelscheduler(){
   _scheduler.cancel();
     isloading = false;

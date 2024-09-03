@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../../config/apis.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
 
 class MemberProfilescreen extends StatelessWidget {
@@ -49,10 +51,10 @@ class MemberProfilescreen extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: Colors.grey[200],
-                                    child:const SizedBox(
+                                    child:SizedBox(
                                       height: 100,
                                       width: 100,
-                                      child: Center(child: Icon(Icons.person,size: 30,))),
+                                      child: ImageWidget(url: "http://10.10.1.76/ProfilePhotos/ab14f71b-fd31-4104-ab2d-281ceb117ac8_prof43.png",)),
                                   ),
 
                                   IconButton(onPressed: (){}, icon: const Icon(Icons.edit,size: 16,))

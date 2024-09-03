@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember.dart';
@@ -19,8 +20,9 @@ import 'addmemberfields/questionnaire.dart';
 
 
 class AddMemberScreen extends StatefulWidget {
-  AddMemberScreen({super.key});
-
+  AddMemberScreen({super.key, this.phonenumber, this.plan});
+  final String? phonenumber;
+  final Plan? plan;
   @override
   State<AddMemberScreen> createState() => _AddMemberScreenState();
 }
@@ -160,7 +162,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                 margin: const EdgeInsets.all(16),
                 child: Form(
                       key:_globalkey,
-                  child: pagectrl.addmemberpages==0?PersonaldetailsField( pagectrl: pagectrl,):pagectrl.addmemberpages==1?PlanSelectionField(pagectrl: pagectrl,):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):const CreateMember())),
+                  child: pagectrl.addmemberpages==0?PersonaldetailsField( pagectrl: pagectrl,phonenumber: widget.phonenumber,):pagectrl.addmemberpages==1?PlanSelectionField(pagectrl: pagectrl,):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):const CreateMember())),
                         const SizedBox(height: 40,)
             ],
           ),

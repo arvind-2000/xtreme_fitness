@@ -14,9 +14,9 @@ import '../../controllers/pagecontroller.dart';
 class PersonaldetailsField extends StatefulWidget {
   const PersonaldetailsField({
     super.key,
-    required this.pagectrl,
+    required this.pagectrl, this.phonenumber,
   });
-
+    final String? phonenumber;
   final GetxPageController pagectrl;
 
   @override
@@ -95,6 +95,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   void initState() {
     super.initState();
     _fullnameFocusNode.requestFocus();
+    _phonecontroller.text = widget.phonenumber??"";
   }
 
   @override
@@ -287,7 +288,9 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         child: TextFieldWidget(
                             hint: "Mobile Number",
                             controller: _phonecontroller,
+                                enabletext: widget.phonenumber==null,
                             focusnode: _phoneFocusNode,
+
                             nextfocusnode: _emergencynameFocusNode,
                             validator: () {
                               return authusecase
@@ -302,6 +305,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
             size < mobilescreen
                 ? TextFieldWidget(
                     hint: "Mobile Number",
+                    enabletext: widget.phonenumber==null,
                     controller: _phonecontroller,
                     focusnode: _occupationFocusNode,
                     nextfocusnode: _homephoneFocusNode,

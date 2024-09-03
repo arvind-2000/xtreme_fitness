@@ -20,13 +20,13 @@ class UserEntity {
   // Factory method to create a User instance from JSON
   factory UserEntity.fromJson(Map<String, dynamic> json) {
     return UserEntity(
-      id: json['Id'] as int,
+      id: json['Id'],
       mobileNumber: json['MobileNumber'],
-      userName: json['UserName'],
+      userName: json['UserName']??"",
       passwordHash: json['PasswordHash'],
       roleName: json['RoleName'],
-      createdAt: DateTime.parse(json['CreatedAt'] as String),
-      isActive: json['IsActive']??false,
+      createdAt: DateTime.tryParse(json['CreatedAt']),
+      isActive: json['IsActive'],
     );
   }
 

@@ -18,8 +18,9 @@ class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
   int changeAuthindex = 0;
   String? cookies;
- String? signuperror;
- int? signups;
+  String? signuperror;
+  String? forgotpasserrormessage;
+  int? signups;
   bool _authentication = false;
   bool loginloading = false;
   String? loginerrortext;
@@ -27,11 +28,13 @@ class GetxAuthController extends GetxController {
   UserEntity? get getuser => _user;
   String? userid;
   bool? numberexists;
+  int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = true;
   int? otp;
   bool otploading = false;
   bool? forgotpass;
+  
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     changeAuthindex = index;
@@ -170,10 +173,12 @@ var d = await authrepo.getUserbyNumber(phone);
 var d = await authrepo.getUserbyNumber(phone);
     // if( d.entries.first.key!>0){
     if( d.entries.first.key!=null){
+        foruserId = d.entries.first.key;
         numberexists = true;
-         otploading =false;
-          sendotp(phone);
-      
+        otploading =false;
+       
+        sendotp(phone);
+       update();
       }else{
     if(d.entries.first.key == null){
        
@@ -231,21 +236,54 @@ var d = await authrepo.getUserbyNumber(phone);
 
   }
 
-  void changepassword(String newpass){
+  void changepassword(String newpass) async{
     otploading = true;
     update();
     Future.delayed(Duration(seconds: 2)).then((value) {
         otploading = false;
         otp = null;
-        forgotpass = true;
+     
         update();
           // Get.offAllNamed("/login");
     },);
       // change pass
-
       //add api call here
+      if(foruserId!=null){
+        print("In password change");
+        // Map<UserEntity?,String> d = await authrepo.getUserbyId(foruserId!);
+        // if(d.entries.first.key!=null){
 
-
-    
+      Map<int?,String?> message = await authrepo.changePass(foruserId!,newpass);
+        if(message.entries.first.key == 200){
+          forgotpass = true;
+          update();
+        }else{
+          forgotpass = false;
+          update();
+        }
+        forgotpasserrormessage = message.entries.first.value;
+        update();
+        // }
+   
+      }
   }
+
+    void disposeforgotpass(){
+        forgotpass = null;
+        numberexists = null;
+        otp = null;
+        otploading = false;
+        forgotpasserrormessage = null;
+        update();
+
+    }
+
+    void disposelogin(){
+        loginerrortext = null;
+        loginloading = false;
+        update();
+
+    }
+
+
 }

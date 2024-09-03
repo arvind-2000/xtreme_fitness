@@ -226,7 +226,10 @@ class NavBar extends StatelessWidget {
                           if (MediaQuery.sizeOf(context).width < mobilescreen) {
                         drawers(context);
                       }
-                        showDialog(context: context, builder:(c)=>PageDialog(
+                        showDialog(context: context, builder:(c)=>authctrl.loginloading?const SizedBox(
+                          height: 300,
+                          width: 400,
+                          child: Cardonly(child: Center(child: CircularProgressIndicator(color: Colors.white,),))):PageDialog(
                           heights: 300,
                         no: () {
                            

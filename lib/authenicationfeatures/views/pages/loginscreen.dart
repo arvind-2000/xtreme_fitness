@@ -47,6 +47,7 @@ Future<bool> validateform(String email,String pass)  async{
   @override
   void dispose() {
     super.dispose();
+    Get.find<GetxAuthController>().disposelogin();
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     _passwordfocus.dispose();

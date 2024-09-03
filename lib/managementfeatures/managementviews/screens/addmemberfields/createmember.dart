@@ -13,7 +13,7 @@ import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
   const CreateMember({super.key});
-
+  
   @override
   State<CreateMember> createState() => _CreateMemberState();
 }
@@ -94,14 +94,14 @@ class _CreateMemberState extends State<CreateMember> {
                           const SizedBox(
                             height: 16,
                           ),
-                          addmemberctrl.userexist
+                          addmemberctrl.usererrormessage!=null
                               ? Cardonly(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .error
                                       .withOpacity(0.5),
-                                  child: const Text(
-                                      "Username Already exists! Try another one"))
+                                  child:  Text(
+                                      addmemberctrl.usererrormessage!))
                               : SizedBox(),
                           const Text(
                             "Bill Details",
@@ -182,6 +182,15 @@ class _CreateMemberState extends State<CreateMember> {
                           const SizedBox(
                             height: 16,
                           ),
+
+                          Row(
+                            children: [
+                              Checkbox(value: addmemberctrl.checkdeclaration, onChanged: (value) {
+                                 addmemberctrl.changedeclaration(value!);
+                              },),
+                              Text("Agree terms and conditions\n By accepting you agree to our terms and privacy policies."),
+                            ],
+                          ),
                           CardwithShadow(
                               onpress:addmemberctrl.isloading?null:() async {
 
@@ -189,7 +198,7 @@ class _CreateMemberState extends State<CreateMember> {
                                   
                                   //   child: PaymentStatusCard(status: 1,),
                                   //  ));
-                                  if(_formkey.currentState!.validate()){
+                                  if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration){
 
                                       if (await addmemberctrl.createuser(
                                     username.text, password.text)) {
@@ -525,6 +534,8 @@ class _CreateMemberState extends State<CreateMember> {
                                     }),
                                   );
                                 }
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(!addmemberctrl.checkdeclaration?"Agree declaration to proceed":"Error")));
                                   }
                               },
                               color: Colors.blue[300],

@@ -80,14 +80,14 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
                           
                           const SizedBox(height: 6,),
                           DropdownMenu(
-                          menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white,)),
+                          menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)),
                             onSelected: (index){
                               setState(() {
                                _plancat = plancategory[(index??0)%plancategory.length];
                               });
                             },  
                             dropdownMenuEntries: plancategory.asMap().entries.map((e)=>DropdownMenuEntry(value: e.key, label: e.value,style: ButtonStyle(
-                              backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white,)
+                              backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)
                             ))).toList()),
                         ],
                       ),
