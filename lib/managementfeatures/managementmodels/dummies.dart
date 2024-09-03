@@ -22,7 +22,7 @@ import '../managementdomain/entities.dart/xtremer.dart';
 
 // ];
 List<Paymententity> dummypayments = [];
-List<Xtremer> dummyxtremer = [];
+// List<Xtremer> dummyxtremer = [];
 // List<Staff> dummystaff = [
 //   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"rahul", phone:  Random().nextInt(1000000000).toString(), username:"jfhdj", roleid:Role(roleid: "4", rolename: "Manager"), isactive: true),
 //   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Gokul", phone:  Random().nextInt(1000000000).toString(), username:"jfhfdj", roleid:Role(roleid: "5", rolename: "Receptionist"), isactive: true),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -13,47 +12,68 @@ class DashboardChild4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return CardwithShadow(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          TitleText("Payments"),
-          SizedBox(height: 16,),
-          Text("Recent Transactions"),
-          SizedBox(height: 5,),
-          //header for table
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(children: [
-              Expanded(child: Text("Name")),
-              Expanded(child: Text("Type")),
-              Expanded(child: Text("Amount")),
-              Expanded(child: Text("Date")),
-              Expanded(child: Text("Status")),
-               
-            ],),
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return CardwithShadow(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleText("Payments"),
+          const SizedBox(
+            height: 16,
           ),
-          Expanded(child: ListView.builder(
+          const Text("Recent Transactions"),
+          const SizedBox(
+            height: 5,
+          ),
+          //header for table
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(child: Center(child: Text("Name"))),
+                Expanded(child: Center(child: Text("Type"))),
+                Expanded(child: Center(child: Text("Amount"))),
+                Expanded(child: Center(child: Text("Date"))),
+                Expanded(child: Center(child: Text("Status"))),
+              ],
+            ),
+          ),
+          Expanded(
+              child: ListView.builder(
             shrinkWrap: true,
-            itemBuilder: (c,i){
-        
-            return     Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(children: [
-              Expanded(child: Text("${managectrl.getallpayments[i].transactionId}")),
-              Expanded(child: Text("${managectrl.getallpayments[i].paymentMethod}")),
-              Expanded(child: Text("${managectrl.getallpayments[i].amount}")),
-              Expanded(child: Text("${managectrl.getallpayments[i].paymentDate}")),
-              Expanded(child: Text("Paid")),
-                 
-                    ],),
-            );
-          },itemCount: managectrl.getallpayments.length,))
-        ],));
-      }
-    );
+            itemBuilder: (c, i) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Center(
+                      child: Text("${managectrl.latestpayment10[i].name}"),
+                    )),
+                    Expanded(
+                        child: Center(
+                      child: Text(
+                          "${managectrl.latestpayment10[i].paymentMethod}"),
+                    )),
+                    Expanded(
+                        child: Center(
+                      child: Text(
+                          "${managectrl.latestpayment10[i].receivedAmount}"),
+                    )),
+                    Expanded(
+                        child: Center(
+                      child: Text(
+                          "${managectrl.latestpayment10[i].paymentDate.day}/${managectrl.latestpayment10[i].paymentDate.month}/${managectrl.latestpayment10[i].paymentDate.year}"),
+                    )),
+                    const Expanded(child: Center(child: Text("Paid"))),
+                  ],
+                ),
+              );
+            },
+            itemCount: managectrl.latestpayment10.length,
+          ))
+        ],
+      ));
+    });
   }
 }
-
-

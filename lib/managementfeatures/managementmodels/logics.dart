@@ -1,15 +1,19 @@
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
+import 'dart:developer';
 
-class Logics{
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 
-   static double totalamounts(List<Paymententity> payment,DateTime date){
-        double total = 0;
-        List<Paymententity> d =  payment.where((element) => element.paymentDate.day == date.day).toList();
-        for(Paymententity x in d){
-            total += x.amount;
-
-        }
-
-        return total;
+class Logics {
+  static double totalamounts(List<Alluserpaymentmodel> payment, DateTime date) {
+    double total = 0;
+    List<Alluserpaymentmodel> d = payment
+        .where((element) => element.paymentDate.day == date.day)
+        .toList();
+    for (var element in d) {
+      total += element.receivedAmount;
     }
+
+    log("Total amount :$total");
+
+    return total;
+  }
 }
