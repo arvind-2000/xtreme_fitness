@@ -1,0 +1,66 @@
+name: xtreme_fitness
+description: "A new Flutter project."
+
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.6
+  flutter_animate: ^4.5.0
+  animated_snack_bar: ^0.4.0
+  toastification: ^2.0.0
+  get: ^4.6.6
+  http: ^1.2.2
+  syncfusion_flutter_charts: ^24.1.45
+  image: ^4.2.0
+  worker_manager: ^7.0.3
+
+  url_launcher: ^6.3.0
+  dio: ^5.6.0
+
+  pdf: ^3.11.1
+  printing: ^5.13.2
+  pdf_image_renderer: ^0.7.0
+
+  image_picker: ^1.1.2
+  image_picker_web: ^4.0.0
+  http_parser: ^4.0.2
+  cached_network_image: ^3.4.1
+  web_smooth_scroll: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^3.0.0
+
+flutter:
+
+
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-regular.ttf
+          weight: 300
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+        
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+    
