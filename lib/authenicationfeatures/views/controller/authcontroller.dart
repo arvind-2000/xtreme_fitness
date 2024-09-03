@@ -173,7 +173,7 @@ var d = await authrepo.getUserbyNumber(phone);
     update();
 var d = await authrepo.getUserbyNumber(phone);
     // if( d.entries.first.key!>0){
-    if( d.entries.first.key!=null){
+    if( d.entries.first.key!=null && d.entries.first.key!>0){
         foruserId = d.entries.first.key;
         numberexists = true;
         otploading =false;
@@ -233,6 +233,7 @@ var d = await authrepo.getUserbyNumber(phone);
       otploading = false;
       otp = null;
       numberexists = null;
+      signuperror = null;
       update();
 
   }

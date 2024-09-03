@@ -8,19 +8,20 @@ import '../managementdomain/entities.dart/planentity.dart';
 import '../managementdomain/entities.dart/user.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
-// List<Plan> dummyplan = [
+List<Plan> dummyplan = [
 
-//   Plan(planid: Random().nextInt(1000).toString(), name: "personal", durationinmonths:3, price: 1500, category: "Personal", discount: 0),
-//   Plan(planid: Random().nextInt(1000).toString(), name: "general", durationinmonths:2, price: 1500, category: "General", discount: 10),
-//   Plan(planid: Random().nextInt(1000).toString(), name: "Zumba", durationinmonths:1, price: 1400, category: "Zumba", discount: 5),
-//   Plan(planid: Random().nextInt(1000).toString(), name: "Aerobic", durationinmonths:1, price: 1200, category: "Aerobic", discount: 20),
+  Plan(id: Random().nextInt(1000), name: "personal", durationInMonths:3, price: 1500, category: "Personal", discountPercentage: 0),
+  Plan(id: Random().nextInt(1000), name: "general", durationInMonths:2, price: 1500, category: "General", discountPercentage: 10),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5),
+  Plan(id: Random().nextInt(1000), name: "Aerobic", durationInMonths:1, price: 1200, category: "Aerobic", discountPercentage: 20),
 
-// ];
-// List<ServicesEntity> dummyservices = [
-//   ServicesEntity(serviceid: Random().nextInt(1000).toString(), servicename:"Steam Bath", memberprice: 200, nonmemberprice: 300),
-//   ServicesEntity(serviceid: Random().nextInt(1000).toString(), servicename:"Massage Chair", memberprice: 300, nonmemberprice: 400),
+];
+List<ServiceEntity> dummyservices = [
+  ServiceEntity(id: Random().nextInt(1000), name: "Massage Chair", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30),
+  ServiceEntity(id: Random().nextInt(1000), name: "BMI", memberPrice: 200, nonMemberPrice: 300, durationInMinutes: 30),
+  ServiceEntity(id: Random().nextInt(1000), name: "Sauna", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30),
 
-// ];
+];
 List<Paymententity> dummypayments = [];
 // List<Xtremer> dummyxtremer = [];
 // List<Staff> dummystaff = [

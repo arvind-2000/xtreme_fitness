@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/widgets/gridviewwidget.dart';
 
 import '../../config/const.dart';
+import '../../widgets/card.dart';
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
 import '../../widgets/headingtext.dart';
@@ -32,47 +33,75 @@ class PricingPage extends StatelessWidget {
                 
            
                       size: size,
-                      children: managementcontroller.getallplans.asMap().entries.map((e) => CardwithShadow(
-                        margin: const EdgeInsets.all(16),
-                        padding: EdgeInsets.symmetric(vertical: 16,horizontal:32),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                           HeadingText(e.value.category,size: 16,),
-                           SizedBox(height: 20,),
-                     
-                           Expanded(
-                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                               children: [
-                                 
-                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                   children: [
-                                     Text("Rs ${e.value.price - (e.value.price * (e.value.discountPercentage/100))}/ ",style: const TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                                     Text("${e.value.durationInMonths} months")
-                                   ],
-                                 ),
-                                 const SizedBox(height: 30,),
-                                  const Text("Price"),
-                                                HeadingText("Rs ${e.value.price}"  ,size: 24,),
-                                                    const SizedBox(height: 10,),
-                                                 const Text("Discount"),
-                                 Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                                 const SizedBox(height: 10,),
-                                             const Text("Actual Price"),
-                                                HeadingText("Rs ${e.value.price - (e.value.price * (e.value.discountPercentage/100))}"  ,size: 24,),
-                               ],
-                             ),
+                      children: managementcontroller.getallplans.asMap().entries.map((e) => SizedBox(
+                                         width: 400,
+                     child: CardwithShadow(
+                      margin: const EdgeInsets.symmetric(vertical: 32,horizontal: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 32,horizontal:32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                         HeadingText(e.value.category,size: 20,color: Colors.white60,),
+                         const SizedBox(height: 20,),
+                                          
+                         Expanded(
+                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                         
+                             children: [
+                               
+                               Row(
+                               
+                                 children: [
+                                   Text("Rs ${e.value.price - (e.value.price * (e.value.discountPercentage/100))}",style: const TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
+                                   Text("/${e.value.durationInMonths} ${e.value.durationInMonths<=1?"month":"months"}")
+                                 ],
+                               ),
+                               const SizedBox(height: 10,),
+                                e.value.discountPercentage<=0? const SizedBox():const Text("Discount",style: TextStyle(color: Colors.white60,),),
+                               e.value.discountPercentage<=0? const SizedBox():Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                               const SizedBox(height: 30,),
+                                const Text("Features",style: TextStyle(color: Colors.white60,),),
+                                          const SizedBox(height: 16,),
+                                              Row(
+                                                children: [
+                                                  e.value.category.toLowerCase()=="personal"?const Icon(Icons.check,color: Colors.green,size:14,):const Icon(Icons.close,color: Colors.red,size:14,),
+                                                  const SizedBox(width: 16,),
+                                                   e.value.category.toLowerCase()=="personal"?Text("Trainer Included"  ,style: TextStyle(fontSize: 14,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),):Text("No Trainers"  ,style: TextStyle(fontSize: 14,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),),
+                                                ],
+                                              ),   const SizedBox(height: 10,),
+                                                   Row(
+                                                children: [
+                                                  const Icon(Icons.check,color: Colors.green,size:14),
+                                                  const SizedBox(width: 16,),
+                                                 Text("Service Discount"  ,style: TextStyle(fontSize: 14,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),),
+                                                ],
+                                              ),
+                                       const SizedBox(height: 10,),
+                                                      Row(
+                                                children: [
+                                                  const Icon(Icons.check,color: Colors.green,size:14,),
+                                                  const SizedBox(width: 16,),
+                                                 Text("One time BMI Free"  ,style: TextStyle(fontSize: 14,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),),
+                                                ],
+                                              ),
+                                                  const SizedBox(height: 10,),
+                                          
+                                     
+                             ],
                            ),
-                     
-                              const CardBorder(
+                         ),
+                                          
+                            SizedBox(
+                              width: double.maxFinite,
+                              child: Cardonly(
                                 margin: EdgeInsets.zero,
-                                color: Colors.grey,
-                                child: Text("Choose Plan",style: TextStyle(color: Colors.white),))
-                          ],
-                        )),).toList()
+                                color: Theme.of(context).colorScheme.secondary,
+                                child: Center(child: Text("Choose Plan",style: TextStyle(),))),
+                            )
+                        ],
+                      )),
+                                           )).toList()
                       ),
               ],),
             ),

@@ -128,10 +128,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           authctrl.signuperror!=null?AnimatedOpacity(
                             duration: Durations.extralong1,
-                            opacity: authctrl.numberexists!?1:0,
+                            opacity: authctrl.signuperror!=null?1:0,
                             child: Cardonly(
                               color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                              child: Text(authctrl.signuperror!,textAlign: TextAlign.center,))):const SizedBox(),
+                              child: Text(authctrl.signuperror??"",textAlign: TextAlign.center,))):const SizedBox(),
                           authctrl.numberexists!=null&&authctrl.numberexists==false?Column(
                                 children: [
                                   const Text("We have send an OTP to your number").animate().slideY(begin: 1,end: 0),

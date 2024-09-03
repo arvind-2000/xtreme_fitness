@@ -28,15 +28,12 @@ class ResponsivePages extends StatelessWidget {
           ),
         ) :SizedBox(
           height: screenheight,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1600),
-            child: Row(children: [
-           SizedBox(width: issize?100:0,),
-                Expanded(child: child1),
-               child2!=null?Expanded(child: child2!):const SizedBox(),
-                  SizedBox(width: issize?100:0,),
-            ],),
-          ),
+          child: Row(children: [
+                     SizedBox(width: issize?100:0,),
+              Expanded(child: child1),
+             child2!=null?Expanded(child: child2!):const SizedBox(),
+                SizedBox(width: issize?100:0,),
+          ],),
         ),
       
     ) ;

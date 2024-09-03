@@ -73,24 +73,26 @@ class LandingNavBar extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CardBorder(
+                            padding:EdgeInsets.zero,
                               onpress: (){
                                 authctrl.changeAuthPage(0);
                                 Get.toNamed("/login");
                               },
                               color: Colors.red[800],
                               child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 4),
+                              padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
                               child: Text("Log In",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.red[800],),),
                             ), 
                             ),
                             const SizedBox(width: 10,),
                             CardwithShadow(
+                              
                               onpress: (){
                                 authctrl.changeAuthPage(1);
                                 Get.toNamed("/signup");
                               },
                               color: Colors.red[800],
-                             padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 12),
+                             padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
                               child:  const Text("Sign Up",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),), 
                             ),
                                                

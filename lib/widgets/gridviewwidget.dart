@@ -18,11 +18,11 @@ class GridViewWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           
-            crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
+            crossAxisCount: size<600?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
             // crossAxisCount: 4,
             mainAxisSpacing: 10,
              crossAxisSpacing: 10,      
-            childAspectRatio:  size<500?1/1.5:size<800?3/4.5 : 3/4,
+            childAspectRatio:  size<600?1/1.2:size>mobilescreen && size<1200?3/5 : 3/4,
                    
             ),
             shrinkWrap: true,

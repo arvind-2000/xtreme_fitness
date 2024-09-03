@@ -52,7 +52,7 @@ class AuthenticationRepositoryImpl  implements AuthenticationRepository{
 
 } on Exception catch (e) {
   print(e);
- return {uid!:"Session tiome out\nTry again"};
+ return {uid!:"Session time out.\nTry again"};
 }
       // print(response.body);
    return {uid:"Session time out.Try again"}; 

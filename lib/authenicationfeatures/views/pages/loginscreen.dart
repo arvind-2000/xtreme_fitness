@@ -94,8 +94,8 @@ Future<bool> validateform(String email,String pass)  async{
                             width: double.maxFinite,
                             child: Cardonly(
                               margin: EdgeInsets.symmetric(vertical: 8),
-                              color: Theme.of(context).colorScheme.secondary,
-                              child: Center(child: Text(authctrl.loginerrortext??""))),
+                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                              child: Center(child: Text(authctrl.loginerrortext??"",textAlign: TextAlign.center))),
                           ),),
 
                         TextFieldWidget(
