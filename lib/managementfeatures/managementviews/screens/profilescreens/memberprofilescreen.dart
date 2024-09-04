@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -6,6 +7,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
+import 'package:xtreme_fitness/widgets/imagewidgets.dart';
 
 import '../../../../config/apis.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
@@ -54,7 +56,7 @@ class MemberProfilescreen extends StatelessWidget {
                                     child:SizedBox(
                                       height: 100,
                                       width: 100,
-                                      child: ImageWidget(url: "http://10.10.1.76/ProfilePhotos/ab14f71b-fd31-4104-ab2d-281ceb117ac8_prof43.png",)),
+                                      child: MemoryImageWidget(id: user!.id)),
                                   ),
 
                                   IconButton(onPressed: (){}, icon: const Icon(Icons.edit,size: 16,))

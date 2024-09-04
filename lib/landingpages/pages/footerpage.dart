@@ -13,7 +13,7 @@ class ContactFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsivePages(
-          colors: Colors.black45,
+          colors: Color.fromARGB(255, 29, 28, 28),
       screenheight: 400,
       child1: Container(
       

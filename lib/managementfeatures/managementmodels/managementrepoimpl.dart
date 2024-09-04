@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xtreme_fitness/config/apis.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -791,4 +792,54 @@ class ManagementrepoImpl implements ManagementRepo {
     }
     return [];
   }
+
+  @override
+  Future<Admission?> viewadmission()async{
+   final url = Uri.parse('$api/api/Admissions'); // Replace with your API endpoint
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      // Parse the response body
+      final  List<dynamic> jsonList = json.decode(response.body);
+ 
+      // Convert the JSON data to an Admission object
+      return jsonList.map((json) => Admission.fromJson(json)).toList().first;
+    } else {
+      // Handle error response
+      print('Failed to load admission. Status code: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    // Handle exceptions like network errors
+    print('Error fetching admission: $e');
+    return null;
+  }
+  }
+  
+  @override
+  Future<Uint8List?> getImage(int id) async{
+    Uri url = Uri.parse("$api/api/Xtremers/$id/photo");
+ try {
+    // Make the GET request
+    final response = await http.get(url);
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      
+      // Return the response body as bytes
+      return response.bodyBytes;
+    } else {
+      // Handle errors or unsuccessful responses
+      print('Failed to load photo. Status code: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    // Handle exceptions
+    print('Error fetching photo: $e');
+    return null;
+  }
+}
+
 }

@@ -52,9 +52,9 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
            
             children: [
-                  const Padding(
+                  Padding(
                 padding: EdgeInsets.all(16.0),
-                child: HeadingText("Add Member",size: 30,),
+                child: HeadingText(widget.phonenumber!=null?"Xtreme Registration":"Add Membership",size: 30,),
               ),
           
               Center(

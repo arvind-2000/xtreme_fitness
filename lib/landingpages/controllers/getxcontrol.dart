@@ -32,8 +32,8 @@ class GetxLandingcontroller extends GetxController{
     }
     void getPlans() async{
 
-        // _plan = await managementrepoImpl.getPlans();
-        _plan =dummyplan;
+        _plan = await managementrepoImpl.getPlans();
+        // _plan =dummyplan;
         print(_plan.length);
         update();
     }
@@ -41,8 +41,8 @@ class GetxLandingcontroller extends GetxController{
     
     void getServices() async{
 
-        // _services = await managementrepoImpl.getServices();
-        _services = dummyservices;
+        _services = await managementrepoImpl.getServices();
+        // _services = dummyservices;
         update();
     }
     void changelandingpage(int pageindex){

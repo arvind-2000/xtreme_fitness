@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
@@ -12,8 +11,8 @@ import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
-  const CreateMember({super.key});
-  
+  const CreateMember({super.key, this.phone});
+  final String? phone;
   @override
   State<CreateMember> createState() => _CreateMemberState();
 }
@@ -188,9 +187,29 @@ class _CreateMemberState extends State<CreateMember> {
                               Checkbox(value: addmemberctrl.checkdeclaration, onChanged: (value) {
                                  addmemberctrl.changedeclaration(value!);
                               },),
-                              Text("Agree terms and conditions\n By accepting you agree to our terms and privacy policies."),
+                              Text(
+                               
+                                "By accepting you agree to our terms and privacy policies."),
                             ],
                           ),
+                      SizedBox(height: 16,),
+                          
+                          Row(
+                            children: [
+                              Checkbox(value: addmemberctrl.paymentdeclaration, onChanged: (value) {
+                                 addmemberctrl.changepaymentdeclaration(value!);
+                              },),
+                              InkWell(
+                                child: Text(
+                                 
+                                  "Agree Terms and Conditions",style: TextStyle(color: Colors.blue),),
+                              ),
+                            ],
+                          ),
+                                                 const SizedBox(
+                            height: 16,
+                          ),
+
                           CardwithShadow(
                               onpress:addmemberctrl.isloading?null:() async {
 
@@ -198,7 +217,7 @@ class _CreateMemberState extends State<CreateMember> {
                                   
                                   //   child: PaymentStatusCard(status: 1,),
                                   //  ));
-                                  if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration){
+                                  if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration&& addmemberctrl.paymentdeclaration){
 
                                       if (await addmemberctrl.createuser(
                                     username.text, password.text)) {
@@ -212,131 +231,6 @@ class _CreateMemberState extends State<CreateMember> {
                                           },
                                           yes: () {
                                             addmemberctrl.addXtremer();
-                                            // ScaffoldMessenger.of(context)
-                                            //     .showSnackBar(const SnackBar(
-                                            //   content:
-                                            //       Text("Added Member Successfully"),
-                                            //   duration: Durations.extralong1,
-                                            // ));
-
-                                            Navigator.pop(context);
-                                         
-                                            // showDialog(
-                                            //   context: context,
-                                            //   builder: (context) => Dialog(
-                                            //     child: SizedBox(
-                                            //       height: 600,
-                                            //       width: 400,
-                                            //       child: Padding(
-                                            //         padding:
-                                            //             const EdgeInsets.all(20),
-                                            //         child: Column(
-                                            //           crossAxisAlignment:
-                                            //               CrossAxisAlignment.start,
-                                            //           children: [
-                                            //             Expanded(
-                                            //               child: Column(
-                                            //                 crossAxisAlignment:
-                                            //                     CrossAxisAlignment
-                                            //                         .start,
-                                            //                 children: [
-                                            //                   Row(
-                                            //                     mainAxisAlignment:
-                                            //                         MainAxisAlignment
-                                            //                             .center,
-                                            //                     children: [
-                                            //                       Image.asset(
-                                            //                         'assets/logo2.png',
-                                            //                         height: 100,
-                                            //                         width: 100,
-                                            //                       ),
-                                            //                     ],
-                                            //                   ),
-                                            //                   const SizedBox(
-                                            //                       height: 20),
-                                            //                   const Text(
-                                            //                       'Company Name',
-                                            //                       style: TextStyle(
-                                            //                           fontSize: 24,
-                                            //                           fontWeight:
-                                            //                               FontWeight
-                                            //                                   .bold)),
-                                            //                   const Text(
-                                            //                       'Phone: (123) 456-7890',
-                                            //                       style: TextStyle(
-                                            //                           fontSize:
-                                            //                               18)),
-                                            //                   const Text(
-                                            //                       'Email: info@company.com',
-                                            //                       style: TextStyle(
-                                            //                           fontSize:
-                                            //                               18)),
-                                            //                   const SizedBox(
-                                            //                       height: 20),
-                                            //                   const Divider(),
-                                            //                   const SizedBox(
-                                            //                       height: 10),
-                                            //                   const Text(
-                                            //                       'Transaction ID: 123456789',
-                                            //                       style: TextStyle(
-                                            //                           fontSize:
-                                            //                               18)),
-                                            //                   Text(
-                                            //                       'Date: ${DateTime.now().toLocal().toString()}',
-                                            //                       style:
-                                            //                           const TextStyle(
-                                            //                               fontSize:
-                                            //                                   18)),
-                                            //                   const SizedBox(
-                                            //                       height: 20),
-                                            //                   const Row(
-                                            //                     mainAxisAlignment:
-                                            //                         MainAxisAlignment
-                                            //                             .spaceBetween,
-                                            //                     children: [
-                                            //                       Text('Amount Due',
-                                            //                           style: TextStyle(
-                                            //                               fontSize:
-                                            //                                   18)),
-                                            //                       Text('\$123.45',
-                                            //                           style: TextStyle(
-                                            //                               fontSize:
-                                            //                                   18)),
-                                            //                     ],
-                                            //                   ),
-                                            //                   const SizedBox(
-                                            //                       height: 20),
-                                            //                   const Text(
-                                            //                       'Thank you for your purchase!',
-                                            //                       style: TextStyle(
-                                            //                           fontSize:
-                                            //                               16)),
-                                            //                 ],
-                                            //               ),
-                                            //             ),
-                                            //             CardwithShadow(
-                                            //                 onpress: () {
-                                            //                   addmemberctrl
-                                            //                       .createAndPrintPdf();
-                                            //                   Navigator.pop(
-                                            //                       context);
-                                            //                 },
-                                            //                 child: const Row(
-                                            //                   children: [
-                                            //                     Icon(Icons.print),
-                                            //                     SizedBox(
-                                            //                       width: 10,
-                                            //                     ),
-                                            //                     Text(
-                                            //                         "Print Receipt")
-                                            //                   ],
-                                            //                 ))
-                                            //           ],
-                                            //         ),
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // );
                                           },
                                           child: Form(
                                             key: _formKeys,
@@ -479,12 +373,12 @@ class _CreateMemberState extends State<CreateMember> {
                                                 //   ],
                                                 // )
 
-                                                const Text(
+                                                widget.phone!=null?const SizedBox(): const Text(
                                                     "Choose Payment Method"),
-                                                const SizedBox(
-                                                  height: 16,
+                                               SizedBox(
+                                                  height: widget.phone!=null?0: 16,
                                                 ),
-                                                Row(
+                                               widget.phone!=null?const SizedBox():Row(
                                                   children: [
                                                     Radio(
                                                         activeColor:

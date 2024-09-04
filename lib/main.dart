@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
@@ -16,7 +17,7 @@ void main() async{
 //  workerManager.log = true;
 //   await workerManager.init();
 
-    setUrlStrategy(PathUrlStrategy());
+    // setUrlStrategy(PathUrlStrategy());
     Get.put(GetxPageController());
     Get.put(GetxAuthController());
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
       theme: ThemeData(colorScheme: darkColorSchemes,
-      scaffoldBackgroundColor: Color.fromARGB(255, 24, 23, 23),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
       ),
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
@@ -53,6 +54,6 @@ class MyApp extends StatelessWidget {
       GetPage(name: '/forgotpassword', page: () => const AuthHandlerPage(index: 2,)),
       ],
              
-    );
+    ).animate().fadeIn();
   }
 }

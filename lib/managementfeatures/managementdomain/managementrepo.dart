@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 
+import 'entities.dart/admission.dart';
 import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
 import 'entities.dart/serviceusage.dart';
@@ -26,6 +27,7 @@ abstract class ManagementRepo {
   Future<String> updateMember(Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
+  Future<Uint8List?> getImage(int id);
 
   ///subscription renewal function
   Future<String> renewal(
@@ -79,4 +81,8 @@ abstract class ManagementRepo {
   ///service usage api
   Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule);
   Future<ServiceSchedule?> getServiceUsage(int id);
+
+
+  //admission
+  Future<Admission?> viewadmission();
 }

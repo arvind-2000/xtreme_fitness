@@ -9,7 +9,6 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../widgets/headingtext.dart';
-import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 
 class EditUserScreen extends StatefulWidget {

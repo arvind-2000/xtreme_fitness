@@ -27,8 +27,10 @@ class GetxPageController extends GetxController{
 
 
   void changeviewprofile(){
-      viewprofile = !viewprofile;
+
+     viewprofile =  viewprofile?false:true;
       update();
+          print("In page control $viewprofile");
 
   }
 }

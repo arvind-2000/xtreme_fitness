@@ -167,7 +167,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                       ],
                                     )),
                                     MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                   MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("Personal",style:TextStyle(fontSize: 14))),
+                                   MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getallXtremer[index].trainerName!.isEmpty?"General":"Personal",style:const TextStyle(fontSize: 14))),
                                     Expanded(child:MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox(
                                       height: 30,
                                       child: CardBorder(
@@ -176,7 +176,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           child: DropdownButton(
                                             underline:const SizedBox(),
                                             value: renewalpos,
-                                            items:renewlist.asMap().entries.map((e) => DropdownMenuItem(value: e.key,child: Text(e.value,style: TextStyle(fontSize: 10),),)).toList(), onChanged:(value) {
+                                            items:renewlist.asMap().entries.map((e) => DropdownMenuItem(value: e.key,child: Text(e.value,style: const TextStyle(fontSize: 10),),)).toList(), onChanged:(value) {
                                             setState(() {       
                                                renewalpos = value!;  
                                       

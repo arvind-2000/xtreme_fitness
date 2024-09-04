@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
+import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -104,15 +105,10 @@ class ManagementController extends GetxController {
     });
   }
 
-  Plan getadmission() {
-    // return getallplans.firstWhere((element) => element.category=="Admission",);
-    return Plan(
-        id: 0,
-        name: "Admission",
-        durationInMonths: 1,
-        price: 1200,
-        category: "Admission",
-        discountPercentage: 0);
+  Future<Admission?> getadmission() async{
+    
+    return await managementRepo.viewadmission();
+
   }
 
   void getStaff() async {

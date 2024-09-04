@@ -20,6 +20,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 
+import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/paymentdetails.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -39,7 +40,7 @@ class AddMemberController extends GetxController {
   Uint8List? _imageData;
   Uint8List? get getprofile => _imageData;
   bool setallquestionaire = false;
-  Plan? admissionfees;
+  Admission? admissionfees;
   bool checkdeclaration = false;
   String? usererrormessage;
   PaymentDetails? paymentsdetails;
@@ -53,7 +54,8 @@ class AddMemberController extends GetxController {
   bool isloading = false;
   bool? usercreated;
   bool userexist = false;
-  String? _userid; 
+  String? _userid;
+  bool paymentdeclaration = false; 
   //questionaire set
   Map<String, bool> healthQuestions = {
     'exerciseQ': false,
@@ -75,9 +77,9 @@ dynamic _scheduler;
   ManagementController managectrl = Get.find<ManagementController>();
   GetxAuthController authctrl = Get.find<GetxAuthController>();
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-    admissionfees = Get.find<ManagementController>().getadmission();
+    admissionfees = await Get.find<ManagementController>().getadmission();
     update();
   }
 
@@ -176,7 +178,7 @@ dynamic _scheduler;
               usercreated = true;
               createAndPrintPdf();
               isloading = false;
-              Get.toNamed("/login");
+              // Get.toNamed("/login");
               update();
       }catch(e){
             usercreated = false;
@@ -455,6 +457,11 @@ else {
 
 void changedeclaration(bool val){
     checkdeclaration = val;
+    update();
+}
+
+void changepaymentdeclaration(bool val){
+    paymentdeclaration = val;
     update();
 }
 void cancelscheduler(){

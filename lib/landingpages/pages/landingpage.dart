@@ -1,7 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
@@ -48,7 +46,7 @@ class LandingPagePlan extends StatelessWidget {
       builder: (managectrl) {
         return ResponsivePages(
           
-          colors: Colors.black54,
+          colors: Color.fromARGB(255, 24, 23, 23),
           child1: SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +200,7 @@ class LandingPageServices extends StatelessWidget {
     return GetBuilder<GetxLandingcontroller>(
       builder: (managectrl) {
         return ResponsivePages(
-        
+          colors: Color.fromARGB(255, 34, 33, 33)!,
           child1: SizedBox(
             child: Column(
 

@@ -38,6 +38,7 @@ class PaymentStatusCard extends StatelessWidget {
                           IconButton(
                               onPressed: () {
                                 addmemberctrl.changepaymentstatus(0);
+                                
                               },
                               icon: const Icon(Icons.close)),
                         ],

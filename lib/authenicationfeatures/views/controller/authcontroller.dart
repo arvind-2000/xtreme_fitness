@@ -31,7 +31,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
   int? otp;
   bool otploading = false;
   bool? forgotpass;
@@ -118,11 +118,12 @@ class GetxAuthController extends GetxController {
       update();
    
     }); 
-      //     await authrepo.logout().then((value) {
-      //   print(value);
-      // },).then((value) {
+          await authrepo.logout().then((value) {
+        print(value);
+          
+      },).then((value) {
          
-      // },);
+      },);
 
   }
 

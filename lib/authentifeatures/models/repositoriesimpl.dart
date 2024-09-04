@@ -8,58 +8,112 @@ import 'usecasesimpl.dart';
 
 class AuthenticationRepositoryImpl  implements AuthenticationRepository{
   
-  @override
-  Future<Map<String?,String>> emailAuthentication({required String email, required String pass}) async{
+//   @override
+//   Future<Map<String?,String>> emailAuthentication({required String email, required String pass}) async{
    
+//   print("in login auth");
+//   String? uid = "";
+//   String message = "";
+//     Uri url =Uri.parse("$api/api/Users/login");
+
+//     final query = {
+//       "userName":email,
+//       "passwordHash":pass
+//     };
+
+//       try {
+//   final response = await http.post(
+//     url,
+//     headers: {
+//       "Content-Type":"application/json"
+//     },
+//     body:jsonEncode({
+//       "userName":email,
+//       "passwordHash":pass
+//     })
+
+//   );
+
+//   if(response.statusCode>=200 && response.statusCode<300){
+//   var d = jsonDecode( response.body);
+  
+
+//   message = d["Message"]??d;
+//   uid = d["Data"]["UserId"].toString();
+
+//   }else if (response.statusCode>=400 && response.statusCode<500){
+
+//   print(response.body);
+//   return {uid:response.body};
+
+//   }else if(response.statusCode>500){
+//       return {uid:"There is an internal Error\n We will get back soon."};
+//   }
+
+// } on Exception catch (e) {
+//   print(e);
+//  return {uid!:"Session time out.\nTry again"};
+// }
+//       // print(response.body);
+//    return {uid:"Session time out.Try again"}; 
+//   }
+
+//with cookies
+@override
+Future<Map<String?, String>> emailAuthentication({
+  required String email,
+  required String pass,
+}) async {
   print("in login auth");
   String? uid = "";
   String message = "";
-    Uri url =Uri.parse("$api/api/Users/login");
+  Uri url = Uri.parse("$api/api/Users/login");
 
-    final query = {
-      "userName":email,
-      "passwordHash":pass
-    };
+  // Prepare the request body
+  final query = {
+    "userName": email,
+    "passwordHash": pass,
+  };
 
-      try {
-  final response = await http.post(
-    url,
-    headers: {
-      "Content-Type":"application/json"
-    },
-    body:jsonEncode({
-      "userName":email,
-      "passwordHash":pass
-    })
+  try {
+    // Send the POST request
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(query),
+    );
 
-  );
+    // Check if the request was successful
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // Decode the response body
+      var d = jsonDecode(response.body);
 
-  if(response.statusCode>=200 && response.statusCode<300){
-  var d = jsonDecode( response.body);
-  
+      // Extract the message and user ID
+      message = d["Message"] ?? d;
+      uid = d["Data"]["UserId"].toString();
 
-  message = d["Message"]??d;
-  uid = d["Data"]["UserId"].toString();
-
-  }else if (response.statusCode>=400 && response.statusCode<500){
-
-  print(response.body);
-  return {uid:response.body};
-
-  }else if(response.statusCode>500){
-      return {uid:"There is an internal Error\n We will get back soon."};
+      // Read cookies from response headers
+      String? rawCookie = response.headers['set-cookie'];
+      if (rawCookie != null) {
+        // Extract cookie value, if multiple cookies are set, you might need to parse them separately
+        print("Cookies received: $rawCookie");
+        // You can also save the cookie if needed for future requests
+      }
+    } else if (response.statusCode >= 400 && response.statusCode < 500) {
+      print(response.body);
+      return {uid: response.body};
+    } else if (response.statusCode > 500) {
+      return {uid: "There is an internal error.\n We will get back soon."};
+    }
+  } on Exception catch (e) {
+    print(e);
+    return {uid!: "Session time out.\nTry again"};
   }
 
-} on Exception catch (e) {
-  print(e);
- return {uid!:"Session time out.\nTry again"};
+  return {uid: "Session time out. Try again"};
 }
-      // print(response.body);
-   return {uid:"Session time out.Try again"}; 
-  }
-
-
-
   
   @override
   Future<Map<String, int>> userRegistration({required String email, required String pass, required String phone, required String name}) async {

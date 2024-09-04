@@ -49,7 +49,8 @@ class _HandlerPageState extends State<HandlerPage> {
               ):null,
               body: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1900),
-                child:SafeArea(child:authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):DashBoardScreen())
+                // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
+                child:SafeArea(child:DashBoardScreen())
                 ),
             );
           }
