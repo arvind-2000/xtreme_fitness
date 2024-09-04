@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/widgets/cardborder.dart';
 
 import '../../../authentifeatures/models/usecasesimpl.dart';
 import '../../../widgets/card.dart';
@@ -92,6 +91,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                           onPressed: authctrl.otploading
                               ? null
                               : () {
+                                  authctrl.disposeforgotpass();
                                   Get.offAndToNamed('/login');
                                 },
                           icon: Icon(Icons.close)),
@@ -126,6 +126,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                 ),
                                 TextFieldWidget(
                                   hint: "Password",
+                                  obscure: true,
                                   icon: const Icon(Icons.lock),
                                   controller: _passwordcontroller,
                                   focusnode: _confirmpasswordfocus,
@@ -143,6 +144,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                   hint: "Confirm Password",
                                   icon: const Icon(Icons.lock),
                                   controller: _confirmpasswordcontroller,
+                                  obscure: true,
                                   focusnode: _passwordfocus,
                                   enabletext: !authctrl.otploading,
                                   nextfocusnode: _confirmpasswordfocus,
@@ -394,6 +396,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                       ),
                       InkWell(
                         onTap: () {
+                            authctrl.disposeforgotpass();
                           Get.offNamed('/login');
                         },
                         child: Text('Log In',

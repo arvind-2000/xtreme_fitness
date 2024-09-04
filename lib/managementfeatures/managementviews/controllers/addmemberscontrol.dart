@@ -16,6 +16,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/imageusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -28,16 +29,18 @@ import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/managementrepo.dart';
 
 class AddMemberController extends GetxController {
-  Plan? selectedplan;
-  Xtremer xtremer = Xtremer(
+  Plan? selectedplan = dummyplan.first;
+      String? imagesizeerrors;
+      // Xtremer? xtremer;
+  Xtremer? xtremer = Xtremer(
     surname: "",
-    firstName: "",
+    firstName: "fdfdf",
     dateOfBirth: DateTime.now(),
-    address: "",
-    postcode: "",
+    address: "fdfdf",
+    postcode: "fdfdfd",
     occupation: "",
-    homeNumber: "",
-    mobileNumber: "",
+    homeNumber: "fdfdfd",
+    mobileNumber: "fdfdf",
     email: "",
     profilePhotoPath: "",
     disability: "",
@@ -45,7 +48,7 @@ class AddMemberController extends GetxController {
     preferTiming: "",
     contactName: "",
     contactNumber: "",
-    relationship: "",
+    relationship: "father",
     unableToExercise: true,
     physicianAdvisedAgainst: false,
     cardiacIssues: false,
@@ -62,6 +65,7 @@ class AddMemberController extends GetxController {
     surgeryNumber: "",
     surgeryAddress: "",
     declaration: true,
+
   );
   DoctorDetails? doctorDetails;
   Paymententity? paymentdetails;
@@ -83,8 +87,8 @@ class AddMemberController extends GetxController {
   String surgeryno = "";
   String surgeryaddress = "";
   int paymentstatus = 0;
-  bool ispaymentcash = true;
-  bool isimagesize = true;
+  bool ispaymentcash = false;
+  bool? isimagesize;
   bool isloading = false;
   bool? usercreated;
   bool userexist = false;
@@ -125,17 +129,17 @@ class AddMemberController extends GetxController {
     Map<int, String> res = await repo.addUser(
         User(
             uid: "",
-            name: xtremer.firstName!,
-            phone: xtremer.mobileNumber!,
+            name: xtremer!.firstName!,
+            phone: xtremer!.mobileNumber!,
             username: username!,
             roleid: Role(roleid: "0", rolename: "Member")),
         pass!,
-        xtremer.mobileNumber!);
+        xtremer!.mobileNumber!);
     if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
       usererrormessage = res.entries.first.value;
       _userid = await repo.viewUser(username, pass);
       print("in user create in create member: ${_userid!}");
-      xtremer.XtremerId = int.tryParse(_userid!);
+      xtremer!.XtremerId = int.tryParse(_userid!);
       userexist = false;
 
       update();
@@ -152,9 +156,9 @@ class AddMemberController extends GetxController {
   }
 
   void addXtremer() async {
-    if (xtremer.XtremerId != null) {
+    if (xtremer!.XtremerId != null) {
       Subscription subs = Subscription(
-          userId: xtremer.XtremerId.toString(),
+          userId: xtremer!.XtremerId.toString(),
           planId: selectedplan!.id,
           startDate: DateTime.now(),
           endDate: DateTime.now()
@@ -165,7 +169,7 @@ class AddMemberController extends GetxController {
       if (subss != null && checkdeclaration) {
         Paymententity payments = Paymententity(
             id: 0,
-            userId: xtremer.XtremerId!,
+            userId: xtremer!.XtremerId!,
             amount: admissionfees!.price + selectedplan!.price,
             discountPercentage: selectedplan!.discountPercentage,
             receivedAmount: admissionfees!.price +
@@ -174,10 +178,10 @@ class AddMemberController extends GetxController {
                         (selectedplan!.discountPercentage / 100))),
             paymentDate: DateTime.now(),
             transactionId:
-                "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}",
+                "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
             paymentStatus: "Initiated",
             paymentMethod: ispaymentcash ? "Cash" : "Online",
-            paymentType: "Membership",
+            paymentType: "Admission + ${selectedplan!.name}",
             subscriptionId: selectedplan!.id,
             serviceUsageId: 0);
         paymentdetails = payments;
@@ -185,7 +189,7 @@ class AddMemberController extends GetxController {
         //online
         if (!ispaymentcash) {
           var d = await repo.addPayments(payments,
-              userid: xtremer.XtremerId.toString(), isonline: true);
+              userid: xtremer!.XtremerId.toString(), isonline: true);
           if (d["response"] == 200) {
             print("in response: 200");
 
@@ -194,7 +198,7 @@ class AddMemberController extends GetxController {
           //wait with dialog options
         } else {
           var d = await repo.addPayments(payments,
-              userid: xtremer.XtremerId.toString(), isonline: false);
+              userid: xtremer!.XtremerId.toString(), isonline: false);
           if (d["response"] == 200) {
             creatextremer();
           }
@@ -217,8 +221,9 @@ class AddMemberController extends GetxController {
 
   void creatextremer()async{
      
-      Map<String,dynamic> res = await repo.addMember(xtremer, _imageData,xtremer.XtremerId.toString());
+   
       try{
+           Map<String,dynamic> res = await repo.addMember(xtremer!, _imageData,xtremer!.XtremerId.toString());
                xtremer = Xtremer.fromJson(jsonDecode( res["response"]));
               usercreated = true;
               createAndPrintPdf();
@@ -244,15 +249,15 @@ class AddMemberController extends GetxController {
     required String emergencycontact,
     required String emergencyname,
   }) {
-    xtremer.firstName = name;
-    xtremer.mobileNumber = phone;
-    xtremer.homeNumber = homephone;
-    xtremer.postcode = postalcode;
-    xtremer.occupation = occupation;
-    xtremer.address = address;
-    xtremer.relationship = relation[relationship]!;
-    xtremer.contactNumber = emergencycontact;
-    xtremer.contactName = emergencyname;
+    xtremer!.firstName = name;
+    xtremer!.mobileNumber = phone;
+    xtremer!.homeNumber = homephone;
+    xtremer!.postcode = postalcode;
+    xtremer!.occupation = occupation;
+    xtremer!.address = address;
+    xtremer!.relationship = relation[relationship]!;
+    xtremer!.contactNumber = emergencycontact;
+    xtremer!.contactName = emergencyname;
     update();
   }
 
@@ -277,7 +282,7 @@ class AddMemberController extends GetxController {
 
   void addTrainer(TrainerEntity trainere) {
     _trainer = trainere;
-    xtremer.trainerName = trainere.name;
+    xtremer!.trainerName = trainere.name;
     update();
   }
 
@@ -288,6 +293,7 @@ class AddMemberController extends GetxController {
 
   void setRelation(int rel) {
     relationship = rel;
+    xtremer!.relationship =relation[rel];
     update();
   }
 
@@ -298,10 +304,10 @@ class AddMemberController extends GetxController {
 
   void addDoctor(
       String doctorname, String surgeryno, String surgeryname, String t) {
-    xtremer.doctorName = doctorname;
-    xtremer.surgeryName = surgeryname;
-    xtremer.surgeryNumber = surgeryno;
-    xtremer.surgeryAddress = "Imphal";
+    xtremer!.doctorName = doctorname;
+    xtremer!.surgeryName = surgeryname;
+    xtremer!.surgeryNumber = surgeryno;
+    xtremer!.surgeryAddress = "Imphal";
     update();
   }
 
@@ -342,14 +348,16 @@ class AddMemberController extends GetxController {
     try {
       final result = await ImagePickerWeb.getImageAsBytes();
       if (result != null && recognizeImageFormat(result) != "Unknown format") {
-        print("in image formaat");
+        print("in image format");
         // _imageData = await resizeImage(result, 100, 100);
         if (await isImageSizeExceeds(result) == false) {
           _imageData = result;
           isimagesize = true;
+            imagesizeerrors = "Photo Added";
         } else {
           _imageData = null;
           isimagesize = false;
+          imagesizeerrors = "Photo exceeds 500 x 500 pixels";
         }
 
         isImageloading = false;
@@ -357,6 +365,7 @@ class AddMemberController extends GetxController {
       } else {
         print("error in images");
         _imageData = null;
+        imagesizeerrors = "The photo must be a png or jpg/jpeg";
         isImageloading = false;
         update();
       }
@@ -488,6 +497,72 @@ class AddMemberController extends GetxController {
         },
       );
     }
+  }
+
+  void renewalsubmission()async{
+     if (xtremer!.XtremerId != null) {
+      Subscription subs = Subscription(
+          userId: xtremer!.XtremerId.toString(),
+          planId: selectedplan!.id,
+          startDate: DateTime.now(),
+          endDate: DateTime.now()
+              .add(Duration(days: selectedplan!.durationInMonths * 3)),
+          status: "active");
+      Subscription? subss = await repo.addSubscription(subs);
+
+      if (subss != null && checkdeclaration) {
+        Paymententity payments = Paymententity(
+            id: 0,
+            userId: xtremer!.XtremerId!,
+            amount: selectedplan!.price,
+            discountPercentage: selectedplan!.discountPercentage,
+            receivedAmount:
+                (selectedplan!.price -
+                    (selectedplan!.price *
+                        (selectedplan!.discountPercentage / 100))),
+            paymentDate: DateTime.now(),
+            transactionId:
+                "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
+            paymentStatus: "Initiated",
+            paymentMethod: ispaymentcash ? "Cash" : "Online",
+            paymentType: "Admission + ${selectedplan!.name}",
+            subscriptionId: selectedplan!.id,
+            serviceUsageId: 0);
+        paymentdetails = payments;
+        print("adding payments");
+        //online
+        if (!ispaymentcash) {
+          var d = await repo.addPayments(payments,
+              userid: xtremer!.XtremerId.toString(), isonline: true);
+          if (d["response"] == 200) {
+            print("in response: 200");
+
+            checkpayment();
+          }
+          //wait with dialog options
+        } else {
+          var d = await repo.addPayments(payments,
+              userid: xtremer!.XtremerId.toString(), isonline: false);
+          if (d["response"] == 200) {
+            creatextremer();
+          }
+        }
+
+        //cash
+      } else {
+        isloading = false;
+        update();
+        print("error");
+      }
+
+      // print("$res  ${dummyxtremer.length}");
+      // print(admissionfees!.price);
+      // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
+    }
+
+    update();
+
+
   }
 
   void changedeclaration(bool val) {

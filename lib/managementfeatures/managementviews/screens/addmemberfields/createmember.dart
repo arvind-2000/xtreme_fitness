@@ -6,13 +6,14 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymen
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
-import '../../../../authentifeatures/widgets/textformwidget.dart';
+import '../../../../widgets/textformwidget.dart';
 import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
-  const CreateMember({super.key, this.phone});
+  const CreateMember({super.key, this.phone, this.renewal});
   final String? phone;
+  final int? renewal;
   @override
   State<CreateMember> createState() => _CreateMemberState();
 }
@@ -23,6 +24,13 @@ class _CreateMemberState extends State<CreateMember> {
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool iscash = false;
+  
+    @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
@@ -36,7 +44,7 @@ class _CreateMemberState extends State<CreateMember> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //upload image
-                  SizedBox(
+                 widget.renewal==null?SizedBox(): SizedBox(
                     height: 100,
                     width: 100,
                     child: CardwithShadow(
@@ -62,13 +70,14 @@ class _CreateMemberState extends State<CreateMember> {
                                     ),
                                   )),
                   ),
-                  Text(
-                    addmemberctrl.isimagesize
-                        ? "Photo must be 500 x 500 px"
-                        : "Photo exceeds 500 x 500 px",
+                  SizedBox(height: 16,),
+                  widget.renewal==null?SizedBox(): Text(
+                    addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null
+                        ? "Add photo\nPhoto must be 500 x 500 px"
+                        :addmemberctrl.imagesizeerrors??"Add photo\nPhoto must be 500 x 500 px",
                     style: TextStyle(
-                        color: addmemberctrl.isimagesize
-                            ? Theme.of(context).colorScheme.onSurface
+                        color:addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null?Theme.of(context).colorScheme.onSecondary
+                            :addmemberctrl.isimagesize!=null && addmemberctrl.isimagesize!? Colors.green[300]
                             : Theme.of(context).colorScheme.error,
                         fontSize: 14),
                   ),
@@ -80,17 +89,20 @@ class _CreateMemberState extends State<CreateMember> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFieldWidget(
-                              hint: "User Name", controller: username),
-                          const SizedBox(
+                         widget.renewal==null?SizedBox():TextFieldWidget(
+                                  enabletext:!addmemberctrl.isloading, 
+                            
+                              hint: "User Name", controller: username,),
+                         widget.renewal==null?SizedBox():  const SizedBox(
                             height: 16,
                           ),
-                          TextFieldWidget(
+                           widget.renewal==null?SizedBox():TextFieldWidget(
+                            enabletext: !addmemberctrl.isloading,
                             hint: "Password",
                             controller: password,
                             obscure: true,
                           ),
-                          const SizedBox(
+                           widget.renewal==null?SizedBox():const SizedBox(
                             height: 16,
                           ),
                           addmemberctrl.usererrormessage!=null
@@ -113,7 +125,7 @@ class _CreateMemberState extends State<CreateMember> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Admission Fees"),
+                             widget.renewal==null?SizedBox():  const Text("Admission Fees"),
                               addmemberctrl.admissionfees != null
                                   ? Text(
                                       "Rs ${addmemberctrl.admissionfees!.price}")
@@ -170,9 +182,9 @@ class _CreateMemberState extends State<CreateMember> {
                                 "Total",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              addmemberctrl.selectedplan != null
+                              addmemberctrl.selectedplan != null 
                                   ? Text(
-                                      "Rs ${total(addmemberctrl.admissionfees!.price, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
+                                      "Rs ${total( widget.renewal==null?0: addmemberctrl.admissionfees!=null?addmemberctrl.admissionfees!.price:0, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
                                       style: const TextStyle(fontSize: 20),
                                     )
                                   : const SizedBox(),
@@ -219,8 +231,9 @@ class _CreateMemberState extends State<CreateMember> {
                                   //  ));
                                   if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration&& addmemberctrl.paymentdeclaration){
 
-                                      if (await addmemberctrl.createuser(
-                                    username.text, password.text)) {
+                                    //   if (await addmemberctrl.createuser(
+                                    // username.text, password.text)) {
+                                      if(true){
                                   showDialog(
                                     context: context,
                                     builder: (context) =>
@@ -231,6 +244,7 @@ class _CreateMemberState extends State<CreateMember> {
                                           },
                                           yes: () {
                                             addmemberctrl.addXtremer();
+                                            Navigator.pop(context);
                                           },
                                           child: Form(
                                             key: _formKeys,
@@ -267,7 +281,7 @@ class _CreateMemberState extends State<CreateMember> {
                                                 const SizedBox(
                                                   height: 16,
                                                 ),
-                                                Row(
+                                              widget.renewal==null?SizedBox():Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
@@ -354,7 +368,7 @@ class _CreateMemberState extends State<CreateMember> {
                                                                 .selectedplan !=
                                                             null
                                                         ? Text(
-                                                            "Rs ${total(addmemberctrl.admissionfees!.price, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
+                                                            "Rs ${total(widget.renewal!=null?addmemberctrl.admissionfees!.price:0, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
                                                             style:
                                                                 const TextStyle(
                                                                     fontSize:

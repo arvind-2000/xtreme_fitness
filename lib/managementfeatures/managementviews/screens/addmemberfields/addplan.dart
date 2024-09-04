@@ -13,8 +13,9 @@ import '../../../../widgets/titletext.dart';
 import '../../controllers/pagecontroller.dart';
 
 class PlanSelectionField extends StatelessWidget {
-  const PlanSelectionField({super.key, required this.pagectrl});
+  const PlanSelectionField({super.key, required this.pagectrl,required this.callback});
   final GetxPageController pagectrl;
+  final VoidCallback callback;
    @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
@@ -146,22 +147,8 @@ class PlanSelectionField extends StatelessWidget {
              managectrl.getallplans.isEmpty?const SizedBox():   CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
                   onpress: (){
-                    if(addmemberctrl.selectedplan!=null){
-
-
-                           if(addmemberctrl.selectedplan!.category!=plancategory[0]){
-                              pagectrl.changeaddMemberPage(2);
-                           }else{
-                            if(addmemberctrl.gettrainer!=null){
-                              pagectrl.changeaddMemberPage(2);
-                            }else{
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a Trainer for personal plan before proceeding")));
-                            }
-                           }
-                    }else{
-
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a plan before proceeding")));
-                    }
+                       callback();
+              
               
                
                   },

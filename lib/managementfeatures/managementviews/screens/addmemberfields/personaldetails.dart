@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/xtremer.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 
 import '../../../../widgets/cardswithshadow.dart';
@@ -14,11 +15,11 @@ import '../../controllers/pagecontroller.dart';
 class PersonaldetailsField extends StatefulWidget {
   const PersonaldetailsField({
     super.key,
-    required this.pagectrl, this.phonenumber,
+    required this.pagectrl, this.phonenumber, required this.callback,
   });
     final String? phonenumber;
   final GetxPageController pagectrl;
-
+  final VoidCallback callback;
   @override
   State<PersonaldetailsField> createState() => _PersonaldetailsFieldState();
 }
@@ -50,7 +51,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final TextEditingController _disabilitycontroller = TextEditingController();
 
   final TextEditingController _othercontroller = TextEditingController();
-
+Xtremer? xtremers;
   final FocusNode _fullnameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _phoneFocusNode = FocusNode();
@@ -95,7 +96,22 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   void initState() {
     super.initState();
     _fullnameFocusNode.requestFocus();
+   xtremers = Get.find<AddMemberController>().xtremer;
     _phonecontroller.text = widget.phonenumber??"";
+    if(xtremers!=null){
+      _fullnamecontroller.text = xtremers!.firstName??"";
+      _emailcontroller.text = xtremers!.email??"";
+      _phonecontroller.text = xtremers!.mobileNumber??"";
+      _homephonecontroller.text = xtremers!.homeNumber??"";
+      _occupationcontroller.text = xtremers!.occupation??"";
+      _pincodecontroller.text = xtremers!.postcode??"";
+      _addresscontroller.text = xtremers!.address??"";
+      _emergencynamecontroller.text = xtremers!.contactName??"";
+      _emergencyphonecontroller.text = xtremers!.contactNumber??"";
+      _disabilitycontroller.text = xtremers!.disability??"";
+      _othercontroller.text = xtremers!.relationship??"";
+    }
+    
   }
 
   @override
@@ -448,11 +464,14 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       height: 6,
                     ),
                     DropdownMenu(
+                        label: const Text("Relation"),
+                        hintText: xtremers!.relationship??"",
                         menuStyle: MenuStyle(
                             backgroundColor: WidgetStateColor.resolveWith(
                           (states) => Theme.of(context).colorScheme.primary,
                         )),
-                        onSelected: (index) {
+                  
+                          onSelected: (index) {
                           addmembrctrl.setRelation(index!);
                         },
                         dropdownMenuEntries: relation.entries
@@ -509,7 +528,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       emergencycontact: _emergencyphonecontroller.text.trim(),
                       emergencyname: _emergencynamecontroller.text.trim(),
                     );
-                    widget.pagectrl.changeaddMemberPage(1);
+                   widget.callback();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content:

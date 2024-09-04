@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextFieldWidget(
                         hint: "Username",
-                        icon: const Icon(Icons.mail),
+                        icon: const Icon(Icons.person),
                         controller: _emailcontroller,
                         focusnode: _emailfocus,
                         enabletext: !authctrl.loginloading,
@@ -144,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onTap: authctrl.loginloading
                                   ? null
                                   : () {
+                                      authctrl.disposelogin();
                                       Get.offNamed('/forgotpassword');
                                     },
                               child: Text(
@@ -228,6 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: authctrl.loginloading
                       ? null
                       : () {
+                        authctrl.disposelogin();
                           Get.offNamed('/signup');
                         },
                   child: Text('Sign Up',

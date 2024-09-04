@@ -4,6 +4,8 @@ import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontro
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addstaffscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addtrainer/addtrainerscreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/edituserscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/plansscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/renewalscreen.dart';

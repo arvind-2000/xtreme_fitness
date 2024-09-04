@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -171,7 +172,7 @@ class _LandingHomePageState extends State<LandingHomePage> {
                   ),
                 ),
               )
-              ),
+              ).animate().fadeIn(),
             );
           }
         );
