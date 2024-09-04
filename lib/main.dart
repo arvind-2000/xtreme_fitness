@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/themes/themenew.dart';
@@ -11,8 +10,8 @@ import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/pages/landingpage.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
-import 'dart:html' as html;
-void main() async{
+
+void main() async {
   runApp(const MyApp());
 //  workerManager.log = true;
 //   await workerManager.init();
@@ -21,7 +20,7 @@ void main() async{
     Get.put(GetxPageController());
     Get.put(GetxAuthController());
 
-    Get.put(GetxLandingcontroller()).onInit();
+  Get.put(GetxLandingcontroller()).onInit();
 }
 
 class MyApp extends StatelessWidget {
@@ -38,8 +37,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-
-       initialRoute: '/',
+      initialRoute: '/',
       getPages: [
 
         GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),

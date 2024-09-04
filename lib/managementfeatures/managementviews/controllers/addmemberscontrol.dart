@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker_web/image_picker_web.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
@@ -28,7 +29,40 @@ import '../../managementdomain/managementrepo.dart';
 
 class AddMemberController extends GetxController {
   Plan? selectedplan;
- Xtremer xtremer = Xtremer(surname:"",firstName: "", dateOfBirth: DateTime.now(), address: "", postcode:"", occupation:"", homeNumber: "", mobileNumber: "", email: "", profilePhotoPath: "", disability: "", trainerName: "", preferTiming: "", contactName: "", contactNumber: "", relationship: "", unableToExercise: true, physicianAdvisedAgainst: false, cardiacIssues: false, respiratoryDifficulties: false, faintingMigraines: false, boneJointMuscleIssues: false, familyHeartDisease: false, chestPain: false, highBloodPressure:false, elevatedCholesterol: false, prescribedMedication: false, doctorName: "", surgeryName: "", surgeryNumber: "", surgeryAddress:"", declaration: true,);
+  Xtremer xtremer = Xtremer(
+    surname: "",
+    firstName: "",
+    dateOfBirth: DateTime.now(),
+    address: "",
+    postcode: "",
+    occupation: "",
+    homeNumber: "",
+    mobileNumber: "",
+    email: "",
+    profilePhotoPath: "",
+    disability: "",
+    trainerName: "",
+    preferTiming: "",
+    contactName: "",
+    contactNumber: "",
+    relationship: "",
+    unableToExercise: true,
+    physicianAdvisedAgainst: false,
+    cardiacIssues: false,
+    respiratoryDifficulties: false,
+    faintingMigraines: false,
+    boneJointMuscleIssues: false,
+    familyHeartDisease: false,
+    chestPain: false,
+    highBloodPressure: false,
+    elevatedCholesterol: false,
+    prescribedMedication: false,
+    doctorName: "",
+    surgeryName: "",
+    surgeryNumber: "",
+    surgeryAddress: "",
+    declaration: true,
+  );
   DoctorDetails? doctorDetails;
   Paymententity? paymentdetails;
   DateTime dob = DateTime.now();
@@ -71,10 +105,10 @@ class AddMemberController extends GetxController {
     'medicationQ': false,
   };
 
-dynamic _scheduler;
+  dynamic _scheduler;
 
   ManagementRepo repo = ManagementrepoImpl();
-  ManagementController managectrl = Get.find<ManagementController>();
+  ManagementController managectrl = Get.put(ManagementController());
   GetxAuthController authctrl = Get.find<GetxAuthController>();
   @override
   void onInit() async{
@@ -83,92 +117,103 @@ dynamic _scheduler;
     update();
   }
 
+  Future<bool> createuser(String? username, String? pass) async {
+    usererrormessage = null;
+    isloading = true;
+    update();
 
-  Future<bool> createuser(String? username,String? pass)async{
-     usererrormessage  = null;
-      isloading = true;
-      update();
+    Map<int, String> res = await repo.addUser(
+        User(
+            uid: "",
+            name: xtremer.firstName!,
+            phone: xtremer.mobileNumber!,
+            username: username!,
+            roleid: Role(roleid: "0", rolename: "Member")),
+        pass!,
+        xtremer.mobileNumber!);
+    if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
+      usererrormessage = res.entries.first.value;
+      _userid = await repo.viewUser(username, pass);
+      print("in user create in create member: ${_userid!}");
+      xtremer.XtremerId = int.tryParse(_userid!);
+      userexist = false;
 
-      Map<int,String> res =  await repo.addUser(User(uid:"" ,name:xtremer.firstName!, phone: xtremer.mobileNumber!, username: username!, roleid: Role(roleid: "0", rolename: "Member")),pass!,xtremer.mobileNumber!);
-   if(res.entries.first.key>=200 && res.entries.first.key<300){
-        usererrormessage  = res.entries.first.value;
-        _userid = await repo.viewUser(username, pass);
-        print("in user create in create member: ${_userid!}");
-        xtremer.XtremerId = int.tryParse(_userid!);
-        userexist = false;
-        
       update();
       return true;
-   }else{
-    print("in user create in create member: failed to create");
-      usererrormessage  = res.entries.first.value;
-     userexist = true;
-     isloading = false;
+    } else {
+      print("in user create in create member: failed to create");
+      usererrormessage = res.entries.first.value;
+      userexist = true;
+      isloading = false;
       update();
-
-   } 
-
-   return false;
-  }
-
-
-  void addXtremer() async {
-    
-    if(xtremer.XtremerId!=null){
-      Subscription subs = Subscription(userId:xtremer.XtremerId.toString(), planId: selectedplan!.id, startDate: DateTime.now(), endDate: DateTime.now().add(Duration(days: selectedplan!.durationInMonths*3)), status: "active");
-      Subscription? subss = await repo.addSubscription(subs);
-
-      if(subss != null && checkdeclaration)
-      {
-          
-      Paymententity payments = Paymententity(id: 0, userId: xtremer.XtremerId!, amount: admissionfees!.price + selectedplan!.price, discountPercentage: selectedplan!.discountPercentage, receivedAmount: admissionfees!.price + (selectedplan!.price - (selectedplan!.price * (selectedplan!.discountPercentage/100))) , paymentDate: DateTime.now(), transactionId: "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}", paymentStatus:"Initiated", paymentMethod: ispaymentcash?"Cash":"Online", paymentType: "Membership", subscriptionId: selectedplan!.id, serviceUsageId: 0);
-      paymentdetails = payments;
-      print("adding payments");
-      //online
-      if(!ispaymentcash){
-        var d = await repo.addPayments(payments,userid: xtremer.XtremerId.toString(),isonline:true);  
-        if(d["response"] == 200){
-          print("in response: 200");
-          
-          checkpayment();
-        }     
-      //wait with dialog options
-   
-      
-      }else{
-
-          var d = await repo.addPayments(payments,userid: xtremer.XtremerId.toString(),isonline: false);
-             if(d["response"] == 200){
-      
-          creatextremer();
-        }  
-      }
-    
-
-      
-      //cash
- 
-      
-      }
-      else
-      {
-  isloading = false;
-              update();
-       print("error");
-
-      }
-
-
-    // print("$res  ${dummyxtremer.length}");
-    // print(admissionfees!.price);
-    // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
     }
 
- 
-              update();
-    
+    return false;
   }
 
+  void addXtremer() async {
+    if (xtremer.XtremerId != null) {
+      Subscription subs = Subscription(
+          userId: xtremer.XtremerId.toString(),
+          planId: selectedplan!.id,
+          startDate: DateTime.now(),
+          endDate: DateTime.now()
+              .add(Duration(days: selectedplan!.durationInMonths * 3)),
+          status: "active");
+      Subscription? subss = await repo.addSubscription(subs);
+
+      if (subss != null && checkdeclaration) {
+        Paymententity payments = Paymententity(
+            id: 0,
+            userId: xtremer.XtremerId!,
+            amount: admissionfees!.price + selectedplan!.price,
+            discountPercentage: selectedplan!.discountPercentage,
+            receivedAmount: admissionfees!.price +
+                (selectedplan!.price -
+                    (selectedplan!.price *
+                        (selectedplan!.discountPercentage / 100))),
+            paymentDate: DateTime.now(),
+            transactionId:
+                "XTRMPAY${Random().nextInt(1000)}${xtremer.XtremerId}",
+            paymentStatus: "Initiated",
+            paymentMethod: ispaymentcash ? "Cash" : "Online",
+            paymentType: "Membership",
+            subscriptionId: selectedplan!.id,
+            serviceUsageId: 0);
+        paymentdetails = payments;
+        print("adding payments");
+        //online
+        if (!ispaymentcash) {
+          var d = await repo.addPayments(payments,
+              userid: xtremer.XtremerId.toString(), isonline: true);
+          if (d["response"] == 200) {
+            print("in response: 200");
+
+            checkpayment();
+          }
+          //wait with dialog options
+        } else {
+          var d = await repo.addPayments(payments,
+              userid: xtremer.XtremerId.toString(), isonline: false);
+          if (d["response"] == 200) {
+            creatextremer();
+          }
+        }
+
+        //cash
+      } else {
+        isloading = false;
+        update();
+        print("error");
+      }
+
+      // print("$res  ${dummyxtremer.length}");
+      // print(admissionfees!.price);
+      // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
+    }
+
+    update();
+  }
 
   void creatextremer()async{
      
@@ -188,7 +233,6 @@ dynamic _scheduler;
 
   }
 
-
   void addpersonaldetails({
     required String name,
     required String phone,
@@ -200,7 +244,7 @@ dynamic _scheduler;
     required String emergencycontact,
     required String emergencyname,
   }) {
-     xtremer.firstName = name;
+    xtremer.firstName = name;
     xtremer.mobileNumber = phone;
     xtremer.homeNumber = homephone;
     xtremer.postcode = postalcode;
@@ -298,22 +342,20 @@ dynamic _scheduler;
     try {
       final result = await ImagePickerWeb.getImageAsBytes();
       if (result != null && recognizeImageFormat(result) != "Unknown format") {
-
-      print("in image formaat");
+        print("in image formaat");
         // _imageData = await resizeImage(result, 100, 100);
-        if(await isImageSizeExceeds(result)==false){
-
-            _imageData = result;
-            isimagesize = true;
-        }else{
-                 _imageData = null;
-            isimagesize = false;
+        if (await isImageSizeExceeds(result) == false) {
+          _imageData = result;
+          isimagesize = true;
+        } else {
+          _imageData = null;
+          isimagesize = false;
         }
 
         isImageloading = false;
         update();
       } else {
-          print("error in images");
+        print("error in images");
         _imageData = null;
         isImageloading = false;
         update();
@@ -329,7 +371,7 @@ dynamic _scheduler;
 
   Future<void> createAndPrintPdf() async {
     final pdf = pw.Document();
-      print("in print pdf");
+    print("in print pdf");
     final logoData = await _loadImageData('assets/logo1.png');
 
     pdf.addPage(
@@ -398,64 +440,57 @@ dynamic _scheduler;
     return data.buffer.asUint8List();
   }
 
-void checkpayment() async{
-      print("payments checking");
-  if(paymentdetails!=null){
-    print("in payment start");
-    int t = 0;
-    paymentstatus = 3;
-    update();
-_scheduler  = Timer.periodic(const Duration(seconds: 5), (timer)async {
-t = t +5;
+  void checkpayment() async {
+    print("payments checking");
+    if (paymentdetails != null) {
+      print("in payment start");
+      int t = 0;
+      paymentstatus = 3;
+      update();
+      _scheduler = Timer.periodic(
+        const Duration(seconds: 5),
+        (timer) async {
+          t = t + 5;
 
-///timeout 
-if(t>(60*5)){
- 
-   paymentstatus = 4;
-   update();
-   cancelscheduler();
-}
+          ///timeout
+          if (t > (60 * 5)) {
+            paymentstatus = 4;
+            update();
+            cancelscheduler();
+          }
 
-
- paymentsdetails = await repo.getpayment(paymentdetails!.transactionId);
-if(paymentsdetails!=null){
-
-if(paymentsdetails!.paymentStatus.toLowerCase()=="success"){
-    paymentstatus = 1;
-    update();
-    creatextremer();
-    cancelscheduler();
-}else if(paymentsdetails!.paymentStatus.toLowerCase()=="failed"){
- paymentstatus = 2;
-  update();
-  cancelscheduler();
-}
-else if(paymentsdetails!.paymentStatus.toLowerCase()=="initiated"){
-  paymentstatus = 3;
-    update();
-}
-else {
-  if(paymentsdetails!.paymentStatus.toLowerCase()=="canceled"){
-  paymentstatus = 4;
-  
+          paymentsdetails =
+              await repo.getpayment(paymentdetails!.transactionId);
+          if (paymentsdetails != null) {
+            if (paymentsdetails!.paymentStatus.toLowerCase() == "success") {
+              paymentstatus = 1;
+              update();
+              creatextremer();
+              cancelscheduler();
+            } else if (paymentsdetails!.paymentStatus.toLowerCase() ==
+                "failed") {
+              paymentstatus = 2;
+              update();
+              cancelscheduler();
+            } else if (paymentsdetails!.paymentStatus.toLowerCase() ==
+                "initiated") {
+              paymentstatus = 3;
+              update();
+            } else {
+              if (paymentsdetails!.paymentStatus.toLowerCase() == "canceled") {
+                paymentstatus = 4;
+              }
+              paymentstatus = 4;
+              update();
+              cancelscheduler();
+            }
+          }
+        },
+      );
+    }
   }
-  paymentstatus = 4;
-  update();
-  cancelscheduler();
 
-}
-} 
-},);
-
-
-
-}
-
-
-}
-
-
-void changedeclaration(bool val){
+  void changedeclaration(bool val) {
     checkdeclaration = val;
     update();
 }
@@ -467,14 +502,12 @@ void changepaymentdeclaration(bool val){
 void cancelscheduler(){
   _scheduler.cancel();
     isloading = false;
-   update();
-  print("in payment");
+    update();
+    print("in payment");
+  }
 
-}
-
-void changepaymentstatus(int i){
-  paymentstatus = i;
-  update();
-}
-
+  void changepaymentstatus(int i) {
+    paymentstatus = i;
+    update();
+  }
 }

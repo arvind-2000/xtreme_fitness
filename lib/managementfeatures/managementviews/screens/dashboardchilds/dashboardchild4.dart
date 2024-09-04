@@ -26,16 +26,55 @@ class DashboardChild4 extends StatelessWidget {
             height: 5,
           ),
           //header for table
-          const Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(child: Center(child: Text("Name"))),
-                Expanded(child: Center(child: Text("Type"))),
-                Expanded(child: Center(child: Text("Amount"))),
-                Expanded(child: Center(child: Text("Date"))),
-                Expanded(child: Center(child: Text("Status"))),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white.withOpacity(0.8),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Center(
+                            child: Text(
+                      "Name",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))),
+                    Expanded(
+                        child: Center(
+                            child: Text(
+                      "Type",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))),
+                    Expanded(
+                        child: Center(
+                            child: Text(
+                      "Amount",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))),
+                    Expanded(
+                        child: Center(
+                            child: Text(
+                      "Date",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))),
+                    Expanded(
+                        child: Center(
+                            child: Text(
+                      "Status",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))),
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(

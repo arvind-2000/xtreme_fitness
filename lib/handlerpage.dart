@@ -6,8 +6,8 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
-import 'widgets/navbar.dart';
 
+import 'widgets/navbar.dart';
 
 class HandlerPage extends StatefulWidget {
   const HandlerPage({super.key});
@@ -19,24 +19,23 @@ class HandlerPage extends StatefulWidget {
 class _HandlerPageState extends State<HandlerPage> {
   @override
   void initState() {
-
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          Get.find<GetxAuthController>().authentications();
-    },);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Get.find<GetxAuthController>().authentications();
+      },
+    );
 
     Get.put(ManagementController());
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GetxAuthController>(
-      builder: (authctrl) {
-        return GetBuilder<GetxPageController>(
-          builder: (pagectrl) {
-            return  Scaffold(
-              appBar: MediaQuery.sizeOf(context).width<mobilescreen?AppBar(
+    return GetBuilder<GetxAuthController>(builder: (authctrl) {
+      return GetBuilder<GetxPageController>(builder: (pagectrl) {
+        return Scaffold(
+          appBar: MediaQuery.sizeOf(context).width < mobilescreen
+              ? AppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   // title: TitleText(navtitles[pagectrl.navpage]),
             centerTitle: true,
@@ -55,7 +54,7 @@ class _HandlerPageState extends State<HandlerPage> {
             );
           }
         );
-      }
-    );
+      });
+    
   }
 }
