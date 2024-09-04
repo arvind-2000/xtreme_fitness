@@ -1,23 +1,21 @@
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
-import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
 
-class GetxLandingcontroller extends GetxController{
+class GetxLandingcontroller extends GetxController {
+  final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
 
-    final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
+  List<Plan> _plan = [];
+  List<ServiceEntity> _services = [];
 
-    List<Plan> _plan = [];
-    List<ServiceEntity> _services = [];
+  List<Plan> get getallplans => _plan;
+  List<ServiceEntity> get getallservices => _services;
 
-    List<Plan> get getallplans => _plan;  
-    List<ServiceEntity> get getallservices => _services;  
-
-    int page = 0;
-    int plandurations = 1;
-    @override
+  int page = 0;
+  int plandurations = 1;
+  @override
   void onInit() {
     super.onInit();
     page = 0;
@@ -26,27 +24,26 @@ class GetxLandingcontroller extends GetxController{
     getServices();
   }
 
-    void changeplanduration(int duration){
-      plandurations = duration;
-      update();
-    }
-    void getPlans() async{
+  void changeplanduration(int duration) {
+    plandurations = duration;
+    update();
+  }
 
-        // _plan = await managementrepoImpl.getPlans();
-        _plan =dummyplan;
-        print(_plan.length);
-        update();
-    }
+  void getPlans() async {
+    _plan = await managementrepoImpl.getPlans();
+    // _plan =dummyplan;
+    print(_plan.length);
+    update();
+  }
 
-    
-    void getServices() async{
+  void getServices() async {
+    _services = await managementrepoImpl.getServices();
+    // _services = dummyservices;
+    update();
+  }
 
-        // _services = await managementrepoImpl.getServices();
-        _services = dummyservices;
-        update();
-    }
-    void changelandingpage(int pageindex){
-      page = pageindex;
-      update();
-    }
+  void changelandingpage(int pageindex) {
+    page = pageindex;
+    update();
+  }
 }
