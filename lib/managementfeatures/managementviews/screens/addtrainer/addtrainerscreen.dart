@@ -537,6 +537,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                     ),
                                                     CardBorder(
                                                         onpress: () {
+                                                          print('cliking');
                                                           pagectrl
                                                               .changeviewprofile();
                                                           _user = managectrl
