@@ -55,7 +55,7 @@ class NavBarMember extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                      SizedBox(height: 16,),
+                      const SizedBox(height: 16,),
                   Cardonly(
                       onpress: () {
                             if (MediaQuery.sizeOf(context).width < mobilescreen) {
@@ -70,7 +70,7 @@ class NavBarMember extends StatelessWidget {
                         icon: Icons.dashboard,
                         title: 'Dashboard',
                       )),
-                      SizedBox(height: 16,),
+                      const SizedBox(height: 16,),
                          Container(
             height: 0.5,
             width:double.maxFinite,

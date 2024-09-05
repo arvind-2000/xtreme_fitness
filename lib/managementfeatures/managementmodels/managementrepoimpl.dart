@@ -100,9 +100,83 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateMember(Xtremer xtremer) {
-    throw UnimplementedError();
+  Future<Map<String,dynamic>> updateMember(Xtremer xtremer, Uint8List? filepath) async {
+    // dummyxtremer.add(xtremer);
+    // print("In add member : userid $userid");
+
+    // Create the multipart request
+    var request = http.MultipartRequest('PUT', Uri.parse('$api/api/Xtremers'));
+
+    // Add fields to the request
+    request.fields.addAll({
+      "Id":xtremer.id.toString(),
+      'UserId': xtremer.XtremerId.toString(),
+      'FirstName': xtremer.firstName!,
+      'Surname': xtremer.surname ?? '',
+      'DateOfBirth': xtremer.dateOfBirth.toString(),
+      'Address': xtremer.address ?? '',
+      'Postcode': xtremer.postcode ?? '',
+      'Occupation': xtremer.occupation ?? '',
+      'HomeNumber': xtremer.homeNumber ?? '',
+      'MobileNumber': xtremer.homeNumber ?? '',
+      'Email': xtremer.email ?? '',
+      'Disability': xtremer.disability ?? '',
+      'TrainerName': xtremer.trainerName ?? '',
+      'PreferTiming': xtremer.preferTiming ?? '',
+      'ContactName': xtremer.contactName ?? '',
+      'ContactNumber': xtremer.contactNumber ?? '',
+      'Relationship': xtremer.relationship ?? '',
+      'UnableToExercise': xtremer.unableToExercise.toString(),
+      'PhysicianAdvisedAgainst': xtremer.physicianAdvisedAgainst.toString(),
+      'CardiacIssues': xtremer.cardiacIssues.toString(),
+      'RespiratoryDifficulties': xtremer.respiratoryDifficulties.toString(),
+      'FaintingMigraines': xtremer.faintingMigraines.toString(),
+      'BoneJointMuscleIssues': xtremer.boneJointMuscleIssues.toString(),
+      'FamilyHeartDisease': xtremer.familyHeartDisease.toString(),
+      'ChestPain': xtremer.chestPain.toString(),
+      'HighBloodPressure': xtremer.highBloodPressure.toString(),
+      'ElevatedCholesterol': xtremer.elevatedCholesterol.toString(),
+      'PrescribedMedication': xtremer.prescribedMedication.toString(),
+      'DoctorName': xtremer.doctorName ?? '',
+      'SurgeryName': xtremer.surgeryName ?? '',
+      'SurgeryNumber': xtremer.surgeryNumber ?? '',
+      'SurgeryAddress': xtremer.surgeryAddress ?? '',
+      'Declaration': xtremer.declaration?.toString() ?? 'false',
+    });
+
+    // Add the file to the request
+    if (filepath != null) {
+      request.files.add(http.MultipartFile.fromBytes(
+        'ProfilePhotoFile',
+        filepath,
+        filename: 'prof${Random().nextInt(100)}.png',
+        contentType: MediaType('image', 'png'),
+      ));
+    }
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        String responseBody = await response.stream.bytesToString();
+        print('Upload successful: $responseBody');
+        return {"response": responseBody};
+      } else if (response.statusCode == 409) {
+        String responseBody = await response.stream.bytesToString();
+        print('Conflict Error: $responseBody');
+        return {"response": response.reasonPhrase};
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+        print('Reason: ${response.reasonPhrase}');
+        return {"response": response.reasonPhrase};
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return {"response": e};
+    }
   }
+  
+
 
   @override
   Future<String> deleteMember(Xtremer xtremer) {
@@ -113,12 +187,12 @@ class ManagementrepoImpl implements ManagementRepo {
   Future<List<Xtremer>> viewMember() async {
     try {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
-      // Plan p = Plan.fromJson(jsonDecode(res.body));
+  
       if (res.statusCode >= 200 && res.statusCode < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In Xtremer list : ${jsonList.length}");
-        // Convert JSON data to List<Plan>
+  
         return jsonList.map((json) => Xtremer.fromJson(json)).toList();
       } else {}
     } catch (e) {
@@ -132,12 +206,12 @@ class ManagementrepoImpl implements ManagementRepo {
   Future<List<Xtremer>> viewPersonalTrainer() async {
     try {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
-      // Plan p = Plan.fromJson(jsonDecode(res.body));
+
       if (res.statusCode >= 200 && res.statusCode < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In Xtremer list : ${jsonList.length}");
-        // Convert JSON data to List<Plan>
+      
         return jsonList.map((json) => Xtremer.fromJson(json)).toList();
       } else {}
     } catch (e) {
@@ -539,9 +613,31 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateTrainer(TrainerEntity staff) {
-    // TODO: implement updateTrainer
-    throw UnimplementedError();
+  Future<String> updateTrainer(TrainerEntity trainer)async {
+      final uri =
+        Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
+
+    // Convert the Trainer instance to JSON
+    final body = jsonEncode(
+        {"name": trainer.name, "designation": 'Trainer', "timing": "morning"});
+
+    // Send the POST request
+    final response = await http.put(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
+
+    // Check the response status
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      print('Trainer updated successfully.');
+    } else {
+      print('Failed to updated trainer. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+    return "updated";
   }
 
   @override
@@ -841,5 +937,4 @@ class ManagementrepoImpl implements ManagementRepo {
     return null;
   }
 }
-
 }

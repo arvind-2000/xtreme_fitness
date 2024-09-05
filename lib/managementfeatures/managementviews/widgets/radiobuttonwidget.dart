@@ -11,18 +11,18 @@ class RadiobuttonWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(question,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+        Text(question,style: const TextStyle(fontSize: 16),),
          Row(
                   children: [
                     Row(
                       children: [
-                       Radio(value: true, groupValue:groupValue, onChanged:onChanged,activeColor: Colors.blue,hoverColor: Colors.blue.withOpacity(0.2)), SizedBox(width: 10,),Text("Yes")
+                       Radio(value: true, groupValue:groupValue, onChanged:onChanged,activeColor: Colors.blue,hoverColor: Colors.blue.withOpacity(0.2)), const SizedBox(width: 10,),Text("Yes")
                       ],
                     ),
-                    SizedBox(width: 20,),
+                    const SizedBox(width: 20,),
                     Row(
                       children: [
-                       Radio(value: false, groupValue:groupValue, onChanged:onChanged,activeColor: Colors.blue,hoverColor: Colors.blue.withOpacity(0.2),),SizedBox(width: 10,),Text("No")
+                       Radio(value: false, groupValue:groupValue, onChanged:onChanged,activeColor: Colors.blue,hoverColor: Colors.blue.withOpacity(0.2),),const SizedBox(width: 10,),Text("No")
                       ],
                     ),
                   ],

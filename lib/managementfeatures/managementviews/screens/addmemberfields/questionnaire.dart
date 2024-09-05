@@ -44,30 +44,38 @@ class Questionnare extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TitleText("Questionnaire"),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CardBorder(
-                          onpress: (){
-                            addmemberctrl.setQuestyionaireall(true);
-                          },
-                        
-                          child: Row(
-                            children: [
-                                Checkbox(
-                                  checkColor: Colors.blue,
-                                  activeColor: Colors.blue[300],
-                                  value: addmemberctrl.setallquestionaire, onChanged: (v){
-                                    addmemberctrl.setQuestyionaireall(v!);
-                                    
-                                }),
-                              const SizedBox(width: 5,),
-                              const Text("Yes to All",style: TextStyle(fontSize: 14),),
-                            ],
-                          )),
-               
+                        const TitleText("Questionnaire"),
+                                Row(
+                          children: [
+                              Checkbox(
+                                materialTapTargetSize: MaterialTapTargetSize.padded,
+                                checkColor: Colors.blue,
+                                activeColor: Colors.blue[300],
+                                value: addmemberctrl.setallquestionaire, onChanged: (v){
+                                  addmemberctrl.setQuestyionaireall(v!);
+                                  
+                              }),
+                            const SizedBox(width: 5,),
+                            const Text("Yes to All",style: TextStyle(fontSize: 14),),
+                          ],
+                        ),
                       ],
-                    )
+                    ),
+                    CardBorder(
+                         color: Colors.grey,
+                         onpress: (){
+                                  pagectrl.changeaddMemberPage(3);
+                                },
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         Text(" Next"),
+                         Icon(Icons.arrow_forward)
+                       ],
+                     ))
                   ],
                 ),ResponsivePages(
                   issize: false,
@@ -76,49 +84,32 @@ class Questionnare extends StatelessWidget {
                 const SizedBox(height: 10,),
                   RadiobuttonWidget(question: "Have your  physician ever advised you against exercising?",groupValue:addmemberctrl.healthQuestions['physicianQ']??false, onChanged: (v){addmemberctrl.updatequestion('physicianQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, ever been suffered form and?",groupValue:addmemberctrl.healthQuestions['cardiacQ']??false, onChanged: (v){addmemberctrl.updatequestion('cardiacQ', v!);} ,),
+                  RadiobuttonWidget(question: "Have you, ever been suffered from any cardiac (heart) related illness?",groupValue:addmemberctrl.healthQuestions['cardiacQ']??false, onChanged: (v){addmemberctrl.updatequestion('cardiacQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['respiratoryQ']??false, onChanged: (v){addmemberctrl.updatequestion('respiratoryQ', v!);} ,),
+                  RadiobuttonWidget(question: "Have you, ever been suffered from respiratory difficulties?",groupValue: addmemberctrl.healthQuestions['respiratoryQ']??false, onChanged: (v){addmemberctrl.updatequestion('respiratoryQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue:addmemberctrl.healthQuestions['faintingQ']??false, onChanged: (v){addmemberctrl.updatequestion('faintingQ', v!);} ,),
+                  RadiobuttonWidget(question: "Have you, ever been suffered from fainting, migraines or loss of balance?",groupValue:addmemberctrl.healthQuestions['faintingQ']??false, onChanged: (v){addmemberctrl.updatequestion('faintingQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
+               RadiobuttonWidget(question: "Is there any history of heat disease in your family?",groupValue:addmemberctrl.healthQuestions['heartQ']??false, onChanged: (v){addmemberctrl.updatequestion('heartQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue:addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
-                const SizedBox(height: 10,),],),
+                 ],),
                 
                 child2:Column(children: [const SizedBox(height: 30,),
-                RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
+                    RadiobuttonWidget(question: "Have you, ever been suffered from any bone joints or muscle related disease?",groupValue: addmemberctrl.healthQuestions['boneQ']??false, onChanged: (v){addmemberctrl.updatequestion('boneQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have your  physician ever advised you against exercising?",groupValue:addmemberctrl.healthQuestions['physicianQ']??false, onChanged: (v){addmemberctrl.updatequestion('physicianQ', v!);} ,),
+                
+                RadiobuttonWidget(question: "Have you, experienced chest pain while exercising?",groupValue: addmemberctrl.healthQuestions['chestQ']??false, onChanged: (v){addmemberctrl.updatequestion('chestQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, ever been suffered form and?",groupValue:addmemberctrl.healthQuestions['cardiacQ']??false, onChanged: (v){addmemberctrl.updatequestion('cardiacQ', v!);} ,),
+                  RadiobuttonWidget(question: "Do you have high blood pressure?",groupValue:addmemberctrl.healthQuestions['bpQ']??false, onChanged: (v){addmemberctrl.updatequestion('bpQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['respiratoryQ']??false, onChanged: (v){addmemberctrl.updatequestion('respiratoryQ', v!);} ,),
+                  RadiobuttonWidget(question: "Do you have elevated cholesterol levels?",groupValue:addmemberctrl.healthQuestions['cholesterolQ']??false, onChanged: (v){addmemberctrl.updatequestion('cholesterolQ', v!);} ,),
                 const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue:addmemberctrl.healthQuestions['faintingQ']??false, onChanged: (v){addmemberctrl.updatequestion('faintingQ', v!);} ,),
-                const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
-                const SizedBox(height: 10,),
-                  RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue:addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
+                  RadiobuttonWidget(question: "Are you currently taking prescribed medications?",groupValue: addmemberctrl.healthQuestions['medicationQ']??false, onChanged: (v){addmemberctrl.updatequestion('medicationQ', v!);} ,),
+
                 const SizedBox(height: 10,),],),
                 ),
                 
-                 SizedBox(
-                  width: double.maxFinite,
-                   child: Cardonly(
-                    margin: EdgeInsets.zero,
-                        onpress: (){
-                                 pagectrl.changeaddMemberPage(3);
-                               },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(" Next"),
-                        Icon(Icons.arrow_forward)
-                      ],
-                    )),
-                 )   
+       
               ],
             ),
           ));

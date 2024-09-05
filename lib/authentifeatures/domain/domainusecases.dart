@@ -4,6 +4,7 @@ abstract class AuthUseCases{
   String? nameAuth(String name);
   String? passwordAuth(String password);
 String? phoneAuth(String password);
+String? pincodeauth(String pincode);
   String? registerOTP(String otp,String mins);
   String? forgotpassOTP(String opt,String mins);
 

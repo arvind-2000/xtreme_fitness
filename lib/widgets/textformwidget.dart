@@ -13,11 +13,12 @@ class TextFieldWidget extends StatefulWidget {
       this.interactivetext,
       this.obscure = false,
       this.autovalidateMode = AutovalidateMode.onUserInteraction,
-      this.enabletext = true});
+      this.enabletext = true, this.onchanged, this.counter = 25});
   final String hint;
   final Icon? icon;
   final bool obscure;
   final Function? validator;
+  final Function(String)? onchanged;
   final TextEditingController controller;
   final FocusNode? focusnode;
   final FocusNode? nextfocusnode;
@@ -25,6 +26,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool? interactivetext;
   final AutovalidateMode autovalidateMode;
   final bool enabletext;
+  final int counter;
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
 }
@@ -64,15 +66,25 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             return '${widget.hint} is  empty';
           }
         } else {
-          return widget.validator!();
+          if(widget.controller.text.length>widget.counter){
+            return "Should be between 1 to ${widget.counter} characters. Exceeds limits";
+          }else{
+            return widget.validator!();
+          }
+          
         }
         return null;
       },
+        maxLength: widget.counter,
+       
+        
       enabled: widget.enabletext,
       enableInteractiveSelection: widget.interactivetext,
       autovalidateMode: widget.autovalidateMode,
       obscureText: toggless,
+      onChanged:widget.onchanged ,
       decoration: InputDecoration(
+         counter: const Offstage(),
           suffixIcon: widget.obscure
               ? IconButton(
                   onPressed: () {

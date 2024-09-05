@@ -6,9 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker_web/image_picker_web.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
@@ -226,7 +224,7 @@ class AddMemberController extends GetxController {
            Map<String,dynamic> res = await repo.addMember(xtremer!, _imageData,xtremer!.XtremerId.toString());
                xtremer = Xtremer.fromJson(jsonDecode( res["response"]));
               usercreated = true;
-              createAndPrintPdf();
+              // createAndPrintPdf(paymentsdetails!);
               isloading = false;
               // Get.toNamed("/login");
               update();
@@ -329,6 +327,12 @@ class AddMemberController extends GetxController {
     update();
   }
 
+
+  void addxtremersrenewaledit(Xtremer xtremere){
+    xtremer = xtremere;
+    update();
+  }
+
   @override
   void onClose() {
     // selectedplan = null;
@@ -378,76 +382,6 @@ class AddMemberController extends GetxController {
     }
   }
 
-  Future<void> createAndPrintPdf() async {
-    final pdf = pw.Document();
-    print("in print pdf");
-    final logoData = await _loadImageData('assets/logo1.png');
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(20),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.center,
-                  children: [
-                    pw.Image(pw.MemoryImage(logoData), width: 100, height: 100),
-                  ],
-                ),
-                pw.SizedBox(height: 20),
-                pw.Text('Company Name',
-                    style: pw.TextStyle(
-                        fontSize: 24, fontWeight: pw.FontWeight.bold)),
-                pw.Text('Phone: (123) 456-7890',
-                    style: const pw.TextStyle(fontSize: 18)),
-                pw.Text('Email: info@company.com',
-                    style: const pw.TextStyle(fontSize: 18)),
-                pw.SizedBox(height: 20),
-                pw.Divider(),
-                pw.SizedBox(height: 10),
-                pw.Text('Transaction ID: 123456789',
-                    style: const pw.TextStyle(fontSize: 18)),
-                pw.Text('Date: ${DateTime.now().toLocal().toString()}',
-                    style: const pw.TextStyle(fontSize: 18)),
-                pw.SizedBox(height: 20),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text('Amount Due',
-                        style: const pw.TextStyle(fontSize: 18)),
-                    pw.Text('\$123.45',
-                        style: const pw.TextStyle(fontSize: 18)),
-                  ],
-                ),
-                pw.SizedBox(height: 20),
-                pw.Text('Thank you for your purchase!',
-                    style: const pw.TextStyle(fontSize: 16)),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-
-    final pdfData = await pdf.save();
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdfData,
-    );
-
-    // final outputFile = await _getOutputFile();
-    // final file = File(outputFile.path);
-    // await file.writeAsBytes(pdfData);
-
-    // print('PDF saved and sent to printer: ${outputFile.path}');
-  }
-
-  Future<Uint8List> _loadImageData(String path) async {
-    final ByteData data = await rootBundle.load(path);
-    return data.buffer.asUint8List();
-  }
 
   void checkpayment() async {
     print("payments checking");
@@ -498,6 +432,8 @@ class AddMemberController extends GetxController {
       );
     }
   }
+
+
 
   void renewalsubmission()async{
      if (xtremer!.XtremerId != null) {

@@ -55,6 +55,16 @@ class AuthenticateUseCases implements AuthUseCases{
   String? registerOTP(String otp, String mins) {
       return "MOBEDS: One-time-Password (OTP) to access the MOBEDS Recruitment Portal is $otp valid till 5 mins. CubeTen technologies";
   }
+  
+  @override
+  String? pincodeauth(String pincode) {
+      if(pincode.trim().isEmpty)
+       {
+          return "Phone number empty";
+
+       }
+        return pinregex.hasMatch(pincode)?null:"Pincode must be 6 digits";
+  }
 
 
 

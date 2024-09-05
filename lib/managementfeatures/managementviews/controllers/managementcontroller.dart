@@ -24,8 +24,10 @@ class ManagementController extends GetxController {
   final List<Xtremer> _allpersonalxtremer = [];
   final List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
+  List<Xtremer> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
   List<Xtremer> get getallXtremer => _allxtremer;
+  List<Xtremer> get getsearchXtremer => _searchxtremerlist;
   List<Xtremer> get allpersonalxtremer => _allpersonalxtremer;
   List<Xtremer> get allgeneralxtremer => _allgeneralxtremer;
   List<Paymentlatest10> get latestpayment10 => _latestpayment10;
@@ -35,7 +37,8 @@ class ManagementController extends GetxController {
   List<Plan> get getallplans => _allplans;
   List<Staff> get getallstaff => _allstaff;
   List<ServiceEntity> get getallservices => _allservices;
-
+  String? searchmessage = "";
+  int searchposition = 0;
   @override
   void onInit() {
     super.onInit();
@@ -56,6 +59,9 @@ class ManagementController extends GetxController {
 
   void getxtremer() async {
     _allxtremer = await managementRepo.viewMember();
+
+    //for getting search xtremer list
+    _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
       if (element.trainerName == null || element.trainerName!.isEmpty) {
         if (_allgeneralxtremer.contains(element)) {
@@ -160,4 +166,55 @@ class ManagementController extends GetxController {
       getplans();
     });
   }
+
+
+
+  void searchusers(String keyword){
+      searchmessage = "";
+      if(keyword.isEmpty){
+        if(searchposition == 0){
+
+            _searchxtremerlist = _allxtremer;
+        }else if(searchposition == 1){
+            _searchxtremerlist = _allpersonalxtremer;
+        }else{
+          _searchxtremerlist = _allgeneralxtremer;
+        }
+      }else{
+
+      _searchxtremerlist = _allxtremer.where((element) {
+        return element.XtremerId.toString().contains(keyword)||element.firstName!.contains(keyword)||element.mobileNumber!.contains(keyword);
+    },).toList();
+      }
+   
+    searchmessage = keyword.isEmpty?"":"Found ${_searchxtremerlist.length} records with keyoword: $keyword";
+    update();
+}
+  ///call in search to make personal only
+  void personalxtremer(){
+    
+      _searchxtremerlist = _allpersonalxtremer;
+      update();
+}
+  ///call in search xtremer to make general only
+  void generalxtremer(){
+    
+      _searchxtremerlist = _allgeneralxtremer;
+      update();
+}
+
+  void allxtremer(){
+    
+      _searchxtremerlist = _allxtremer;
+      update();
+}
+
+//   void exXtremer(){
+    
+//       _searchxtremerlist = _allxtremer.where((element) {
+       
+//       },).toList();
+//       update();
+// }
+
 }

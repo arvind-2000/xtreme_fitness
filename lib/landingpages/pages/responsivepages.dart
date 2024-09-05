@@ -28,7 +28,9 @@ class ResponsivePages extends StatelessWidget {
           ),
         ) :SizedBox(
           height: screenheight,
-          child: Row(children: [
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
                      SizedBox(width: issize?100:0,),
               Expanded(child: child1),
              child2!=null?Expanded(child: child2!):const SizedBox(),

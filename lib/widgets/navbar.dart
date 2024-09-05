@@ -172,7 +172,7 @@ class NavBar extends StatelessWidget {
                           vertical: 16, horizontal: 16),
                       child: const NavTiles(
                         icon: Icons.person_add,
-                        title: 'Add Trainer',
+                        title: 'Trainer',
                       )),
 
                   Cardonly(
@@ -192,7 +192,7 @@ class NavBar extends StatelessWidget {
                           vertical: 16, horizontal: 16),
                       child: const NavTiles(
                         icon: Icons.person_add,
-                        title: 'Add Staff',
+                        title: 'Staff',
                       )),
 
                   Container(

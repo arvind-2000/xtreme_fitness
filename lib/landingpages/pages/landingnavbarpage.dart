@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/widgets/normaltext.dart';
 
 import '../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../widgets/card.dart';
@@ -48,7 +49,7 @@ class LandingNavBar extends StatelessWidget {
                                   landingctrl.changelandingpage(1);
                                 Get.toNamed("/pricing");
                               },
-                              child: Text("Pricing",style: TextStyle(fontSize: 14, color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:null),)),
+                              child: NormalText(text:"Pricing",size: 14, color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:null),),
                             const SizedBox(width: 30,),
                             Cardonly(
                                        color: Colors.transparent,
@@ -56,7 +57,7 @@ class LandingNavBar extends StatelessWidget {
                                   landingctrl.changelandingpage(2);
                                 Get.toNamed("/services");
                               },
-                              child: Text("Services",style: TextStyle(fontSize: 14,  color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:null),)),
+                              child: NormalText(text: "Services",size: 14,  color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:null),),
                             const SizedBox(width: 30,),
                              Cardonly(
                                         color: Colors.transparent,
@@ -64,42 +65,40 @@ class LandingNavBar extends StatelessWidget {
                                   landingctrl.changelandingpage(3);
                                 Get.toNamed("/gallery");
                               },
-                               child: Text("Gallery",style: TextStyle(fontSize: 14, color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:null),)),
+                               child: NormalText(text: "Gallery",size: 14, color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:null),),
                           ],
                         ),
                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CardBorder(
-                            padding:EdgeInsets.zero,
-                              onpress: (){
-                                authctrl.changeAuthPage(0);
-                                Get.toNamed("/login");
-                              },
-                              color: Colors.red[800],
-                              child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
-                              child: Text("Log In",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.red[800],),),
-                            ), 
-                            ),
-                            const SizedBox(width: 10,),
-                            CardwithShadow(
-                              
-                              onpress: (){
-                                authctrl.changeAuthPage(1);
-                                Get.toNamed("/signup");
-                              },
-                              color: Colors.red[800],
-                             padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
-                              child:  const Text("Sign Up",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),), 
-                            ),
-                                               
-                                            
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CardBorder(
+                          padding:EdgeInsets.zero,
+                            onpress: (){
+                              authctrl.changeAuthPage(0);
+                              Get.toNamed("/login");
+                            },
+                            color: Colors.red[800],
+                            child:  Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
+                            child: Text("Log In",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.red[800],),),
+                          ), 
+                          ),
+                          const SizedBox(width: 10,),
+                          CardwithShadow(
                             
-                          ],
-                        ),
+                            onpress: (){
+                              authctrl.changeAuthPage(1);
+                              Get.toNamed("/signup");
+                            },
+                            color: Colors.red[800],
+                           padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
+                            child:  const Text("Sign Up",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),), 
+                          ),
+                                             
+                                          
+                          
+                        ],
                       ),
                              const SizedBox(width: 100,),
                     ],

@@ -24,7 +24,7 @@ abstract class ManagementRepo {
   ///adding members
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid);
-  Future<String> updateMember(Xtremer xtremer);
+  Future<Map<String,dynamic>> updateMember(Xtremer xtremer,Uint8List? filepath);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
   Future<Uint8List?> getImage(int id);

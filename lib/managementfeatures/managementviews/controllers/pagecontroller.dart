@@ -7,7 +7,8 @@ class GetxPageController extends GetxController {
 
   int addmemberpages = 0;
   bool viewprofile = false;
-
+  bool isrenewalforms = false;
+  bool iseditforms = false;
   void changeNavPage(int page) {
     navpage = page;
     update();
@@ -27,11 +28,34 @@ class GetxPageController extends GetxController {
   }
 
 
+  void changerenewal(bool v){
+
+      isrenewalforms = v;
+      update();
+  }
+
+  
+  void changeeditform(bool v){
+
+      iseditforms = v;
+      update();
+  }
+
+
   void changeviewprofile(){
 
      viewprofile =  viewprofile?false:true;
       update();
           print("In page control $viewprofile");
 
+  }
+
+  void disposes(){
+
+ addmemberpages = 0;
+  viewprofile = false;
+isrenewalforms = false;
+iseditforms = false;
+  update();
   }
 }

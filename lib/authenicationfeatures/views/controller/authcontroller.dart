@@ -120,9 +120,9 @@ class GetxAuthController extends GetxController {
   }
 
   void authentications() {
-    if (_authentication == false || _user == null) {
-      Get.offAllNamed("/");
-    }
+    // if (_authentication == false || _user == null) {
+    //   Get.offAllNamed("/");
+    // }
   }
 
   void signup(String phone) async {
@@ -157,6 +157,7 @@ class GetxAuthController extends GetxController {
     otploading = false;
     update();
   }
+
 
   void passwordrenew(String phone) async {
     signuperror = null;
