@@ -27,15 +27,15 @@ class GetxAuthController extends GetxController {
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = false;
- 
+
   int? otp;
   bool otploading = false;
   bool? forgotpass;
 
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
-    changeAuthindex = index;
-    update();
+    // changeAuthindex = index;
+    // update();
   }
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
@@ -108,20 +108,19 @@ class GetxAuthController extends GetxController {
       authentications();
 
       update();
-   
-    }); 
-          await authrepo.logout().then((value) {
+    });
+    await authrepo.logout().then(
+      (value) {
         print(value);
-          
-      },).then((value) {
-         
-      },);
-
+      },
+    ).then(
+      (value) {},
+    );
   }
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      Get.offAllNamed("/");
+      // Get.offAllNamed("/");
     }
   }
 

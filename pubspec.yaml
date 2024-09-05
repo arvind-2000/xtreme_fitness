@@ -34,6 +34,7 @@ dependencies:
   http_parser: ^4.0.2
   cached_network_image: ^3.4.1
   web_smooth_scroll: ^1.1.0
+  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_test:
