@@ -19,35 +19,50 @@ class DashboardChild3 extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TitleText("Analytics"),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Text("Services"),
-                    
                   ],
                 ),
-                    
-                  DropdownButton(
-                    underline: const SizedBox(),
-                    hint:const Text("Week",style: TextStyle(fontSize: 10),),
-                    value: 0,
-                    items:List.generate(3, (index) => DropdownMenuItem(
-                      value: index,
-                      child: Text(dayslist[index],style: const TextStyle(fontSize: 10))),) , onChanged: (value) {  },)
-                        
-                          ],
-                        ),
-              ),
-          Expanded(child: Padding(
+                DropdownButton(
+                  underline: const SizedBox(),
+                  hint: const Text(
+                    "Week",
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  value: 0,
+                  items: List.generate(
+                    3,
+                    (index) => DropdownMenuItem(
+                        value: index,
+                        child: Text(dayslist[index],
+                            style: const TextStyle(fontSize: 10))),
+                  ),
+                  onChanged: (value) {},
+                )
+              ],
+            ),
+          ),
+          Expanded(
+              child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: GraphsWidget(charttype: ChartType.bar, seriesdata: List.generate(7, (index) => Random().nextInt(100).toDouble()), ontap: (v){},axis: true,),
+            child: GraphsWidget(
+              charttype: ChartType.bar,
+              seriesdata:
+                  List.generate(7, (index) => Random().nextInt(100).toDouble()),
+              ontap: (v) {},
+              axis: true,
+            ),
           ))
         ],
       ),

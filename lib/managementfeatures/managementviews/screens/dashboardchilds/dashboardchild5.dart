@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/radialbar.dart';
+import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/circularchartwidget.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../../widgets/titletext.dart';
@@ -16,33 +16,58 @@ class Dashboardchild5 extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TitleText("Activities"),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Text("OverAll"),
-                    
                   ],
                 ),
-                    
-                  // DropdownButton(
-                  //   underline: const SizedBox(),
-                  //   hint:const Text("Week",style: TextStyle(fontSize: 10),),
-                  //   value: 0,
-                  //   items:List.generate(3, (index) => DropdownMenuItem(
-                  //     value: index,
-                  //     child: Text(dayslist[index],style: const TextStyle(fontSize: 10))),) , onChanged: (value) {  },)
-                        
-                          ],
+                Card(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: DropdownButton(
+                        alignment: Alignment.center,
+                        borderRadius: BorderRadius.circular(10),
+                        style: const TextStyle(color: Colors.black),
+                        underline: const SizedBox(),
+                        value: 0,
+                        dropdownColor: Colors.white,
+                        items: List.generate(
+                          3,
+                          (index) => DropdownMenuItem(
+                              value: index,
+                              child: Text(dayslist2[index],
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.black,
+                                  ))),
                         ),
-              ),
-          Expanded(child: RadialBarScreen(waterLevellist: [100,40,80],))
+                        onChanged: (value) {},
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const Expanded(child: PieChartWidget()
+              //  RadialBarScreen(waterLevellist: [100,40,80],)
+
+              )
         ],
       ),
     );

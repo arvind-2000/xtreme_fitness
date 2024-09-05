@@ -16,9 +16,9 @@ void main() async {
 //  workerManager.log = true;
 //   await workerManager.init();
 
-    // setUrlStrategy(PathUrlStrategy());
-    Get.put(GetxPageController());
-    Get.put(GetxAuthController());
+  // setUrlStrategy(PathUrlStrategy());
+  Get.put(GetxPageController());
+  Get.put(GetxAuthController());
 
   Get.put(GetxLandingcontroller()).onInit();
 }
@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
-      theme: ThemeData(colorScheme: darkColorSchemes,
-      scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
+      theme: ThemeData(
+        colorScheme: darkColorSchemes,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
       ),
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
@@ -39,19 +40,52 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       getPages: [
+        // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
+        GetPage(
+            name: '/',
+            page: () => const HandlerPage(),
+            transition: Transition.noTransition),
+        GetPage(
+            name: '/home',
+            page: () => const LandingHomePage(
+                  index: 0,
+                ),
+            transition: Transition.noTransition),
+        GetPage(
+            name: '/pricing',
+            page: () => const LandingHomePage(
+                  index: 1,
+                ),
+            transition: Transition.noTransition),
+        GetPage(
+            name: '/services',
+            page: () => const LandingHomePage(
+                  index: 2,
+                ),
+            transition: Transition.noTransition),
+        GetPage(
+            name: '/gallery',
+            page: () => const LandingHomePage(
+                  index: 3,
+                ),
+            transition: Transition.noTransition),
 
-        GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
-        GetPage(name: '/dashboard', page: () => const HandlerPage(),transition: Transition.noTransition),
-        GetPage(name: '/home', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
-        GetPage(name: '/pricing', page: () => const LandingHomePage(index: 1,),transition: Transition.noTransition),
-        GetPage(name: '/services', page: () => const LandingHomePage(index: 2,),transition: Transition.noTransition),
-        GetPage(name: '/gallery', page: () => const LandingHomePage(index: 3,),transition: Transition.noTransition),
-
-      GetPage(name: '/login', page: () => const AuthHandlerPage(index: 0,)),
-      GetPage(name: '/signup', page: () => const AuthHandlerPage(index: 1,)),
-      GetPage(name: '/forgotpassword', page: () => const AuthHandlerPage(index: 2,)),
+        GetPage(
+            name: '/login',
+            page: () => const AuthHandlerPage(
+                  index: 0,
+                )),
+        GetPage(
+            name: '/signup',
+            page: () => const AuthHandlerPage(
+                  index: 1,
+                )),
+        GetPage(
+            name: '/forgotpassword',
+            page: () => const AuthHandlerPage(
+                  index: 2,
+                )),
       ],
-             
     ).animate().fadeIn();
   }
 }
