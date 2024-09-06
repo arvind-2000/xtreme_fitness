@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 
 class PieChartWidget extends StatelessWidget {
   const PieChartWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SfCircularChart(
-      legend: const Legend(
-        isVisible: true, // Show the legend
-        position: LegendPosition.right, // Position of the legend
-        overflowMode: LegendItemOverflowMode.scroll, // Handle overflow
-      ),
-      series: <CircularSeries>[
-        PieSeries<ChartData, String>(
-          enableTooltip: true,
-          dataSource: <ChartData>[
-            ChartData('Personal Trainee', 12),
-            ChartData('General Trainee', 45),
-            ChartData('Inactive Trainee', 7),
-          ],
-          xValueMapper: (ChartData data, _) => data.category,
-          yValueMapper: (ChartData data, _) => data.value,
-          // Optional: set color for each segment
-          pointColorMapper: (ChartData data, _) {
-            switch (data.category) {
-              case 'Personal Trainee':
-                return Colors.green;
-              case 'General Trainee':
-                return Colors.blue;
-              case 'Inactive Trainee':
-                return Colors.red;
-            }
-            return null;
-          },
-          dataLabelSettings:
-              const DataLabelSettings(isVisible: true), // Show data labels
+    ManagementController controller = Get.put(ManagementController());
+    return GetBuilder<ManagementController>(builder: (_) {
+      return SfCircularChart(
+        onLegendTapped: (legendTapArgs) {},
+        legend: const Legend(
+          isVisible: true, // Show the legend
+          position: LegendPosition.right, // Position of the legend
+          overflowMode: LegendItemOverflowMode.scroll, // Handle overflow
         ),
-      ],
-    );
+        series: <CircularSeries>[
+          PieSeries<ChartData, String>(
+            enableTooltip: true,
+            dataSource: <ChartData>[
+              ChartData('Personal Trainee',
+                  controller.allpersonalxtremer.length.toDouble()),
+              ChartData('General Trainee',
+                  controller.getallXtremer.length.toDouble()),
+              ChartData('Inactive Trainee', 0),
+            ],
+            xValueMapper: (ChartData data, _) => data.category,
+            yValueMapper: (ChartData data, _) => data.value,
+            // Optional: set color for each segment
+            pointColorMapper: (ChartData data, _) {
+              switch (data.category) {
+                case 'Personal Trainee':
+                  return Colors.green;
+                case 'General Trainee':
+                  return Colors.blue;
+                case 'Inactive Trainee':
+                  return Colors.red;
+              }
+              return null;
+            },
+            dataLabelSettings: const DataLabelSettings(
+                isVisible: true, showZeroValue: false), // Show data labels
+          ),
+        ],
+      );
+    });
   }
 }
 

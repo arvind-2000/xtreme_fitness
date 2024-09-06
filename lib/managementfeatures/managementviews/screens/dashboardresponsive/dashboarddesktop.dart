@@ -92,7 +92,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                     child: CardwithShadow(
                         child: OverviewMembertitle(
                       num: 100,
-                      title: "Defaulter",
+                      title: "Inactive",
                     )),
                   ),
                 ],

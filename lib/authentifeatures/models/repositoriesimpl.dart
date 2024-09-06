@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/authentifeatures/config/apis.dart';
@@ -79,41 +81,101 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       "passwordHash":pass
     };
 
-      try {
-  final response = await http.post(
-    url,
-    headers: {
-      "Content-Type":"application/json"
-    },
-    body:jsonEncode({
-      "userName":email,
-      "passwordHash":pass
-    })
+    try {
+      final cookieJar = CookieJar();
+      // Making the request using universal_html
+      final response = await html.HttpRequest.request(
+        url.toString(),
+        method: 'POST',
+        sendData: jsonEncode(query),
+        requestHeaders: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        // Ensuring session cookies are handled
+      );
+      print("Status Code :${response.status}");
+      // Get cookies from the response
 
-  );
+      if (response.status! >= 200 && response.status! < 300) {
+        print(response);
+        // Parsing the successful response
+        var d = jsonDecode(response.responseText!);
+        var cookies = html.document.cookie;
 
-  if(response.statusCode>=200 && response.statusCode<300){
-  var d = jsonDecode( response.body);
+        message = d["Message"] ?? d.toString();
+        uid = d["Data"]["UserId"].toString(); // Extract the userId
 
-  message = d["Message"]??d;
-  uid = d["Data"]["UserId"].toString();
+        return {uid: message}; // Return the uid and message on success
+      } else if (response.status! >= 400 && response.status! < 500) {
+        // Client-side errors
+        print(response.responseText);
+        return {uid: response.responseText ?? "Client-side error"};
+      } else if (response.status! >= 500) {
+        // Server-side errors
+        return {uid: "There is an internal Error\n We will get back soon."};
+      }
+    } catch (e) {
+      // Handle exceptions like network errors
+      log(e.toString());
+      return {
+        uid:
+            "Error logging in. Check your internet connection or with the browser.\nTry again"
+      };
+    }
 
-  }else if (response.statusCode>=400 && response.statusCode<500){
-
-  print(response.body);
-  return {uid:response.body};
-
-  }else if(response.statusCode>500){
-      return {uid:"There is an internal Error\n We will get back soon."};
+    // Fallback if the request took too long
+    return {uid: "Took too long to respond. Try again"};
   }
 
-} on Exception catch (e) {
-  print(e);
- return {uid!:"Error logging in. Check your internet connection or with the browser.\nTry again"};
-}
-      // print(response.body);
-   return {uid:"Took too long to respond.Try again"};
-  }
+//   @override
+//   Future<Map<String?,String>> emailAuthentication({required String email, required String pass}) async{
+
+//   print("in login auth");
+//   String? uid = "";
+//   String message = "";
+//     Uri url =Uri.parse("$api/api/Users/login");
+
+//     final query = {
+//       "userName":email,
+//       "passwordHash":pass
+//     };
+
+//       try {
+//   final response = await http.post(
+//     url,
+//     headers: {
+//       "Content-Type":"application/json"
+//     },
+//     body:jsonEncode({
+//       "userName":email,
+//       "passwordHash":pass
+//     })
+
+//   );
+
+//   if(response.statusCode>=200 && response.statusCode<300){
+//   var d = jsonDecode( response.body);
+
+//   message = d["Message"]??d;
+//   uid = d["Data"]["UserId"].toString();
+
+//   }else if (response.statusCode>=400 && response.statusCode<500){
+
+//   print(response.body);
+//   return {uid:response.body};
+
+//   }else if(response.statusCode>500){
+//       return {uid:"There is an internal Error\n We will get back soon."};
+//   }
+
+// } on Exception catch (e) {
+//   print(e);
+//  return {uid!:"Error logging in. Check your internet connection or with the browser.\nTry again"};
+// }
+//       // print(response.body);
+//    return {uid:"Took too long to respond.Try again"};
+//   }
 
 //with cookies
 // @override
@@ -288,13 +350,20 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<String> logout() async {
     Uri url = Uri.parse("$api/api/Users/logout");
+
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
+      final response = await html.HttpRequest.request(
+        url.toString(),
+        method: 'POST',
+
+        requestHeaders: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        withCredentials: true, // Ensuring session cookies are handled
       );
-      print(response.body);
-      return response.body;
+      print("Logout :${response.statusText}");
+      return response.statusText!;
     } on Exception catch (e) {
       print(e);
     }

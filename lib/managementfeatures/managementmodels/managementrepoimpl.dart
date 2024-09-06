@@ -101,7 +101,8 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<String,dynamic>> updateMember(Xtremer xtremer, Uint8List? filepath) async {
+  Future<Map<String, dynamic>> updateMember(
+      Xtremer xtremer, Uint8List? filepath) async {
     // dummyxtremer.add(xtremer);
     // print("In add member : userid $userid");
 
@@ -110,7 +111,7 @@ class ManagementrepoImpl implements ManagementRepo {
 
     // Add fields to the request
     request.fields.addAll({
-      "Id":xtremer.id.toString(),
+      "Id": xtremer.id.toString(),
       'UserId': xtremer.XtremerId.toString(),
       'FirstName': xtremer.firstName!,
       'Surname': xtremer.surname ?? '',
@@ -177,8 +178,6 @@ class ManagementrepoImpl implements ManagementRepo {
       return {"response": e};
     }
   }
-  
-
 
   @override
   Future<String> deleteMember(Xtremer xtremer) {
@@ -189,12 +188,12 @@ class ManagementrepoImpl implements ManagementRepo {
   Future<List<Xtremer>> viewMember() async {
     try {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
-  
+
       if (res.statusCode >= 200 && res.statusCode < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In Xtremer list : ${jsonList.length}");
-  
+
         return jsonList.map((json) => Xtremer.fromJson(json)).toList();
       } else {}
     } catch (e) {
@@ -213,7 +212,7 @@ class ManagementrepoImpl implements ManagementRepo {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In Xtremer list : ${jsonList.length}");
-      
+
         return jsonList.map((json) => Xtremer.fromJson(json)).toList();
       } else {}
     } catch (e) {
@@ -551,7 +550,7 @@ class ManagementrepoImpl implements ManagementRepo {
   @override
   Future<List<Alluserpaymentmodel>> viewpayment() async {
     print('viewpayment function');
-    final url = Uri.parse("http://10.10.1.76/api/Payments"); // Example endpoint
+    final url = Uri.parse("$api/api/Payments"); // Example endpoint
 
     try {
       final response = await http.get(
@@ -619,8 +618,8 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateTrainer(TrainerEntity trainer)async {
-      final uri =
+  Future<String> updateTrainer(TrainerEntity trainer) async {
+    final uri =
         Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
 
     // Convert the Trainer instance to JSON
@@ -665,48 +664,46 @@ class ManagementrepoImpl implements ManagementRepo {
     return [];
   }
 
- @override
-  Future<Map<int,String>> addUser(User user,String pass,String phone) async{
+  @override
+  Future<Map<int, String>> addUser(User user, String pass, String phone) async {
+    final uri =
+        Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
 
-   final uri = Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
+    // Convert the User instance to JSON
+    final body = jsonEncode({
+      "mobileNumber": user.phone,
+      "userName": user.username,
+      "passwordHash": pass,
+      "roleName": user.roleid.rolename,
+      "createdAt": DateTime.now().toString(),
+    });
 
-  // Convert the User instance to JSON
-  final body = jsonEncode({
-  "mobileNumber": user.phone,
-  "userName": user.username,
-  "passwordHash": pass,
-    "roleName":user.roleid.rolename,
-  "createdAt": DateTime.now().toString(),
-  });
+    // Send the POST request
+    try {
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
 
-  // Send the POST request
-  try {
-  final response = await http.post(
-    uri,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  );
-  
-  // Check the response status
-  if (response.statusCode >= 200 && response.statusCode<300) {
-    print('User added successfully.');
-      return {200:response.body};
-  } else {
-    print('Failed to add user. Status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
-     return {response.statusCode:response.body};
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print('User added successfully.');
+        return {200: response.body};
+      } else {
+        print('Failed to add user. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return {response.statusCode: response.body};
+      }
+    } on Exception catch (e) {
+      // TODO
+      print("Error in user registrer: $e");
+      return {0: "Error in user register"};
+    }
   }
-} on Exception catch (e) {
-  // TODO
-  print("Error in user registrer: $e");
-    return {0:"Error in user register"};
-}
 
-
-
-  }
   @override
   Future<String?> viewUser(String username, String pass) async {
     print("in login auth");
@@ -897,51 +894,51 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Admission?> viewadmission()async{
-   final url = Uri.parse('$api/api/Admissions'); // Replace with your API endpoint
+  Future<Admission?> viewadmission() async {
+    final url =
+        Uri.parse('$api/api/Admissions'); // Replace with your API endpoint
 
-  try {
-    final response = await http.get(url);
+    try {
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      // Parse the response body
-      final  List<dynamic> jsonList = json.decode(response.body);
- 
-      // Convert the JSON data to an Admission object
-      return jsonList.map((json) => Admission.fromJson(json)).toList().first;
-    } else {
-      // Handle error response
-      print('Failed to load admission. Status code: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        // Parse the response body
+        final List<dynamic> jsonList = json.decode(response.body);
+
+        // Convert the JSON data to an Admission object
+        return jsonList.map((json) => Admission.fromJson(json)).toList().first;
+      } else {
+        // Handle error response
+        print('Failed to load admission. Status code: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      // Handle exceptions like network errors
+      print('Error fetching admission: $e');
       return null;
     }
-  } catch (e) {
-    // Handle exceptions like network errors
-    print('Error fetching admission: $e');
-    return null;
   }
-  }
-  
+
   @override
-  Future<Uint8List?> getImage(int id) async{
+  Future<Uint8List?> getImage(int id) async {
     Uri url = Uri.parse("$api/api/Xtremers/$id/photo");
- try {
-    // Make the GET request
-    final response = await http.get(url);
+    try {
+      // Make the GET request
+      final response = await http.get(url);
 
-    // Check if the request was successful
-    if (response.statusCode == 200) {
-      
-      // Return the response body as bytes
-      return response.bodyBytes;
-    } else {
-      // Handle errors or unsuccessful responses
-      print('Failed to load photo. Status code: ${response.statusCode}');
+      // Check if the request was successful
+      if (response.statusCode == 200) {
+        // Return the response body as bytes
+        return response.bodyBytes;
+      } else {
+        // Handle errors or unsuccessful responses
+        print('Failed to load photo. Status code: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error fetching photo: $e');
       return null;
     }
-  } catch (e) {
-    // Handle exceptions
-    print('Error fetching photo: $e');
-    return null;
   }
-}
 }
