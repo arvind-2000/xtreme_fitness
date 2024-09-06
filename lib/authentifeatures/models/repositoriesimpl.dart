@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/authentifeatures/config/apis.dart';
@@ -26,6 +28,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     };
 
     try {
+      final cookieJar = CookieJar();
       // Making the request using universal_html
       final response = await html.HttpRequest.request(
         url.toString(),
@@ -35,12 +38,17 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
-        withCredentials: true, // Ensuring session cookies are handled
+        // Ensuring session cookies are handled
       );
+      print("Status Code :${response.status}");
+      // Get cookies from the response
 
       if (response.status! >= 200 && response.status! < 300) {
+        print(response);
         // Parsing the successful response
         var d = jsonDecode(response.responseText!);
+        var cookies = html.document.cookie;
+
         message = d["Message"] ?? d.toString();
         uid = d["Data"]["UserId"].toString(); // Extract the userId
 
@@ -53,9 +61,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         // Server-side errors
         return {uid: "There is an internal Error\n We will get back soon."};
       }
-    } on Exception catch (e) {
+    } catch (e) {
       // Handle exceptions like network errors
-      print(e);
+      log(e.toString());
       return {
         uid:
             "Error logging in. Check your internet connection or with the browser.\nTry again"
@@ -288,13 +296,20 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<String> logout() async {
     Uri url = Uri.parse("$api/api/Users/logout");
+
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
+      final response = await html.HttpRequest.request(
+        url.toString(),
+        method: 'POST',
+
+        requestHeaders: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        withCredentials: true, // Ensuring session cookies are handled
       );
-      print(response.body);
-      return response.body;
+      print("Logout :${response.statusText}");
+      return response.statusText!;
     } on Exception catch (e) {
       print(e);
     }

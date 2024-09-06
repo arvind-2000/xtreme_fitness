@@ -40,7 +40,12 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       getPages: [
-        // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
+        // GetPage(
+        //     name: '/',
+        //     page: () => const LandingHomePage(
+        //           index: 0,
+        //         ),
+        //     transition: Transition.noTransition),
         GetPage(
             name: '/',
             page: () => const HandlerPage(),
@@ -69,7 +74,6 @@ class MyApp extends StatelessWidget {
                   index: 3,
                 ),
             transition: Transition.noTransition),
-
         GetPage(
             name: '/login',
             page: () => const AuthHandlerPage(
