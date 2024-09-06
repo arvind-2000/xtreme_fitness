@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymentdetails.dart';
-import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
+
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -15,7 +14,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
-import 'profilescreens/memberprofilescreen.dart';
+
 
 class RenewalScreen extends StatefulWidget {
   const RenewalScreen({super.key});
@@ -30,7 +29,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
   @override
   void dispose() {
     _searchcontroller.dispose();
-    _searchfocus.dispose();
+    _searchfocus.dispose(); 
+    Get.find<GetxPageController>().disposes();
+    Get.find<AddMemberController>().onClose();
     super.dispose();
   }
 
@@ -47,16 +48,18 @@ class _RenewalScreenState extends State<RenewalScreen> {
   void initState() {
     super.initState();
     _searchfocus.requestFocus();
-    Get.put(AddMemberController());
+    Get.put(AddMemberController()).onInit();
     WidgetsBinding.instance.addPostFrameCallback(
 
       (timeStamp) => Get.find<ManagementController>().getxtremer(),
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    createAndPrintPdf(PaymentDetails(id: 0, userId: 123, amount: 4000, discountPercentage: 10, receivedAmount: 3900, paymentDate: DateTime.now(), transactionId: "XTRMPAY@366421", paymentStatus: "Online", paymentMethod: "dfhfdjhf", paymentType: "fsjfhjshf", subscriptionId: 0123));
+    // createAndPrintPdf(PaymentDetails(id: 0, userId: 123, amount: 4000, discountPercentage: 10, receivedAmount: 3900, paymentDate: DateTime.now(), transactionId: "XTRMPAY@366421", paymentStatus: "Online", paymentMethod: "dfhfdjhf", paymentType: "fsjfhjshf", subscriptionId: 0123));
     return GetBuilder<AddMemberController>(
       builder: (addmemberctrl) {
         return GetBuilder<GetxPageController>(builder: (pagectrl) {
@@ -263,7 +266,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           ],
                                         )),
                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                       MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].trainerName!.isEmpty?"General":"Personal",style:const TextStyle(fontSize: 14))),
+                                      //  MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].trainerName!.isEmpty?"General":"Personal",style:const TextStyle(fontSize: 14))),
                                         Expanded(child:MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox(
                                           height: 30,
                                           child: CardBorder(
@@ -284,14 +287,16 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                             CardBorder(
                                               margin: EdgeInsets.zero,
                                               onpress: (){
+                                                pagectrl.changerenewal(true);
                                                       addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
-                                                     pagectrl.changerenewal(true);
+                                                     
                                               },
                                               child: const Text("Renewal",style:TextStyle(fontSize: 14))),
                                               const SizedBox(width: 5,),
                                               IconButton(onPressed: (){
-                                                     addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
-                                                     pagectrl.changeeditform(true);
+                                                pagectrl.changeeditform(true);
+                                                     addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
+                                                     
 
                                               }, icon: const Icon(Icons.edit,size: 14,),tooltip: "Edit",),
                                                  const SizedBox(width: 5,),

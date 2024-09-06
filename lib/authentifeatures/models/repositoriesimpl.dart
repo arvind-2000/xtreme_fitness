@@ -10,110 +10,110 @@ import '../domain/userentity.dart';
 import 'usecasesimpl.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
+  // @override
+  // Future<Map<String?, String>> emailAuthentication(
+  //     {required String email, required String pass}) async {
+  //   print("in login auth");
+
+  //   String? uid = "";
+  //   String message = "";
+  //   Uri url = Uri.parse("$api/api/Users/login");
+
+  //   // The request body
+  //   final query = {
+  //     "userName": email,
+  //     "passwordHash": pass // Assuming this is already hashed
+  //   };
+
+  //   try {
+  //     // Making the request using universal_html
+  //     final response = await html.HttpRequest.request(
+  //       url.toString(),
+  //       method: 'POST',
+  //       sendData: jsonEncode(query),
+  //       requestHeaders: {
+  //         "Content-Type": "application/json",
+  //         "Accept": "application/json",
+  //       },
+  //       withCredentials: true, // Ensuring session cookies are handled
+  //     );
+
+  //     if (response.status! >= 200 && response.status! < 300) {
+  //       // Parsing the successful response
+  //       var d = jsonDecode(response.responseText!);
+  //       message = d["Message"] ?? d.toString();
+  //       uid = d["Data"]["UserId"].toString(); // Extract the userId
+
+  //       return {uid: message}; // Return the uid and message on success
+  //     } else if (response.status! >= 400 && response.status! < 500) {
+  //       // Client-side errors
+  //       print(response.responseText);
+  //       return {uid: response.responseText ?? "Client-side error"};
+  //     } else if (response.status! >= 500) {
+  //       // Server-side errors
+  //       return {uid: "There is an internal Error\n We will get back soon."};
+  //     }
+  //   } on Exception catch (e) {
+  //     // Handle exceptions like network errors
+  //     print(e);
+  //     return {
+  //       uid:
+  //           "Error logging in. Check your internet connection or with the browser.\nTry again"
+  //     };
+  //   }
+
+  //   // Fallback if the request took too long
+  //   return {uid: "Took too long to respond. Try again"};
+  // }
+
   @override
-  Future<Map<String?, String>> emailAuthentication(
-      {required String email, required String pass}) async {
-    print("in login auth");
+  Future<Map<String?,String>> emailAuthentication({required String email, required String pass}) async{
 
-    String? uid = "";
-    String message = "";
-    Uri url = Uri.parse("$api/api/Users/login");
+  print("in login auth");
+  String? uid = "";
+  String message = "";
+    Uri url =Uri.parse("$api/api/Users/login");
 
-    // The request body
     final query = {
-      "userName": email,
-      "passwordHash": pass // Assuming this is already hashed
+      "userName":email,
+      "passwordHash":pass
     };
 
-    try {
-      // Making the request using universal_html
-      final response = await html.HttpRequest.request(
-        url.toString(),
-        method: 'POST',
-        sendData: jsonEncode(query),
-        requestHeaders: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        withCredentials: true, // Ensuring session cookies are handled
-      );
+      try {
+  final response = await http.post(
+    url,
+    headers: {
+      "Content-Type":"application/json"
+    },
+    body:jsonEncode({
+      "userName":email,
+      "passwordHash":pass
+    })
 
-      if (response.status! >= 200 && response.status! < 300) {
-        // Parsing the successful response
-        var d = jsonDecode(response.responseText!);
-        message = d["Message"] ?? d.toString();
-        uid = d["Data"]["UserId"].toString(); // Extract the userId
+  );
 
-        return {uid: message}; // Return the uid and message on success
-      } else if (response.status! >= 400 && response.status! < 500) {
-        // Client-side errors
-        print(response.responseText);
-        return {uid: response.responseText ?? "Client-side error"};
-      } else if (response.status! >= 500) {
-        // Server-side errors
-        return {uid: "There is an internal Error\n We will get back soon."};
-      }
-    } on Exception catch (e) {
-      // Handle exceptions like network errors
-      print(e);
-      return {
-        uid:
-            "Error logging in. Check your internet connection or with the browser.\nTry again"
-      };
-    }
+  if(response.statusCode>=200 && response.statusCode<300){
+  var d = jsonDecode( response.body);
 
-    // Fallback if the request took too long
-    return {uid: "Took too long to respond. Try again"};
+  message = d["Message"]??d;
+  uid = d["Data"]["UserId"].toString();
+
+  }else if (response.statusCode>=400 && response.statusCode<500){
+
+  print(response.body);
+  return {uid:response.body};
+
+  }else if(response.statusCode>500){
+      return {uid:"There is an internal Error\n We will get back soon."};
   }
 
-//   @override
-//   Future<Map<String?,String>> emailAuthentication({required String email, required String pass}) async{
-
-//   print("in login auth");
-//   String? uid = "";
-//   String message = "";
-//     Uri url =Uri.parse("$api/api/Users/login");
-
-//     final query = {
-//       "userName":email,
-//       "passwordHash":pass
-//     };
-
-//       try {
-//   final response = await http.post(
-//     url,
-//     headers: {
-//       "Content-Type":"application/json"
-//     },
-//     body:jsonEncode({
-//       "userName":email,
-//       "passwordHash":pass
-//     })
-
-//   );
-
-//   if(response.statusCode>=200 && response.statusCode<300){
-//   var d = jsonDecode( response.body);
-
-//   message = d["Message"]??d;
-//   uid = d["Data"]["UserId"].toString();
-
-//   }else if (response.statusCode>=400 && response.statusCode<500){
-
-//   print(response.body);
-//   return {uid:response.body};
-
-//   }else if(response.statusCode>500){
-//       return {uid:"There is an internal Error\n We will get back soon."};
-//   }
-
-// } on Exception catch (e) {
-//   print(e);
-//  return {uid!:"Error logging in. Check your internet connection or with the browser.\nTry again"};
-// }
-//       // print(response.body);
-//    return {uid:"Took too long to respond.Try again"};
-//   }
+} on Exception catch (e) {
+  print(e);
+ return {uid!:"Error logging in. Check your internet connection or with the browser.\nTry again"};
+}
+      // print(response.body);
+   return {uid:"Took too long to respond.Try again"};
+  }
 
 //with cookies
 // @override

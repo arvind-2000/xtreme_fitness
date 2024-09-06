@@ -44,7 +44,6 @@ class ManagementrepoImpl implements ManagementRepo {
       'MobileNumber': xtremer.homeNumber ?? '',
       'Email': xtremer.email ?? '',
       'Disability': xtremer.disability ?? '',
-      'TrainerName': xtremer.trainerName ?? '',
       'PreferTiming': xtremer.preferTiming ?? '',
       'ContactName': xtremer.contactName ?? '',
       'ContactNumber': xtremer.contactNumber ?? '',
@@ -65,6 +64,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryNumber': xtremer.surgeryNumber ?? '',
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
+      'SubmittedBy':xtremer.submittedBy.toString(),
+      'isActive':xtremer.isActive.toString()
     });
 
     // Add the file to the request
@@ -121,7 +122,6 @@ class ManagementrepoImpl implements ManagementRepo {
       'MobileNumber': xtremer.homeNumber ?? '',
       'Email': xtremer.email ?? '',
       'Disability': xtremer.disability ?? '',
-      'TrainerName': xtremer.trainerName ?? '',
       'PreferTiming': xtremer.preferTiming ?? '',
       'ContactName': xtremer.contactName ?? '',
       'ContactNumber': xtremer.contactNumber ?? '',
@@ -142,6 +142,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryNumber': xtremer.surgeryNumber ?? '',
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
+      'SubmittedBy':xtremer.submittedBy.toString(),
+      'isActive':xtremer.isActive.toString()
     });
 
     // Add the file to the request
@@ -454,8 +456,10 @@ class ManagementrepoImpl implements ManagementRepo {
     String status = payment.paymentStatus;
     String method = payment.paymentMethod;
     String type = payment.paymentType;
-    int subsid = payment.subscriptionId;
+    int? subsid = payment.subscriptionId;
+    int? serviceid = payment.serviceUsageId;
     String dates = payment.paymentDate.toString();
+    bool tnc = payment.termsAndConditions;
 
     print(
         "$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
@@ -475,6 +479,8 @@ class ManagementrepoImpl implements ManagementRepo {
         "paymentMethod": method,
         "paymentType": type,
         "subscriptionId": subsid,
+        "serviceUsageId":serviceid,
+          'termsAndConditions':tnc
       });
       request.headers.addAll(headers);
 
@@ -793,7 +799,8 @@ class ManagementrepoImpl implements ManagementRepo {
       "planId": subs.planId,
       "startDate": subs.startDate.toString(),
       "endDate": subs.endDate.toString(),
-      "status": subs.status,
+      "isActive": subs.isActive,
+      "trainerId":subs.trainerId
     });
 
     // Send the POST request

@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/config/themes/themenew.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/xtremer.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
@@ -29,25 +32,47 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final AuthenticateUseCases authusecase = AuthenticateUseCases();
 
-  final TextEditingController _fullnamecontroller = TextEditingController();
+  // final TextEditingController _fullnamecontroller = TextEditingController();
 
-  final TextEditingController _emailcontroller = TextEditingController();
+  // final TextEditingController _emailcontroller = TextEditingController();
 
-  final TextEditingController _phonecontroller = TextEditingController();
+  // final TextEditingController _phonecontroller = TextEditingController();
 
-  final TextEditingController _addresscontroller = TextEditingController();
+  // final TextEditingController _addresscontroller = TextEditingController();
 
-  final TextEditingController _pincodecontroller = TextEditingController();
+  // final TextEditingController _pincodecontroller = TextEditingController();
 
-  final TextEditingController _occupationcontroller = TextEditingController();
+  // final TextEditingController _occupationcontroller = TextEditingController();
 
-  final TextEditingController _homephonecontroller = TextEditingController();
+  // final TextEditingController _homephonecontroller = TextEditingController();
+
+  // final TextEditingController _emergencynamecontroller =
+  //     TextEditingController();
+
+  // final TextEditingController _emergencyphonecontroller =
+  //     TextEditingController();
+
+  
+  final TextEditingController _fullnamecontroller = TextEditingController(text: "dfbdf");
+
+  final TextEditingController _emailcontroller = TextEditingController(text: 'fh@gm.com');
+
+  final TextEditingController _phonecontroller = TextEditingController(text: '90172637464');
+
+  final TextEditingController _addresscontroller = TextEditingController(text: 'fghdgfh');
+
+  final TextEditingController _pincodecontroller = TextEditingController(text: '786544');
+
+  final TextEditingController _occupationcontroller = TextEditingController(text:'fgdhfghd');
+
+  final TextEditingController _homephonecontroller = TextEditingController(text: '8888888889');
 
   final TextEditingController _emergencynamecontroller =
-      TextEditingController();
+      TextEditingController(text:'fghsg');
 
   final TextEditingController _emergencyphonecontroller =
-      TextEditingController();
+      TextEditingController(text: '17171717171');
+
 
   final TextEditingController _disabilitycontroller = TextEditingController();
 
@@ -97,9 +122,9 @@ Xtremer? xtremers;
   void initState() {
     super.initState();
     _fullnameFocusNode.requestFocus();
-   xtremers = Get.find<AddMemberController>().xtremer;
+    xtremers = Get.find<AddMemberController>().xtremer;
     _phonecontroller.text = widget.phonenumber??"";
-    if(xtremers!=null){
+    if(xtremers!=null && widget.phonenumber==null){
       _fullnamecontroller.text = xtremers!.firstName??"";
       _emailcontroller.text = xtremers!.email??"";
       _phonecontroller.text = xtremers!.mobileNumber??"";
@@ -134,7 +159,7 @@ Xtremer? xtremers;
                         controller: _fullnamecontroller,
                         focusnode: _fullnameFocusNode,
                         validator: () {
-                          return authusecase.nameAuth(_fullnamecontroller.text);
+                          return authusecase.nameAuth(_fullnamecontroller.text,"full Name");
                         },
                         nextfocusnode: _emailFocusNode,
                       )),
@@ -152,7 +177,7 @@ Xtremer? xtremers;
                               validator:() {
                                         if(_emailcontroller.text.isNotEmpty){
                          return authusecase
-                                    .emailAuth(_emailcontroller.text);
+                                    .emailAuth(_emailcontroller.text,"Email");
                                           
                                         }
                                    
@@ -169,7 +194,7 @@ Xtremer? xtremers;
                       focusnode: _emailFocusNode,
                       nextfocusnode: _addressFocusNode,
                       validator: () {
-                        return authusecase.emailAuth(_emailcontroller.text);
+                        return authusecase.emailAuth(_emailcontroller.text,"Email");
                       })
                   : const SizedBox(),
               const SizedBox(
@@ -179,8 +204,12 @@ Xtremer? xtremers;
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CardBorder(
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
                                  onpress: () {
                                   showDatePicker(
+                                          builder: (context, child) {
+                                            return Theme(data: ThemeData(colorScheme: ColorScheme.dark(primary: Colors.blue[200]!),buttonTheme: ButtonThemeData(buttonColor: Colors.white)), child: child!);
+                                          },
                                           context: context,
                                           firstDate: DateTime(1950),
                                           lastDate:
@@ -193,14 +222,14 @@ Xtremer? xtremers;
                                     },
                                   );
                                 },
-                    padding: EdgeInsets.symmetric(horizontal:  16,vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal:  16,vertical: 12),
                     margin: EdgeInsets.zero,
                     child: Row(
                     
                       children: [
                         const Text(
                           "D.O.B:",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(width: 5,),
                         Row(
@@ -210,7 +239,7 @@ Xtremer? xtremers;
                    
                                Icons.date_range,size: 14,),
                             Text(
-                                "${addmembrctrl.dob.day}/${addmembrctrl.dob.month}/${addmembrctrl.dob.year}")
+                                "${addmembrctrl.dob.day}/${addmembrctrl.dob.month}/${addmembrctrl.dob.year}",style: TextStyle(fontSize: 14),)
                           ],
                         ),
                       ],
@@ -231,7 +260,7 @@ Xtremer? xtremers;
                               nextfocusnode: _pincodeFocusNode,
                               validator: () {
                                 return authusecase
-                                    .nameAuth(_addresscontroller.text);
+                                    .nameAuth(_addresscontroller.text,"Address");
                               })),
                 ],
               ),
@@ -246,7 +275,7 @@ Xtremer? xtremers;
                       nextfocusnode: _pincodeFocusNode,
                          validator: () {
                                 return authusecase
-                                    .nameAuth(_addresscontroller.text);
+                                    .nameAuth(_addresscontroller.text,"Address");
                               })
                   : const SizedBox(),
               const SizedBox(
@@ -263,7 +292,7 @@ Xtremer? xtremers;
                     counter: 6,
                     validator:() {
                                 return authusecase
-                                    .pincodeauth(_pincodecontroller.text);
+                                    .pincodeauth(_pincodecontroller.text,"Pin Code");
                               },
                   )),
                   SizedBox(
@@ -279,7 +308,7 @@ Xtremer? xtremers;
                               nextfocusnode: _homephoneFocusNode,
                                  validator: () {
                                 return authusecase
-                                    .nameAuth(_occupationcontroller.text);
+                                    .nameAuth(_occupationcontroller.text,"Occupation");
                               })),
                 ],
               ),
@@ -294,7 +323,7 @@ Xtremer? xtremers;
                       focusnode: _occupationFocusNode,
                       nextfocusnode: _homephoneFocusNode,  validator: () {
                                 return authusecase
-                                    .nameAuth(_occupationcontroller.text);
+                                    .nameAuth(_occupationcontroller.text,"Occupation");
                               })
                   : const SizedBox(),
               const SizedBox(
@@ -311,7 +340,7 @@ Xtremer? xtremers;
                           nextfocusnode: _phoneFocusNode,
                           validator: () {
                             return authusecase
-                                .phoneAuth(_homephonecontroller.text);
+                                .phoneAuth(_homephonecontroller.text,"Home NUmber");
                           })),
                   SizedBox(
                     width: size < mobilescreen ? 0 : 16,
@@ -329,7 +358,7 @@ Xtremer? xtremers;
                               nextfocusnode: _emergencynameFocusNode,
                               validator: () {
                                 return authusecase
-                                    .phoneAuth(_phonecontroller.text);
+                                    .phoneAuth(_phonecontroller.text,"Moile number");
                               })),
                 ],
               ),
@@ -346,7 +375,7 @@ Xtremer? xtremers;
                       focusnode: _occupationFocusNode,
                       nextfocusnode: _homephoneFocusNode,
                       validator: () {
-                        return authusecase.phoneAuth(_phonecontroller.text);
+                        return authusecase.phoneAuth(_phonecontroller.text,"Mobile Number");
                       })
                   : const SizedBox(),
               const SizedBox(
@@ -416,7 +445,7 @@ Xtremer? xtremers;
                       nextfocusnode: _emergencynameFocusNode,
                         validator: () {
                                 return authusecase
-                                    .nameAuth(_disabilitycontroller.text);
+                                    .nameAuth(_disabilitycontroller.text,"Disabilty");
                               }
                     ).animate().fadeIn()
                   : const SizedBox(),
@@ -438,7 +467,7 @@ Xtremer? xtremers;
                           nextfocusnode: _emergencyphoneFocusNode,
                             validator: () {
                                 return authusecase
-                                    .nameAuth(_emergencynamecontroller.text);
+                                    .nameAuth(_emergencynamecontroller.text,"Emergency Name");
                               })),
                   SizedBox(
                     width: size < mobilescreen ? 0 : 16,
@@ -453,7 +482,7 @@ Xtremer? xtremers;
                               focusnode: _emergencyphoneFocusNode,
                               validator: () {
                                 return authusecase
-                                    .phoneAuth(_emergencyphonecontroller.text);
+                                    .phoneAuth(_emergencyphonecontroller.text,"Mobile Number");
                               })),
                 ],
               ),
@@ -469,7 +498,7 @@ Xtremer? xtremers;
                       focusnode: _emergencyphoneFocusNode,
                       validator: () {
                         return authusecase
-                            .phoneAuth(_emergencyphonecontroller.text);
+                            .phoneAuth(_emergencyphonecontroller.text,"Mobile Number");
                       })
                   : const SizedBox(),
               const SizedBox(
@@ -487,7 +516,7 @@ Xtremer? xtremers;
                       ),
                       DropdownMenu(
                           label: const Text("Relation"),
-                          hintText: xtremers!.relationship??"",
+                          // hintText: "",
                           menuStyle: MenuStyle(
                               backgroundColor: WidgetStateColor.resolveWith(
                             (states) => Theme.of(context).colorScheme.primary,
@@ -526,7 +555,7 @@ Xtremer? xtremers;
                       controller: _othercontroller,
                       validator: addmembrctrl.relationship == 20 ? null :   () {
                                 return authusecase
-                                    .nameAuth(_othercontroller.text);
+                                    .nameAuth(_othercontroller.text,"Other");
                               },
                       focusnode: _otherFocusNode,
                       

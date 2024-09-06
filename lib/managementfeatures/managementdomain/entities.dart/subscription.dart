@@ -2,9 +2,10 @@ class Subscription {
   int? id;
   String userId;
   int planId;
+  int? trainerId;
   DateTime startDate;
   DateTime endDate;
-  String status;
+  bool isActive;
 
   Subscription({
     this.id,
@@ -12,7 +13,8 @@ class Subscription {
     required this.planId,
     required this.startDate,
     required this.endDate,
-    required this.status,
+    this.trainerId,
+    required this.isActive
   });
 
   // Factory method to create a Subscription instance from a JSON map
@@ -23,7 +25,9 @@ class Subscription {
       planId:json['PlanId'],
       startDate: DateTime.parse(json['StartDate']),
       endDate: DateTime.parse(json['EndDate']),
-      status: json['Status'].toString(),
+      trainerId: json['TrainerId'],
+      isActive: json['IsActive']
+
     );
   }
 
@@ -34,7 +38,8 @@ class Subscription {
       'planId': planId,
       'startDate': startDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
-      'status': status,
+      'isActive': isActive,
+      'trainerId':trainerId
     };
   }
 }

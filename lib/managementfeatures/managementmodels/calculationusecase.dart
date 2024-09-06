@@ -53,32 +53,34 @@ double percentprice(double? actualprice,double? dis){
                 'MantriPukhri, Imphal West\n795001',
                 style: pw.TextStyle(fontSize: 18),
               ),
-              pw.Text(
-                'Email: info@company.com',
-                style: pw.TextStyle(fontSize: 18),
-              ),
+              // pw.Text(
+              //   'Email: info@company.com',
+              //   style: pw.TextStyle(fontSize: 18),
+              // ),
               pw.SizedBox(height: 20),
               pw.Divider(),
               pw.SizedBox(height: 10),
               pw.Text(
                 'Transaction ID: ${paymentDetails.transactionId}',
-                style: pw.TextStyle(fontSize: 18),
+                style: pw.TextStyle(fontSize: 16),
               ),
               pw.Text(
-                'Date: ${paymentDetails.paymentDate.toLocal()}',
-                style: pw.TextStyle(fontSize: 18),
+                'Date: ${paymentDetails.paymentDate.day}/${paymentDetails.paymentDate.month}/${paymentDetails.paymentDate.year}',
+                style: pw.TextStyle(fontSize: 12
+                
+                ),
               ),
               pw.SizedBox(height: 20),
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                   pw.Text(
-                    'Amount Due:',
-                    style: pw.TextStyle(fontSize: 18),
+                    'Amount:',
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                   pw.Text(
                     'Rs. ${paymentDetails.amount.toStringAsFixed(2)}',
-                    style: pw.TextStyle(fontSize: 18),
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                 ],
               ),
@@ -87,12 +89,12 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                   pw.Text(
-                    'Discount Percentage:',
-                    style: pw.TextStyle(fontSize: 18),
+                    'Discount:',
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                   pw.Text(
-                    '${paymentDetails.discountPercentage.toStringAsFixed(2)}%',
-                    style: pw.TextStyle(fontSize: 18),
+                    '${paymentDetails.discountPercentage.toStringAsFixed(0)}%',
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                 ],
               ),
@@ -102,11 +104,11 @@ double percentprice(double? actualprice,double? dis){
                 children: [
                   pw.Text(
                     'Received Amount:',
-                    style: pw.TextStyle(fontSize: 18),
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                   pw.Text(
                     'Rs. ${paymentDetails.receivedAmount.toStringAsFixed(2)}',
-                    style: pw.TextStyle(fontSize: 18),
+                    style: pw.TextStyle(fontSize: 14),
                   ),
                 ],
               ),
@@ -121,30 +123,15 @@ double percentprice(double? actualprice,double? dis){
               pw.SizedBox(height: 10),
               pw.Text(
                 'Payment Status: ${paymentDetails.paymentStatus}',
-                style: pw.TextStyle(fontSize: 18),
+                style: pw.TextStyle(fontSize: 14),
               ),
               pw.Text(
                 'Payment Method: ${paymentDetails.paymentMethod}',
-                style: pw.TextStyle(fontSize: 18),
+                style: pw.TextStyle(fontSize: 14),
               ),
               pw.Text(
                 'Payment Type: ${paymentDetails.paymentType}',
-                style: pw.TextStyle(fontSize: 18),
-              ),
-              pw.SizedBox(height: 10),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text(
-                    'Subscription ID: ${paymentDetails.subscriptionId}',
-                    style: pw.TextStyle(fontSize: 18),
-                  ),
-                  if (paymentDetails.serviceUsageId != null)
-                    pw.Text(
-                      'Service Usage ID: ${paymentDetails.serviceUsageId}',
-                      style: pw.TextStyle(fontSize: 18),
-                    ),
-                ],
+                style: pw.TextStyle(fontSize: 14),
               ),
               pw.SizedBox(height: 20),
               pw.Text(
@@ -156,7 +143,7 @@ double percentprice(double? actualprice,double? dis){
               ),
                       pw.Text(
                 'This Receipt is computer generated',
-                style: pw.TextStyle(fontSize: 16),
+                style: pw.TextStyle(fontSize: 14),
               ),
             ],
           ),

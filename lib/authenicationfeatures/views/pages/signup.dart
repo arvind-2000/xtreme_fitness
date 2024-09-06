@@ -118,7 +118,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   // nextfocusnode: _passwordfocus,
                                   validator: () {
                                     return _authUseCases.phoneAuth(
-                                        _phonecontroller.text.trim());
+                                        _phonecontroller.text.trim(),"Phone NUmber");
                                   },
                                   fieldsubmitted: () {
                                     authctrl.signup(_phonecontroller.text);

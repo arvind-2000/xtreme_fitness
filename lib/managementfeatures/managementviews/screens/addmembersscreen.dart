@@ -39,7 +39,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
 @override
   void dispose() {
     Get.find<AddMemberController>().onClose();
-    Get.find<GetxPageController>().changeaddMemberPage(0);
+    Get.find<GetxPageController>().changeaddmemberclose();
     super.dispose();
   }
 
@@ -180,7 +180,8 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                         }else{
         
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a plan before proceeding")));
-                        }},):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):const CreateMember())),
+                        }},):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember()
+                )),
                             const SizedBox(height: 40,)
                 ],
               ),

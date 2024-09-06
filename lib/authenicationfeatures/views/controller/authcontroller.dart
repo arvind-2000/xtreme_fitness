@@ -38,6 +38,9 @@ class GetxAuthController extends GetxController {
     // update();
   }
 
+  
+     
+
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
     loginerrortext = null;
@@ -101,14 +104,7 @@ class GetxAuthController extends GetxController {
   void logout() async {
     loginloading = true;
     update();
-    Future.delayed(const Duration(seconds: 2)).then((v) {
-      _authentication = false;
-      loginloading = false;
-      _user = null;
-      authentications();
-
-      update();
-    });
+         authentications();
     await authrepo.logout().then(
       (value) {
         print(value);
@@ -116,12 +112,19 @@ class GetxAuthController extends GetxController {
     ).then(
       (value) {},
     );
+    Future.delayed(const Duration(seconds: 2)).then((v) {
+      _authentication = false;
+      loginloading = false;
+      _user = null;
+      authentications();
+      update();
+    });
   }
 
   void authentications() {
-    // if (_authentication == false || _user == null) {
-    //   Get.offAllNamed("/");
-    // }
+    if (_authentication == false || _user == null) {
+      Get.offAllNamed("/home");
+    }
   }
 
   void signup(String phone) async {
@@ -218,6 +221,7 @@ class GetxAuthController extends GetxController {
     signuperror = null;
     update();
   }
+
 
   void changepassword(String newpass) async {
     otploading = true;

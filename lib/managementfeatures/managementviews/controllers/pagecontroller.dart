@@ -15,10 +15,13 @@ class GetxPageController extends GetxController {
   }
 
   void changeaddMemberPage(int addpage) {
+    print('in change page $addpage');
     addmemberpages = addpage;
     update();
   }
-
+  void changeaddmemberclose(){
+    addmemberpages = 0;
+  }
 
   @override
   void onClose() {
@@ -52,10 +55,9 @@ class GetxPageController extends GetxController {
 
   void disposes(){
 
- addmemberpages = 0;
-  viewprofile = false;
+addmemberpages = 0;
+viewprofile = false;
 isrenewalforms = false;
 iseditforms = false;
-  update();
   }
 }

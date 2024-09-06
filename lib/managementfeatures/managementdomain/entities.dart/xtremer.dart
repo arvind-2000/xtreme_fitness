@@ -12,7 +12,6 @@ class Xtremer {
   String? email;
   String? profilePhotoPath;
   String? disability;
-  String? trainerName;
   String? preferTiming;
   String? contactName;
   String? contactNumber;
@@ -33,7 +32,8 @@ class Xtremer {
   String? surgeryNumber;
   String? surgeryAddress;
   bool? declaration;
-
+  int?  submittedBy;
+  bool? isActive;
   Xtremer({
     this.id,
     this.XtremerId,
@@ -48,7 +48,6 @@ class Xtremer {
     this.email,
     this.profilePhotoPath,
     this.disability,
-    this.trainerName,
     this.preferTiming,
     this.contactName,
     this.contactNumber,
@@ -69,6 +68,8 @@ class Xtremer {
     this.surgeryNumber,
     this.surgeryAddress,
     this.declaration,
+    this.submittedBy,
+    this.isActive
   });
 
   // Factory method to create a Xtremer instance from a JSON map
@@ -89,7 +90,6 @@ class Xtremer {
       email: json['Email'] ?? '',
       profilePhotoPath: json['ProfilePhotoPath'] ?? '',
       disability: json['Disability'] ?? '',
-      trainerName: json['TrainerName'] ?? '',
       preferTiming: json['PreferTiming'] ?? '',
       contactName: json['ContactName'] ?? '',
       contactNumber: json['ContactNumber'] ?? '',
@@ -110,6 +110,8 @@ class Xtremer {
       surgeryNumber: json['SurgeryNumber'] ?? '',
       surgeryAddress: json['SurgeryAddress'] ?? '',
       declaration: json['Declaration'] ?? false,
+      submittedBy: json['SubmittedBy'],
+      isActive: json['isActive'] ?? false,
     );
   }
 
@@ -129,7 +131,6 @@ class Xtremer {
       'email': email,
       'profilePhotoPath': profilePhotoPath,
       'disability': disability,
-      'trainerName': trainerName,
       'preferTiming': preferTiming,
       'contactName': contactName,
       'contactNumber': contactNumber,
@@ -150,6 +151,8 @@ class Xtremer {
       'surgeryNumber': surgeryNumber,
       'surgeryAddress': surgeryAddress,
       'declaration': declaration,
+      'submittedBy':submittedBy,
+      'isActive':isActive
     };
   }
 }

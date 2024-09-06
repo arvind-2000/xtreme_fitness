@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
@@ -52,6 +53,7 @@ class ManagementController extends GetxController {
   }
 
   void getplans() async {
+      // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
 
     update();
@@ -63,20 +65,20 @@ class ManagementController extends GetxController {
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
-      if (element.trainerName == null || element.trainerName!.isEmpty) {
-        if (_allgeneralxtremer.contains(element)) {
-          log('Already Added general');
-        } else {
-          _allgeneralxtremer.add(element);
-        }
-      } else {
-        if (_allpersonalxtremer.contains(element)) {
-          log('Already Added');
-        } else {
-          log(element.trainerName.toString());
-          _allpersonalxtremer.add(element);
-        }
-      }
+      // if (element.trainerName == null || element.trainerName!.isEmpty) {
+      //   if (_allgeneralxtremer.contains(element)) {
+      //     log('Already Added general');
+      //   } else {
+      //     _allgeneralxtremer.add(element);
+      //   }
+      // } else {
+      //   if (_allpersonalxtremer.contains(element)) {
+      //     log('Already Added');
+      //   } else {
+      //     log(element.trainerName.toString());
+      //     _allpersonalxtremer.add(element);
+      //   }
+      // }
     }
     update();
   }
@@ -128,6 +130,7 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
+    // _alltrainer = dummytrainers;
     _alltrainer = await managementRepo.viewTrainer();
 
     update();

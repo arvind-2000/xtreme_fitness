@@ -6,7 +6,7 @@ import '../domain/domainusecases.dart';
 
 class AuthenticateUseCases implements AuthUseCases{
   @override
-  String? emailAuth(String data) {
+  String? emailAuth(String data,String hint) {
       if(data.trim().isEmpty){
           return "Email empty";
       }
@@ -27,20 +27,20 @@ class AuthenticateUseCases implements AuthUseCases{
   }
   
   @override
-  String? nameAuth(String name) {
+  String? nameAuth(String name,String hint) {
        if(name.trim().isEmpty)
        {
-          return "Name empty";
+          return "$hint is  empty";
 
        }
         return nameregex.hasMatch(name)?null:"Name must be alphabet or must be less than 20 characters";
   }
   
   @override
-  String? phoneAuth(String phone) {
+  String? phoneAuth(String phone,String hint) {
    if(phone.trim().isEmpty)
        {
-          return "Phone number empty";
+          return "$hint is empty";
 
        }
         return phoneregex.hasMatch(phone)?null:"Phone must have 10 digits";
@@ -57,10 +57,10 @@ class AuthenticateUseCases implements AuthUseCases{
   }
   
   @override
-  String? pincodeauth(String pincode) {
+  String? pincodeauth(String pincode,String hint) {
       if(pincode.trim().isEmpty)
        {
-          return "Phone number empty";
+          return "$hint is empty";
 
        }
         return pinregex.hasMatch(pincode)?null:"Pincode must be 6 digits";

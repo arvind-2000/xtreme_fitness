@@ -5,12 +5,14 @@ class TrainerEntity extends User {
   String name;
   String designation;
   String timing;
+  bool isActive;
 
   TrainerEntity({
     required this.id,
     required this.name,
     required this.designation,
     required this.timing,
+    required this.isActive
   }) : super(uid: id.toString(), name: name, phone: '', username: '', roleid:Role(roleid: "0", rolename: designation));
 
   // Convert a Trainer instance to a Map
@@ -20,6 +22,7 @@ class TrainerEntity extends User {
       'name': name,
       'designation': designation,
       'timing': timing,
+      "isActive":isActive
     };
   }
 
@@ -30,6 +33,7 @@ class TrainerEntity extends User {
       name: json['Name'],
       designation: json['Designation'],
       timing: json['Timing'],
+      isActive: json['IsActive']
     );
   }
 }

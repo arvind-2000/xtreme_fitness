@@ -23,48 +23,15 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmem
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/paymentdetails.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
+import '../../managementdomain/entities.dart/servicesentity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/managementrepo.dart';
 
 class AddMemberController extends GetxController {
-  Plan? selectedplan = dummyplan.first;
-      String? imagesizeerrors;
-      // Xtremer? xtremer;
-  Xtremer? xtremer = Xtremer(
-    surname: "",
-    firstName: "fdfdf",
-    dateOfBirth: DateTime.now(),
-    address: "fdfdf",
-    postcode: "fdfdfd",
-    occupation: "",
-    homeNumber: "fdfdfd",
-    mobileNumber: "fdfdf",
-    email: "",
-    profilePhotoPath: "",
-    disability: "",
-    trainerName: "",
-    preferTiming: "",
-    contactName: "",
-    contactNumber: "",
-    relationship: "father",
-    unableToExercise: true,
-    physicianAdvisedAgainst: false,
-    cardiacIssues: false,
-    respiratoryDifficulties: false,
-    faintingMigraines: false,
-    boneJointMuscleIssues: false,
-    familyHeartDisease: false,
-    chestPain: false,
-    highBloodPressure: false,
-    elevatedCholesterol: false,
-    prescribedMedication: false,
-    doctorName: "",
-    surgeryName: "",
-    surgeryNumber: "",
-    surgeryAddress: "",
-    declaration: true,
-
-  );
+  Plan? selectedplan;
+  ServiceEntity? selectedservice;
+  String? imagesizeerrors;
+  Xtremer? xtremer;
   DoctorDetails? doctorDetails;
   Paymententity? paymentdetails;
   DateTime dob = DateTime.now();
@@ -116,6 +83,8 @@ class AddMemberController extends GetxController {
   void onInit() async{
     super.onInit();
     admissionfees = await Get.find<ManagementController>().getadmission();
+    selectedplan = null;
+
     update();
   }
 
@@ -161,7 +130,9 @@ class AddMemberController extends GetxController {
           startDate: DateTime.now(),
           endDate: DateTime.now()
               .add(Duration(days: selectedplan!.durationInMonths * 3)),
-          status: "active");
+            isActive: true,
+            trainerId: _trainer?.id
+            );
       Subscription? subss = await repo.addSubscription(subs);
 
       if (subss != null && checkdeclaration) {
@@ -181,7 +152,9 @@ class AddMemberController extends GetxController {
             paymentMethod: ispaymentcash ? "Cash" : "Online",
             paymentType: "Admission + ${selectedplan!.name}",
             subscriptionId: selectedplan!.id,
-            serviceUsageId: 0);
+            serviceUsageId: selectedservice!.id,
+            termsAndConditions: paymentdeclaration
+            );
         paymentdetails = payments;
         print("adding payments");
         //online
@@ -191,7 +164,7 @@ class AddMemberController extends GetxController {
           if (d["response"] == 200) {
             print("in response: 200");
 
-            checkpayment();
+            checkpayment(creatextremer);
           }
           //wait with dialog options
         } else {
@@ -253,6 +226,7 @@ class AddMemberController extends GetxController {
     xtremer!.postcode = postalcode;
     xtremer!.occupation = occupation;
     xtremer!.address = address;
+    xtremer!.email = email;
     xtremer!.relationship = relation[relationship]!;
     xtremer!.contactNumber = emergencycontact;
     xtremer!.contactName = emergencyname;
@@ -280,7 +254,6 @@ class AddMemberController extends GetxController {
 
   void addTrainer(TrainerEntity trainere) {
     _trainer = trainere;
-    xtremer!.trainerName = trainere.name;
     update();
   }
 
@@ -291,7 +264,7 @@ class AddMemberController extends GetxController {
 
   void setRelation(int rel) {
     relationship = rel;
-    xtremer!.relationship =relation[rel];
+    xtremer!.relationship ="grandpa";
     update();
   }
 
@@ -328,8 +301,24 @@ class AddMemberController extends GetxController {
   }
 
 
-  void addxtremersrenewaledit(Xtremer xtremere){
+  void addxtremersrenewaledit(Xtremer? xtremere){
+      
     xtremer = xtremere;
+    update();
+  }
+
+    void addxtremersedit(Xtremer? xtremere) async{
+      
+    xtremer = xtremere;
+    dob = xtremere!.dateOfBirth!;
+    relationship = relation.keys.firstWhere((element) =>
+      relation[element]==xtremere.relationship      
+    ,orElse: () => 20,);
+    isImageloading = true;
+    _imageData = await repo.getImage(
+      xtremer!.id!
+    );
+    isImageloading = false;
     update();
   }
 
@@ -343,6 +332,9 @@ class AddMemberController extends GetxController {
     _trainer = null;
     _imageData = null;
     usererrormessage = null;
+    xtremer = null;
+    imagesizeerrors = null;
+    selectedplan = null;
     super.onClose();
   }
 
@@ -383,7 +375,7 @@ class AddMemberController extends GetxController {
   }
 
 
-  void checkpayment() async {
+  void checkpayment(Function() callback) async {
     print("payments checking");
     if (paymentdetails != null) {
       print("in payment start");
@@ -408,7 +400,8 @@ class AddMemberController extends GetxController {
             if (paymentsdetails!.paymentStatus.toLowerCase() == "success") {
               paymentstatus = 1;
               update();
-              creatextremer();
+              callback();
+           
               cancelscheduler();
             } else if (paymentsdetails!.paymentStatus.toLowerCase() ==
                 "failed") {
@@ -443,10 +436,13 @@ class AddMemberController extends GetxController {
           startDate: DateTime.now(),
           endDate: DateTime.now()
               .add(Duration(days: selectedplan!.durationInMonths * 3)),
-          status: "active");
-      Subscription? subss = await repo.addSubscription(subs);
+          isActive: true,
+          trainerId: _trainer?.id
+          
+          );
+ 
 
-      if (subss != null && checkdeclaration) {
+      if (checkdeclaration) {
         Paymententity payments = Paymententity(
             id: 0,
             userId: xtremer!.XtremerId!,
@@ -461,9 +457,12 @@ class AddMemberController extends GetxController {
                 "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
             paymentStatus: "Initiated",
             paymentMethod: ispaymentcash ? "Cash" : "Online",
-            paymentType: "Admission + ${selectedplan!.name}",
+            paymentType: selectedplan!.name,
             subscriptionId: selectedplan!.id,
-            serviceUsageId: 0);
+            serviceUsageId: selectedservice!.id,
+            termsAndConditions: true
+            
+            );
         paymentdetails = payments;
         print("adding payments");
         //online
@@ -473,14 +472,14 @@ class AddMemberController extends GetxController {
           if (d["response"] == 200) {
             print("in response: 200");
 
-            checkpayment();
+            checkpayment(() async {     Subscription? subss = await repo.addSubscription(subs);});
           }
           //wait with dialog options
         } else {
           var d = await repo.addPayments(payments,
               userid: xtremer!.XtremerId.toString(), isonline: false);
           if (d["response"] == 200) {
-            creatextremer();
+           Subscription? subss = await repo.addSubscription(subs);
           }
         }
 

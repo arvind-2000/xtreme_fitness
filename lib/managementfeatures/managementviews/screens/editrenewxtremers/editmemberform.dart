@@ -28,7 +28,6 @@ class EditmemberForm extends StatefulWidget {
 }
 
 class _EditmemberFormState extends State<EditmemberForm> {
-  final GlobalKey<FormState>  _globalkey = GlobalKey<FormState>();
 
     @override
   void initState() {
@@ -50,35 +49,33 @@ class _EditmemberFormState extends State<EditmemberForm> {
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
             return SingleChildScrollView(
-              child: Expanded(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 800,maxHeight: 800),
-                  child: CardBorderHover(
-                    
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const HeadingText("Edit Profile"),
-                            IconButton(onPressed: (){
-                              addmemberctrl.onClose();
-                              pagectrl.disposes();
-                              pagectrl.changeeditform(false);
-                            }, icon: Icon(Icons.close),tooltip: "Close",)
-                          ],
-                        ),
-                        const SizedBox(height: 40,),
-                       Column(
-                         children: [
-                           pagectrl.addmemberpages==0?PersonaldetailsField(pagectrl: pagectrl, callback: () {
-                                      pagectrl.changeaddMemberPage(2);
-                                                    
-                           },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(),
-                         ],
-                       ),
-                      ],
-                    ),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800,maxHeight: 800),
+                child: CardBorderHover(
+                  
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const HeadingText("Edit Profile"),
+                          IconButton(onPressed: (){
+                            addmemberctrl.onClose();
+                            pagectrl.disposes();
+                            pagectrl.changeeditform(false);
+                          }, icon: Icon(Icons.close),tooltip: "Close",)
+                        ],
+                      ),
+                      const SizedBox(height: 40,),
+                     Column(
+                       children: [
+                         pagectrl.addmemberpages==0?PersonaldetailsField(pagectrl: pagectrl, callback: () {
+                                    pagectrl.changeaddMemberPage(2);
+                                                  
+                         },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(),
+                       ],
+                     ),
+                    ],
                   ),
                 ),
               ),

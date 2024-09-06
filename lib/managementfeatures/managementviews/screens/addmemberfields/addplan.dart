@@ -121,24 +121,6 @@ class PlanSelectionField extends StatelessWidget {
                                                     ),
                             ),
 
-                            // const Column(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            //   children: [
-                            //     Row(children: [
-                            //         CardwithShadow(
-                            //           padding: EdgeInsets.all(8),
-                                 
-                            //           child: Icon(Icons.close,color: Colors.white,size: 12,)),
-                                    
-                             
-                            //     ],),
-                            //     SizedBox(height: 16,),
-                            //     CardwithShadow(
-                            //       color: Color.fromARGB(255, 175, 210, 238),
-                            //       child: Text("View Profile"))
-                            //   ],
-                            // )
                           ],
                         )).animate().slideX(begin: 1,end: 0):const SizedBox(),
                   const SizedBox(height: 10,),

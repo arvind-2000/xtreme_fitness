@@ -230,7 +230,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         // nextfocusnode: _passwordfocus,
                                         validator: () {
                                           return _authUseCases.phoneAuth(
-                                              _phonecontroller.text.trim());
+                                              _phonecontroller.text.trim(),"Phone Number");
                                         },
                                         fieldsubmitted: () {
                                           authctrl.passwordrenew(

@@ -30,7 +30,4 @@ List<Paymententity> dummypayments = [];
 //   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Raja", phone:  Random().nextInt(1000000000).toString(), username:"lkkkk", roleid:Role(roleid: "6", rolename: "Others"), isactive: true),
 // ];
 // List<TrainerEntity> dummytrainers = [
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"rahul", phone:  Random().nextInt(1000000000).toString(), username:"jfhdj", roleid:Role(roleid: "12", rolename: "Trainer"), isactive: true),
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Gokul", phone:  Random().nextInt(1000000000).toString(), username:"jfhfdj", roleid:Role(roleid: "12", rolename: "Trainer"), isactive: true),
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Raja", phone:  Random().nextInt(1000000000).toString(), username:"lkkkk", roleid:Role(roleid: "12", rolename: "Trainer"), isactive: true),
-// ];
+//   TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning"),];

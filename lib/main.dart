@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/',
+      initialRoute: '/home',
       getPages: [
         // GetPage(name: '/', page: () => const LandingHomePage(index: 0,),transition: Transition.noTransition),
         GetPage(

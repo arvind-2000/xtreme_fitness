@@ -48,38 +48,44 @@ class _RenewalFormsState extends State<RenewalForms> {
       builder: (addmemberctrl) {
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
-            return SizedBox(
-            
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 800),
-                child: CardBorderHover(
-                  
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 1000,maxHeight: 800),
+              child: CardBorderHover(
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            HeadingText("Plan Renewal"),
-                            IconButton(onPressed: (){
-                              pagectrl.changerenewal(false);
-                            }, icon: Icon(Icons.close),tooltip: "Close",)
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Expanded(
-                        child: PlanSelectionField(pagectrl: pagectrl, callback: () {
-                                
-                                if(addmemberctrl.selectedplan!=null){
-                                    addmemberctrl.renewalsubmission();  
+                            Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const HeadingText("Plan Renewal"),
+                              IconButton(onPressed: (){
+                                addmemberctrl.onClose();
+                                pagectrl.disposes();
+                                pagectrl.changerenewal(false);
+                              }, icon: Icon(Icons.close),tooltip: "Close",)
+                            ],
+                          ),
+                          const SizedBox(height: 40,),
+                      PlanSelectionField(pagectrl: pagectrl, callback: () {
+                              
+                              if(addmemberctrl.selectedplan!=null){
+                                if(addmemberctrl.selectedplan!.category.toLowerCase()=="personal"){
+                                      if(addmemberctrl.gettrainer!=null){
+                                          addmemberctrl.renewalsubmission();  
+                                      }else{
+                                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No trainer selected")));
+                                      }
                                 }else{
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No Plans Selected")));
+                                  addmemberctrl.renewalsubmission();  
                                 }
-                                                  
-                        },),
-                      ),
+                                 
+                              }else{
+
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Plans Selected")));
+                              }
+                                                
+                      },),
+                      SizedBox(height: 100,)
                     ],
                   ),
                 ),

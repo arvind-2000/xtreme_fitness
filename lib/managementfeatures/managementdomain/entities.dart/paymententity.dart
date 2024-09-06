@@ -9,9 +9,9 @@ class Paymententity {
   String paymentStatus;
   String paymentMethod;
   String paymentType;
-  int subscriptionId;
-  int serviceUsageId;
-
+  int? subscriptionId;
+  int? serviceUsageId;
+  bool termsAndConditions;
   Paymententity({
     required this.id,
     required this.userId,
@@ -25,6 +25,7 @@ class Paymententity {
     required this.paymentType,
     required this.subscriptionId,
     required this.serviceUsageId,
+    required this.termsAndConditions
   });
 
   // Factory method to create a Payment instance from a JSON map
@@ -42,6 +43,7 @@ factory Paymententity.fromJson(Map<String, dynamic> json) {
     paymentType: json['PaymentType'],
     subscriptionId: json['SubscriptionId'],
     serviceUsageId: json['ServiceUsageId'],
+    termsAndConditions: json['TermsAndConditions']
   );
 }
 
@@ -60,12 +62,13 @@ factory Paymententity.fromJson(Map<String, dynamic> json) {
       'paymentType': paymentType,
       'subscriptionId': subscriptionId,
       'serviceUsageId': serviceUsageId,
+      'termsAndConditions':termsAndConditions
     };
   }
 }
 
 class PaymentModel extends Paymententity{
-  PaymentModel({required super.id, required super.userId, required super.amount, required super.discountPercentage, required super.receivedAmount, required super.paymentDate, required super.transactionId, required super.paymentStatus, required super.paymentMethod, required super.paymentType, required super.subscriptionId, required super.serviceUsageId});
+  PaymentModel({required super.id, required super.userId, required super.amount, required super.discountPercentage, required super.receivedAmount, required super.paymentDate, required super.transactionId, required super.paymentStatus, required super.paymentMethod, required super.paymentType, required super.subscriptionId, required super.serviceUsageId, required super.termsAndConditions});
  
 
 

@@ -130,6 +130,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                       .validate()) {
                                                     TrainerEntity addtrainer =
                                                         TrainerEntity(
+                                                          isActive: true,
                                                       id: Random().nextInt(100),
                                                       name: _fullnamecontroller
                                                           .text,

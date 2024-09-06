@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/widgets/textformwidget.dart';
 import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/cardswithshadow.dart';
 import '../../../../widgets/titletext.dart';
+import '../../../managementdomain/entities.dart/xtremer.dart';
 import '../../controllers/pagecontroller.dart';
 
 class DoctorDetails extends StatefulWidget {
@@ -30,12 +31,22 @@ final FocusNode _doctornameFocusNode = FocusNode();
 final FocusNode _surgerynameFocusNode = FocusNode();
 final FocusNode _surgerynumberFocusNode = FocusNode();
 final FocusNode _surgeryaddressFocusNode = FocusNode();
-
+Xtremer? xtremers;
 @override
   void initState() {
     super.initState();
 
   _doctornameFocusNode.requestFocus();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+     xtremers = Get.find<AddMemberController>().xtremer;
+  _doctorname.text = xtremers!=null?xtremers!.doctorName??"":"";
+  _surgeryname.text = xtremers!=null?xtremers!.surgeryName??"":"";
+  _surgerynumber.text = xtremers!=null?xtremers!.surgeryNumber??"":"";
+  _surgeryaddress.text = xtremers!=null?xtremers!.surgeryAddress??"":"";
+  },);
+ 
+
+
   }
 
 @override
