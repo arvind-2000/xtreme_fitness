@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -8,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
@@ -52,16 +51,29 @@ class ManagementController extends GetxController {
     getpaymentlastest10();
   }
 
+  final GetxPageController pgctrl = Get.put(GetxPageController());
   void getplans() async {
-      // _allplans = dummyplan;
+    // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
-    _allplans = dummyplan;
+    // _allplans = dummyplan;
     update();
   }
 
   void getxtremer() async {
-    // _allxtremer = await managementRepo.viewMember();
-    _allxtremer = dummyxtremer;
+    switch (pgctrl.overalldropdownindex.value) {
+      case 0:
+        _allxtremer = await managementRepo.viewMember();
+        update();
+      case 1:
+        _allxtremer = dummyxtremer;
+        update();
+      case 2:
+        _allxtremer = await managementRepo.viewMember();
+        update();
+      default:
+    }
+
+    // _allxtremer = dummyxtremer;
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -93,17 +105,15 @@ class ManagementController extends GetxController {
   }
 
   Future<String> editplan(Plan plan) async {
-    Map<Plan?,String> d = await managementRepo.updatePlans(plan: plan);
+    Map<Plan?, String> d = await managementRepo.updatePlans(plan: plan);
     // update plans
     getplans();
     return d.entries.first.value;
   }
 
-
-
   void getallServices() async {
     _allservices = await managementRepo.getServices();
-    _allservices = dummyservices;
+    // _allservices = dummyservices;
     update();
   }
 
@@ -117,8 +127,6 @@ class ManagementController extends GetxController {
     return v;
   }
 
-
-  
   Future<String> editservice(ServiceEntity service) async {
     String v = await managementRepo.updateServices(service: service);
     // update service
@@ -132,10 +140,8 @@ class ManagementController extends GetxController {
     });
   }
 
-  Future<Admission?> getadmission() async{
-    
+  Future<Admission?> getadmission() async {
     return await managementRepo.viewadmission();
-
   }
 
   void getStaff() async {
@@ -189,54 +195,62 @@ class ManagementController extends GetxController {
     });
   }
 
-
-
-  void searchusers(String keyword){
-      searchmessage = "";
-      if(keyword.isEmpty){
-        if(searchposition == 0){
-
-            _searchxtremerlist = _allxtremer;
-        }else if(searchposition == 1){
-            _searchxtremerlist = _allpersonalxtremer;
-        }else{
-          _searchxtremerlist = _allgeneralxtremer;
-        }
-      }else{
-
-      _searchxtremerlist = _allxtremer.where((element) {
-        return element.XtremerId.toString().toLowerCase().contains(keyword.toLowerCase())||element.firstName.toString().toLowerCase().contains(keyword.toLowerCase())||element.mobileNumber.toString().toLowerCase().contains(keyword.toLowerCase());
-    },).toList();
+  void searchusers(String keyword) {
+    searchmessage = "";
+    if (keyword.isEmpty) {
+      if (searchposition == 0) {
+        _searchxtremerlist = _allxtremer;
+      } else if (searchposition == 1) {
+        _searchxtremerlist = _allpersonalxtremer;
+      } else {
+        _searchxtremerlist = _allgeneralxtremer;
       }
-   
-    searchmessage = keyword.isEmpty?"":"Found ${_searchxtremerlist.length} records with keyoword: $keyword";
-    update();
-}
-  ///call in search to make personal only
-  void personalxtremer(){
-    
-      _searchxtremerlist = _allpersonalxtremer;
-      update();
-}
-  ///call in search xtremer to make general only
-  void generalxtremer(){
-    
-      _searchxtremerlist = _allgeneralxtremer;
-      update();
-}
+    } else {
+      _searchxtremerlist = _allxtremer.where(
+        (element) {
+          return element.XtremerId.toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||
+              element.firstName
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||
+              element.mobileNumber
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase());
+        },
+      ).toList();
+    }
 
-  void allxtremer(){
-    
-      _searchxtremerlist = _allxtremer;
-      update();
-}
+    searchmessage = keyword.isEmpty
+        ? ""
+        : "Found ${_searchxtremerlist.length} records with keyoword: $keyword";
+    update();
+  }
+
+  ///call in search to make personal only
+  void personalxtremer() {
+    _searchxtremerlist = _allpersonalxtremer;
+    update();
+  }
+
+  ///call in search xtremer to make general only
+  void generalxtremer() {
+    _searchxtremerlist = _allgeneralxtremer;
+    update();
+  }
+
+  void allxtremer() {
+    _searchxtremerlist = _allxtremer;
+    update();
+  }
 
 //   void exXtremer(){
-    
+
 //       _searchxtremerlist = _allxtremer.where((element) {
-       
+
 //       },).toList();
 //       update();
 // }
-
 }
