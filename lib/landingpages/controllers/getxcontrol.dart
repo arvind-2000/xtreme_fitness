@@ -13,7 +13,7 @@ class GetxLandingcontroller extends GetxController {
 
   List<Plan> get getallplans => _plan;
   List<ServiceEntity> get getallservices => _services;
-
+  ServiceEntity? services;
   int page = 0;
   int plandurations = 1;
   @override
@@ -31,8 +31,8 @@ class GetxLandingcontroller extends GetxController {
   }
 
   void getPlans() async {
-    // _plan = await managementrepoImpl.getPlans();
-    _plan = dummyplan;
+    _plan = await managementrepoImpl.getPlans();
+    // _plan =dummyplan;
     print(_plan.length);
     update();
   }
@@ -41,6 +41,11 @@ class GetxLandingcontroller extends GetxController {
     _services = await managementrepoImpl.getServices();
     // _services = dummyservices;
     update();
+  }
+
+  void addServices(ServiceEntity servic) async {
+    // _services = await managementrepoImpl.getServices();
+    services = servic;
   }
 
   void changelandingpage(int pageindex) {

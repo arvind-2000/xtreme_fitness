@@ -17,20 +17,21 @@ class ServiceSchedule {
 
   // Factory method to create a ServiceSchedule instance from a JSON map
   factory ServiceSchedule.fromJson(Map<String, dynamic> json) {
+  
     return ServiceSchedule(
-      id: json['id'],
-      userId: json['userId'],
-      serviceId: json['serviceId'],
-      scheduleDate: DateTime.parse(json['scheduleDate']),
-      price: (json['price'] as num).toDouble(),
-      status: json['status'],
+      id: json['Id'],
+      userId: json['UserId'],
+      serviceId: json['ServiceId'],
+      scheduleDate: DateTime.parse(json['ScheduleDate']),
+      price: (json['Price'] as num).toDouble(),
+      status: json['Status'],
     );
   }
 
   // Method to convert a ServiceSchedule instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      
       'userId': userId,
       'serviceId': serviceId,
       'scheduleDate': scheduleDate.toIso8601String(),

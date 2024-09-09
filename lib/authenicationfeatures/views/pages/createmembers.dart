@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/addserviceusage.dart';
 
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmembersscreen.dart';
 
@@ -8,8 +10,9 @@ import '../../../managementfeatures/managementviews/controllers/managementcontro
 import '../../../widgets/cardborderhover.dart';
 
 class CreateXtremers extends StatefulWidget {
-  const CreateXtremers({super.key, this.phonenumber});
+  const CreateXtremers({super.key, this.phonenumber, this.services});
   final String? phonenumber;
+  final ServiceEntity? services;
   @override
   State<CreateXtremers> createState() => _CreateXtremersState();
 }
@@ -32,7 +35,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
            child: Column(
              children: [
               SizedBox(height: 100,child: Center(child: Image.asset(height: 60,width: 60,"assets/logo1.png"),),),
-               Expanded(child: CardBorderHover(child: AddMemberScreen(phonenumber: widget.phonenumber,))),
+               Expanded(child: CardBorderHover(child:widget.services!=null?AddServiceUsage(serviceEntity: widget.services,phonenumber:widget.phonenumber):AddMemberScreen(phonenumber: widget.phonenumber,))),
              ],
            )),
       ),
