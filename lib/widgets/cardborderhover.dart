@@ -141,7 +141,9 @@ class _CardBorderHoverState extends State<CardBorderHover>{
                       ),
                     ),
                   )),
-                  Positioned.fill(child: InkWell(
+                  Positioned.fill(
+                      
+                    child: InkWell(
                       borderRadius: BorderRadius.circular(16),
                             onTap: widget.onpress,
                       child: Padding(

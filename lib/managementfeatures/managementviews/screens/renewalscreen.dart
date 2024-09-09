@@ -88,7 +88,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // const Text("All Members",style: TextStyle(fontSize: 20,),),
-                                  
+
                                     SizedBox(
                                         height: 40,
                                      
@@ -134,9 +134,10 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            height:50,
+                                            height:60,
                                             width:MediaQuery.sizeOf(context).width<mobilescreen?double.maxFinite: 400,
                                             child: TextFieldWidget(
+                                                showhint:false,
                                                 hint: "Search by id, name or phone",
                                                 controller: _searchcontroller,
                                                 validator: () {
@@ -163,13 +164,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                  IconButton(onPressed: (){
-                                    pagectrl.changerenewal(true);
-                                  }, icon: const Icon(Icons.repeat_one)),
-                                  const SizedBox(width: 20,),
-                                  IconButton(onPressed: (){
-                                        pagectrl.changeeditform(true);
-                                  }, icon: const Icon(Icons.edit)),
+                                
                                     // const Expanded(
                                     //     child: Row(
                                     //   children: [],
@@ -217,7 +212,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold))),
-                                    const Expanded(
+                                   Expanded(
+                                      flex: MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
                                         child: Text("Actions",
                                             style: TextStyle(
                                                 fontSize: 14,
@@ -225,99 +221,137 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   ],
                                 ),
                               ),
-                              Divider(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .secondary
-                                    .withOpacity(0.2),
-                                height: 1,
-                              ),
+                         
+                      
                               Expanded(
                                 child: ListView.builder(
                                   shrinkWrap: true,
-                                  itemBuilder: (context, index) => Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 16),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                        Expanded(child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 10,),
-                                            Text(managectrl.getsearchXtremer[index].firstName!,style:const TextStyle(fontSize: 14),),
-                                               MediaQuery.sizeOf(context).width<=mobilescreen?Cardonly(
-                                                  margin: const EdgeInsets.only(top: 4),
-                                                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
-                                                  color: Colors.green[200],
-                                                  child: const Text('Personal',style: TextStyle(fontSize: 10),)):const SizedBox()
-                                          ],
-                                        )),
-                                        Expanded(child: Text(managectrl.getsearchXtremer[index].homeNumber!,style:const TextStyle(fontSize: 14))),
-                                        Expanded(child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("4/5/2024",style:TextStyle(fontSize: 14)),
-                                            const SizedBox(height: 5,),
-                                            MediaQuery.sizeOf(context).width<=mobilescreen?const Text("4/5/2024",style:TextStyle(fontSize: 14)):const SizedBox()
-                                          ],
-                                        )),
-                                        MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                      //  MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].trainerName!.isEmpty?"General":"Personal",style:const TextStyle(fontSize: 14))),
-                                        Expanded(child:MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox(
-                                          height: 30,
-                                          child: CardBorder(
-                                              margin: EdgeInsets.zero,
-                                              padding: const EdgeInsets.only(left: 16,right: 8),
-                                              child: DropdownButton(
-                                                underline:const SizedBox(),
-                                                value: renewalpos,
-                                                items:renewlist.asMap().entries.map((e) => DropdownMenuItem(value: e.key,child: Text(e.value,style: const TextStyle(fontSize: 10),),)).toList(), onChanged:(value) {
-                                                setState(() {       
-                                                   renewalpos = value!;  
-                                          
-                                                });
-                                              },),
-                                            ),
-                                        ):Row(
-                                          children: [
-                                            CardBorder(
-                                              margin: EdgeInsets.zero,
-                                              onpress: (){
-                                                pagectrl.changerenewal(true);
-                                                      addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
-                                                     
-                                              },
-                                              child: const Text("Renewal",style:TextStyle(fontSize: 14))),
-                                              const SizedBox(width: 5,),
-                                              IconButton(onPressed: (){
-                                                pagectrl.changeeditform(true);
-                                                     addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
-                                                     
-
-                                              }, icon: const Icon(Icons.edit,size: 14,),tooltip: "Edit",),
-                                                 const SizedBox(width: 5,),
-                                              IconButton(onPressed: (){
-                                                    changeuser(managectrl.getsearchXtremer[index]);
-                                                    pagectrl.changeviewprofile();
-                                                
-                                              }, icon: const Icon(Icons.person,size: 14,),tooltip: "View Profile",),
-                                          ],
-                                        )),
-                                                          
-                                                              ],),
-                                      ),
-                                      Divider(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary
-                                            .withOpacity(0.2),
-                                        height: 1,
-                                      ),
-                                    ],
+                                  itemBuilder: (context, index) => Container(
+                                    color: Colors.grey[900],
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 16),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                          Expanded(child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(height: 10,),
+                                              Text(managectrl.getsearchXtremer[index].firstName!,style:const TextStyle(fontSize: 14),),
+                                              MediaQuery.sizeOf(context).width <= mobilescreen
+                                        ?  Cardonly(
+                                                    margin: const EdgeInsets.only(top: 4),
+                                                    padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+                                                    color: Colors.green[200],
+                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):SizedBox()
+                                            ],
+                                          )),
+                                          Expanded(child: Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14))),
+                                          Expanded(child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Text("4/5/2024",style:TextStyle(fontSize: 14)),
+                                              const SizedBox(height: 5,),
+                                              MediaQuery.sizeOf(context).width<=mobilescreen?const Text("4/5/2024",style:TextStyle(fontSize: 14)):const SizedBox()
+                                            ],
+                                          )),
+                                          MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
+                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14))),
+                                          Expanded(
+                                            flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
+                                       
+                                            child:MediaQuery.sizeOf(context).width<=mobilescreen?       Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CardBorder(
+                                                margin: EdgeInsets.zero,
+                                                onpress: (){
+                                                  pagectrl.changerenewal(true);
+                                                        addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
+                                                       
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const Icon(Icons.upload,size: 12,),
+                                                      SizedBox(width: 5,),
+                                                    const Text("Renewal",style:TextStyle(fontSize: 14)),
+                                                  ],
+                                                )),
+                                                const SizedBox(height: 5,),
+                                                CardBorder(
+                                                  onpress: (){
+                                                        pagectrl.changeeditform(true);
+                                                             addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
+                                                  },
+                                                      color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                                                  margin: EdgeInsets.zero,
+                                                  child: Row(
+                                                    children: [
+                                           const Icon(Icons.edit,size: 12,),
+                                                      SizedBox(width: 5,),
+                                                      Text("Edit",style:TextStyle(fontSize: 14))
+                                                    ],
+                                                  ),
+                                                ),
+                                                   const SizedBox(height: 5,),
+                                                CardBorder(
+                                                  onpress: (){
+                                                                 changeuser(managectrl.getsearchXtremer[index]);
+                                                            pagectrl.changeviewprofile();
+                                                  },
+                                                  margin: EdgeInsets.zero,
+                                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                                                  child: Row(
+                                                    children: [
+                                                 Icon(Icons.person,size: 12,),
+                                                       SizedBox(width: 5,),
+                                                      Text("View",style:TextStyle(fontSize: 14))
+                                                    ],
+                                                  ),
+                                                ),
+                                            ],
+                                          ):
+                                          Row(
+                                            children: [
+                                              CardBorder(
+                                                margin: EdgeInsets.zero,
+                                                onpress: (){
+                                                  pagectrl.changerenewal(true);
+                                                        addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
+                                                       
+                                                },
+                                                child: const Text("Renewal",style:TextStyle(fontSize: 14))),
+                                                const SizedBox(width: 5,),
+                                                IconButton(onPressed: (){
+                                                  pagectrl.changeeditform(true);
+                                                       addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
+                                                       
+                                                                              
+                                                }, icon: const Icon(Icons.edit,size: 14,),tooltip: "Edit",),
+                                                   const SizedBox(width: 5,),
+                                                IconButton(onPressed: (){
+                                                      changeuser(managectrl.getsearchXtremer[index]);
+                                                      pagectrl.changeviewprofile();
+                                                  
+                                                }, icon: const Icon(Icons.person,size: 14,),tooltip: "View Profile",),
+                                            ],
+                                          )),
+                                                            
+                                                                ],),
+                                        ),
+                                        Divider(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary
+                                              .withOpacity(0.2),
+                                          height: 1,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   itemCount: managectrl.getsearchXtremer.length,
                                 ),

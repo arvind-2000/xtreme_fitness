@@ -48,14 +48,14 @@ abstract class ManagementRepo {
   Future<bool> deletePlans({required Plan plan});
 
   /// updating plans api
-  Future<Plan> updatePlans({required Plan plan});
+  Future<Map<Plan?,String>> updatePlans({required Plan plan});
 
   ///getplans api
   Future<List<Plan>> getPlans();
 
   ///adding trainer for management
   Future<String> addTrainer(TrainerEntity staff);
-  Future<String> updateTrainer(TrainerEntity staff);
+  Future<Map<TrainerEntity?,String>> updateTrainer(TrainerEntity staff);
   Future<String> deleteTrainer(TrainerEntity staff);
   Future<List<TrainerEntity>> viewTrainer();
   Future<List<Xtremer>> viewPersonalTrainer();

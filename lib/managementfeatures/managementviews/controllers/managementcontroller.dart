@@ -55,13 +55,13 @@ class ManagementController extends GetxController {
   void getplans() async {
       // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
-
+    _allplans = dummyplan;
     update();
   }
 
   void getxtremer() async {
-    _allxtremer = await managementRepo.viewMember();
-
+    // _allxtremer = await managementRepo.viewMember();
+    _allxtremer = dummyxtremer;
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -92,8 +92,18 @@ class ManagementController extends GetxController {
     return v;
   }
 
+  Future<String> editplan(Plan plan) async {
+    Map<Plan?,String> d = await managementRepo.updatePlans(plan: plan);
+    // update plans
+    getplans();
+    return d.entries.first.value;
+  }
+
+
+
   void getallServices() async {
     _allservices = await managementRepo.getServices();
+    _allservices = dummyservices;
     update();
   }
 
@@ -104,6 +114,15 @@ class ManagementController extends GetxController {
 
     getallServices();
 
+    return v;
+  }
+
+
+  
+  Future<String> editservice(ServiceEntity service) async {
+    String v = await managementRepo.updateServices(service: service);
+    // update service
+    getallServices();
     return v;
   }
 
@@ -130,8 +149,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    // _alltrainer = dummytrainers;
-    _alltrainer = await managementRepo.viewTrainer();
+    _alltrainer = dummytrainers;
+    // _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }
@@ -186,7 +205,7 @@ class ManagementController extends GetxController {
       }else{
 
       _searchxtremerlist = _allxtremer.where((element) {
-        return element.XtremerId.toString().contains(keyword)||element.firstName!.contains(keyword)||element.mobileNumber!.contains(keyword);
+        return element.XtremerId.toString().toLowerCase().contains(keyword.toLowerCase())||element.firstName.toString().toLowerCase().contains(keyword.toLowerCase())||element.mobileNumber.toString().toLowerCase().contains(keyword.toLowerCase());
     },).toList();
       }
    

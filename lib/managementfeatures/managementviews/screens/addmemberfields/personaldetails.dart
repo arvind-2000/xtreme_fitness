@@ -32,46 +32,46 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final AuthenticateUseCases authusecase = AuthenticateUseCases();
 
-  // final TextEditingController _fullnamecontroller = TextEditingController();
+  final TextEditingController _fullnamecontroller = TextEditingController();
 
-  // final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _emailcontroller = TextEditingController();
 
-  // final TextEditingController _phonecontroller = TextEditingController();
+  final TextEditingController _phonecontroller = TextEditingController();
 
-  // final TextEditingController _addresscontroller = TextEditingController();
+  final TextEditingController _addresscontroller = TextEditingController();
 
-  // final TextEditingController _pincodecontroller = TextEditingController();
+  final TextEditingController _pincodecontroller = TextEditingController();
 
-  // final TextEditingController _occupationcontroller = TextEditingController();
+  final TextEditingController _occupationcontroller = TextEditingController();
 
-  // final TextEditingController _homephonecontroller = TextEditingController();
-
-  // final TextEditingController _emergencynamecontroller =
-  //     TextEditingController();
-
-  // final TextEditingController _emergencyphonecontroller =
-  //     TextEditingController();
-
-  
-  final TextEditingController _fullnamecontroller = TextEditingController(text: "dfbdf");
-
-  final TextEditingController _emailcontroller = TextEditingController(text: 'fh@gm.com');
-
-  final TextEditingController _phonecontroller = TextEditingController(text: '90172637464');
-
-  final TextEditingController _addresscontroller = TextEditingController(text: 'fghdgfh');
-
-  final TextEditingController _pincodecontroller = TextEditingController(text: '786544');
-
-  final TextEditingController _occupationcontroller = TextEditingController(text:'fgdhfghd');
-
-  final TextEditingController _homephonecontroller = TextEditingController(text: '8888888889');
+  final TextEditingController _homephonecontroller = TextEditingController();
 
   final TextEditingController _emergencynamecontroller =
-      TextEditingController(text:'fghsg');
+      TextEditingController();
 
   final TextEditingController _emergencyphonecontroller =
-      TextEditingController(text: '17171717171');
+      TextEditingController();
+
+  
+  // final TextEditingController _fullnamecontroller = TextEditingController(text: "dfbdf");
+
+  // final TextEditingController _emailcontroller = TextEditingController(text: 'fh@gm.com');
+
+  // final TextEditingController _phonecontroller = TextEditingController(text: '90172637464');
+
+  // final TextEditingController _addresscontroller = TextEditingController(text: 'fghdgfh');
+
+  // final TextEditingController _pincodecontroller = TextEditingController(text: '786544');
+
+  // final TextEditingController _occupationcontroller = TextEditingController(text:'fgdhfghd');
+
+  // final TextEditingController _homephonecontroller = TextEditingController(text: '8888888889');
+
+  // final TextEditingController _emergencynamecontroller =
+  //     TextEditingController(text:'fghsg');
+
+  // final TextEditingController _emergencyphonecontroller =
+  //     TextEditingController(text: '17171717171');
 
 
   final TextEditingController _disabilitycontroller = TextEditingController();
@@ -203,47 +203,54 @@ Xtremer? xtremers;
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CardBorder(
-                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                 onpress: () {
-                                  showDatePicker(
-                                          builder: (context, child) {
-                                            return Theme(data: ThemeData(colorScheme: ColorScheme.dark(primary: Colors.blue[200]!),buttonTheme: ButtonThemeData(buttonColor: Colors.white)), child: child!);
-                                          },
-                                          context: context,
-                                          firstDate: DateTime(1950),
-                                          lastDate:
-                                              DateTime(DateTime.now().year + 1))
-                                      .then(
-                                    (value) {
-                                      addmembrctrl
-                                          .addDOB(value ?? DateTime.now());
-                                      _addressFocusNode.requestFocus();
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                         Text("Choose DOB",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),fontSize: 12),),
+                      const SizedBox(height: 6,),
+                      CardBorder(
+                        color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                                     onpress: () {
+                                      showDatePicker(
+                                              builder: (context, child) {
+                                                return Theme(data: ThemeData(colorScheme: ColorScheme.dark(primary: Colors.blue[200]!),buttonTheme: const ButtonThemeData(buttonColor: Colors.white)), child: child!);
+                                              },
+                                              context: context,
+                                              firstDate: DateTime(1950),
+                                              lastDate:
+                                                  DateTime(DateTime.now().year + 1))
+                                          .then(
+                                        (value) {
+                                          addmembrctrl
+                                              .addDOB(value ?? DateTime.now());
+                                          _addressFocusNode.requestFocus();
+                                        },
+                                      );
                                     },
-                                  );
-                                },
-                    padding: EdgeInsets.symmetric(horizontal:  16,vertical: 12),
-                    margin: EdgeInsets.zero,
-                    child: Row(
-                    
-                      children: [
-                        const Text(
-                          "D.O.B:",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(width: 5,),
-                        Row(
-                   
+                        padding: const EdgeInsets.symmetric(horizontal:  16,vertical: 12),
+                        margin: EdgeInsets.zero,
+                        child: Row(
+                        
                           children: [
-                            Icon(
-                   
-                               Icons.date_range,size: 14,),
-                            Text(
-                                "${addmembrctrl.dob.day}/${addmembrctrl.dob.month}/${addmembrctrl.dob.year}",style: TextStyle(fontSize: 14),)
+                            const Text(
+                              "D.O.B:",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            const SizedBox(width: 5,),
+                            Row(
+                       
+                              children: [
+                                const Icon(
+                       
+                                   Icons.date_range,size: 14,),
+                               addmembrctrl.dob==null?SizedBox(): Text(
+                                    "${addmembrctrl.dob!.day}/${addmembrctrl.dob!.month}/${addmembrctrl.dob!.year}",style: const TextStyle(fontSize: 14),)
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   // child: TextFieldWidget(hint: "DOB", controller: _phonecontroller,)),
                   SizedBox(
@@ -515,8 +522,8 @@ Xtremer? xtremers;
                         height: 6,
                       ),
                       DropdownMenu(
-                          label: const Text("Relation"),
-                          // hintText: "",
+                         
+                          hintText: relation[addmembrctrl.relationship]??"",
                           menuStyle: MenuStyle(
                               backgroundColor: WidgetStateColor.resolveWith(
                             (states) => Theme.of(context).colorScheme.primary,
@@ -524,6 +531,7 @@ Xtremer? xtremers;
                     
                             onSelected: (index) {
                             addmembrctrl.setRelation(index!);
+                            print(addmembrctrl.relationship);
                           },
                           dropdownMenuEntries: relation.entries
                               .map((e) => DropdownMenuEntry(
@@ -568,7 +576,7 @@ Xtremer? xtremers;
               CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
                   onpress: () {
-                    if (_formkey.currentState!.validate()) {
+                    if (_formkey.currentState!.validate() && addmembrctrl.dob!=null) {
                       addmembrctrl.addpersonaldetails(
                         name: _fullnamecontroller.text.trim(),
                         phone: _phonecontroller.text.trim(),
@@ -581,9 +589,16 @@ Xtremer? xtremers;
                       );
                      widget.callback();
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      if(addmembrctrl.dob==null){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content:
+                              Text("DOB field cannot be empty.")));
+                      }else{
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content:
                               Text("Add required fields before proceeding")));
+                      }
+            
                     }
                   },
                   child: const Row(

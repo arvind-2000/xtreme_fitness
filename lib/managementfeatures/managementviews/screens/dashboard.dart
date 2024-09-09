@@ -32,6 +32,7 @@ class DashBoardScreen extends StatelessWidget {
       builder: (authctrl) {
         return GetBuilder<GetxPageController>(builder: (pagectrl) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
           //  SizedBox(height:    MediaQuery.sizeOf(context).width < 800?0:100,),
               Expanded(
@@ -62,6 +63,7 @@ class DashBoardScreen extends StatelessWidget {
                 
                     Expanded(
                       child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                            SizedBox(height: 70,
                           child: Padding(

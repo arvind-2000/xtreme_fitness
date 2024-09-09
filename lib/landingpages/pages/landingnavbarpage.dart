@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/signupdialog.dart';
 import 'package:xtreme_fitness/widgets/normaltext.dart';
 
 import '../../authenicationfeatures/views/controller/authcontroller.dart';
@@ -49,23 +51,23 @@ class LandingNavBar extends StatelessWidget {
                                   landingctrl.changelandingpage(1);
                                 Get.toNamed("/pricing");
                               },
-                              child: NormalText(text:"Pricing",size: 14, color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:null),),
-                            const SizedBox(width: 30,),
+                              child: NormalText(text:"Pricing",size: 16, color: landingctrl.page == 1?Theme.of(context).colorScheme.secondary:null),),
+                            const SizedBox(width: 20,),
                             Cardonly(
                                        color: Colors.transparent,
                               onpress: (){
                                   landingctrl.changelandingpage(2);
                                 Get.toNamed("/services");
                               },
-                              child: NormalText(text: "Services",size: 14,  color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:null),),
-                            const SizedBox(width: 30,),
+                              child: NormalText(text: "Services",size: 16,  color: landingctrl.page == 2?Theme.of(context).colorScheme.secondary:null),),
+                            const SizedBox(width: 20,),
                              Cardonly(
                                         color: Colors.transparent,
                               onpress: (){
                                   landingctrl.changelandingpage(3);
                                 Get.toNamed("/gallery");
                               },
-                               child: NormalText(text: "Gallery",size: 14, color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:null),),
+                               child: NormalText(text: "Gallery",size: 16, color: landingctrl.page == 3?Theme.of(context).colorScheme.secondary:null),),
                           ],
                         ),
                      ),
@@ -75,8 +77,13 @@ class LandingNavBar extends StatelessWidget {
                           CardBorder(
                           padding:EdgeInsets.zero,
                             onpress: (){
-                              authctrl.changeAuthPage(0);
-                              Get.toNamed("/login");
+                              Get.dialog(
+                                   barrierDismissible: false,
+                               
+                            LoginDialog(signupdialog: false,));
+                            
+                              // authctrl.changeAuthPage(0);
+                              // Get.toNamed("/login");
                             },
                             color: Colors.red[800],
                             child:  Padding(
@@ -88,8 +95,12 @@ class LandingNavBar extends StatelessWidget {
                           CardwithShadow(
                             
                             onpress: (){
-                              authctrl.changeAuthPage(1);
-                              Get.toNamed("/signup");
+                                Get.dialog(
+                                  barrierDismissible: false,
+                                  LoginDialog(signupdialog: true,),);
+                              // authctrl.changeAuthPage(1);
+                              // Get.toNamed("/signup");
+
                             },
                             color: Colors.red[800],
                            padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),

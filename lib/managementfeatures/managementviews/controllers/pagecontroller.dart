@@ -6,6 +6,7 @@ class GetxPageController extends GetxController {
   String _overalldropdownname = dayslist2[0];
   String get overalldropdownname => _overalldropdownname;
   int addmemberpages = 0;
+
   bool viewprofile = false;
   bool isrenewalforms = false;
   bool iseditforms = false;
@@ -29,7 +30,10 @@ class GetxPageController extends GetxController {
   
     super.onClose();
   }
-
+void overalldropdown(String? val){
+  _overalldropdownname = val!;
+  update();
+}
 
   void changerenewal(bool v){
 

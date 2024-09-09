@@ -11,9 +11,9 @@ import '../../../widgets/textformwidget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({
-    super.key,
+    super.key, this.changelogin,
   });
-
+  final Function(bool)? changelogin;
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
@@ -86,8 +86,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   IconButton(
                       onPressed: () {
-                        Get.offAndToNamed('/home');
+                        // Get.offAndToNamed('/home');
                         authctrl.signupclose();
+                          Navigator.pop(context);
                       },
                       icon: const Icon(Icons.close)),
                 ],
@@ -312,7 +313,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     onTap: authctrl.otploading
                         ? null
                         : () {
-                            Get.offNamed('/login');
+                            // Get.offNamed('/login');
+                            authctrl.signupclose();
+                            widget.changelogin!(true);
                           },
                     child: Text('Log In',
                         style: TextStyle(

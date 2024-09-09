@@ -8,9 +8,10 @@ import '../../../widgets/textformwidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
-    super.key,
+    super.key, this.changepass, this.changesignup,
   });
-
+  final Function(bool)? changepass;
+    final Function(bool)? changesignup;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -62,8 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 IconButton(
                     onPressed: () {
-                      Get.offAndToNamed('/home');
+                      // Get.offAndToNamed('/home');
+
                       authctrl.disposelogin();
+                      Navigator.pop(context);
                     },
                     icon: const Icon(Icons.close)),
               ],
@@ -144,8 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               onTap: authctrl.loginloading
                                   ? null
                                   : () {
+
                                       authctrl.disposelogin();
-                                      Get.offNamed('/forgotpassword');
+                                      widget.changepass!(true);
+                                      // Get.offNamed('/forgotpassword');
                                     },
                               child: Text(
                                 "Forgot Password?",
@@ -230,7 +235,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? null
                       : () {
                         authctrl.disposelogin();
-                          Get.offNamed('/signup');
+                          // Get.offNamed('/signup');
+                          widget.changesignup!(true);
                         },
                   child: Text('Sign Up',
                       style: TextStyle(

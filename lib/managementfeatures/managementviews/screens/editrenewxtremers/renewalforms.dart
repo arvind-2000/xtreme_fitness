@@ -19,9 +19,10 @@ import '../addmemberfields/questionnaire.dart';
 
 
 class RenewalForms extends StatefulWidget {
-  RenewalForms({super.key, this.phonenumber, this.plan});
+  RenewalForms({super.key, this.phonenumber, this.plan, this.callback});
   final String? phonenumber;
   final Plan? plan;
+  final VoidCallback? callback;
   @override
   State<RenewalForms> createState() => _RenewalFormsState();
 }
@@ -48,20 +49,21 @@ class _RenewalFormsState extends State<RenewalForms> {
       builder: (addmemberctrl) {
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 1000,maxHeight: 800),
-              child: CardBorderHover(
+            return Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 1000,maxHeight: 800),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                             Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const HeadingText("Plan Renewal"),
+                              HeadingText("Plan Renewal"),
                               IconButton(onPressed: (){
                                 addmemberctrl.onClose();
                                 pagectrl.disposes();
                                 pagectrl.changerenewal(false);
+                                widget.callback!();
                               }, icon: Icon(Icons.close),tooltip: "Close",)
                             ],
                           ),
@@ -80,7 +82,7 @@ class _RenewalFormsState extends State<RenewalForms> {
                                 }
                                  
                               }else{
-
+                
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Plans Selected")));
                               }
                                                 

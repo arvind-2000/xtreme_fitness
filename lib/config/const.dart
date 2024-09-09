@@ -11,3 +11,10 @@ List<String> dayslist2 = [
   "Yesterday",
 ];
 List<String> plancategory = ["Personal", "General", "Zumba", "Aerobic"];
+
+String xtremeemail = "";
+String xtremecontact = "";
+String xtremeaddress = "";
+String xtremefacebook = "";
+String xtremeinstagram = "";
+String xtremeyoutube = "";

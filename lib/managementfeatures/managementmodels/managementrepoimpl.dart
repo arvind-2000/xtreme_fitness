@@ -325,7 +325,7 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Plan> updatePlans({required Plan plan}) async {
+  Future<Map<Plan?,String>> updatePlans({required Plan plan}) async {
     final uri = Uri.parse('$api/api/Plans/${plan.id}');
 
     // Convert the Plan instance to JSON
@@ -344,19 +344,15 @@ class ManagementrepoImpl implements ManagementRepo {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       print('Plan updated successfully.');
       Plan plan = Plan.fromJson(jsonDecode(response.body));
-    } else {
+      return {plan:"plan Updated Successfully"};
+      }
+     else {
       print('Failed to update plan. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
+      
     }
 
-    return Plan(
-        id: 0,
-        name: "",
-        price: 0,
-        durationInMonths: 0,
-        discountPercentage: 0,
-        category: "");
-  }
+    return {null:"Error updating plans"}; }
 
   // SERVICES
 
@@ -618,7 +614,7 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateTrainer(TrainerEntity trainer) async {
+  Future<Map<TrainerEntity?,String>> updateTrainer(TrainerEntity trainer) async {
     final uri =
         Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
 
@@ -638,11 +634,12 @@ class ManagementrepoImpl implements ManagementRepo {
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
       print('Trainer updated successfully.');
+      return {TrainerEntity.fromJson(jsonDecode(response.body)):"Trainer updated successfully"};
     } else {
       print('Failed to updated trainer. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
     }
-    return "updated";
+    return {null:"Failed to update trainer"};
   }
 
   @override

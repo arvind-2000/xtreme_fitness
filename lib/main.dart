@@ -10,13 +10,13 @@ import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/pages/landingpage.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
-
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 void main() async {
   runApp(const MyApp());
 //  workerManager.log = true;
 //   await workerManager.init();
 
-  // setUrlStrategy(PathUrlStrategy());
+  setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
 
@@ -32,24 +32,30 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
+        // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
+       scaffoldBackgroundColor:  const Color.fromARGB(255, 15, 15, 15),
       ),
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
       initialRoute: '/home',
+            unknownRoute: GetPage(
+        name: '/not-found',
+        page: () => LandingHomePage(index: 4,),
+
+      ),
       getPages: [
+        GetPage(
+            name: '/dashboard',
+            page: () => const HandlerPage(
+            
+                ),
+            transition: Transition.noTransition),
         // GetPage(
         //     name: '/',
-        //     page: () => const LandingHomePage(
-        //           index: 0,
-        //         ),
+        //     page: () => const LandingHomePage(index: 4,),
         //     transition: Transition.noTransition),
-        GetPage(
-            name: '/',
-            page: () => const HandlerPage(),
-            transition: Transition.noTransition),
         GetPage(
             name: '/home',
             page: () => const LandingHomePage(

@@ -5,8 +5,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/radiobuttonwidget.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
-
-import '../../../../widgets/cardswithshadow.dart';
 import '../../../../widgets/titletext.dart';
 import '../../controllers/pagecontroller.dart';
 
@@ -73,7 +71,8 @@ class Questionnare extends StatelessWidget {
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
                          Text(" Next"),
-                         Icon(Icons.arrow_forward)
+                            SizedBox(width: 5,),                         
+                         Icon(Icons.arrow_forward,size:14)
                        ],
                      ))
                   ],

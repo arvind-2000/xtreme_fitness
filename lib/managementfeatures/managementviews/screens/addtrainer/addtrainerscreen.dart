@@ -366,9 +366,10 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceBetween,
+                                                        .end,
                                                 children: [
-                                                  const CardwithShadow(
+                                                CardwithShadow(
+                                                    onpress: (){},
                                                       padding:
                                                           EdgeInsets.all(8),
                                                       child: Icon(
@@ -379,97 +380,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                   const SizedBox(
                                                     width: 6,
                                                   ),
-                                                  CardwithShadow(
-                                                      onpress: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              PageDialog(
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const TitleText(
-                                                                              "Delete"),
-                                                                          IconButton(
-                                                                              onPressed: () {
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              icon: const Icon(Icons.close))
-                                                                        ],
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            20,
-                                                                      ),
-                                                                      const Text(
-                                                                          "User Name"),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Text(
-                                                                        managectrl
-                                                                            .getalltrainer[i]
-                                                                            .name,
-                                                                        style: const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Row(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.end,
-                                                                          children: [
-                                                                            Expanded(
-                                                                                child: CardwithShadow(
-                                                                                    color: Theme.of(context).colorScheme.error.withOpacity(0.6),
-                                                                                    margin: const EdgeInsets.all(16),
-                                                                                    child: const Text(
-                                                                                      "Are you sure you want to delete this user?\nPress Yes to confirm",
-                                                                                      textAlign: TextAlign.center,
-                                                                                    )))
-                                                                          ],
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  no: () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  yes: () {
-                                                                    managectrl.deleteTrainer(
-                                                                        managectrl
-                                                                            .getalltrainer[i]);
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }),
-                                                        );
-                                                      },
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      color:
-                                                          const Color.fromARGB(
-                                                                  255,
-                                                                  14,
-                                                                  11,
-                                                                  11)
-                                                              .withOpacity(0.3),
-                                                      child: const Icon(
-                                                        Icons.delete,
-                                                        color: Colors.white,
-                                                        size: 12,
-                                                      )),
-                                                ],
-                                              ),
+                                                ]),
                                               Expanded(
                                                 child: Column(
                                                   crossAxisAlignment:
@@ -552,8 +463,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                   ],
                                                 ),
                                               ),
-                                            ],
-                                          )).animate().slideX(begin: 1, end: 0);
+                                            ],)
+                                          ).animate().slideX(begin: 1, end: 0);
                                     })
                           ],
                         ))

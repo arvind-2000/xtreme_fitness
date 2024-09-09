@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
+import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/pages/servicespage.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'dart:html' as html;
@@ -59,7 +60,7 @@ class _LandingHomePageState extends State<LandingHomePage> {
         
         
             return Scaffold(
-              backgroundColor: Colors.black87,
+              backgroundColor:  const Color.fromARGB(255, 15, 15, 15),
               appBar:size>1000?null:AppBar(
                 // title:SizedBox(
                 //   height: 50,
@@ -164,7 +165,9 @@ class _LandingHomePageState extends State<LandingHomePage> {
                       landingctrl.page == 2?const ServicePage():
                       landingctrl.page == 3?const GalleryPage():
                       landingctrl.page == 1? const PricingPage():
-                       const LandingPage(),
+                      landingctrl.page == 0? const LandingPage():
+                      NotfoundPage()
+                      
                       // ContactFooter()
                       // Footer()
                     

@@ -10,8 +10,8 @@ import '../../../widgets/textformwidget.dart';
 import 'createmembers.dart';
 
 class ForgotPassWordScreen extends StatefulWidget {
-  const ForgotPassWordScreen({super.key});
-
+  const ForgotPassWordScreen({super.key, this.changelogin});
+  final Function(bool)? changelogin;
   @override
   State<ForgotPassWordScreen> createState() => _ForgotPassWordScreenState();
 }
@@ -92,7 +92,8 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                               ? null
                               : () {
                                   authctrl.disposeforgotpass();
-                                  Get.offAndToNamed('/login');
+                                  Navigator.pop(context);
+                                  // Get.offAndToNamed('/login');
                                 },
                           icon: Icon(Icons.close)),
                       // SizedBox(height: 10,),
@@ -397,7 +398,8 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                       InkWell(
                         onTap: () {
                             authctrl.disposeforgotpass();
-                          Get.offNamed('/login');
+                          // Get.offNamed('/login');
+                            widget.changelogin!(false);
                         },
                         child: Text('Log In',
                             style: TextStyle(

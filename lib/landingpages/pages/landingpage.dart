@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
@@ -509,10 +510,38 @@ class LandingPageServices extends StatelessWidget {
   }
 }
 
-class LandingPage1 extends StatelessWidget {
+class LandingPage1 extends StatefulWidget {
   const LandingPage1({
     super.key,
   });
+
+  @override
+  State<LandingPage1> createState() => _LandingPage1State();
+}
+
+class _LandingPage1State extends State<LandingPage1> {
+
+    // final PageController _controller = PageController();
+    
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) => _animateSlider());
+  }
+
+  // void _animateSlider() {
+  //   Future.delayed(Duration(seconds: 5)).then((_) {
+  //     int nextPage = _controller.page!.round() + 1;
+
+  //     if (nextPage == 5) {
+  //       nextPage = 0;
+  //     }
+
+  //     _controller
+  //         .animateToPage(nextPage, duration: Duration(seconds: 3), curve: Curves.easeIn)
+  //         .then((_) => _animateSlider());
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -521,8 +550,11 @@ class LandingPage1 extends StatelessWidget {
       children: [
             Positioned(child: SizedBox(
                 height: 1000,
-                width: double.maxFinite,
-              child: Image.asset('assets/backg.jpg',fit: BoxFit.cover,))),
+                width: MediaQuery.sizeOf(context).width,
+              child: PageView.builder(
+                // controller: _controller,
+                  itemCount: 5,
+                itemBuilder:(c,i)=> Image.asset('assets/backg.jpg',fit: BoxFit.cover,)))),
         ResponsivePages(
           // screenheight: MediaQuery.sizeOf(context).height,
           screenheight: 1000,
@@ -534,14 +566,14 @@ class LandingPage1 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
              children: [
                const SizedBox(height: 60,),
-               HeadingText("Your Fitness, Your Way",size:MediaQuery.sizeOf(context).width<mobilescreen?60:80,color: Colors.white,isbold: true,),
+               HeadingText("Your Fitness, Your Way",size:MediaQuery.sizeOf(context).width<mobilescreen?60:80,color: Colors.white,isbold: true,).animate().shimmer(color:Colors.grey,delay: Duration(seconds: 1),duration: Duration(seconds: 2),curve: Curves.easeIn,),
                const SizedBox(height: 60,),
                RichText(
                 text:  const TextSpan(children: [
                         TextSpan(text: "Revolutionize Your Workout Experience with Personalised Training\n",style: TextStyle(fontSize: 16,color: Colors.white54),),
                           // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
                 ]),
-               ),
+               ).animate().slideX(begin: -1,end:0,).fadeIn(),
                  const SizedBox(height: 20,),
                  CardwithShadow(
                   onpress: (){

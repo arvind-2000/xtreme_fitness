@@ -116,22 +116,22 @@ class NavBarMember extends StatelessWidget {
                       
              
             
-                          Cardonly(
-                      color: pagectrl.navpage == 6 ? Theme.of(context).colorScheme.secondary.withOpacity(0.3) : Colors.transparent,
-                      onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
-                          drawers(context);
-                        }
+                      //     Cardonly(
+                      // color: pagectrl.navpage == 6 ? Theme.of(context).colorScheme.secondary.withOpacity(0.3) : Colors.transparent,
+                      // onpress: () {
+                      //   if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                      //     drawers(context);
+                      //   }
               
-                        pagectrl.changeNavPage(6);
-                      },
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                      child: const NavTiles(
+                      //   pagectrl.changeNavPage(6);
+                      // },
+                      // margin:
+                      //     const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      // child: const NavTiles(
                       
-                        icon: Icons.design_services,
-                        title: 'Renewal',
-                      )),
+                      //   icon: Icons.design_services,
+                      //   title: 'Renewal',
+                      // )),
               
                   
                 ],

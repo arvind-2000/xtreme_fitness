@@ -170,3 +170,14 @@ double percentprice(double? actualprice,double? dis){
     return data.buffer.asUint8List();
   }
 
+
+
+  String? numberauth(String keyword){
+    try{
+             double.parse(keyword);
+          
+    }catch(e){
+      return "Not a valid number";
+    }
+  }
+

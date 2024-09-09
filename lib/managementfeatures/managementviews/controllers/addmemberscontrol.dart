@@ -34,7 +34,7 @@ class AddMemberController extends GetxController {
   Xtremer? xtremer;
   DoctorDetails? doctorDetails;
   Paymententity? paymentdetails;
-  DateTime dob = DateTime.now();
+  DateTime? dob;
   int relationship = 4;
   bool disability = false;
   TrainerEntity? _trainer;
@@ -264,7 +264,7 @@ class AddMemberController extends GetxController {
 
   void setRelation(int rel) {
     relationship = rel;
-    xtremer!.relationship ="grandpa";
+    // xtremer!.relationship ="grandpa";
     update();
   }
 
@@ -309,17 +309,24 @@ class AddMemberController extends GetxController {
 
     void addxtremersedit(Xtremer? xtremere) async{
       
-    xtremer = xtremere;
-    dob = xtremere!.dateOfBirth!;
-    relationship = relation.keys.firstWhere((element) =>
-      relation[element]==xtremere.relationship      
-    ,orElse: () => 20,);
+    // xtremer = xtremere;
+    try{
+  dob = xtremere!.dateOfBirth!;
+    // relationship = relation.keys.firstWhere((element) =>
+    //   relation[element]==xtremere.relationship      
+    // ,orElse: () => 20,);
+    relationship = 0;
     isImageloading = true;
     _imageData = await repo.getImage(
       xtremer!.id!
     );
     isImageloading = false;
     update();
+      
+    }catch(e){
+
+    }
+  
   }
 
   @override

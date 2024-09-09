@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/widgets/gridviewwidget.dart';
 
@@ -19,7 +20,8 @@ class PricingPage extends StatelessWidget {
     return  GetBuilder<GetxLandingcontroller>(
       builder: (managementcontroller) {
         return  Container(
-          color: Color.fromARGB(255, 15, 15, 15),
+      
+          color: const Color.fromARGB(255, 15, 15, 15),
           child: Row(
             children: [
               SizedBox(width:size<=mobilescreen?16: 100,),
@@ -27,12 +29,15 @@ class PricingPage extends StatelessWidget {
                 child: Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                 const SizedBox(height: 50,),
-                 HeadingText("Pricing",size:size<=mobilescreen?30: 60,isbold: true,),
-                 const SizedBox(height: 50,),
+              
+                 Container(
+                   height: 300,
+                   width: MediaQuery.sizeOf(context).width,
+                   child: Center(child: HeadingText("Pricing",size:size<=mobilescreen?30: 60,isbold: true,))),
+             
                 GridViewWidget(
                   
-             
+                             
                         size: size,
                         children: managementcontroller.getallplans.asMap().entries.map((e) => SizedBox(
                                            width: 400,
@@ -102,7 +107,7 @@ class PricingPage extends StatelessWidget {
                               )
                           ],
                         )),
-                                             )).toList()
+                                             ).animate().shimmer(duration: Duration(seconds: 1),curve: Curves.easeIn,color: Colors.grey)).toList()
                         ),
                 ],),
               ),

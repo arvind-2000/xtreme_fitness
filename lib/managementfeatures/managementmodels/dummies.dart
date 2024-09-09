@@ -17,17 +17,26 @@ List<Plan> dummyplan = [
 
 ];
 List<ServiceEntity> dummyservices = [
-  ServiceEntity(id: Random().nextInt(1000), name: "Massage Chair", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30),
-  ServiceEntity(id: Random().nextInt(1000), name: "BMI", memberPrice: 200, nonMemberPrice: 300, durationInMinutes: 30),
-  ServiceEntity(id: Random().nextInt(1000), name: "Sauna", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30),
+  ServiceEntity(id: Random().nextInt(1000), name: "Massage Chair", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30,isactive: true),
+  ServiceEntity(id: Random().nextInt(1000), name: "BMI", memberPrice: 200, nonMemberPrice: 300, durationInMinutes: 30,isactive: true),
+  ServiceEntity(id: Random().nextInt(1000), name: "Sauna", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30,isactive: true),
 
 ];
 List<Paymententity> dummypayments = [];
-// List<Xtremer> dummyxtremer = [];
-// List<Staff> dummystaff = [
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"rahul", phone:  Random().nextInt(1000000000).toString(), username:"jfhdj", roleid:Role(roleid: "4", rolename: "Manager"), isactive: true),
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Gokul", phone:  Random().nextInt(1000000000).toString(), username:"jfhfdj", roleid:Role(roleid: "5", rolename: "Receptionist"), isactive: true),
-//   TrainerEntity(uid:  Random().nextInt(1000).toString(), name:"Raja", phone:  Random().nextInt(1000000000).toString(), username:"lkkkk", roleid:Role(roleid: "6", rolename: "Others"), isactive: true),
-// ];
-// List<TrainerEntity> dummytrainers = [
-//   TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning"),];
+List<Xtremer> dummyxtremer = [
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+    Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
+];
+List<Staff> dummystaff = [
+
+];
+List<TrainerEntity> dummytrainers = [
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: true),];
