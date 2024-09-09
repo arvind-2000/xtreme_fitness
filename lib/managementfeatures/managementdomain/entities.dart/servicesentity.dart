@@ -29,6 +29,7 @@ class ServiceEntity {
 
   // Create a Service instance from a Map
   factory ServiceEntity.fromJson(Map<String, dynamic> json) {
+
     return ServiceEntity(
       id: json['Id'],
       name: json['Name'],

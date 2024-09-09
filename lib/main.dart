@@ -16,7 +16,7 @@ void main() async {
 //  workerManager.log = true;
 //   await workerManager.init();
 
-  setUrlStrategy(PathUrlStrategy());
+  // setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
 

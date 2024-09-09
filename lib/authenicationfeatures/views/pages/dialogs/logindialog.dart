@@ -35,6 +35,7 @@ class _LoginDialogState extends State<LoginDialog> {
             height: 600,
             width: 500,
             child: Cardonly(
+              margin: EdgeInsets.zero,
               color: Colors.grey[800]!.withOpacity(0.6),
               child: isforgot?ForgotPassWordScreen(changelogin: (v){       state(() {
                                   isforgot = v;

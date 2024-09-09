@@ -245,7 +245,7 @@ class _CreateMemberState extends State<CreateMember> {
                                       showDialog(
                                         context: context,
                                         builder: (context) =>
-                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,),
+                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,username: username.text,pass: password.text,),
                                       );
                                     }
                                       }else{
@@ -289,12 +289,13 @@ class _CreateMemberState extends State<CreateMember> {
 class PaymentDialog extends StatelessWidget {
   const PaymentDialog({
     super.key,
-    required GlobalKey<FormState> formKeys, this.phone,
+    required GlobalKey<FormState> formKeys, this.phone, this.username, this.pass,
  
   }) : _formKeys = formKeys;
 
   final GlobalKey<FormState> _formKeys;
-
+  final String? username;
+  final String? pass; 
   final String? phone;
   @override
   Widget build(BuildContext context) {
@@ -307,8 +308,9 @@ class PaymentDialog extends StatelessWidget {
               no: () {
                 Navigator.pop(context);
               },
-              yes: () {
-                addmemberctrl.addXtremer();
+              yes: () async{
+                bool v = await addmemberctrl.createuser(username, pass,null);
+    
                 Navigator.pop(context);
               },
               child: Form(

@@ -576,18 +576,32 @@ Xtremer? xtremers;
               CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
                   onpress: () {
+                   
                     if (_formkey.currentState!.validate() && addmembrctrl.dob!=null) {
+                      print("${_fullnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${ _pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${ _emergencynamecontroller.text.trim()} "); 
                       addmembrctrl.addpersonaldetails(
+                          // address: "f",
+                          // emergencycontact: "sds",
+                          // emergencyname: "",
+                          // homephone: "",
+                          // name: "fg",
+                          // occupation: "",
+                          // phone: "",
+                          // postalcode: "",
+                          // email: "",
+
+
                         name: _fullnamecontroller.text.trim(),
                         phone: _phonecontroller.text.trim(),
                         homephone: _homephonecontroller.text.trim(),
+                        email: _emailcontroller.text.trim(),
                         address: _addresscontroller.text.trim(),
                         postalcode: _pincodecontroller.text.trim(),
                         occupation: _occupationcontroller.text.trim(),
                         emergencycontact: _emergencyphonecontroller.text.trim(),
                         emergencyname: _emergencynamecontroller.text.trim(),
                       );
-                     widget.callback();
+                      widget.callback();
                     } else {
                       if(addmembrctrl.dob==null){
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

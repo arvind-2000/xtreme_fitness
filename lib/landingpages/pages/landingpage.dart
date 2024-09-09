@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
+import '../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
@@ -438,7 +439,15 @@ class LandingPageServices extends StatelessWidget {
                ),
              ),
                    const SizedBox(height: 16,),
-                const CardBorder(
+                CardBorder(
+                  onpress: (){
+                        managectrl.addServices(e.value);
+                           Get.dialog(
+                                   barrierDismissible: false,
+                               
+                            LoginDialog(signupdialog: true,));  
+
+                  },
                   margin: EdgeInsets.zero,
                   color: Colors.grey,
                   child: Row(
