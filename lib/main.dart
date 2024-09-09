@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
@@ -10,7 +11,7 @@ import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/pages/landingpage.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+
 void main() async {
   runApp(const MyApp());
 //  workerManager.log = true;
@@ -33,24 +34,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: darkColorSchemes,
         // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
-       scaffoldBackgroundColor:  const Color.fromARGB(255, 15, 15, 15),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
       ),
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/home',
-            unknownRoute: GetPage(
-        name: '/not-found',
-        page: () => LandingHomePage(index: 4,),
-
+      initialRoute: '/',
+      unknownRoute: GetPage(
+        name: '/',
+        page: () => const HandlerPage(),
       ),
       getPages: [
         GetPage(
             name: '/dashboard',
-            page: () => const HandlerPage(
-            
-                ),
+            page: () => const HandlerPage(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/',

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
+import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
 import '../../../authentifeatures/models/usecasesimpl.dart';
@@ -12,7 +13,8 @@ import '../../../widgets/textformwidget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({
-    super.key, this.changelogin,
+    super.key,
+    this.changelogin,
   });
   final Function(bool)? changelogin;
   @override

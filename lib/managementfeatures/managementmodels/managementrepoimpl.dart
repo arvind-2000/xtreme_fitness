@@ -64,8 +64,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryNumber': xtremer.surgeryNumber ?? '',
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
-      'SubmittedBy':xtremer.submittedBy.toString(),
-      'isActive':xtremer.isActive.toString()
+      'SubmittedBy': xtremer.submittedBy.toString(),
+      'isActive': xtremer.isActive.toString()
     });
 
     // Add the file to the request
@@ -143,8 +143,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryNumber': xtremer.surgeryNumber ?? '',
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
-      'SubmittedBy':xtremer.submittedBy.toString(),
-      'isActive':xtremer.isActive.toString()
+      'SubmittedBy': xtremer.submittedBy.toString(),
+      'isActive': xtremer.isActive.toString()
     });
 
     // Add the file to the request
@@ -185,6 +185,64 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
+  Future<List<Xtremer>> viewMemberforoverall() async {
+    List<Xtremer> allxtremelist = [];
+    List<Xtremer> todayxtremelsit = [];
+    List<Xtremer> yesterdayxtremlist = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Xtremers"));
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Xtremer list : ${jsonList.length}");
+        allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        DateTime now = DateTime.now();
+        DateTime today = DateTime(now.year, now.month, now.day);
+        DateTime yesterday = today.subtract(const Duration(days: 1));
+
+// Filter for today's elements
+        for (var element in allxtremelist) {
+          if (todayxtremelsit.contains(element)) {
+            print('already added to today list');
+          } else {
+            if (element.createddate!.isAtSameMomentAs(today)) {
+              // Add all elements whose createddate is today
+              todayxtremelsit.add(element);
+            }
+          }
+        }
+
+// Filter for yesterday's elements
+        for (var element in allxtremelist) {
+          if (yesterdayxtremlist.contains(element)) {
+            print('already added to yesterday list');
+          } else {
+            if (element.createddate!.isAtSameMomentAs(yesterday)) {
+              // Add all elements whose createddate is yesterday
+              yesterdayxtremlist.add(element);
+            }
+          }
+        }
+
+        switch (pgctrl.overalldropdownindex.value) {
+          case 0:
+            return allxtremelist;
+          case 1:
+            return todayxtremelsit;
+          case 2:
+            return yesterdayxtremlist;
+          default:
+        }
+      } else {}
+    } catch (e) {
+      print("cant load Xtremer : $e");
+    }
+
+    return [];
+  }
+
+  @override
   Future<List<Xtremer>> viewMember() async {
     try {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
@@ -193,8 +251,10 @@ class ManagementrepoImpl implements ManagementRepo {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In Xtremer list : ${jsonList.length}");
+        List<Xtremer> xtremelist =
+            jsonList.map((json) => Xtremer.fromJson(json)).toList();
 
-        return jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        return xtremelist;
       } else {}
     } catch (e) {
       print("cant load Xtremer : $e");
@@ -325,7 +385,7 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<Plan?,String>> updatePlans({required Plan plan}) async {
+  Future<Map<Plan?, String>> updatePlans({required Plan plan}) async {
     final uri = Uri.parse('$api/api/Plans/${plan.id}');
 
     // Convert the Plan instance to JSON
@@ -344,15 +404,14 @@ class ManagementrepoImpl implements ManagementRepo {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       print('Plan updated successfully.');
       Plan plan = Plan.fromJson(jsonDecode(response.body));
-      return {plan:"plan Updated Successfully"};
-      }
-     else {
+      return {plan: "plan Updated Successfully"};
+    } else {
       print('Failed to update plan. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
-      
     }
 
-    return {null:"Error updating plans"}; }
+    return {null: "Error updating plans"};
+  }
 
   // SERVICES
 
@@ -414,7 +473,9 @@ class ManagementrepoImpl implements ManagementRepo {
         print("In Services list : ${jsonList.length}");
         // Convert JSON data to List<Services>
         return jsonList.map((json) => ServiceEntity.fromJson(json)).toList();
-      } else {}
+      } else {
+        print('rewtwetwetwe');
+      }
     } catch (e) {
       print("cant load services");
     }
@@ -474,8 +535,8 @@ class ManagementrepoImpl implements ManagementRepo {
         "paymentMethod": method,
         "paymentType": type,
         "subscriptionId": subsid,
-        "serviceUsageId":serviceid,
-          'termsAndConditions':tnc
+        "serviceUsageId": serviceid,
+        'termsAndConditions': tnc
       });
       request.headers.addAll(headers);
 
@@ -614,7 +675,8 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<TrainerEntity?,String>> updateTrainer(TrainerEntity trainer) async {
+  Future<Map<TrainerEntity?, String>> updateTrainer(
+      TrainerEntity trainer) async {
     final uri =
         Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
 
@@ -634,12 +696,15 @@ class ManagementrepoImpl implements ManagementRepo {
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
       print('Trainer updated successfully.');
-      return {TrainerEntity.fromJson(jsonDecode(response.body)):"Trainer updated successfully"};
+      return {
+        TrainerEntity.fromJson(jsonDecode(response.body)):
+            "Trainer updated successfully"
+      };
     } else {
       print('Failed to updated trainer. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
     }
-    return {null:"Failed to update trainer"};
+    return {null: "Failed to update trainer"};
   }
 
   @override
@@ -670,7 +735,10 @@ class ManagementrepoImpl implements ManagementRepo {
     final body = jsonEncode({
       "mobileNumber": phone,
       "userName": username,
+      "mobileNumber": phone,
+      "userName": username,
       "passwordHash": pass,
+      "roleName": role,
       "roleName": role,
       "createdAt": DateTime.now().toString(),
       "isActive":true
@@ -812,7 +880,7 @@ class ManagementrepoImpl implements ManagementRepo {
       "startDate": subs.startDate.toString(),
       "endDate": subs.endDate.toString(),
       "isActive": subs.isActive,
-      "trainerId":subs.trainerId
+      "trainerId": subs.trainerId
     });
 
     // Send the POST request

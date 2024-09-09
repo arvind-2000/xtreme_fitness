@@ -24,9 +24,11 @@ abstract class ManagementRepo {
   ///adding members
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid);
-  Future<Map<String,dynamic>> updateMember(Xtremer xtremer,Uint8List? filepath);
+  Future<Map<String, dynamic>> updateMember(
+      Xtremer xtremer, Uint8List? filepath);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
+  Future<List<Xtremer>> viewMemberforoverall();
   Future<Uint8List?> getImage(int id);
 
   ///subscription renewal function
@@ -48,14 +50,14 @@ abstract class ManagementRepo {
   Future<bool> deletePlans({required Plan plan});
 
   /// updating plans api
-  Future<Map<Plan?,String>> updatePlans({required Plan plan});
+  Future<Map<Plan?, String>> updatePlans({required Plan plan});
 
   ///getplans api
   Future<List<Plan>> getPlans();
 
   ///adding trainer for management
   Future<String> addTrainer(TrainerEntity staff);
-  Future<Map<TrainerEntity?,String>> updateTrainer(TrainerEntity staff);
+  Future<Map<TrainerEntity?, String>> updateTrainer(TrainerEntity staff);
   Future<String> deleteTrainer(TrainerEntity staff);
   Future<List<TrainerEntity>> viewTrainer();
   Future<List<Xtremer>> viewPersonalTrainer();
@@ -71,7 +73,12 @@ abstract class ManagementRepo {
   Future<PaymentDetails?> getpayment(String transcationid);
 
   ///users api
+<<<<<<< HEAD
   Future<Map<int,String>> addUser(String username ,String pass, String phone,String role);
+=======
+  Future<Map<int, String>> addUser(
+      String username, String pass, String phone, String role);
+>>>>>>> e14d65d46137173ae5eff33aa46e89df8644fff0
   Future<String?> viewUser(String username, String pass);
 
   ///subscription api
@@ -81,7 +88,6 @@ abstract class ManagementRepo {
   ///service usage api
   Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule);
   Future<ServiceSchedule?> getServiceUsage(int id);
-
 
   //admission
   Future<Admission?> viewadmission();

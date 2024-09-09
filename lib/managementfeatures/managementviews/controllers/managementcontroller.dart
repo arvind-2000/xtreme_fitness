@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -8,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
@@ -22,12 +21,14 @@ class ManagementController extends GetxController {
   List<Paymentlatest10> _latestpayment10 = [];
   List<Staff> _allstaff = [];
   List<Xtremer> _allxtremer = [];
+  List<Xtremer> _allxtremerforoverall = [];
   final List<Xtremer> _allpersonalxtremer = [];
   final List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
   List<Xtremer> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
   List<Xtremer> get getallXtremer => _allxtremer;
+  List<Xtremer> get getallxtremerforoverall => _allxtremerforoverall;
   List<Xtremer> get getsearchXtremer => _searchxtremerlist;
   List<Xtremer> get allpersonalxtremer => _allpersonalxtremer;
   List<Xtremer> get allgeneralxtremer => _allgeneralxtremer;
@@ -53,9 +54,30 @@ class ManagementController extends GetxController {
   }
 
   void getplans() async {
-      // _allplans = dummyplan;
+    // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
     // _allplans = dummyplan;
+    update();
+  }
+
+  void getxtremerforoverall() async {
+    _allxtremerforoverall = await managementRepo.viewMemberforoverall();
+    // for (var element in _allxtremerforoverall) {
+    //   if (element. == null || element.trainerName!.isEmpty) {
+    //     if (_allgeneralxtremer.contains(element)) {
+    //       log('Already Added general');
+    //     } else {
+    //       _allgeneralxtremer.add(element);
+    //     }
+    //   } else {
+    //     if (_allpersonalxtremer.contains(element)) {
+    //       log('Already Added');
+    //     } else {
+    //       log(element.trainerName.toString());
+    //       _allpersonalxtremer.add(element);
+    //     }
+    //   }
+    // }
     update();
   }
 
@@ -93,13 +115,11 @@ class ManagementController extends GetxController {
   }
 
   Future<String> editplan(Plan plan) async {
-    Map<Plan?,String> d = await managementRepo.updatePlans(plan: plan);
+    Map<Plan?, String> d = await managementRepo.updatePlans(plan: plan);
     // update plans
     getplans();
     return d.entries.first.value;
   }
-
-
 
   void getallServices() async {
     _allservices = await managementRepo.getServices();
@@ -117,8 +137,6 @@ class ManagementController extends GetxController {
     return v;
   }
 
-
-  
   Future<String> editservice(ServiceEntity service) async {
     String v = await managementRepo.updateServices(service: service);
     // update service
@@ -132,10 +150,8 @@ class ManagementController extends GetxController {
     });
   }
 
-  Future<Admission?> getadmission() async{
-    
+  Future<Admission?> getadmission() async {
     return await managementRepo.viewadmission();
-
   }
 
   void getStaff() async {
@@ -189,54 +205,62 @@ class ManagementController extends GetxController {
     });
   }
 
-
-
-  void searchusers(String keyword){
-      searchmessage = "";
-      if(keyword.isEmpty){
-        if(searchposition == 0){
-
-            _searchxtremerlist = _allxtremer;
-        }else if(searchposition == 1){
-            _searchxtremerlist = _allpersonalxtremer;
-        }else{
-          _searchxtremerlist = _allgeneralxtremer;
-        }
-      }else{
-
-      _searchxtremerlist = _allxtremer.where((element) {
-        return element.XtremerId.toString().toLowerCase().contains(keyword.toLowerCase())||element.firstName.toString().toLowerCase().contains(keyword.toLowerCase())||element.mobileNumber.toString().toLowerCase().contains(keyword.toLowerCase());
-    },).toList();
+  void searchusers(String keyword) {
+    searchmessage = "";
+    if (keyword.isEmpty) {
+      if (searchposition == 0) {
+        _searchxtremerlist = _allxtremer;
+      } else if (searchposition == 1) {
+        _searchxtremerlist = _allpersonalxtremer;
+      } else {
+        _searchxtremerlist = _allgeneralxtremer;
       }
-   
-    searchmessage = keyword.isEmpty?"":"Found ${_searchxtremerlist.length} records with keyoword: $keyword";
-    update();
-}
-  ///call in search to make personal only
-  void personalxtremer(){
-    
-      _searchxtremerlist = _allpersonalxtremer;
-      update();
-}
-  ///call in search xtremer to make general only
-  void generalxtremer(){
-    
-      _searchxtremerlist = _allgeneralxtremer;
-      update();
-}
+    } else {
+      _searchxtremerlist = _allxtremer.where(
+        (element) {
+          return element.XtremerId.toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||
+              element.firstName
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||
+              element.mobileNumber
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase());
+        },
+      ).toList();
+    }
 
-  void allxtremer(){
-    
-      _searchxtremerlist = _allxtremer;
-      update();
-}
+    searchmessage = keyword.isEmpty
+        ? ""
+        : "Found ${_searchxtremerlist.length} records with keyoword: $keyword";
+    update();
+  }
+
+  ///call in search to make personal only
+  void personalxtremer() {
+    _searchxtremerlist = _allpersonalxtremer;
+    update();
+  }
+
+  ///call in search xtremer to make general only
+  void generalxtremer() {
+    _searchxtremerlist = _allgeneralxtremer;
+    update();
+  }
+
+  void allxtremer() {
+    _searchxtremerlist = _allxtremer;
+    update();
+  }
 
 //   void exXtremer(){
-    
+
 //       _searchxtremerlist = _allxtremer.where((element) {
-       
+
 //       },).toList();
 //       update();
 // }
-
 }
