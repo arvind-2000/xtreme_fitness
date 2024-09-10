@@ -185,6 +185,64 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
+  Future<List<Xtremer>> viewMemberforoverall() async {
+    List<Xtremer> allxtremelist = [];
+    List<Xtremer> todayxtremelsit = [];
+    List<Xtremer> yesterdayxtremlist = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Xtremers"));
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Xtremer list : ${jsonList.length}");
+        allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        DateTime now = DateTime.now();
+        DateTime today = DateTime(now.year, now.month, now.day);
+        DateTime yesterday = today.subtract(const Duration(days: 1));
+
+// Filter for today's elements
+        for (var element in allxtremelist) {
+          if (todayxtremelsit.contains(element)) {
+            print('already added to today list');
+          } else {
+            if (element.createddate!.isAtSameMomentAs(today)) {
+              // Add all elements whose createddate is today
+              todayxtremelsit.add(element);
+            }
+          }
+        }
+
+// Filter for yesterday's elements
+        for (var element in allxtremelist) {
+          if (yesterdayxtremlist.contains(element)) {
+            print('already added to yesterday list');
+          } else {
+            if (element.createddate!.isAtSameMomentAs(yesterday)) {
+              // Add all elements whose createddate is yesterday
+              yesterdayxtremlist.add(element);
+            }
+          }
+        }
+
+        switch (pgctrl.overalldropdownindex.value) {
+          case 0:
+            return allxtremelist;
+          case 1:
+            return todayxtremelsit;
+          case 2:
+            return yesterdayxtremlist;
+          default:
+        }
+      } else {}
+    } catch (e) {
+      print("cant load Xtremer : $e");
+    }
+
+    return [];
+  }
+
+  @override
   Future<List<Xtremer>> viewMember() async {
     try {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
@@ -195,6 +253,7 @@ class ManagementrepoImpl implements ManagementRepo {
         print("In Xtremer list : ${jsonList.length}");
         List<Xtremer> xtremelist =
             jsonList.map((json) => Xtremer.fromJson(json)).toList();
+
         return xtremelist;
       } else {}
     } catch (e) {
@@ -668,7 +727,8 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<int, String>> addUser(String username, String pass, String phone,String role) async {
+  Future<Map<int, String>> addUser(
+      String username, String pass, String phone, String role) async {
     final uri =
         Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
 
@@ -679,7 +739,7 @@ class ManagementrepoImpl implements ManagementRepo {
       "passwordHash": pass,
       "roleName": role,
       "createdAt": DateTime.now().toString(),
-      "isActive":true
+      "isActive": true
     });
 
     // Send the POST request
@@ -699,12 +759,13 @@ class ManagementrepoImpl implements ManagementRepo {
       } else {
         print('Failed to add user. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        if(response.statusCode>=500){
- return {response.statusCode: "Server error. Try Again after some time"};
-        }else{
-   return {response.statusCode: response.body};
+        if (response.statusCode >= 500) {
+          return {
+            response.statusCode: "Server error. Try Again after some time"
+          };
+        } else {
+          return {response.statusCode: response.body};
         }
-     
       }
     } on Exception catch (e) {
       // TODO
@@ -741,20 +802,19 @@ class ManagementrepoImpl implements ManagementRepo {
   @override
   Future<ServiceSchedule?> addServiceUsage(
       ServiceSchedule serviceschedule) async {
-    
-      String userid = serviceschedule.userId.toString();
-      String serviceid = serviceschedule.serviceId.toString();
-      String scheduledate = serviceschedule.scheduleDate.toString();
-      String price = serviceschedule.price.toString();
-      String status = serviceschedule.status;
+    String userid = serviceschedule.userId.toString();
+    String serviceid = serviceschedule.serviceId.toString();
+    String scheduledate = serviceschedule.scheduleDate.toString();
+    String price = serviceschedule.price.toString();
+    String status = serviceschedule.status;
     final uri =
         Uri.parse('$api/api/ServiceUsages'); // Replace with your API endpoint
-  print( "$userid  $serviceid $scheduledate $price $status");
+    print("$userid  $serviceid $scheduledate $price $status");
     // Convert the User instance to JSON
     final body = jsonEncode({
-        'userId': userid,
+      'userId': userid,
       'serviceId': serviceid,
-      'scheduleDate':scheduledate,
+      'scheduleDate': scheduledate,
       'price': price,
       'status': status,
     });

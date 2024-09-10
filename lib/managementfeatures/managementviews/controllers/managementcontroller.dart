@@ -21,12 +21,14 @@ class ManagementController extends GetxController {
   List<Paymentlatest10> _latestpayment10 = [];
   List<Staff> _allstaff = [];
   List<Xtremer> _allxtremer = [];
+  List<Xtremer> _allxtremerforoverall = [];
   final List<Xtremer> _allpersonalxtremer = [];
   final List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
   List<Xtremer> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
   List<Xtremer> get getallXtremer => _allxtremer;
+  List<Xtremer> get getallxtremerforoverall => _allxtremerforoverall;
   List<Xtremer> get getsearchXtremer => _searchxtremerlist;
   List<Xtremer> get allpersonalxtremer => _allpersonalxtremer;
   List<Xtremer> get allgeneralxtremer => _allgeneralxtremer;
@@ -51,7 +53,6 @@ class ManagementController extends GetxController {
     getpaymentlastest10();
   }
 
-  final GetxPageController pgctrl = Get.put(GetxPageController());
   void getplans() async {
     // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
@@ -59,20 +60,29 @@ class ManagementController extends GetxController {
     update();
   }
 
-  void getxtremer() async {
-    switch (pgctrl.overalldropdownindex.value) {
-      case 0:
-        _allxtremer = await managementRepo.viewMember();
-        update();
-      case 1:
-        _allxtremer = dummyxtremer;
-        update();
-      case 2:
-        _allxtremer = await managementRepo.viewMember();
-        update();
-      default:
-    }
+  void getxtremerforoverall() async {
+    _allxtremerforoverall = await managementRepo.viewMemberforoverall();
+    // for (var element in _allxtremerforoverall) {
+    //   if (element. == null || element.trainerName!.isEmpty) {
+    //     if (_allgeneralxtremer.contains(element)) {
+    //       log('Already Added general');
+    //     } else {
+    //       _allgeneralxtremer.add(element);
+    //     }
+    //   } else {
+    //     if (_allpersonalxtremer.contains(element)) {
+    //       log('Already Added');
+    //     } else {
+    //       log(element.trainerName.toString());
+    //       _allpersonalxtremer.add(element);
+    //     }
+    //   }
+    // }
+    update();
+  }
 
+  void getxtremer() async {
+    _allxtremer = await managementRepo.viewMember();
     // _allxtremer = dummyxtremer;
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;

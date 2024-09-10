@@ -33,7 +33,7 @@ class GetxPageController extends GetxController {
     _overalldropdownname = val!;
     overalldropdownindex = dayslist2.indexOf(_overalldropdownname).obs;
     update();
-    mgctrl.getxtremer();
+    mgctrl.getxtremerforoverall();
   }
 
   void changerenewal(bool v) {
