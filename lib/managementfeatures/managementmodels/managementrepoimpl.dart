@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,12 +17,14 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../managementdomain/entities.dart/10latestpayment.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
+  GetxPageController pgctrl = Get.put(GetxPageController());
   @override
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid) async {

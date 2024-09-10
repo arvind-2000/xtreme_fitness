@@ -132,10 +132,7 @@ class AddMemberController extends GetxController {
 
   
 
-  Future<Subscription?> addsubscription(Subscription subs) async {
-    Subscription? subss = await repo.addSubscription(subs);
-    return subss;
-  }
+
 
   void addXtremer() async {
     if (xtremer!.XtremerId != null) {
