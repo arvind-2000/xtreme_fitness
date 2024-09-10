@@ -12,7 +12,8 @@ import '../../../widgets/textformwidget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({
-    super.key, this.changelogin,
+    super.key,
+    this.changelogin,
   });
   final Function(bool)? changelogin;
   @override

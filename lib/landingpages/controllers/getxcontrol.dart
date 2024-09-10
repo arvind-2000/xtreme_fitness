@@ -5,12 +5,11 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
 
-class GetxLandingcontroller extends GetxController{
+class GetxLandingcontroller extends GetxController {
+  final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
 
-    final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
-
-    List<Plan> _plan = [];
-    List<ServiceEntity> _services = [];
+  List<Plan> _plan = [];
+  List<ServiceEntity> _services = [];
 
     List<Plan> get getallplans => _plan;  
     List<ServiceEntity> get getallservices => _services;  
@@ -26,17 +25,17 @@ class GetxLandingcontroller extends GetxController{
     getServices();
   }
 
-    void changeplanduration(int duration){
-      plandurations = duration;
-      update();
-    }
-    void getPlans() async{
+  void changeplanduration(int duration) {
+    plandurations = duration;
+    update();
+  }
 
-        _plan = await managementrepoImpl.getPlans();
-        // _plan =dummyplan;
-        print(_plan.length);
-        update();
-    }
+  void getPlans() async {
+    _plan = await managementrepoImpl.getPlans();
+    // _plan =dummyplan;
+    print(_plan.length);
+    update();
+  }
 
     
     void getServices() async{
