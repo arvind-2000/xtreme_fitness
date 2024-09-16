@@ -6,7 +6,6 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
