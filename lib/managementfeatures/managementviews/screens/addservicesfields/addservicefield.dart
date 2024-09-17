@@ -93,7 +93,7 @@ class _AddPlanFieldsState extends State<AddServiceField> {
                    ],
                  ),
                ),
-             widget.edit?SizedBox():isactives?Text("Service Active"):Text("Service Disabled"),
+             widget.edit?isactives?Text("Service Active"):Text("Service Disabled"):SizedBox(),
               widget.edit?Switch(
                activeColor: Colors.blue,
                hoverColor: Colors.blue.withOpacity(0.5),
@@ -114,6 +114,7 @@ class _AddPlanFieldsState extends State<AddServiceField> {
                             yes: () async{
                               String d = "";
                               if(widget.edit){
+                                print("in service edit");
                                  String v =  await managementctrl.editservice(service);
                                     d= v;
                               }else{

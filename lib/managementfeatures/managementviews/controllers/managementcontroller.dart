@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
+import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 
@@ -35,10 +36,12 @@ class ManagementController extends GetxController {
   List<Paymentlatest10> get latestpayment10 => _latestpayment10;
 
   List<ServiceEntity> _allservices = [];
+  List<Trainee> _alltrainee = [];
   List<Alluserpaymentmodel> get getallpayments => _allpayments;
   List<Plan> get getallplans => _allplans;
   List<Staff> get getallstaff => _allstaff;
   List<ServiceEntity> get getallservices => _allservices;
+  List<Trainee> get getallTrainee => _alltrainee;
   String? searchmessage = "";
   int searchposition = 0;
   @override
@@ -51,6 +54,9 @@ class ManagementController extends GetxController {
     getTrainer();
     viewpayment();
     getpaymentlastest10();
+    getAllTraineess();
+    
+
   }
 
   void getplans() async {
@@ -59,6 +65,19 @@ class ManagementController extends GetxController {
     // _allplans = dummyplan;
     update();
   }
+
+
+  void getAllTraineess()async{
+    // _allplans = dummyplan;
+    _alltrainee = await managementRepo.viewTrainee(10);
+    print( "In trainer list ${_alltrainee.length}");
+    // _allplans = dummyplan;
+    update();
+
+
+
+  }
+
 
   void getxtremerforoverall() async {
     _allxtremerforoverall = await managementRepo.viewMemberforoverall();
@@ -115,10 +134,17 @@ class ManagementController extends GetxController {
   }
 
   Future<String> editplan(Plan plan) async {
-    Map<Plan?, String> d = await managementRepo.updatePlans(plan: plan);
+    String d = await managementRepo.updatePlans(plan: plan);
     // update plans
     getplans();
-    return d.entries.first.value;
+    return d;
+  }
+
+    Future<String> edittrainer(TrainerEntity trainerentity) async {
+    String d = await managementRepo.updateTrainer(trainerentity);
+    // update plans
+    getplans();
+    return d;
   }
 
   void getallServices() async {
@@ -165,8 +191,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    _alltrainer = dummytrainers;
-    // _alltrainer = await managementRepo.viewTrainer();
+    // _alltrainer = dummytrainers;
+    _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }

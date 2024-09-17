@@ -117,13 +117,14 @@ class GetxAuthController extends GetxController {
       loginloading = false;
       _user = null;
       authentications();
+      // Get.offAllNamed('/home');
       update();
     });
   }
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      // Get.offAllNamed("/");
+      Get.offAllNamed("/home");
     }
   }
 
@@ -200,7 +201,7 @@ class GetxAuthController extends GetxController {
     otp = rand;
     update();
     debugPrint(otp.toString());
-    //  authrepo.sendOTP(rand.toString(), "10",phone);
+     authrepo.sendOTP(rand.toString(), "10",phone);
   }
 
   bool confirmotp(String confirmotp) {

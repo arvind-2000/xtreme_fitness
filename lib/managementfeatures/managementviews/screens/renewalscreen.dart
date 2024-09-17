@@ -214,7 +214,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     fontWeight: FontWeight.bold))),
                                    Expanded(
                                       flex: MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
-                                        child: Text("Actions",
+                                        child: const Text("Actions",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold))),
@@ -247,7 +247,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     margin: const EdgeInsets.only(top: 4),
                                                     padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
                                                     color: Colors.green[200],
-                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):SizedBox()
+                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):const SizedBox()
                                             ],
                                           )),
                                           Expanded(child: Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14))),
@@ -274,11 +274,11 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                         addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
                                                        
                                                 },
-                                                child: Row(
+                                                child: const Row(
                                                   children: [
-                                                    const Icon(Icons.upload,size: 12,),
+                                                    Icon(Icons.upload,size: 12,),
                                                       SizedBox(width: 5,),
-                                                    const Text("Renewal",style:TextStyle(fontSize: 14)),
+                                                    Text("Renewal",style:TextStyle(fontSize: 14)),
                                                   ],
                                                 )),
                                                 const SizedBox(height: 5,),
@@ -289,9 +289,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   },
                                                       color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
                                                   margin: EdgeInsets.zero,
-                                                  child: Row(
+                                                  child: const Row(
                                                     children: [
-                                           const Icon(Icons.edit,size: 12,),
+                                           Icon(Icons.edit,size: 12,),
                                                       SizedBox(width: 5,),
                                                       Text("Edit",style:TextStyle(fontSize: 14))
                                                     ],
@@ -305,7 +305,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   },
                                                   margin: EdgeInsets.zero,
                                                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                  child: Row(
+                                                  child: const Row(
                                                     children: [
                                                  Icon(Icons.person,size: 12,),
                                                        SizedBox(width: 5,),

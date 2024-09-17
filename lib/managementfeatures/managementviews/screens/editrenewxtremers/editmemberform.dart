@@ -72,7 +72,10 @@ class _EditmemberFormState extends State<EditmemberForm> {
                              pagectrl.addmemberpages==0?PersonaldetailsField(pagectrl: pagectrl, callback: () {
                                         pagectrl.changeaddMemberPage(2);
                                                       
-                             },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(),
+                             },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(callback: ()async{
+                                 String x = await  addmemberctrl.updateXtremer();
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(x)));
+                             },),
                            ],
                          ),
                        ),

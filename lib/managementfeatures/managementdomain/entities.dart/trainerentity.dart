@@ -29,11 +29,11 @@ class TrainerEntity extends User {
   // Create a Trainer instance from a Map
   factory TrainerEntity.fromJson(Map<String, dynamic> json) {
     return TrainerEntity(
-      id: json['Id'],
-      name: json['Name'],
-      designation: json['Designation'],
-      timing: json['Timing'],
-      isActive: json['IsActive']
+      id: json['Id']??0,
+      name: json['Name']??"",
+      designation: json['Designation']??"",
+      timing: json['Timing']??"",
+      isActive: json['IsActive']??false
     );
   }
 }

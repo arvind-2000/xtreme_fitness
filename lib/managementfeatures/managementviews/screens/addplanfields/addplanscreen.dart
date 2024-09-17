@@ -45,6 +45,7 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
         _plandiscountcontroller.text = widget.plan!.discountPercentage.toString();
         _durationinmonths = widget.plan!.durationInMonths;
         _plancat = widget.plan!.category;
+        isactives = widget.plan!.isActive??false;
     }
   }
   
@@ -142,7 +143,7 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
                 ],
               ),
 
-                  widget.edit?SizedBox():isactives?Text("Service Active"):Text("Service Disabled"),
+                  widget.edit?isactives?Text("Service Active"):Text("Service Disabled"):const SizedBox(),
               widget.edit?Switch(
                activeColor: Colors.blue,
                hoverColor: Colors.blue.withOpacity(0.5),
@@ -155,7 +156,7 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
             onpress: (){
               if(_formkey.currentState!.validate()){
                   if(_plancat!=null){
-                    Plan plan = Plan(id: widget.plan!=null?widget.plan!.id:0, name: _plannamecontroller.text, durationInMonths: _durationinmonths, price: double.tryParse(_planamountcontroller.text)??0, category: _plancat!, discountPercentage:double.tryParse(_plandiscountcontroller.text)??0);
+                    Plan plan = Plan(id: widget.plan!=null?widget.plan!.id:0, name: _plannamecontroller.text, durationInMonths: _durationinmonths, price: double.tryParse(_planamountcontroller.text)??0, category: _plancat!, discountPercentage:double.tryParse(_plandiscountcontroller.text)??0,isActive: isactives);
                       showDialog(context: context, builder: (context) => PageDialog(
                         
                         no: () {

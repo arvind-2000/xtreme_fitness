@@ -12,10 +12,11 @@ import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
-  const CreateMember({super.key, this.phone, this.renewal, this.buttontext});
+  const CreateMember({super.key, this.phone, this.renewal, this.buttontext, this.callback});
   final String? phone;
   final int? renewal;
   final String? buttontext;
+  final VoidCallback? callback;
   @override
   State<CreateMember> createState() => _CreateMemberState();
 }
@@ -77,8 +78,8 @@ class _CreateMemberState extends State<CreateMember> {
                       const SizedBox(height: 16,),
                       pagectrl.isrenewalforms?const SizedBox(): Text(
                         addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null
-                            ? "Add\nPhoto must be 500 x 500 px"
-                            :addmemberctrl.imagesizeerrors??"Add photo\nPhoto must be 500 x 500 px",
+                            ? "Add\nPhoto must be less or equal to 500 x 500 px"
+                            :addmemberctrl.imagesizeerrors??"Add photo\nPhoto must be less or equal to 500 x 500 px",
                         style: TextStyle(
                             color:addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null?Theme.of(context).colorScheme.onSecondary
                                 :addmemberctrl.isimagesize!=null && addmemberctrl.isimagesize!? Colors.green[300]
@@ -231,7 +232,7 @@ class _CreateMemberState extends State<CreateMember> {
 
                           
                               CardwithShadow(
-                                  onpress:addmemberctrl.isloading?null:(){
+                                  onpress:addmemberctrl.isloading?null:widget.callback ?? (){
         
                                       //  showDialog(context: context, builder:(context) => Dialog(
                                       
@@ -310,7 +311,9 @@ class PaymentDialog extends StatelessWidget {
               },
               yes: () async{
                 bool v = await addmemberctrl.createuser(username, pass,null);
-    
+                if(v){
+                  addmemberctrl.addXtremer();
+                }
                 Navigator.pop(context);
               },
               child: Form(

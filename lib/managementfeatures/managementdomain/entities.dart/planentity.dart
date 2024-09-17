@@ -5,6 +5,7 @@ class Plan {
   int durationInMonths;
   double discountPercentage;
   String category;
+  bool? isActive;
 
   Plan({
     required this.id,
@@ -13,6 +14,7 @@ class Plan {
     required this.durationInMonths,
     required this.discountPercentage,
     required this.category,
+    this.isActive
   });
 
   // Convert a Plan instance to a Map
@@ -24,6 +26,7 @@ class Plan {
       'DurationInMonths': durationInMonths,
       'DiscountPercentage': discountPercentage,
       'Category': category,
+      'IsActive':isActive??false
     };
   }
 
@@ -36,6 +39,7 @@ class Plan {
       durationInMonths: json['DurationInMonths'],
       discountPercentage: json['DiscountPercentage'],
       category: json['Category'],
+      isActive: json['IsActive']??false
     );
   }
 }

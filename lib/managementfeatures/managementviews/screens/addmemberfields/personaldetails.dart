@@ -124,7 +124,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
     _fullnameFocusNode.requestFocus();
     xtremers = Get.find<AddMemberController>().xtremer;
     _phonecontroller.text = widget.phonenumber ?? "";
-    if (xtremers != null && widget.phonenumber == null) {
+    if (xtremers != null) {
       _fullnamecontroller.text = xtremers!.firstName ?? "";
       _emailcontroller.text = xtremers!.email ?? "";
       _phonecontroller.text = xtremers!.mobileNumber ?? "";

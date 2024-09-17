@@ -12,11 +12,12 @@ import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
 import 'entities.dart/serviceusage.dart';
 import 'entities.dart/subscription.dart';
+import 'entities.dart/trainee.dart';
 import 'entities.dart/xtremer.dart';
 
 abstract class ManagementRepo {
   ///adding staff for management
-  Future<String> addStaff(Staff staff);
+  Future<Map<int,String>> addStaff(Staff staff);
   Future<String> updateStaff(Staff staff);
   Future<String> deleteStaff(Staff staff);
   Future<List<Staff>> viewStaff();
@@ -24,8 +25,8 @@ abstract class ManagementRepo {
   ///adding members
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid);
-  Future<Map<String, dynamic>> updateMember(
-      Xtremer xtremer, Uint8List? filepath);
+  Future<String> updateMember(
+      Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
   Future<List<Xtremer>> viewMemberforoverall();
@@ -50,14 +51,14 @@ abstract class ManagementRepo {
   Future<bool> deletePlans({required Plan plan});
 
   /// updating plans api
-  Future<Map<Plan?, String>> updatePlans({required Plan plan});
+  Future<String> updatePlans({required Plan plan});
 
   ///getplans api
   Future<List<Plan>> getPlans();
 
   ///adding trainer for management
   Future<String> addTrainer(TrainerEntity staff);
-  Future<Map<TrainerEntity?, String>> updateTrainer(TrainerEntity staff);
+  Future<String> updateTrainer(TrainerEntity staff);
   Future<String> deleteTrainer(TrainerEntity staff);
   Future<List<TrainerEntity>> viewTrainer();
   Future<List<Xtremer>> viewPersonalTrainer();
@@ -86,4 +87,6 @@ abstract class ManagementRepo {
 
   //admission
   Future<Admission?> viewadmission();
+
+  Future<List<Trainee>> viewTrainee(int id );
 }

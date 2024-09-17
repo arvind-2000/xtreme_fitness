@@ -72,13 +72,13 @@ class PlanSelectionField extends StatelessWidget {
                               Icon(addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?Icons.check:Icons.add,color: Colors.white,),
                               const SizedBox(width: 10,),
                         
-                            addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?const Text("Plan Added",style: TextStyle(color: Colors.white)):Text("Add Plan",style: TextStyle(color: Colors.white),)
+                            addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?const Text("Plan Added",style: TextStyle(color: Colors.white)):const Text("Add Plan",style: TextStyle(color: Colors.white),)
                             ],))
                         ],
                       )),).toList()
                     ),
                    
-                addmemberctrl.selectedplan!=null&& addmemberctrl.selectedplan!.category==plancategory[0]&& managectrl.getalltrainer.isNotEmpty?   Padding(
+                addmemberctrl.selectedplan!=null&& addmemberctrl.selectedplan!.category.toLowerCase()=="personal"&& managectrl.getalltrainer.isNotEmpty?   Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +126,7 @@ class PlanSelectionField extends StatelessWidget {
                   const SizedBox(height: 10,),
 
             
-             managectrl.getallplans.isEmpty?const SizedBox():   CardwithShadow(
+             managectrl.getallplans.isEmpty?const SizedBox():CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
                   onpress: (){
                        callback();
@@ -134,7 +134,7 @@ class PlanSelectionField extends StatelessWidget {
               
                
                   },
-                  child: Row(
+                  child: const Row(
             
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

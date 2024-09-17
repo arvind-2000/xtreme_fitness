@@ -1,3 +1,5 @@
+import 'package:universal_html/html.dart';
+
 class Paymententity {
   int id;
   int userId;
@@ -65,6 +67,13 @@ factory Paymententity.fromJson(Map<String, dynamic> json) {
       'termsAndConditions':termsAndConditions
     };
   }
+
+    void printPayment(){
+
+        print('id : $id  xtremerid: $userId  amount: $amount  discount: $discountPercentage receiveamnt: $receivedAmount transid: $transactionId  paystatus: $paymentStatus subsid: $subscriptionId serviceid: $serviceUsageId  paymentmethod: $paymentMethod date: $paymentDate');
+
+    }
+
 }
 
 class PaymentModel extends Paymententity{
