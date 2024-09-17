@@ -618,12 +618,14 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         phone: _phonecontroller.text.trim(),
                         homephone: _homephonecontroller.text.trim(),
                         email: _emailcontroller.text.trim(),
+                   
                         address: _addresscontroller.text.trim(),
                         postalcode: _pincodecontroller.text.trim(),
                         occupation: _occupationcontroller.text.trim(),
                         emergencycontact: _emergencyphonecontroller.text.trim(),
                         emergencyname: _emergencynamecontroller.text.trim(),
                       );
+                      widget.callback();
                       widget.callback();
                     } else {
                       if (addmembrctrl.dob == null) {

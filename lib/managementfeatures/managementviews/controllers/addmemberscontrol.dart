@@ -88,6 +88,7 @@ class AddMemberController extends GetxController {
   void onInit() async {
     super.onInit();
     xtremer = Xtremer();
+    xtremer = Xtremer();
     admissionfees = await Get.find<ManagementController>().getadmission();
     selectedplan = null;
     selectedservice = null;
@@ -315,6 +316,7 @@ void addServiceusage({bool paymentonline = true})async{
     required String postalcode,
     required String occupation,
     required String email,
+
     required String emergencycontact,
     required String emergencyname,
   }) {

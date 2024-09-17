@@ -836,7 +836,10 @@ class ManagementrepoImpl implements ManagementRepo {
     final body = jsonEncode({
       "mobileNumber": phone,
       "userName": username,
+      "mobileNumber": phone,
+      "userName": username,
       "passwordHash": pass,
+      "roleName": role,
       "roleName": role,
       "createdAt": DateTime.now().toString(),
       "isActive":true

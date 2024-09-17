@@ -76,6 +76,7 @@ abstract class ManagementRepo {
 
   ///users api
   Future<Map<int,String>> addUser(String username ,String pass, String phone,String role);
+
   Future<String?> viewUser(String username, String pass);
 
   ///subscription api
