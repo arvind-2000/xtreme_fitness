@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
 import '../../managementfeatures/managementviews/controllers/addmemberscontrol.dart';
@@ -33,8 +36,19 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
+    log("Width :${MediaQuery.sizeOf(context).width}");
+    GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
+    landctrl.controller.addListener(() {
+      log('fdfdfd');
+      landctrl.setNavIndex(context);
+    });
+    return PageView.builder(
+      physics: Responsive.isMobile(context)
+          ? const NeverScrollableScrollPhysics()
+          : null,
+      pageSnapping: false,
+      scrollDirection: Axis.vertical,
+      controller: landctrl.controller,
       itemCount: landingwidgets.length,
       itemBuilder: (context, index) => landingwidgets[index],
     );
@@ -70,7 +84,7 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 40,
+                  height: 100,
                 ),
                 const HeadingText(
                   "Choose The Best Plan",
@@ -400,7 +414,7 @@ class LandingPageServices extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 40,
+                height: 100,
               ),
               const HeadingText("The Best Programs We\nOffers For You"),
               const SizedBox(
@@ -650,13 +664,15 @@ class _LandingPage1State extends State<LandingPage1> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 60,
+                      height: 100,
                     ),
                     HeadingText(
                       "Your Fitness, Your Way",
                       size: MediaQuery.sizeOf(context).width < mobilescreen
                           ? 60
-                          : 80,
+                          : MediaQuery.sizeOf(context).width < 1600
+                              ? 70
+                              : 80,
                       color: Colors.white,
                       isbold: true,
                     ).animate().shimmer(

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
+import 'package:xtreme_fitness/landingpages/pages/landingnavbarpage.dart';
+import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
@@ -34,29 +36,29 @@ class _HandlerPageState extends State<HandlerPage> {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return GetBuilder<GetxPageController>(builder: (pagectrl) {
         return Scaffold(
-          appBar: MediaQuery.sizeOf(context).width < mobilescreen
-              ? AppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  // title: TitleText(navtitles[pagectrl.navpage]),
-                  centerTitle: true,
-                )
-              : null,
-          drawer: MediaQuery.sizeOf(context).width < mobilescreen
-              ? Drawer(
-                  surfaceTintColor: Colors.transparent,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: authctrl.ismember
-                      ? NavBarMember(pagectrl: pagectrl, authctrl: authctrl)
-                      : NavBar(
-                          pagectrl: pagectrl,
-                          authctrl: authctrl,
-                        ),
-                )
-              : null,
+          // appBar: MediaQuery.sizeOf(context).width < mobilescreen
+          //     ? AppBar(
+          //         backgroundColor: Theme.of(context).colorScheme.surface,
+          //         // title: TitleText(navtitles[pagectrl.navpage]),
+          //         centerTitle: true,
+          //       )
+          //     : null,
+          // drawer: MediaQuery.sizeOf(context).width < mobilescreen
+          //     ? Drawer(
+          //         surfaceTintColor: Colors.transparent,
+          //         backgroundColor: Theme.of(context).colorScheme.primary,
+          //         child: authctrl.ismember
+          //             ? NavBarMember(pagectrl: pagectrl, authctrl: authctrl)
+          //             : NavBar(
+          //                 pagectrl: pagectrl,
+          //                 authctrl: authctrl,
+          //               ),
+          //       )
+          //     : null,
           body: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1900),
               // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-              child: const SafeArea(child: LandingHomePage())),
+              child: const SafeArea(child: MainPage())),
         );
       });
     });

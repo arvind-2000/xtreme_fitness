@@ -18,7 +18,7 @@ class ContactFooter extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 40,
+              height: 100,
             ),
             MediaQuery.sizeOf(context).width < mobilescreen
                 ? Column(
