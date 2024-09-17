@@ -68,7 +68,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'isActive': xtremer.isActive.toString()
+      'isActive': xtremer.isActive.toString(),
+      'Category': xtremer.category!
     });
 
     // Add the file to the request
@@ -147,7 +148,8 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'isActive': xtremer.isActive.toString()
+      'isActive': xtremer.isActive.toString(),
+      'Category': xtremer.category.toString()
     });
 
     // Add the file to the request
@@ -185,6 +187,60 @@ class ManagementrepoImpl implements ManagementRepo {
   @override
   Future<String> deleteMember(Xtremer xtremer) {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Xtremer>> viewpersonalmembers() async {
+    List<Xtremer> allxtremelist = [];
+    List<Xtremer> personalxtremelist = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Xtremers"));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Xtremer list : ${jsonList.length}");
+        allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        // Filter for today's elements
+        for (var element in allxtremelist) {
+          if (personalxtremelist.contains(element)) {
+            print('already added to today list');
+          } else {
+            if (element.category == 'Personal') {
+              // Add all elements whose createddate is today
+              personalxtremelist.add(element);
+            }
+          }
+        }
+        return personalxtremelist;
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  @override
+  Future<List<Xtremer>> viewinactivemembers() async {
+    List<Xtremer> allxtremelist = [];
+    List<Xtremer> inactivextremelsit = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Xtremers"));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Xtremer list : ${jsonList.length}");
+        allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        // Filter for today's elements
+        for (var element in allxtremelist) {
+          if (inactivextremelsit.contains(element)) {
+            print('already added to today list');
+          } else {
+            if (element.isActive == false) {
+              // Add all elements whose createddate is today
+              inactivextremelsit.add(element);
+            }
+          }
+        }
+        return inactivextremelsit;
+      }
+    } catch (e) {}
+    return [];
   }
 
   @override
@@ -227,7 +283,8 @@ class ManagementrepoImpl implements ManagementRepo {
             }
           }
         }
-
+        print("Yesterday Register members :${yesterdayxtremlist.length}");
+        print("Drop down index :${pgctrl.overalldropdownindex.value}");
         switch (pgctrl.overalldropdownindex.value) {
           case 0:
             return allxtremelist;

@@ -32,6 +32,7 @@ class Xtremer {
   String? surgeryNumber;
   String? surgeryAddress;
   bool? declaration;
+  String? category;
   int? submittedBy;
   bool? isActive;
   DateTime? createddate;
@@ -70,6 +71,7 @@ class Xtremer {
       this.surgeryAddress,
       this.declaration,
       this.submittedBy,
+      this.category,
       this.isActive,
       this.createddate});
 
@@ -111,8 +113,9 @@ class Xtremer {
         surgeryNumber: json['SurgeryNumber'] ?? '',
         surgeryAddress: json['SurgeryAddress'] ?? '',
         declaration: json['Declaration'] ?? false,
+        category: json['Category'] ?? 'General',
         submittedBy: json['SubmittedBy'],
-        isActive: json['isActive'] ?? false,
+        isActive: json['isActive'] ?? true,
         createddate: json['createddate'] ?? DateTime.now());
   }
 
@@ -154,7 +157,8 @@ class Xtremer {
       'declaration': declaration,
       'submittedBy': submittedBy,
       'isActive': isActive,
-      'createddate': createddate
+      'createddate': createddate,
+      'category': category
     };
   }
 }

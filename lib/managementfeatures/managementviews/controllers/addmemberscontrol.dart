@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker_web/image_picker_web.dart';
-
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
@@ -14,8 +12,6 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
-import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/imageusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -52,6 +48,8 @@ class AddMemberController extends GetxController {
   String surgeryname = "";
   String surgeryno = "";
   String surgeryaddress = "";
+
+  /// payments 1[success] 2[failed] 3[initiated] 4[cancel]
 
   /// payments 1[success] 2[failed] 3[initiated] 4[cancel]
   int paymentstatus = 0;
@@ -105,6 +103,7 @@ class AddMemberController extends GetxController {
       print("in user create in create member: ${_userid!}");
       xtremer!.XtremerId = int.tryParse(_userid!);
       userexist = false;
+      // addXtremer();
       // addXtremer();
       update();
       return true;
@@ -376,6 +375,7 @@ class AddMemberController extends GetxController {
     }
 
     selectedplan = plan;
+    xtremer!.category = selectedplan!.category;
     // if (selectedplan != null) {
     //   // if (selectedplan!.planid == plan.planid) {
     //   //   selectedplan = null;

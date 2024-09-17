@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
 
 import 'widgets/navbar.dart';
@@ -38,23 +38,27 @@ class _HandlerPageState extends State<HandlerPage> {
               ? AppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   // title: TitleText(navtitles[pagectrl.navpage]),
-            centerTitle: true,
-              ):null,
-              drawer:MediaQuery.sizeOf(context).width<mobilescreen? Drawer(
-                surfaceTintColor: Colors.transparent,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-
-                child:authctrl.ismember? NavBarMember(pagectrl: pagectrl, authctrl: authctrl): NavBar(pagectrl:pagectrl, authctrl: authctrl,),
-              ):null,
-              body: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1900),
-                // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-                child:SafeArea(child:DashBoardScreen())
-                ),
-            );
-          }
+                  centerTitle: true,
+                )
+              : null,
+          drawer: MediaQuery.sizeOf(context).width < mobilescreen
+              ? Drawer(
+                  surfaceTintColor: Colors.transparent,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: authctrl.ismember
+                      ? NavBarMember(pagectrl: pagectrl, authctrl: authctrl)
+                      : NavBar(
+                          pagectrl: pagectrl,
+                          authctrl: authctrl,
+                        ),
+                )
+              : null,
+          body: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1900),
+              // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
+              child: const SafeArea(child: LandingHomePage())),
         );
       });
-    
+    });
   }
 }

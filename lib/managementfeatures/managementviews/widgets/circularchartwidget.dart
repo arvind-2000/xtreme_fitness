@@ -22,10 +22,14 @@ class PieChartWidget extends StatelessWidget {
             enableTooltip: true,
             dataSource: <ChartData>[
               ChartData('Personal Trainee',
-                  controller.allpersonalxtremer.length.toDouble()),
-              ChartData('General Trainee',
-                  controller.getallXtremer.length.toDouble()),
-              ChartData('Inactive Trainee', 0),
+                  controller.allpersonalxtremerforoverall.length.toDouble()),
+              ChartData(
+                  'General Trainee',
+                  (controller.getallxtremerforoverall.length -
+                          controller.allpersonalxtremerforoverall.length)
+                      .toDouble()),
+              ChartData('Inactive Trainee',
+                  controller.allinactivextremerforoverall.length.toDouble()),
             ],
             xValueMapper: (ChartData data, _) => data.category,
             yValueMapper: (ChartData data, _) => data.value,
@@ -42,7 +46,9 @@ class PieChartWidget extends StatelessWidget {
               return null;
             },
             dataLabelSettings: const DataLabelSettings(
-                isVisible: true, showZeroValue: false), // Show data labels
+                textStyle: TextStyle(fontSize: 20),
+                isVisible: true,
+                showZeroValue: false), // Show data labels
           ),
         ],
       );

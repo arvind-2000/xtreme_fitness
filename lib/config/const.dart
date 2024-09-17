@@ -18,3 +18,5 @@ String xtremeaddress = "";
 String xtremefacebook = "";
 String xtremeinstagram = "";
 String xtremeyoutube = "";
+
+final List<String> navItems = ['Home', 'Pricing', 'Services', 'Contact'];

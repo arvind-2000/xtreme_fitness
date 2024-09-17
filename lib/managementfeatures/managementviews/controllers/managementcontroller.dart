@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -21,7 +23,17 @@ class ManagementController extends GetxController {
   List<Staff> _allstaff = [];
   List<Xtremer> _allxtremer = [];
   List<Xtremer> _allxtremerforoverall = [];
-  final List<Xtremer> _allpersonalxtremer = [];
+  List<Xtremer> _allinactivextremer = [];
+
+  List<Xtremer> get allinactivextremer => _allinactivextremer;
+  List<Xtremer> _allpersonalxtremer = [];
+  final List<Xtremer> _allpersonalxtremerforoverall = [];
+  List<Xtremer> get allpersonalxtremerforoverall =>
+      _allpersonalxtremerforoverall;
+
+  final List<Xtremer> _allinactivextremerforoverall = [];
+  List<Xtremer> get allinactivextremerforoverall =>
+      _allinactivextremerforoverall;
   final List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
   List<Xtremer> _searchxtremerlist = [];
@@ -45,11 +57,14 @@ class ManagementController extends GetxController {
     super.onInit();
     getplans();
     getxtremer();
+    getinactivextremer();
+    getallpersonalextremer();
     getStaff();
     getallServices();
     getTrainer();
     viewpayment();
     getpaymentlastest10();
+    getxtremerforoverall();
   }
 
   void getplans() async {
@@ -59,25 +74,43 @@ class ManagementController extends GetxController {
     update();
   }
 
-  void getxtremerforoverall() async {
-    _allxtremerforoverall = await managementRepo.viewMemberforoverall();
-    // for (var element in _allxtremerforoverall) {
-    //   if (element. == null || element.trainerName!.isEmpty) {
-    //     if (_allgeneralxtremer.contains(element)) {
-    //       log('Already Added general');
-    //     } else {
-    //       _allgeneralxtremer.add(element);
-    //     }
-    //   } else {
-    //     if (_allpersonalxtremer.contains(element)) {
-    //       log('Already Added');
-    //     } else {
-    //       log(element.trainerName.toString());
-    //       _allpersonalxtremer.add(element);
-    //     }
-    //   }
-    // }
+  void getinactivextremer() async {
+    _allinactivextremer = await managementRepo.viewinactivemembers();
     update();
+  }
+
+  void getallpersonalextremer() async {
+    _allpersonalxtremer = await managementRepo.viewpersonalmembers();
+    update();
+  }
+
+  void getxtremerforoverall() async {
+    var alldata = await managementRepo.viewMemberforoverall();
+
+    for (var element in alldata) {
+      if (_allinactivextremerforoverall.contains(element)) {
+        print('already added to today list');
+      } else {
+        if (element.isActive == false) {
+          // Add all elements whose createddate is today
+          _allinactivextremerforoverall.add(element);
+        }
+      }
+    }
+
+    for (var element in alldata) {
+      if (_allpersonalxtremerforoverall.contains(element)) {
+        print('already added to today list');
+      } else {
+        if (element.category == 'Personal') {
+          // Add all elements whose createddate is today
+          _allpersonalxtremerforoverall.add(element);
+        }
+      }
+    }
+    _allxtremerforoverall = alldata;
+    update();
+    log(_allxtremerforoverall.length.toString());
   }
 
   void getxtremer() async {
