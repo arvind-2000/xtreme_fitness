@@ -82,7 +82,7 @@ class PaymentStatusCard extends StatelessWidget {
                       height: 10,
                     ),
                     addmemberctrl.paymentstatus == 3
-                        ? const Text("The Payment process has been started.\n do not close or go back until the payment is completed.")
+                        ? const Text("The Payment process has been started.\n Do not close or go back until the payment is completed.")
                         : addmemberctrl.paymentstatus == 1
                             ? const Text(
                                 "The Payment has been successfully processed")
@@ -146,7 +146,7 @@ class PaymentStatusCard extends StatelessWidget {
                         onpress: (){
                           // Navigator.pop(context);
                           
-                         createAndPrintPdf(PaymentDetails(id: 0, userId: addmemberctrl.paymentdetails!.userId, amount: addmemberctrl.paymentsdetails!.amount, discountPercentage: addmemberctrl.paymentdetails!.discountPercentage, receivedAmount: addmemberctrl.paymentdetails!.receivedAmount, paymentDate:addmemberctrl.paymentdetails!.paymentDate, transactionId: addmemberctrl.paymentdetails!.transactionId, paymentStatus: addmemberctrl.paymentdetails!.paymentStatus, paymentMethod: addmemberctrl.paymentdetails!.paymentMethod, paymentType:addmemberctrl.paymentdetails!.paymentType, subscriptionId:addmemberctrl.paymentdetails!.subscriptionId!,serviceUsageId: addmemberctrl.paymentdetails!.serviceUsageId));
+                         createAndPrintPdf( addmemberctrl.paymentdetails!);
                         },
                           color: Colors.blue[200],
                           child: const Center(child: Text("Download Receipt"))),

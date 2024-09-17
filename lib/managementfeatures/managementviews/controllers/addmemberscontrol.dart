@@ -583,7 +583,7 @@ void addServiceusage({bool paymentonline = true})async{
       trainerId: _trainer?.id);
 
 
-      if (checkdeclaration) {
+      
         print("adding payments");
         print(" xtremer: ${xtremer!.XtremerId}  amount: ${selectedplan!.price}  discount: ${selectedplan!.price} paymenttype: ${selectedplan!.name}");
         Paymententity payments = Paymententity(
@@ -628,11 +628,7 @@ void addServiceusage({bool paymentonline = true})async{
         }
 
         //cash
-      } else {
-        isloading = false;
-        update();
-        print("error");
-      }
+   
 
       // print("$res  ${dummyxtremer.length}");
       // print(admissionfees!.price);

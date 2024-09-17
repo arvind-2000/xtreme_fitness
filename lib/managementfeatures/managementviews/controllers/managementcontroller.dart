@@ -186,6 +186,30 @@ class ManagementController extends GetxController {
     return await managementRepo.viewadmission();
   }
 
+    Future<String> activateXtremer(Xtremer? xtremer)async{
+    
+      print("In update xtremer");
+      if(xtremer!=null){
+        try {
+            Xtremer  y = xtremer;
+            y.isActive = !xtremer.isActive!;
+  String d  = await managementRepo.updateMember(y);
+  getxtremer();
+  
+  return d;
+} on Exception catch (e) {
+  // TODO
+    return "error updating member";
+}
+
+      }else{
+ return "xtremer null";
+
+      }
+     
+  }
+
+
   void getStaff() async {
     _allstaff = dummystaff;
     // _allstaff = await managementRepo.viewStaff();

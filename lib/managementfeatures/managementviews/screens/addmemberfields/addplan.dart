@@ -13,9 +13,10 @@ import '../../../../widgets/titletext.dart';
 import '../../controllers/pagecontroller.dart';
 
 class PlanSelectionField extends StatelessWidget {
-  const PlanSelectionField({super.key, required this.pagectrl,required this.callback});
+  const PlanSelectionField({super.key, required this.pagectrl,required this.callback, this.buttontext});
   final GetxPageController pagectrl;
   final VoidCallback callback;
+  final String? buttontext;
    @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
@@ -134,13 +135,13 @@ class PlanSelectionField extends StatelessWidget {
               
                
                   },
-                  child: const Row(
+                  child: Row(
             
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       Icon(Icons.add,color: Colors.white,),
                       SizedBox(width: 10,),
-                      Text("Add plan",style: TextStyle(color: Colors.white),)
+                      Text(buttontext?? "Add plan",style: TextStyle(color: Colors.white),)
                   ],
                 ))
             

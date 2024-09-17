@@ -15,6 +15,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../widgets/dialogswidget.dart';
 
 
 class RenewalScreen extends StatefulWidget {
@@ -261,7 +262,15 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                             ],
                                           )),
                                           MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14))),
+                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: InkWell(
+                                           onTap: (){
+                                             Get.dialog(Dialog(child:PageDialog(
+                                               heights: 300,
+                                               child: Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () {
+                                               managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
+                                             },)));
+                                           },
+                                           child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14)))),
                                           Expanded(
                                             flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
                                        
