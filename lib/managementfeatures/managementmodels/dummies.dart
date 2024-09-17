@@ -4,16 +4,23 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/planentity.dart';
+import '../managementdomain/entities.dart/trainee.dart';
 import '../managementdomain/entities.dart/user.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 List<Plan> dummyplan = [
 
-  Plan(id: Random().nextInt(1000), name: "personal", durationInMonths:3, price: 1500, category: "Personal", discountPercentage: 0),
-  Plan(id: Random().nextInt(1000), name: "general", durationInMonths:2, price: 1500, category: "General", discountPercentage: 10),
-  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5),
-  Plan(id: Random().nextInt(1000), name: "Aerobic", durationInMonths:1, price: 1200, category: "Aerobic", discountPercentage: 20),
+  Plan(id: Random().nextInt(1000), name: "personal", durationInMonths:3, price: 1500, category: "Personal", discountPercentage: 0,isActive: true),
+  Plan(id: Random().nextInt(1000), name: "general", durationInMonths:2, price: 1500, category: "General", discountPercentage: 10,isActive: true),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Zumba", durationInMonths:1, price: 1400, category: "Zumba", discountPercentage: 5,isActive: false),
+  Plan(id: Random().nextInt(1000), name: "Aerobic", durationInMonths:1, price: 1200, category: "Aerobic", discountPercentage: 20,isActive: true),
 
 ];
 List<ServiceEntity> dummyservices = [
@@ -35,8 +42,35 @@ List<Xtremer> dummyxtremer = [
     Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
     Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
 ];
-List<Staff> dummystaff = [
-
+List<UserEntity> dummystaff = [
+    UserEntity(userName: 'Rahuls', passwordHash: 'fjdf',mobileNumber: '129948394893',isActive: true),
+    UserEntity(userName: 'Rahuls', passwordHash: 'fjdf',mobileNumber: '129948394893',isActive: true),
+    UserEntity(userName: 'Rahuls', passwordHash: 'fjdf',mobileNumber: '129948394893',isActive: true),
+    UserEntity(userName: 'Rahuls', passwordHash: 'fjdf',mobileNumber: '129948394893',isActive: true),
+    UserEntity(userName: 'Rahuls', passwordHash: 'fjdf',mobileNumber: '129948394893',isActive: true),
 ];
 List<TrainerEntity> dummytrainers = [
-  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: true),];
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: true),
+  TrainerEntity(id:  Random().nextInt(1000), name:"raja",designation: "trainer",timing: "morning", isActive: true),
+  TrainerEntity(id:  Random().nextInt(1000), name:"ramon",designation: "trainer",timing: "morning", isActive: true),
+  TrainerEntity(id:  Random().nextInt(1000), name:"tomal",designation: "trainer",timing: "morning", isActive: true),
+  TrainerEntity(id:  Random().nextInt(1000), name:"Kesho",designation: "trainer",timing: "morning", isActive: true),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  TrainerEntity(id:  Random().nextInt(1000), name:"rahul",designation: "trainer",timing: "morning", isActive: false),
+  
+  ];
+
+  List<Trainee> dummytrainees = [
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+    Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+  ];

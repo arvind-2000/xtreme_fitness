@@ -13,6 +13,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profil
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
+import '../../../../authentifeatures/domain/userentity.dart';
 import '../../../../config/const.dart';
 import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/headingtext.dart';
@@ -41,7 +42,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
     });
   }
 String timing = 'morning';
-  User? _user;
+  TrainerEntity? _user;
 
 
   @override
@@ -731,11 +732,11 @@ String timing = 'morning';
                                                       ),
                                                       CardBorder(
                                                           onpress: () {
-                                                            print('cliking');
+                                                         
                                                             pagectrl
                                                                 .changeviewprofile();
                                                             _user = managectrl
-                                                                .getalltrainer[i];
+                                                                .getalltrainer[i]; 
                                                           },
                                                           color: const Color
                                                               .fromARGB(

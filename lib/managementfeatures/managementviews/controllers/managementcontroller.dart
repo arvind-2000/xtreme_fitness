@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart'
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
+import '../../../authentifeatures/domain/userentity.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
@@ -18,9 +19,11 @@ class ManagementController extends GetxController {
   final ManagementRepo managementRepo = ManagementrepoImpl();
 
   List<Plan> _allplans = [];
+  List<Plan> _allactiveplans = [];
+  List<ServiceEntity> _allactiveservices = [];
   List<Alluserpaymentmodel> _allpayments = [];
   List<Paymentlatest10> _latestpayment10 = [];
-  List<Staff> _allstaff = [];
+  List<UserEntity> _allstaff = [];
   List<Xtremer> _allxtremer = [];
   List<Xtremer> _allxtremerforoverall = [];
   final List<Xtremer> _allpersonalxtremer = [];
@@ -39,8 +42,10 @@ class ManagementController extends GetxController {
   List<Trainee> _alltrainee = [];
   List<Alluserpaymentmodel> get getallpayments => _allpayments;
   List<Plan> get getallplans => _allplans;
-  List<Staff> get getallstaff => _allstaff;
+  List<Plan> get getallactiveplans => _allactiveplans;
+  List<UserEntity> get getallstaff => _allstaff;
   List<ServiceEntity> get getallservices => _allservices;
+  List<ServiceEntity> get getallactiveservices => _allactiveservices;
   List<Trainee> get getallTrainee => _alltrainee;
   String? searchmessage = "";
   int searchposition = 0;
@@ -54,26 +59,26 @@ class ManagementController extends GetxController {
     getTrainer();
     viewpayment();
     getpaymentlastest10();
-    getAllTraineess();
+    getAllTraineess(10);
     
 
   }
 
   void getplans() async {
-    // _allplans = dummyplan;
-    _allplans = await managementRepo.getPlans();
-    // _allplans = dummyplan;
+    _allplans = dummyplan;
+    // _allplans = await managementRepo.getPlans();
+    _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
     update();
   }
 
 
-  void getAllTraineess()async{
-    // _allplans = dummyplan;
-    _alltrainee = await managementRepo.viewTrainee(10);
+  Future<List<Trainee>> getAllTraineess(int id)async{
+    _alltrainee = dummytrainees;
+    // _alltrainee = await managementRepo.viewTrainee(id);
     print( "In trainer list ${_alltrainee.length}");
-    // _allplans = dummyplan;
+    
     update();
-
+      return _alltrainee;
 
 
   }
@@ -101,8 +106,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    _allxtremer = await managementRepo.viewMember();
-    // _allxtremer = dummyxtremer;
+    // _allxtremer = await managementRepo.viewMember();
+    _allxtremer = dummyxtremer;
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -148,8 +153,9 @@ class ManagementController extends GetxController {
   }
 
   void getallServices() async {
-    _allservices = await managementRepo.getServices();
-    // _allservices = dummyservices;
+    // _allservices = await managementRepo.getServices();
+    _allservices = dummyservices;
+     _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
 
@@ -181,7 +187,8 @@ class ManagementController extends GetxController {
   }
 
   void getStaff() async {
-    _allstaff = await managementRepo.viewStaff();
+    _allstaff = dummystaff;
+    // _allstaff = await managementRepo.viewStaff();
     update();
   }
 
@@ -191,8 +198,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    // _alltrainer = dummytrainers;
-    _alltrainer = await managementRepo.viewTrainer();
+    _alltrainer = dummytrainers;
+    // _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }

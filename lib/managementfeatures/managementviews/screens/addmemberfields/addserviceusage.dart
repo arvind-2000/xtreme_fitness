@@ -58,7 +58,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                       
                               HeadingText("Book Service"),
                               const SizedBox(height: 16,),
-                                  landingctrl.getallplans.isEmpty? const NodataScreen(title: "No Services", desc: "No Services to show.",onpress: null,): GridView(
+                                  landingctrl.getallservices.isEmpty? const NodataScreen(title: "No Services", desc: "No Services to show.",onpress: null,): GridView(
                                shrinkWrap: true,
                                physics: NeverScrollableScrollPhysics(),
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -69,7 +69,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                   childAspectRatio:  size<500?1:size<700?4/6:4/5,
                               
                                   ),
-                                  children: landingctrl.getallservices.asMap().entries.map((e) => CardwithShadow(
+                                  children: landingctrl.getallservices.where((element) => element.isactive,).toList().asMap().entries.map((e) => CardwithShadow(
                                     // margin: const EdgeInsets.all(16),
                                     color: addmemberctrl.selectedservice!=null?addmemberctrl.selectedservice!.id== e.value.id?Colors.grey[700]:null:null,
                                     child: Column(

@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import 'entities.dart/admission.dart';
 import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
@@ -20,7 +21,7 @@ abstract class ManagementRepo {
   Future<Map<int,String>> addStaff(Staff staff);
   Future<String> updateStaff(Staff staff);
   Future<String> deleteStaff(Staff staff);
-  Future<List<Staff>> viewStaff();
+  Future<List<UserEntity>> viewStaff();
 
   ///adding members
   Future<Map<String, dynamic>> addMember(

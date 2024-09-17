@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
@@ -65,7 +66,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
         return GetBuilder<GetxPageController>(builder: (pagectrl) {
           return GetBuilder<ManagementController>(builder: (managectrl) {
             return pagectrl.isrenewalforms?RenewalForms()
-                :pagectrl.iseditforms?EditmemberForm(): Column(
+                :pagectrl.iseditforms?EditmemberForm():pagectrl.viewprofile && _user != null?MemberProfilescreen(user: _user,pagectrl: pagectrl,):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //     const Padding(

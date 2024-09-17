@@ -37,7 +37,7 @@ class PlanSelectionField extends StatelessWidget {
                     childAspectRatio:  size<500?1:size<700?4/7.2:3/5,
                 
                     ),
-                    children: managectrl.getallplans.asMap().entries.map((e) => CardwithShadow(
+                    children: managectrl.getallactiveplans.asMap().entries.map((e) => CardwithShadow(
                       // margin: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

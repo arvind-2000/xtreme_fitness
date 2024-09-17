@@ -20,6 +20,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
@@ -342,9 +343,26 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<List<Staff>> viewStaff() async {
-    // return dummystaff;
-    return [];
+  Future<List<UserEntity>> viewStaff() async {
+    List<UserEntity> stafflist = [];
+   try {
+      final res = await http.get(Uri.parse("$api/api/Users"));
+      // Plan p = Plan.fromJson(jsonDecode(res.body));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In plan list : ${jsonList.length}");
+        // Convert JSON data to List<Plan>
+      stafflist =  jsonList.map((json) => UserEntity.fromJson(json)).toList();
+      
+     
+      } else {}
+    } catch (e) {
+      print("cant load staff");
+    }
+
+    return stafflist.where((element) => element.roleName?.toLowerCase()!="super admin" && element.roleName?.toLowerCase()!='member',).toList();
+
   }
 
   @override
