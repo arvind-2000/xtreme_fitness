@@ -7,30 +7,32 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import 'entities.dart/admission.dart';
 import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
 import 'entities.dart/serviceusage.dart';
 import 'entities.dart/subscription.dart';
+import 'entities.dart/trainee.dart';
 import 'entities.dart/xtremer.dart';
 
 abstract class ManagementRepo {
   ///adding staff for management
-  Future<String> addStaff(Staff staff);
+  Future<Map<int, String>> addStaff(Staff staff);
   Future<String> updateStaff(Staff staff);
   Future<String> deleteStaff(Staff staff);
-  Future<List<Staff>> viewStaff();
+  Future<List<UserEntity>> viewStaff();
 
   ///adding members
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid);
-  Future<Map<String, dynamic>> updateMember(
-      Xtremer xtremer, Uint8List? filepath);
+  Future<String> updateMember(Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
   Future<List<Xtremer>> viewMemberforoverall();
   Future<List<Xtremer>> viewinactivemembers();
   Future<List<Xtremer>> viewpersonalmembers();
+  Future<List<Xtremer>> viewgeneralmembers();
   Future<Uint8List?> getImage(int id);
 
   ///subscription renewal function
@@ -52,14 +54,14 @@ abstract class ManagementRepo {
   Future<bool> deletePlans({required Plan plan});
 
   /// updating plans api
-  Future<Map<Plan?, String>> updatePlans({required Plan plan});
+  Future<String> updatePlans({required Plan plan});
 
   ///getplans api
   Future<List<Plan>> getPlans();
 
   ///adding trainer for management
   Future<String> addTrainer(TrainerEntity staff);
-  Future<Map<TrainerEntity?, String>> updateTrainer(TrainerEntity staff);
+  Future<String> updateTrainer(TrainerEntity staff);
   Future<String> deleteTrainer(TrainerEntity staff);
   Future<List<TrainerEntity>> viewTrainer();
   Future<List<Xtremer>> viewPersonalTrainer();
@@ -74,9 +76,9 @@ abstract class ManagementRepo {
   Future<List<Paymentlatest10>> viewlatest10payment();
   Future<PaymentDetails?> getpayment(String transcationid);
 
-  ///users api
   Future<Map<int, String>> addUser(
       String username, String pass, String phone, String role);
+
   Future<String?> viewUser(String username, String pass);
 
   ///subscription api
@@ -89,4 +91,6 @@ abstract class ManagementRepo {
 
   //admission
   Future<Admission?> viewadmission();
+
+  Future<List<Trainee>> viewTrainee(int id);
 }

@@ -4,10 +4,12 @@ import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontro
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addservicesfields/addservicefield.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
+import 'package:xtreme_fitness/widgets/card.dart';
 
 import '../../../widgets/cardborder.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
+import '../../../widgets/normaltext.dart';
 import '../../../widgets/titletext.dart';
 import '../controllers/managementcontroller.dart';
 import '../widgets/dialogswidget.dart';
@@ -21,9 +23,18 @@ class ServicesScreen extends StatefulWidget {
 
 class _ServicesScreenState extends State<ServicesScreen> {
   bool _isserviceadd = false;
+  bool isactive = true;
+
+
   void isaddservice() {
     setState(() {
       _isserviceadd = !_isserviceadd;
+    });
+  }
+
+  void changeIsActive(){
+    setState(() {
+      isactive = !isactive;
     });
   }
 
@@ -75,7 +86,17 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ),
               ),
             
-            
+            Row(
+              children: [
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
+                const SizedBox(width: 5,),
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
+              ],
+            ),
             managementcontroller.getallservices.isEmpty?const NodataScreen(title: "Services", desc: " No Services to show") : Expanded(
                       child: GridView(
                           shrinkWrap: true,
@@ -90,7 +111,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           ),
                           children: managementcontroller.getallservices
                               .asMap()
-                              .entries
+                              .entries.where((element) => element.value.isactive == isactive,)
                               .map(
                                 (e) => CardwithShadow(
                                     margin: const EdgeInsets.all(16),

@@ -124,7 +124,7 @@ class GetxLandingcontroller extends GetxController {
 
   void getPlans() async {
     _plan = await managementrepoImpl.getPlans();
-    // _plan =dummyplan;
+    // _plan = dummyplan;
     print(_plan.length);
     update();
   }

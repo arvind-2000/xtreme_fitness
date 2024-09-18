@@ -8,12 +8,14 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../widgets/dialogswidget.dart';
 
 
 class RenewalScreen extends StatefulWidget {
@@ -65,7 +67,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
         return GetBuilder<GetxPageController>(builder: (pagectrl) {
           return GetBuilder<ManagementController>(builder: (managectrl) {
             return pagectrl.isrenewalforms?RenewalForms()
-                :pagectrl.iseditforms?EditmemberForm(): Column(
+                :pagectrl.iseditforms?EditmemberForm():pagectrl.viewprofile && _user != null?MemberProfilescreen(user: _user,pagectrl: pagectrl,):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //     const Padding(
@@ -214,7 +216,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     fontWeight: FontWeight.bold))),
                                    Expanded(
                                       flex: MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
-                                        child: Text("Actions",
+                                        child: const Text("Actions",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold))),
@@ -247,7 +249,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     margin: const EdgeInsets.only(top: 4),
                                                     padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
                                                     color: Colors.green[200],
-                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):SizedBox()
+                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):const SizedBox()
                                             ],
                                           )),
                                           Expanded(child: Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14))),
@@ -260,7 +262,15 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                             ],
                                           )),
                                           MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14))),
+                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: InkWell(
+                                           onTap: (){
+                                             Get.dialog(Dialog(child:PageDialog(
+                                               heights: 300,
+                                               child: Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () {
+                                               managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
+                                             },)));
+                                           },
+                                           child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14)))),
                                           Expanded(
                                             flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
                                        
@@ -274,11 +284,11 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                         addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
                                                        
                                                 },
-                                                child: Row(
+                                                child: const Row(
                                                   children: [
-                                                    const Icon(Icons.upload,size: 12,),
+                                                    Icon(Icons.upload,size: 12,),
                                                       SizedBox(width: 5,),
-                                                    const Text("Renewal",style:TextStyle(fontSize: 14)),
+                                                    Text("Renewal",style:TextStyle(fontSize: 14)),
                                                   ],
                                                 )),
                                                 const SizedBox(height: 5,),
@@ -289,9 +299,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   },
                                                       color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
                                                   margin: EdgeInsets.zero,
-                                                  child: Row(
+                                                  child: const Row(
                                                     children: [
-                                           const Icon(Icons.edit,size: 12,),
+                                           Icon(Icons.edit,size: 12,),
                                                       SizedBox(width: 5,),
                                                       Text("Edit",style:TextStyle(fontSize: 14))
                                                     ],
@@ -305,7 +315,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   },
                                                   margin: EdgeInsets.zero,
                                                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                  child: Row(
+                                                  child: const Row(
                                                     children: [
                                                  Icon(Icons.person,size: 12,),
                                                        SizedBox(width: 5,),

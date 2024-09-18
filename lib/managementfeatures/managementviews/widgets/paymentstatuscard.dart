@@ -5,6 +5,9 @@ import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../managementdomain/entities.dart/paymentdetails.dart';
+import '../../managementmodels/calculationusecase.dart';
+
 class PaymentStatusCard extends StatelessWidget {
   const PaymentStatusCard({super.key, this.color, this.status = 3});
 
@@ -25,7 +28,7 @@ class PaymentStatusCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+               
                   children: [
                     const SizedBox(
                       height: 20,
@@ -37,30 +40,28 @@ class PaymentStatusCard extends StatelessWidget {
                         children: [
                           IconButton(
                               onPressed: () {
-                                addmemberctrl.changepaymentstatus(0);
+                                // addmemberctrl.changepaymentstatus(0);
                                 
                               },
                               icon: const Icon(Icons.close)),
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        addmemberctrl.paymentstatus == 3
-                            ? CircularProgressIndicator(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              )
-                            : addmemberctrl.paymentstatus == 1
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : Icon(
-                                    Icons.dangerous,
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
-                      ],
+                    CircleAvatar(
+                      backgroundColor: addmemberctrl.paymentstatus==3?Colors.blue[200]:addmemberctrl.paymentstatus==1?Colors.green[200]:Colors.red[200],
+                      child: addmemberctrl.paymentstatus == 3
+                          ? CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            )
+                          : addmemberctrl.paymentstatus == 1
+                              ? const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )
+                              : Icon(
+                                  Icons.dangerous,
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
                     ),
                     const SizedBox(
                       height: 30,
@@ -69,7 +70,7 @@ class PaymentStatusCard extends StatelessWidget {
                         ? const HeadingText("Processing Payment", size: 30)
                         : addmemberctrl.paymentstatus == 1
                             ? const HeadingText(
-                                "Successfull",
+                                "Success",
                                 size: 30,
                                 color: Colors.green,
                               )
@@ -81,7 +82,7 @@ class PaymentStatusCard extends StatelessWidget {
                       height: 10,
                     ),
                     addmemberctrl.paymentstatus == 3
-                        ? const Text("The Payment process has been started")
+                        ? const Text("The Payment process has been started.\n Do not close or go back until the payment is completed.")
                         : addmemberctrl.paymentstatus == 1
                             ? const Text(
                                 "The Payment has been successfully processed")
@@ -142,6 +143,11 @@ class PaymentStatusCard extends StatelessWidget {
                   ? SizedBox(
                       width: double.maxFinite,
                       child: Cardonly(
+                        onpress: (){
+                          // Navigator.pop(context);
+                          
+                         createAndPrintPdf( addmemberctrl.paymentdetails!);
+                        },
                           color: Colors.blue[200],
                           child: const Center(child: Text("Download Receipt"))),
                     )

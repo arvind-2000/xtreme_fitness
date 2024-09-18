@@ -14,9 +14,13 @@ import '../../controllers/pagecontroller.dart';
 
 class PlanSelectionField extends StatelessWidget {
   const PlanSelectionField(
-      {super.key, required this.pagectrl, required this.callback});
+      {super.key,
+      required this.pagectrl,
+      required this.callback,
+      this.buttontext});
   final GetxPageController pagectrl;
   final VoidCallback callback;
+  final String? buttontext;
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
@@ -49,7 +53,7 @@ class PlanSelectionField extends StatelessWidget {
                               ? 4 / 7.2
                               : 3 / 5,
                     ),
-                    children: managectrl.getallplans
+                    children: managectrl.getallactiveplans
                         .asMap()
                         .entries
                         .map(
@@ -135,7 +139,8 @@ class PlanSelectionField extends StatelessWidget {
                         )
                         .toList()),
             addmemberctrl.selectedplan != null &&
-                    addmemberctrl.selectedplan!.category == plancategory[0] &&
+                    addmemberctrl.selectedplan!.category.toLowerCase() ==
+                        "personal" &&
                     managectrl.getalltrainer.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -215,19 +220,19 @@ class PlanSelectionField extends StatelessWidget {
                     onpress: () {
                       callback();
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          "Add plan",
-                          style: TextStyle(color: Colors.white),
+                          buttontext ?? "Add plan",
+                          style: const TextStyle(color: Colors.white),
                         )
                       ],
                     ))

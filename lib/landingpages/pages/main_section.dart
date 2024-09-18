@@ -1,14 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
-
 import 'package:xtreme_fitness/landingpages/pages/landingpage.dart';
 import 'package:xtreme_fitness/landingpages/widget/landingnavbarwidget.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
-import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 

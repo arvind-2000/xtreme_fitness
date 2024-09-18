@@ -13,12 +13,14 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainee.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
@@ -29,14 +31,15 @@ class ManagementrepoImpl implements ManagementRepo {
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid) async {
     // dummyxtremer.add(xtremer);
-    print("In add member : userid $userid");
+    print(
+        "In add member : userid $userid  xtremer submitted: ${xtremer.submittedBy}  ${xtremer.category}  ${xtremer.isActive}");
 
     // Create the multipart request
     var request = http.MultipartRequest('POST', Uri.parse('$api/api/Xtremers'));
 
     // Add fields to the request
     request.fields.addAll({
-      'UserId': xtremer.XtremerId.toString(),
+      'UserId': xtremer.XtremerId!.toString(),
       'FirstName': xtremer.firstName!,
       'Surname': xtremer.surname ?? '',
       'DateOfBirth': xtremer.dateOfBirth.toString(),
@@ -68,8 +71,7 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'isActive': xtremer.isActive.toString(),
-      'Category': xtremer.category!
+      'isActive': xtremer.isActive.toString()
     });
 
     // Add the file to the request
@@ -105,13 +107,13 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<String, dynamic>> updateMember(
-      Xtremer xtremer, Uint8List? filepath) async {
+  Future<String> updateMember(Xtremer xtremer) async {
     // dummyxtremer.add(xtremer);
     // print("In add member : userid $userid");
 
     // Create the multipart request
-    var request = http.MultipartRequest('PUT', Uri.parse('$api/api/Xtremers'));
+    var request = http.MultipartRequest(
+        'PUT', Uri.parse('$api/api/Xtremers/${xtremer.id}'));
 
     // Add fields to the request
     request.fields.addAll({
@@ -148,19 +150,18 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'isActive': xtremer.isActive.toString(),
-      'Category': xtremer.category.toString()
+      'isActive': xtremer.isActive.toString()
     });
 
     // Add the file to the request
-    if (filepath != null) {
-      request.files.add(http.MultipartFile.fromBytes(
-        'ProfilePhotoFile',
-        filepath,
-        filename: 'prof${Random().nextInt(100)}.png',
-        contentType: MediaType('image', 'png'),
-      ));
-    }
+    // if (filepath != null) {
+    //   request.files.add(http.MultipartFile.fromBytes(
+    //     'ProfilePhotoFile',
+    //     filepath,
+    //     filename: 'prof${Random().nextInt(100)}.png',
+    //     contentType: MediaType('image', 'png'),
+    //   ));
+    // }
 
     try {
       var response = await request.send();
@@ -168,25 +169,52 @@ class ManagementrepoImpl implements ManagementRepo {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         String responseBody = await response.stream.bytesToString();
         print('Upload successful: $responseBody');
-        return {"response": responseBody};
+        return "Update successful";
       } else if (response.statusCode == 409) {
         String responseBody = await response.stream.bytesToString();
-        print('Conflict Error: $responseBody');
-        return {"response": response.reasonPhrase};
+
+        return "Conflict Error";
       } else {
-        print('Request failed with status: ${response.statusCode}');
-        print('Reason: ${response.reasonPhrase}');
-        return {"response": response.reasonPhrase};
+        return 'Request failed with status: ${response.statusCode} ${response.stream.bytesToString}';
       }
     } catch (e) {
-      print('Error occurred: $e');
-      return {"response": e};
+      // print('Error occurred: $e');
+      return "Error occurred";
     }
   }
 
   @override
   Future<String> deleteMember(Xtremer xtremer) {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Xtremer>> viewgeneralmembers() async {
+    List<Xtremer> allxtremelist = [];
+    List<Xtremer> generalxtremelist = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Xtremers"));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Xtremer list : ${jsonList.length}");
+        allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
+        // Filter for today's elements
+        for (var element in allxtremelist) {
+          if (generalxtremelist.contains(element)) {
+            print('already added to today list');
+          } else {
+            if (element.category == 'General') {
+              if (element.isActive == true) {
+                generalxtremelist.add(element);
+              }
+              // Add all elements whose createddate is today
+            }
+          }
+        }
+        return generalxtremelist;
+      }
+    } catch (e) {}
+    return [];
   }
 
   @override
@@ -205,8 +233,10 @@ class ManagementrepoImpl implements ManagementRepo {
             print('already added to today list');
           } else {
             if (element.category == 'Personal') {
+              if (element.isActive == true) {
+                personalxtremelist.add(element);
+              }
               // Add all elements whose createddate is today
-              personalxtremelist.add(element);
             }
           }
         }
@@ -265,8 +295,12 @@ class ManagementrepoImpl implements ManagementRepo {
           if (todayxtremelsit.contains(element)) {
             print('already added to today list');
           } else {
-            if (element.createddate!.isAtSameMomentAs(today)) {
-              // Add all elements whose createddate is today
+            // Create a new DateTime object from createddate without time component
+            DateTime createdDate = DateTime(element.createddate!.year,
+                element.createddate!.month, element.createddate!.day);
+
+            if (createdDate.isAtSameMomentAs(today)) {
+              // Add all elements whose createddate is today (ignoring time)
               todayxtremelsit.add(element);
             }
           }
@@ -275,14 +309,20 @@ class ManagementrepoImpl implements ManagementRepo {
 // Filter for yesterday's elements
         for (var element in allxtremelist) {
           if (yesterdayxtremlist.contains(element)) {
-            print('already added to yesterday list');
+            print('already added to today list');
           } else {
-            if (element.createddate!.isAtSameMomentAs(yesterday)) {
-              // Add all elements whose createddate is yesterday
+            // Create a new DateTime object from createddate without time component
+            DateTime createdDate = DateTime(element.createddate!.year,
+                element.createddate!.month, element.createddate!.day);
+
+            if (createdDate.isAtSameMomentAs(yesterday)) {
+              // Add all elements whose createddate is today (ignoring time)
               yesterdayxtremlist.add(element);
             }
           }
         }
+
+        print("Today Register members :${todayxtremelsit.length}");
         print("Yesterday Register members :${yesterdayxtremlist.length}");
         print("Drop down index :${pgctrl.overalldropdownindex.value}");
         switch (pgctrl.overalldropdownindex.value) {
@@ -296,7 +336,7 @@ class ManagementrepoImpl implements ManagementRepo {
         }
       } else {}
     } catch (e) {
-      print("cant load Xtremer : $e");
+      print("cant load Xtremer for overall : $e");
     }
 
     return [];
@@ -343,9 +383,50 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> addStaff(Staff staff) async {
-    // dummystaff.add(staff);
-    return "added";
+  Future<Map<int, String>> addStaff(Staff staff) async {
+    final uri =
+        Uri.parse('$api/api/Users/register'); // Replace with your API endpoint
+
+    // Convert the User instance to JSON
+    final body = jsonEncode({
+      "mobileNumber": staff.phone,
+      "userName": staff.username,
+      "passwordHash": staff.phone,
+      "roleName": "Staff",
+      "createdAt": DateTime.now().toString(),
+      "isActive": true
+    });
+
+    // Send the POST request
+    try {
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
+
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print('User added successfully.');
+        return {200: response.body};
+      } else {
+        print('Failed to add user. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        if (response.statusCode >= 500) {
+          return {
+            response.statusCode: "Server error. Try Again after some time"
+          };
+        } else {
+          return {response.statusCode: response.body};
+        }
+      }
+    } on Exception catch (e) {
+      // TODO
+      print("Error in user registrer: $e");
+      return {0: "Error in user register"};
+    }
   }
 
   @override
@@ -357,9 +438,29 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<List<Staff>> viewStaff() async {
-    // return dummystaff;
-    return [];
+  Future<List<UserEntity>> viewStaff() async {
+    List<UserEntity> stafflist = [];
+    try {
+      final res = await http.get(Uri.parse("$api/api/Users"));
+      // Plan p = Plan.fromJson(jsonDecode(res.body));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In plan list : ${jsonList.length}");
+        // Convert JSON data to List<Plan>
+        stafflist = jsonList.map((json) => UserEntity.fromJson(json)).toList();
+      } else {}
+    } catch (e) {
+      print("cant load staff");
+    }
+
+    return stafflist
+        .where(
+          (element) =>
+              element.roleName?.toLowerCase() != "super admin" &&
+              element.roleName?.toLowerCase() != 'member',
+        )
+        .toList();
   }
 
   @override
@@ -445,32 +546,33 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<Plan?, String>> updatePlans({required Plan plan}) async {
+  Future<String> updatePlans({required Plan plan}) async {
     final uri = Uri.parse('$api/api/Plans/${plan.id}');
 
     // Convert the Plan instance to JSON
     final body = jsonEncode(plan.toJson());
 
     // Send the PUT request
-    final response = await http.put(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    );
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
 
-    // Check the response status
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Plan updated successfully.');
-      Plan plan = Plan.fromJson(jsonDecode(response.body));
-      return {plan: "plan Updated Successfully"};
-    } else {
-      print('Failed to update plan. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return "plan Updated Successfully";
+      } else {
+        return 'Failed to update plan. Status code: ${response.statusCode}';
+        // print('Response body: ${response.body}');
+      }
+    } on Exception {
+      // TODO
+      return "Error updating plans";
     }
-
-    return {null: "Error updating plans"};
   }
 
   // SERVICES
@@ -484,23 +586,25 @@ class ManagementrepoImpl implements ManagementRepo {
     final body = jsonEncode(service.toJson());
 
     // Send the POST request
-    final response = await http.post(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    );
+    try {
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
 
-    // Check the response status
-    if (response.statusCode == 201) {
-      print('Service created successfully.');
-    } else {
-      print('Failed to create service. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return 'Service created successfully.';
+      } else {
+        return 'Failed to create service. Status code: ${response.statusCode}';
+        // print('Response body: ${response.body}');
+      }
+    } on Exception catch (e) {
+      return "Error adding service";
     }
-
-    return "";
   }
 
   @override
@@ -545,7 +649,32 @@ class ManagementrepoImpl implements ManagementRepo {
 
   @override
   Future<String> updateServices({required ServiceEntity service}) async {
-    return "not update";
+    final uri = Uri.parse(
+        '$api/api/Services/${service.id}'); // Replace with your API endpoint
+
+    // Convert the Service instance to JSON
+    final body = jsonEncode(service.toJson());
+
+    // Send the POST request
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
+
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return 'Service updated successfully.';
+      } else {
+        return 'Failed to update service. Status code: ${response.statusCode}';
+        // print('Response body: ${response.body}');
+      }
+    } on Exception {
+      return "Error updating service.";
+    }
   }
 
   @override
@@ -735,36 +864,35 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Map<TrainerEntity?, String>> updateTrainer(
-      TrainerEntity trainer) async {
-    final uri =
-        Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
+  Future<String> updateTrainer(TrainerEntity trainer) async {
+    final uri = Uri.parse(
+        '$api/api/Trainers/${trainer.id}'); // Replace with your API endpoint
 
     // Convert the Trainer instance to JSON
     final body = jsonEncode(
         {"name": trainer.name, "designation": 'Trainer', "timing": "morning"});
 
     // Send the POST request
-    final response = await http.put(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    );
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
 
-    // Check the response status
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Trainer updated successfully.');
-      return {
-        TrainerEntity.fromJson(jsonDecode(response.body)):
-            "Trainer updated successfully"
-      };
-    } else {
-      print('Failed to updated trainer. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return 'Trainer updated successfully.';
+      } else {
+        print('Failed to updated trainer. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } on Exception catch (e) {
+      return "Failed to update trainer";
     }
-    return {null: "Failed to update trainer"};
+    return "Failed to update trainer";
   }
 
   @override
@@ -1081,5 +1209,27 @@ class ManagementrepoImpl implements ManagementRepo {
       print('Error fetching photo: $e');
       return null;
     }
+  }
+
+  @override
+  Future<List<Trainee>> viewTrainee(int id) async {
+    print("in trainee api calls");
+    try {
+      final res = await http.get(Uri.parse("$api/api/Trainers/trainer/$id"));
+      print("${res.statusCode}");
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Trainee list : ${jsonList.length}");
+        List<Trainee> xtremelist =
+            jsonList.map((json) => Trainee.fromJson(json)).toList();
+
+        return xtremelist;
+      } else {}
+    } catch (e) {
+      print("cant load Trainee : $e");
+    }
+
+    return [];
   }
 }

@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
-import 'package:xtreme_fitness/landingpages/pages/landingnavbarpage.dart';
 import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
-import 'package:xtreme_fitness/widgets/navbarmember.dart';
-
-import 'widgets/navbar.dart';
 
 class HandlerPage extends StatefulWidget {
   const HandlerPage({super.key});
@@ -25,6 +20,7 @@ class _HandlerPageState extends State<HandlerPage> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         Get.find<GetxAuthController>().authentications();
+        Get.put(AddMemberController());
       },
     );
 

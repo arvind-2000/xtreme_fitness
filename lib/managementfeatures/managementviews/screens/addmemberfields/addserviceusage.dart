@@ -53,7 +53,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                         const SizedBox(
                           height: 16,
                         ),
-                        landingctrl.getallplans.isEmpty
+                        landingctrl.getallservices.isEmpty
                             ? const NodataScreen(
                                 title: "No Services",
                                 desc: "No Services to show.",
@@ -80,6 +80,10 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                           : 4 / 5,
                                 ),
                                 children: landingctrl.getallservices
+                                    .where(
+                                      (element) => element.isactive,
+                                    )
+                                    .toList()
                                     .asMap()
                                     .entries
                                     .map(

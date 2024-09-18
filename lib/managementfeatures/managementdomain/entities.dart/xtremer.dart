@@ -16,17 +16,17 @@ class Xtremer {
   String? contactName;
   String? contactNumber;
   String? relationship;
-  bool? unableToExercise;
-  bool? physicianAdvisedAgainst;
-  bool? cardiacIssues;
-  bool? respiratoryDifficulties;
-  bool? faintingMigraines;
-  bool? boneJointMuscleIssues;
-  bool? familyHeartDisease;
-  bool? chestPain;
-  bool? highBloodPressure;
-  bool? elevatedCholesterol;
-  bool? prescribedMedication;
+  bool unableToExercise;
+  bool physicianAdvisedAgainst;
+  bool cardiacIssues;
+  bool respiratoryDifficulties;
+  bool faintingMigraines;
+  bool boneJointMuscleIssues;
+  bool familyHeartDisease;
+  bool chestPain;
+  bool highBloodPressure;
+  bool elevatedCholesterol;
+  bool prescribedMedication;
   String? doctorName;
   String? surgeryName;
   String? surgeryNumber;
@@ -35,6 +35,7 @@ class Xtremer {
   String? category;
   int? submittedBy;
   bool? isActive;
+
   DateTime? createddate;
   Xtremer(
       {this.id,
@@ -54,17 +55,17 @@ class Xtremer {
       this.contactName,
       this.contactNumber,
       this.relationship,
-      this.unableToExercise,
-      this.physicianAdvisedAgainst,
-      this.cardiacIssues,
-      this.respiratoryDifficulties,
-      this.faintingMigraines,
-      this.boneJointMuscleIssues,
-      this.familyHeartDisease,
-      this.chestPain,
-      this.highBloodPressure,
-      this.elevatedCholesterol,
-      this.prescribedMedication,
+      this.unableToExercise = false,
+      this.physicianAdvisedAgainst = false,
+      this.cardiacIssues = false,
+      this.respiratoryDifficulties = false,
+      this.faintingMigraines = false,
+      this.boneJointMuscleIssues = false,
+      this.familyHeartDisease = false,
+      this.chestPain = false,
+      this.highBloodPressure = false,
+      this.elevatedCholesterol = false,
+      this.prescribedMedication = false,
       this.doctorName,
       this.surgeryName,
       this.surgeryNumber,
@@ -115,8 +116,9 @@ class Xtremer {
         declaration: json['Declaration'] ?? false,
         category: json['Category'] ?? 'General',
         submittedBy: json['SubmittedBy'],
-        isActive: json['isActive'] ?? true,
-        createddate: json['createddate'] ?? DateTime.now());
+        isActive: json['IsActive'] ?? false,
+        createddate:
+            DateTime.parse(json['CreatedAt'] ?? DateTime.now().toString()));
   }
 
   // Method to convert a Xtremer instance to a JSON map
@@ -157,8 +159,8 @@ class Xtremer {
       'declaration': declaration,
       'submittedBy': submittedBy,
       'isActive': isActive,
-      'createddate': createddate,
-      'category': category
+      'category': category,
+      'createddate': createddate
     };
   }
 }

@@ -5,6 +5,7 @@ import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
 
 import '../managementdomain/entities.dart/paymentdetails.dart';
+import '../managementdomain/entities.dart/paymententity.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -19,7 +20,7 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndPrintPdf(PaymentDetails paymentDetails) async {
+  Future<void> createAndPrintPdf(Paymententity paymentDetails) async {
     final pdf = pw.Document();
     print("in print pdf");
     final logoData = await _loadImageData('assets/logo2.png');

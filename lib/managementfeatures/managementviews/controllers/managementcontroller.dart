@@ -9,8 +9,10 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrep
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
+import '../../../authentifeatures/domain/userentity.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
+import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 
@@ -18,9 +20,11 @@ class ManagementController extends GetxController {
   final ManagementRepo managementRepo = ManagementrepoImpl();
 
   List<Plan> _allplans = [];
+  List<Plan> _allactiveplans = [];
+  List<ServiceEntity> _allactiveservices = [];
   List<Alluserpaymentmodel> _allpayments = [];
   List<Paymentlatest10> _latestpayment10 = [];
-  List<Staff> _allstaff = [];
+  List<UserEntity> _allstaff = [];
   List<Xtremer> _allxtremer = [];
   List<Xtremer> _allxtremerforoverall = [];
   List<Xtremer> _allinactivextremer = [];
@@ -31,10 +35,14 @@ class ManagementController extends GetxController {
   List<Xtremer> get allpersonalxtremerforoverall =>
       _allpersonalxtremerforoverall;
 
+  final List<Xtremer> _allgeneralxtremerforoverall = [];
+  List<Xtremer> get allgenerallxtremerforoverall =>
+      _allgeneralxtremerforoverall;
+
   final List<Xtremer> _allinactivextremerforoverall = [];
   List<Xtremer> get allinactivextremerforoverall =>
       _allinactivextremerforoverall;
-  final List<Xtremer> _allgeneralxtremer = [];
+  List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
   List<Xtremer> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
@@ -46,10 +54,14 @@ class ManagementController extends GetxController {
   List<Paymentlatest10> get latestpayment10 => _latestpayment10;
 
   List<ServiceEntity> _allservices = [];
+  final List<Trainee> _alltrainee = [];
   List<Alluserpaymentmodel> get getallpayments => _allpayments;
   List<Plan> get getallplans => _allplans;
-  List<Staff> get getallstaff => _allstaff;
+  List<Plan> get getallactiveplans => _allactiveplans;
+  List<UserEntity> get getallstaff => _allstaff;
   List<ServiceEntity> get getallservices => _allservices;
+  List<ServiceEntity> get getallactiveservices => _allactiveservices;
+  List<Trainee> get getallTrainee => _alltrainee;
   String? searchmessage = "";
   int searchposition = 0;
   @override
@@ -65,13 +77,7 @@ class ManagementController extends GetxController {
     viewpayment();
     getpaymentlastest10();
     getxtremerforoverall();
-  }
-
-  void getplans() async {
-    // _allplans = dummyplan;
-    _allplans = await managementRepo.getPlans();
-    // _allplans = dummyplan;
-    update();
+    getallgeneralextremer();
   }
 
   void getinactivextremer() async {
@@ -84,7 +90,26 @@ class ManagementController extends GetxController {
     update();
   }
 
+  void getallgeneralextremer() async {
+    _allgeneralxtremer = await managementRepo.viewgeneralmembers();
+    update();
+  }
+
+  void getplans() async {
+    _allplans = dummyplan;
+    // _allplans = await managementRepo.getPlans();
+    _allactiveplans = _allplans
+        .where(
+          (element) => element.isActive ?? false,
+        )
+        .toList();
+    update();
+  }
+
   void getxtremerforoverall() async {
+    _allinactivextremerforoverall.clear();
+    _allpersonalxtremerforoverall.clear();
+    _allgeneralxtremerforoverall.clear();
     var alldata = await managementRepo.viewMemberforoverall();
 
     for (var element in alldata) {
@@ -103,8 +128,23 @@ class ManagementController extends GetxController {
         print('already added to today list');
       } else {
         if (element.category == 'Personal') {
+          if (element.isActive == true) {
+            _allpersonalxtremerforoverall.add(element);
+          }
           // Add all elements whose createddate is today
-          _allpersonalxtremerforoverall.add(element);
+        }
+      }
+    }
+
+    for (var element in alldata) {
+      if (_allgeneralxtremerforoverall.contains(element)) {
+        print('already added to today list');
+      } else {
+        if (element.category == 'General') {
+          if (element.isActive == true) {
+            _allgeneralxtremerforoverall.add(element);
+          }
+          // Add all elements whose createddate is today
         }
       }
     }
@@ -147,15 +187,24 @@ class ManagementController extends GetxController {
   }
 
   Future<String> editplan(Plan plan) async {
-    Map<Plan?, String> d = await managementRepo.updatePlans(plan: plan);
+    String d = await managementRepo.updatePlans(plan: plan);
     // update plans
     getplans();
-    return d.entries.first.value;
+    return d;
+  }
+
+  Future<String> edittrainer(TrainerEntity trainerentity) async {
+    String d = await managementRepo.updateTrainer(trainerentity);
+    // update plans
+    getplans();
+    return d;
   }
 
   void getallServices() async {
-    _allservices = await managementRepo.getServices();
-    // _allservices = dummyservices;
+    // _allservices = await managementRepo.getServices();
+    _allservices = dummyservices;
+    _allactiveservices =
+        _allservices.where((element) => element.isactive).toList();
     update();
   }
 
@@ -186,8 +235,28 @@ class ManagementController extends GetxController {
     return await managementRepo.viewadmission();
   }
 
+  Future<String> activateXtremer(Xtremer? xtremer) async {
+    print("In update xtremer");
+    if (xtremer != null) {
+      try {
+        Xtremer y = xtremer;
+        y.isActive = !xtremer.isActive!;
+        String d = await managementRepo.updateMember(y);
+        getxtremer();
+
+        return d;
+      } on Exception catch (e) {
+        // TODO
+        return "error updating member";
+      }
+    } else {
+      return "xtremer null";
+    }
+  }
+
   void getStaff() async {
-    _allstaff = await managementRepo.viewStaff();
+    _allstaff = dummystaff;
+    // _allstaff = await managementRepo.viewStaff();
     update();
   }
 

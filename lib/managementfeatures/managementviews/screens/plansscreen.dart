@@ -9,8 +9,10 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addpla
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 
+import '../../../widgets/card.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
+import '../../../widgets/normaltext.dart';
 
 class PlansScreen extends StatefulWidget {
   const PlansScreen({super.key});
@@ -21,12 +23,17 @@ class PlansScreen extends StatefulWidget {
 
 class _PlansScreenState extends State<PlansScreen> {
   // bool _isplanadd = false;
-
+bool isactive = true;
   // void isaddplan() {
   //   setState(() {
   //     _isplanadd = !_isplanadd;
   //   });
   // }
+  void changeIsActive(){
+    setState(() {
+      isactive = !isactive;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +74,18 @@ class _PlansScreenState extends State<PlansScreen> {
                     ],
                   ),
                 ),
+
+                          Row(
+              children: [
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
+                const SizedBox(width: 5,),
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
+              ],
+            ),
                 managementcontroller.getallplans.isEmpty
                         ? const NodataScreen(
                             title: "No Plans",
@@ -96,7 +115,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                 shrinkWrap: true,
                                 children: managementcontroller.getallplans
                                     .asMap()
-                                    .entries
+                                    .entries.where((element) => element.value.isActive==isactive,)
                                     .map(
                                       (e) => CardwithShadow(
                                           margin: const EdgeInsets.all(16),
