@@ -42,8 +42,9 @@ class LandingNavBarItemsWidget extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  landingctrl.changelandingpage(0);
-                                  Get.toNamed("/home");
+                                  landingctrl.setnavindex(0);
+
+                                  landingctrl.scroll(0);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
