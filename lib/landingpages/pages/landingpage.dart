@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
+import 'package:xtreme_fitness/landingpages/pages/gallery.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
@@ -31,6 +32,7 @@ class _LandingPageState extends State<LandingPage> {
     const LandingPage1(),
     const LandingPageServices(),
     const LandingPagePlan(),
+    const GalleryPage(),
     const ContactFooter()
   ];
 
@@ -77,146 +79,143 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
     GetxLandingcontroller managectrl = Get.put(GetxLandingcontroller());
     return GetBuilder<AddMemberController>(builder: (_) {
       return GetBuilder<GetxLandingcontroller>(builder: (_) {
-        return ResponsivePages(
-          colors: Colors.black54,
-          child1: SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                const HeadingText(
-                  "Choose The Best Plan",
-                  size: 40,
-                  isbold: true,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  "Choose a plan that's right for you. Flexible, Simple & no hidden prices",
-                  style: TextStyle(color: Colors.white60),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          managectrl.changeplanduration(1);
-                        },
-                        child: Text(
-                          "1",
-                          style: TextStyle(
-                              color: managectrl.plandurations == 1
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                              fontSize:
-                                  managectrl.plandurations == 1 ? 24 : 16),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          managectrl.changeplanduration(3);
-                        },
-                        child: Text(
-                          "3",
-                          style: TextStyle(
-                              color: managectrl.plandurations == 3
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                              fontSize:
-                                  managectrl.plandurations == 3 ? 24 : 16),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          managectrl.changeplanduration(6);
-                        },
-                        child: Text(
-                          "6",
-                          style: TextStyle(
-                              color: managectrl.plandurations == 6
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                              fontSize:
-                                  managectrl.plandurations == 6 ? 24 : 16),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          managectrl.changeplanduration(12);
-                        },
-                        child: Text(
-                          "12",
-                          style: TextStyle(
-                              color: managectrl.plandurations == 12
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                              fontSize:
-                                  managectrl.plandurations == 12 ? 24 : 16),
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 500,
-                  child: Center(
-                    child: ListView(
-                      shrinkWrap: true,
+        return SingleChildScrollView(
+          child: ResponsivePages(
+            colors: Colors.black54,
+            child1: SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  const HeadingText(
+                    "Choose The Best Plan",
+                    size: 40,
+                    isbold: true,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    "Choose a plan that's right for you. Flexible, Simple & no hidden prices",
+                    style: TextStyle(color: Colors.white60),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            managectrl.changeplanduration(1);
+                          },
+                          child: Text(
+                            "1",
+                            style: TextStyle(
+                                color: managectrl.plandurations == 1
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : null,
+                                fontSize:
+                                    managectrl.plandurations == 1 ? 24 : 16),
+                          )),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            managectrl.changeplanduration(3);
+                          },
+                          child: Text(
+                            "3",
+                            style: TextStyle(
+                                color: managectrl.plandurations == 3
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : null,
+                                fontSize:
+                                    managectrl.plandurations == 3 ? 24 : 16),
+                          )),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            managectrl.changeplanduration(6);
+                          },
+                          child: Text(
+                            "6",
+                            style: TextStyle(
+                                color: managectrl.plandurations == 6
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : null,
+                                fontSize:
+                                    managectrl.plandurations == 6 ? 24 : 16),
+                          )),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            managectrl.changeplanduration(12);
+                          },
+                          child: Text(
+                            "12",
+                            style: TextStyle(
+                                color: managectrl.plandurations == 12
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : null,
+                                fontSize:
+                                    managectrl.plandurations == 12 ? 24 : 16),
+                          )),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: double.maxFinite,
+                    height: 500,
+                    child: Center(
+                      child: ListView(
+                        shrinkWrap: true,
 
-                      // controller: PageController(viewportFraction: 0.3,initialPage: 1),
+                        // controller: PageController(viewportFraction: 0.3,initialPage: 1),
 
-                      scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.horizontal,
 
-                      children: managectrl.getallplans
-                          .where(
-                            (element) {
-                              return element.durationInMonths ==
-                                  managectrl.plandurations;
-                            },
-                          )
-                          .toList()
-                          .asMap()
-                          .entries
-                          .map(
-                            (e) => SizedBox(
-                              width: 400,
-                              child: CardwithShadow(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 32, horizontal: 16),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 32, horizontal: 32),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      HeadingText(
-                                        e.value.category,
-                                        size: 20,
-                                        color: Colors.white60,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Expanded(
-                                        child: Column(
+                        children: managectrl.getallplans
+                            .where(
+                              (element) {
+                                return element.durationInMonths ==
+                                    managectrl.plandurations;
+                              },
+                            )
+                            .toList()
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => SizedBox(
+                                width: 400,
+                                child: CardwithShadow(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 32, horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 32, horizontal: 32),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        HeadingText(
+                                          e.value.category,
+                                          size: 20,
+                                          color: Colors.white60,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -361,36 +360,33 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: double.maxFinite,
-                                        child: Cardonly(
-                                            onpress: () {
-                                              addmemberctrl.addplan(e.value);
-                                              Get.toNamed("/login");
-                                            },
-                                            margin: EdgeInsets.zero,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                            child: const Center(
-                                                child: Text(
-                                              "Choose Plan",
-                                              style: TextStyle(),
-                                            ))),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          )
-                          .toList(),
+                                        SizedBox(
+                                          width: double.maxFinite,
+                                          child: Cardonly(
+                                              onpress: () {
+                                                addmemberctrl.addplan(e.value);
+                                                Get.toNamed("/login");
+                                              },
+                                              margin: EdgeInsets.zero,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              child: const Center(
+                                                  child: Text(
+                                                "Choose Plan",
+                                                style: TextStyle(),
+                                              ))),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -408,6 +404,7 @@ class LandingPageServices extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return ResponsivePages(
+        screenheight: 1000,
         colors: const Color.fromARGB(255, 36, 34, 34),
         child1: SizedBox(
           child: Column(
@@ -594,9 +591,6 @@ class LandingPageServices extends StatelessWidget {
                                   ))
                             ],
                           )),
-              ),
-              const SizedBox(
-                height: 60,
               ),
             ],
           ),

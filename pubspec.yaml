@@ -36,6 +36,7 @@ dependencies:
   web_smooth_scroll: ^1.1.0
   universal_html: ^2.2.4
   cookie_jar: ^4.0.8
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/images/
 
   fonts:
     - family: Montserrat

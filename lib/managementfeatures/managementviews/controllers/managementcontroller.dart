@@ -36,10 +36,14 @@ class ManagementController extends GetxController {
   List<Xtremer> get allpersonalxtremerforoverall =>
       _allpersonalxtremerforoverall;
 
+  final List<Xtremer> _allgeneralxtremerforoverall = [];
+  List<Xtremer> get allgenerallxtremerforoverall =>
+      _allgeneralxtremerforoverall;
+
   final List<Xtremer> _allinactivextremerforoverall = [];
   List<Xtremer> get allinactivextremerforoverall =>
       _allinactivextremerforoverall;
-  final List<Xtremer> _allgeneralxtremer = [];
+  List<Xtremer> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
   List<Xtremer> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
@@ -121,7 +125,16 @@ class ManagementController extends GetxController {
     update();
   }
 
+  void getallgeneralextremer() async {
+    _allgeneralxtremer = await managementRepo.viewgeneralmembers();
+    update();
+  }
+
+
   void getxtremerforoverall() async {
+    _allinactivextremerforoverall.clear();
+    _allpersonalxtremerforoverall.clear();
+    _allgeneralxtremerforoverall.clear();
     var alldata = await managementRepo.viewMemberforoverall();
 
     for (var element in alldata) {
@@ -140,8 +153,23 @@ class ManagementController extends GetxController {
         print('already added to today list');
       } else {
         if (element.category == 'Personal') {
+          if (element.isActive == true) {
+            _allpersonalxtremerforoverall.add(element);
+          }
           // Add all elements whose createddate is today
-          _allpersonalxtremerforoverall.add(element);
+        }
+      }
+    }
+
+    for (var element in alldata) {
+      if (_allgeneralxtremerforoverall.contains(element)) {
+        print('already added to today list');
+      } else {
+        if (element.category == 'General') {
+          if (element.isActive == true) {
+            _allgeneralxtremerforoverall.add(element);
+          }
+          // Add all elements whose createddate is today
         }
       }
     }
@@ -151,6 +179,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
+    _allxtremer = await managementRepo.viewMember();
+    // _allxtremer = dummyxtremer;
     _allxtremer = await managementRepo.viewMember();
     // _allxtremer = dummyxtremer;
     //for getting search xtremer list
@@ -190,7 +220,7 @@ class ManagementController extends GetxController {
     return d;
   }
 
-    Future<String> edittrainer(TrainerEntity trainerentity) async {
+  Future<String> edittrainer(TrainerEntity trainerentity) async {
     String d = await managementRepo.updateTrainer(trainerentity);
     // update plans
     getplans();
@@ -231,29 +261,24 @@ class ManagementController extends GetxController {
     return await managementRepo.viewadmission();
   }
 
-    Future<String> activateXtremer(Xtremer? xtremer)async{
-    
-      print("In update xtremer");
-      if(xtremer!=null){
-        try {
-            Xtremer  y = xtremer;
-            y.isActive = !xtremer.isActive!;
-  String d  = await managementRepo.updateMember(y);
-  getxtremer();
-  
-  return d;
-} on Exception catch (e) {
-  // TODO
-    return "error updating member";
-}
+  Future<String> activateXtremer(Xtremer? xtremer) async {
+    print("In update xtremer");
+    if (xtremer != null) {
+      try {
+        Xtremer y = xtremer;
+        y.isActive = !xtremer.isActive!;
+        String d = await managementRepo.updateMember(y);
+        getxtremer();
 
-      }else{
- return "xtremer null";
-
+        return d;
+      } on Exception catch (e) {
+        // TODO
+        return "error updating member";
       }
-     
+    } else {
+      return "xtremer null";
+    }
   }
-
 
   void getStaff() async {
     // _allstaff = dummystaff;

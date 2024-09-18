@@ -29,14 +29,10 @@ class _HandlerPageState extends State<HandlerPage> {
       (timeStamp) {
         // Get.find<GetxAuthController>().authentications();
         Get.put(AddMemberController());
-       
       },
     );
-    
+
     Get.put(ManagementController());
-
-  
-
   }
 
   @override

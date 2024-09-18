@@ -35,6 +35,7 @@ class Xtremer {
   int? submittedBy;
   bool? isActive;
   String? category;
+
   DateTime? createddate;
   Xtremer(
       {this.id,
@@ -56,9 +57,9 @@ class Xtremer {
       this.relationship,
       this.unableToExercise = false,
       this.physicianAdvisedAgainst = false,
-      this.cardiacIssues= false,
+      this.cardiacIssues = false,
       this.respiratoryDifficulties = false,
-      this.faintingMigraines= false,
+      this.faintingMigraines = false,
       this.boneJointMuscleIssues = false,
       this.familyHeartDisease = false,
       this.chestPain = false,
@@ -115,8 +116,9 @@ class Xtremer {
         declaration: json['Declaration'] ?? false,
         submittedBy: json['SubmittedBy'],
         isActive: json['IsActive'] ?? false,
-        category: json['Category'],
-        createddate: json['CreatedDate'] ?? DateTime.now());
+          category: json['Category'],
+        createddate:
+            DateTime.parse(json['CreatedAt'] ?? DateTime.now().toString()));
   }
 
   // Method to convert a Xtremer instance to a JSON map

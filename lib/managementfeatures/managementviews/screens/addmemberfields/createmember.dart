@@ -12,7 +12,8 @@ import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
-  const CreateMember({super.key, this.phone, this.renewal, this.buttontext, this.callback});
+  const CreateMember(
+      {super.key, this.phone, this.renewal, this.buttontext, this.callback});
   final String? phone;
   final int? renewal;
   final String? buttontext;
@@ -27,8 +28,8 @@ class _CreateMemberState extends State<CreateMember> {
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool iscash = false;
-  
-    @override
+
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -308,12 +309,10 @@ class PaymentDialog extends StatelessWidget {
   final String? phone;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GetxPageController>(
-      builder: (pagectrl) {
-        return GetBuilder<AddMemberController>(
-          builder: (addmemberctrl) {
-            return StatefulBuilder(builder: (context, s) {
-                                                      return PageDialog(
+    return GetBuilder<GetxPageController>(builder: (pagectrl) {
+      return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
+        return StatefulBuilder(builder: (context, s) {
+          return PageDialog(
               no: () {
                 Navigator.pop(context);
               },
@@ -327,23 +326,17 @@ class PaymentDialog extends StatelessWidget {
               child: Form(
                 key: _formKeys,
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const TitleText(
-                            "Payment Method"),
+                        const TitleText("Payment Method"),
                         IconButton(
                             onPressed: () {
-                              Navigator.pop(
-                                  context);
+                              Navigator.pop(context);
                             },
-                            icon: const Icon(
-                                Icons.close))
+                            icon: const Icon(Icons.close))
                       ],
                     ),
                     const SizedBox(
@@ -351,48 +344,36 @@ class PaymentDialog extends StatelessWidget {
                     ),
                     const Text(
                       "Bill Details",
-                      style: TextStyle(
-                          fontWeight:
-                              FontWeight.bold,
-                          fontSize: 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                  pagectrl.isrenewalforms?const SizedBox():Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
-                      children: [
-                        const Text(
-                            "Admission Fees"),
-                        addmemberctrl
-                                    .admissionfees !=
-                                null
-                            ? Text(
-                                "Rs ${addmemberctrl.admissionfees!.price}")
-                            : const SizedBox()
-                      ],
-                    ),
-                    addmemberctrl.selectedplan !=
-                            null
-                        ? Text(addmemberctrl
-                            .selectedplan!.category)
+                    pagectrl.isrenewalforms
+                        ? const SizedBox()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Admission Fees"),
+                              addmemberctrl.admissionfees != null
+                                  ? Text(
+                                      "Rs ${addmemberctrl.admissionfees!.price}")
+                                  : const SizedBox()
+                            ],
+                          ),
+                    addmemberctrl.selectedplan != null
+                        ? Text(addmemberctrl.selectedplan!.category)
                         : const SizedBox(),
                     const SizedBox(
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Price"),
-                        addmemberctrl
-                                    .selectedplan !=
-                                null
-                            ? Text(
-                                "Rs ${addmemberctrl.selectedplan!.price}")
+                        addmemberctrl.selectedplan != null
+                            ? Text("Rs ${addmemberctrl.selectedplan!.price}")
                             : const SizedBox(),
                       ],
                     ),
@@ -400,14 +381,10 @@ class PaymentDialog extends StatelessWidget {
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Discount"),
-                        addmemberctrl
-                                    .selectedplan !=
-                                null
+                        addmemberctrl.selectedplan != null
                             ? Text(
                                 "${addmemberctrl.selectedplan!.discountPercentage} %")
                             : const SizedBox(),
@@ -417,15 +394,10 @@ class PaymentDialog extends StatelessWidget {
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                            "Discounted price"),
-                        addmemberctrl
-                                    .selectedplan !=
-                                null
+                        const Text("Discounted price"),
+                        addmemberctrl.selectedplan != null
                             ? Text(
                                 "Rs ${addmemberctrl.selectedplan!.price - (addmemberctrl.selectedplan!.price * (addmemberctrl.selectedplan!.discountPercentage / 100))}")
                             : const SizedBox(),
@@ -433,29 +405,21 @@ class PaymentDialog extends StatelessWidget {
                     ),
                     const Divider(),
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           "Total",
-                          style: TextStyle(
-                              fontSize: 20),
+                          style: TextStyle(fontSize: 20),
                         ),
-                        addmemberctrl
-                                    .selectedplan !=
-                                null
+                        addmemberctrl.selectedplan != null
                             ? Text(
-                                "Rs ${total(addmemberctrl.admissionfees!=null?addmemberctrl.admissionfees!.price:0, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
-                                style:
-                                    const TextStyle(
-                                        fontSize:
-                                            20),
+                                "Rs ${total(addmemberctrl.admissionfees != null ? addmemberctrl.admissionfees!.price : 0, percentprice(addmemberctrl.selectedplan!.price, addmemberctrl.selectedplan!.discountPercentage))}",
+                                style: const TextStyle(fontSize: 20),
                               )
                             : const SizedBox(),
                       ],
                     ),
-                    
+
                     // Row(
                     //   children: [
                     //     Expanded(child: CardwithShadow(
@@ -517,10 +481,8 @@ class PaymentDialog extends StatelessWidget {
                   ],
                 ),
               ));
-                                                    });
-          }
-        );
-      }
-    );
+        });
+      });
+    });
   }
 }

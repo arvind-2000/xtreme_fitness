@@ -18,7 +18,7 @@ import 'entities.dart/xtremer.dart';
 
 abstract class ManagementRepo {
   ///adding staff for management
-  Future<Map<int,String>> addStaff(Staff staff);
+  Future<Map<int, String>> addStaff(Staff staff);
   Future<String> updateStaff(Staff staff);
   Future<String> deleteStaff(Staff staff);
   Future<List<UserEntity>> viewStaff();
@@ -26,13 +26,13 @@ abstract class ManagementRepo {
   ///adding members
   Future<Map<String, dynamic>> addMember(
       Xtremer xtremer, Uint8List? filepath, String userid);
-  Future<String> updateMember(
-      Xtremer xtremer);
+  Future<String> updateMember(Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
   Future<List<Xtremer>> viewMemberforoverall();
   Future<List<Xtremer>> viewinactivemembers();
   Future<List<Xtremer>> viewpersonalmembers();
+  Future<List<Xtremer>> viewgeneralmembers();
   Future<Uint8List?> getImage(int id);
 
   ///subscription renewal function
@@ -92,5 +92,5 @@ abstract class ManagementRepo {
   //admission
   Future<Admission?> viewadmission();
 
-  Future<List<Trainee>> viewTrainee(int id );
+  Future<List<Trainee>> viewTrainee(int id);
 }
