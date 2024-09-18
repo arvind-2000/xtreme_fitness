@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
 
 import 'managementfeatures/managementviews/widgets/paymentstatuscard.dart';
@@ -26,7 +27,7 @@ class _HandlerPageState extends State<HandlerPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Get.find<GetxAuthController>().authentications();
+        // Get.find<GetxAuthController>().authentications();
         Get.put(AddMemberController());
        
       },
@@ -65,7 +66,8 @@ class _HandlerPageState extends State<HandlerPage> {
           body: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1900),
               // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-              child: const SafeArea(child: MainPage())),
+              // child: const SafeArea(child: MainPage())),
+              child: const SafeArea(child: DashBoardScreen())),
         );
       });
     });

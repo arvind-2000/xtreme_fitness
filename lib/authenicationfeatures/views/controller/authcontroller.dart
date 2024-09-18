@@ -26,7 +26,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember = true;
 
   int? otp;
   bool otploading = false;
@@ -70,7 +70,7 @@ class GetxAuthController extends GetxController {
               print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
               update();
-              Get.to(() => const HandlerPage());
+              Get.toNamed('/dashboard');
             } else {
               print("user null");
             }
@@ -104,7 +104,7 @@ class GetxAuthController extends GetxController {
   void logout() async {
     loginloading = true;
     update();
-         authentications();
+       
     await authrepo.logout().then(
       (value) {
         print(value);

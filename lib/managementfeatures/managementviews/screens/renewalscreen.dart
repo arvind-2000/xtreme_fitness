@@ -8,12 +8,14 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../widgets/dialogswidget.dart';
 
 
 class RenewalScreen extends StatefulWidget {
@@ -35,7 +37,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
     super.dispose();
   }
 
-  List<String> d = ["All Members", "Personal", "General"];
+  List<String> d = ["All Members", "Personal", "General","InActive"];
   List<String> renewlist = ["Renewal", "Edit", "View"];
   int pos = 0;
   int renewalpos = 0;
@@ -65,7 +67,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
         return GetBuilder<GetxPageController>(builder: (pagectrl) {
           return GetBuilder<ManagementController>(builder: (managectrl) {
             return pagectrl.isrenewalforms?RenewalForms()
-                :pagectrl.iseditforms?EditmemberForm(): Column(
+                :pagectrl.iseditforms?EditmemberForm():pagectrl.viewprofile && _user != null?MemberProfilescreen(user: _user,pagectrl: pagectrl,):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //     const Padding(
@@ -121,6 +123,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                       managectrl.personalxtremer();
                                                 }else if(pos == 2){
                                                        managectrl.generalxtremer();
+                                                }else{
+                                                  managectrl.inactivextremer();
                                                 }
                                               });
                                             },
@@ -260,7 +264,15 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                             ],
                                           )),
                                           MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():const Expanded(child: Text("4/5/2024",style:TextStyle(fontSize: 14))),
-                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14))),
+                                         MediaQuery.sizeOf(context).width<=mobilescreen?const SizedBox():Expanded(child: InkWell(
+                                           onTap: (){
+                                             Get.dialog(Dialog(child:PageDialog(
+                                               heights: 300,
+                                               child: Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () {
+                                               managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
+                                             },)));
+                                           },
+                                           child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14)))),
                                           Expanded(
                                             flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
                                        

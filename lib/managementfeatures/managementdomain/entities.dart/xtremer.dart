@@ -32,7 +32,6 @@ class Xtremer {
   String? surgeryNumber;
   String? surgeryAddress;
   bool? declaration;
-  String? category;
   int? submittedBy;
   bool? isActive;
   String? category;
@@ -72,7 +71,6 @@ class Xtremer {
       this.surgeryAddress,
       this.declaration,
       this.submittedBy,
-      this.category,
       this.isActive,
       this.category,
       this.createddate});
@@ -115,16 +113,10 @@ class Xtremer {
         surgeryNumber: json['SurgeryNumber'] ?? '',
         surgeryAddress: json['SurgeryAddress'] ?? '',
         declaration: json['Declaration'] ?? false,
-        category: json['Category'] ?? 'General',
         submittedBy: json['SubmittedBy'],
-<<<<<<< HEAD
         isActive: json['IsActive'] ?? false,
         category: json['Category'],
         createddate: json['CreatedDate'] ?? DateTime.now());
-=======
-        isActive: json['isActive'] ?? true,
-        createddate: json['createddate'] ?? DateTime.now());
->>>>>>> 134541aab72beed05a76bb08a7707b07eb2a2da5
   }
 
   // Method to convert a Xtremer instance to a JSON map
@@ -165,13 +157,8 @@ class Xtremer {
       'declaration': declaration,
       'submittedBy': submittedBy,
       'isActive': isActive,
-<<<<<<< HEAD
       'category': category,
       'createddate': createddate
-=======
-      'createddate': createddate,
-      'category': category
->>>>>>> 134541aab72beed05a76bb08a7707b07eb2a2da5
     };
   }
 }

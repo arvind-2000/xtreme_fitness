@@ -75,7 +75,7 @@ bool isactive = true;
                   ),
                 ),
 
-                          Row(
+                        managementcontroller.ismember?SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,

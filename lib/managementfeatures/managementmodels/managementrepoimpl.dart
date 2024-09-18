@@ -20,6 +20,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
+import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
@@ -39,15 +40,15 @@ class ManagementrepoImpl implements ManagementRepo {
     request.fields.addAll({
       'UserId': xtremer.XtremerId!.toString(),
       'FirstName': xtremer.firstName!,
-      'Surname': xtremer.surname ?? '',
+      'Surname': xtremer.surname ?? 'no',
       'DateOfBirth': xtremer.dateOfBirth.toString(),
       'Address': xtremer.address ?? '',
       'Postcode': xtremer.postcode ?? '',
       'Occupation': xtremer.occupation ?? '',
       'HomeNumber': xtremer.homeNumber ?? '',
       'MobileNumber': xtremer.homeNumber ?? '',
-      'Email': xtremer.email ?? '',
-      'Disability': xtremer.disability ?? '',
+      'Email': xtremer.email ?? 'emails',
+      'Disability': xtremer.disability ?? 'no',
       'PreferTiming': xtremer.preferTiming ?? '',
       'ContactName': xtremer.contactName ?? '',
       'ContactNumber': xtremer.contactNumber ?? '',
@@ -397,9 +398,30 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<List<Staff>> viewStaff() async {
-    // return dummystaff;
-    return [];
+  Future<List<UserEntity>> viewStaff() async {
+    List<UserEntity> stafflist = [];
+   try {
+      final res = await http.get(Uri.parse("$api/api/Users"));
+      // Plan p = Plan.fromJson(jsonDecode(res.body));
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In staff list : ${jsonList.length}");
+        // Convert JSON data to List<Plan>
+      stafflist =  jsonList.map((json){ 
+        print(json);
+        return UserEntity.fromJson(json);}).toList();
+      
+           print("In staff list actual: ${stafflist.length}");
+      } else {
+
+      }
+    } catch (e) {
+      print("cant load staff $e");
+    }
+
+    return stafflist.where((element) => element.roleName?.toLowerCase()!="super admin" && element.roleName?.toLowerCase()!='member',).toList();
+
   }
 
   @override
@@ -1066,7 +1088,7 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<PaymentDetails?> getpayment(String transactionid) async {
+  Future<Paymententity?> getpayment(String transactionid) async {
     final uri = Uri.parse(
         '$api/api/Payments/GetByTranId?transactionId=$transactionid'); // Replace with your API endpoint
 
@@ -1081,7 +1103,7 @@ class ManagementrepoImpl implements ManagementRepo {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       print('Payment get successfully.');
       print(response.body);
-      return PaymentDetails.fromJson(jsonDecode(response.body));
+      return Paymententity.fromJson(jsonDecode(response.body));
     } else {
       print('Failed to get payment. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');

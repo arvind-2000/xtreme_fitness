@@ -86,7 +86,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ),
               ),
             
-            Row(
+           managementcontroller.ismember?SizedBox(): Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,

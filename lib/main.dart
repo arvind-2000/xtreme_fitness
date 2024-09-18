@@ -3,11 +3,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
+import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/themes/themenew.dart';
 import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
+import 'landingpages/pages/landingpage.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 void main() async {
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // scrollBehavior: CustomScrollBehavior(),
+      scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
@@ -37,11 +39,11 @@ class MyApp extends StatelessWidget {
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
-
+      
       initialRoute: '/',
       unknownRoute: GetPage(
         name: '/',
-        page: () => const HandlerPage(),
+        page: () => const LandingHomePage(index: 4,),
       ),
       getPages: [
         GetPage(
@@ -53,44 +55,44 @@ class MyApp extends StatelessWidget {
         //     page: () => const LandingHomePage(index: 4,),
         //     transition: Transition.noTransition),
         GetPage(
-            name: '/home',
-            page: () => const LandingHomePage(
-                  index: 0,
+            name: '/',
+            page: () => const MainPage(
+                  
                 ),
             transition: Transition.noTransition),
-        GetPage(
-            name: '/pricing',
-            page: () => const LandingHomePage(
-                  index: 1,
-                ),
-            transition: Transition.noTransition),
-        GetPage(
-            name: '/services',
-            page: () => const LandingHomePage(
-                  index: 2,
-                ),
-            transition: Transition.noTransition),
-        GetPage(
-            name: '/gallery',
-            page: () => const LandingHomePage(
-                  index: 3,
-                ),
-            transition: Transition.noTransition),
-        GetPage(
-            name: '/login',
-            page: () => const AuthHandlerPage(
-                  index: 0,
-                )),
-        GetPage(
-            name: '/signup',
-            page: () => const AuthHandlerPage(
-                  index: 1,
-                )),
-        GetPage(
-            name: '/forgotpassword',
-            page: () => const AuthHandlerPage(
-                  index: 2,
-                )),
+        // GetPage(
+        //     name: '/pricing',
+        //     page: () => const LandingHomePage(
+        //           index: 1,
+        //         ),
+        //     transition: Transition.noTransition),
+        // GetPage(
+        //     name: '/services',
+        //     page: () => const LandingHomePage(
+        //           index: 2,
+        //         ),
+        //     transition: Transition.noTransition),
+        // GetPage(
+        //     name: '/gallery',
+        //     page: () => const LandingHomePage(
+        //           index: 3,
+        //         ),
+        //     transition: Transition.noTransition),
+        // GetPage(
+        //     name: '/login',
+        //     page: () => const AuthHandlerPage(
+        //           index: 0,
+        //         )),
+        // GetPage(
+        //     name: '/signup',
+        //     page: () => const AuthHandlerPage(
+        //           index: 1,
+        //         )),
+        // GetPage(
+        //     name: '/forgotpassword',
+        //     page: () => const AuthHandlerPage(
+        //           index: 2,
+        //         )),
       ],
     ).animate().fadeIn();
   }

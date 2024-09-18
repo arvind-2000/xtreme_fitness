@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
+import '../../managementfeatures/managementmodels/dummies.dart';
 
 class GetxLandingcontroller extends GetxController {
   final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
@@ -129,11 +130,13 @@ class GetxLandingcontroller extends GetxController {
     update();
   }
 
-  void getServices() async {
-    _services = await managementrepoImpl.getServices();
-    // _services = dummyservices;
-    update();
-  }
+    
+    void getServices() async{
+
+        _services = await managementrepoImpl.getServices();
+        // _services = dummyservices;
+        update();
+    }
 
   void addServices(ServiceEntity servic) async {
     // _services = await managementrepoImpl.getServices();

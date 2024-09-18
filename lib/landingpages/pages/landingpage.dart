@@ -879,12 +879,25 @@ class _LandingPage1State extends State<LandingPage1> {
 }
 
 class CustomScrollBehavior extends ScrollBehavior {
-  @override
-  Widget buildscrollIndicator(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
+@override
+Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  // When modifying this function, consider modifying the implementation in
+  // the Material and Cupertino subclasses as well.
+  switch (getPlatform(context)) {
+    case TargetPlatform.iOS:
+    case TargetPlatform.linux:
+    case TargetPlatform.macOS:
+    case TargetPlatform.windows:
+      return child;
+    case TargetPlatform.android:
+    case TargetPlatform.fuchsia:
+      return GlowingOverscrollIndicator(
+        axisDirection: details.direction,
+        color: Theme.of(context).colorScheme.secondary,
+        child: child,
+      );
   }
-
+}
   @override
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,

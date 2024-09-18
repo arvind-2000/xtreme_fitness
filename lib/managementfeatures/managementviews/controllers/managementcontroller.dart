@@ -9,6 +9,8 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrep
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
+import '../../../authenicationfeatures/views/controller/authcontroller.dart';
+import '../../../authentifeatures/domain/userentity.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
@@ -19,13 +21,15 @@ class ManagementController extends GetxController {
   final ManagementRepo managementRepo = ManagementrepoImpl();
 
   List<Plan> _allplans = [];
+  List<Plan> _allactiveplans = [];
+  List<ServiceEntity> _allactiveservices = [];
   List<Alluserpaymentmodel> _allpayments = [];
   List<Paymentlatest10> _latestpayment10 = [];
-  List<Staff> _allstaff = [];
+  List<UserEntity> _allstaff = [];
   List<Xtremer> _allxtremer = [];
   List<Xtremer> _allxtremerforoverall = [];
   List<Xtremer> _allinactivextremer = [];
-
+  bool ismember = true;
   List<Xtremer> get allinactivextremer => _allinactivextremer;
   List<Xtremer> _allpersonalxtremer = [];
   final List<Xtremer> _allpersonalxtremerforoverall = [];
@@ -50,11 +54,15 @@ class ManagementController extends GetxController {
   List<Trainee> _alltrainee = [];
   List<Alluserpaymentmodel> get getallpayments => _allpayments;
   List<Plan> get getallplans => _allplans;
-  List<Staff> get getallstaff => _allstaff;
+  List<Plan> get getallactiveplans => _allactiveplans;
+  List<UserEntity> get getallstaff => _allstaff;
   List<ServiceEntity> get getallservices => _allservices;
+  List<ServiceEntity> get getallactiveservices => _allactiveservices;
   List<Trainee> get getallTrainee => _alltrainee;
   String? searchmessage = "";
   int searchposition = 0;
+
+    GetxAuthController authctrl = Get.find<GetxAuthController>();
   @override
   void onInit() {
     super.onInit();
@@ -67,26 +75,36 @@ class ManagementController extends GetxController {
     getTrainer();
     viewpayment();
     getpaymentlastest10();
-    getAllTraineess();
+    getAllTraineess(10);
     
-
+    checkmember();
     getxtremerforoverall();
   }
+
+
+  ///checking member or admin
+  void checkmember(){
+    ismember = authctrl.ismember;
+    update();
+  }
+
 
   void getplans() async {
     // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
-    // _allplans = dummyplan;
+    _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
     update();
   }
 
 
-  void getAllTraineess()async{
-    // _allplans = dummyplan;
-    _alltrainee = await managementRepo.viewTrainee(10);
+  Future<List<Trainee>> getAllTraineess(int id)async{
+   List<Trainee> d = [];
+    // _alltrainee = dummytrainees;
+    d = await managementRepo.viewTrainee(id);
     print( "In trainer list ${_alltrainee.length}");
-    // _allplans = dummyplan;
+    _alltrainee = d;
     update();
+    return d;
 
 
 
@@ -182,6 +200,7 @@ class ManagementController extends GetxController {
   void getallServices() async {
     _allservices = await managementRepo.getServices();
     // _allservices = dummyservices;
+     _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
 
@@ -212,7 +231,32 @@ class ManagementController extends GetxController {
     return await managementRepo.viewadmission();
   }
 
+    Future<String> activateXtremer(Xtremer? xtremer)async{
+    
+      print("In update xtremer");
+      if(xtremer!=null){
+        try {
+            Xtremer  y = xtremer;
+            y.isActive = !xtremer.isActive!;
+  String d  = await managementRepo.updateMember(y);
+  getxtremer();
+  
+  return d;
+} on Exception catch (e) {
+  // TODO
+    return "error updating member";
+}
+
+      }else{
+ return "xtremer null";
+
+      }
+     
+  }
+
+
   void getStaff() async {
+    // _allstaff = dummystaff;
     _allstaff = await managementRepo.viewStaff();
     update();
   }
@@ -308,6 +352,12 @@ class ManagementController extends GetxController {
     _searchxtremerlist = _allgeneralxtremer;
     update();
   }
+
+    void inactivextremer() {
+    _searchxtremerlist = _allinactivextremer;
+    update();
+  }
+
 
   void allxtremer() {
     _searchxtremerlist = _allxtremer;

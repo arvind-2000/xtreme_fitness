@@ -45,7 +45,15 @@ class _CreateMemberState extends State<CreateMember> {
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 600),
-                  child:addmemberctrl.paymentstatus!=0?const PaymentStatusCard():Column(
+                  child:addmemberctrl.paymentstatus!=0? PaymentStatusCard(callback: () {
+                    addmemberctrl.changepaymentstatus(0);
+                    
+                    if(addmemberctrl.ismember ){
+                            Get.toNamed('/home');
+                    }else{
+                      pagectrl.changeaddMemberPage(0);
+                    }
+                  },):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //upload image
@@ -246,7 +254,7 @@ class _CreateMemberState extends State<CreateMember> {
                                       showDialog(
                                         context: context,
                                         builder: (context) =>
-                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,),
+                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,username: username.text,pass: password.text,),
                                       );
                                     }
                                       }else{
@@ -457,12 +465,12 @@ class PaymentDialog extends StatelessWidget {
                     //   ],
                     // )
                     
-                 phone!=null?const SizedBox(): const Text(
+                 addmemberctrl.ismember?const SizedBox(): const Text(
                         "Choose Payment Method"),
                    SizedBox(
                       height: phone!=null?0: 16,
                     ),
-                   phone!=null?const SizedBox():Row(
+                  addmemberctrl.ismember?const SizedBox():Row(
                       children: [
                         Radio(
                             activeColor:

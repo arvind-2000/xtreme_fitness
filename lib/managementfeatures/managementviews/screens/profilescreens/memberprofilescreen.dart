@@ -13,13 +13,13 @@ import '../../../../config/apis.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
 
 class MemberProfilescreen extends StatelessWidget {
-  const MemberProfilescreen({super.key, this.user});
+  const MemberProfilescreen({super.key, this.user, this.pagectrl,});
   final Xtremer? user;
+  final GetxPageController? pagectrl;
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.sizeOf(context).width;
-    return GetBuilder<GetxPageController>(
-      builder: (pagectrl) {
+  
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -30,7 +30,7 @@ class MemberProfilescreen extends StatelessWidget {
               children: [
                 const HeadingText("Profile",size: 30,),
                 IconButton(onPressed: (){
-                    pagectrl.changeviewprofile();
+                    pagectrl!.changeviewprofile();
           
                 }, icon:const Icon(Icons.close))
               ],
@@ -67,11 +67,11 @@ class MemberProfilescreen extends StatelessWidget {
 
                               const Text("Name"),
                               const SizedBox(height: 10,),
-                              Text(user!.firstName!,style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.firstName??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Phone"),
                                  const SizedBox(height: 10,),
-                              Text(user!.mobileNumber!,style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Designation"),
                                  const SizedBox(height: 10,),
@@ -79,11 +79,11 @@ class MemberProfilescreen extends StatelessWidget {
                               const SizedBox(height: 20,),
                               const Text("Address"),
                                  const SizedBox(height: 10,),
-                              Text(user!.address!,style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.address??"",style: TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 20,),
                               const Text("Email"),
                                  const SizedBox(height: 10,),
-                              Text(user!.email!,style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(user!.email??"",style: TextStyle(fontWeight: FontWeight.bold),),
                               const SizedBox(height: 16,),
                                 CardwithShadow(
                                   color: Colors.blue[300],
@@ -155,7 +155,6 @@ class MemberProfilescreen extends StatelessWidget {
             ],
           ),
         );
-      }
-    );
+
   }
 }
