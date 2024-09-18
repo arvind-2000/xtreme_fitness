@@ -164,7 +164,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                     margin: const EdgeInsets.all(16),
                     child: Form(
                           key:_globalkey,
-                      child: pagectrl.addmemberpages==0?PersonaldetailsField(pagectrl: pagectrl,phonenumber: widget.phonenumber,callback: (){
+                      child: pagectrl.addmemberpages==0?PersonaldetailsField( pagectrl: pagectrl,phonenumber: widget.phonenumber,callback: (){
                         pagectrl.changeaddMemberPage(1);
                       },):pagectrl.addmemberpages==1?PlanSelectionField(pagectrl: pagectrl,callback: (){     
                          if(addmemberctrl.selectedplan!=null){  
@@ -174,12 +174,12 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                                 if(addmemberctrl.gettrainer!=null){
                                   pagectrl.changeaddMemberPage(2);
                                 }else{
-                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Choose a Trainer for personal plan before proceeding")));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a Trainer for personal plan before proceeding")));
                                 }
                                }
                         }else{
         
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Choose a plan before proceeding")));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Choose a plan before proceeding")));
                         }},):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember()
                 )),
                             const SizedBox(height: 40,)

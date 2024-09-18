@@ -84,14 +84,15 @@ class DashboardDesktopScreen extends StatelessWidget {
                     child: CardwithShadow(
                         margin: const EdgeInsets.only(right: 16),
                         child: OverviewMembertitle(
-                          num: controller.allgeneralxtremer.length,
+                          num: controller.getallXtremer.length -
+                              controller.allpersonalxtremer.length,
                           title: "General",
                         )),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: CardwithShadow(
                         child: OverviewMembertitle(
-                      num: 100,
+                      num: controller.allinactivextremer.length,
                       title: "Inactive",
                     )),
                   ),

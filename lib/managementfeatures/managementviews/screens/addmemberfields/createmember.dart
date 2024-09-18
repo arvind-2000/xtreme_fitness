@@ -246,7 +246,7 @@ class _CreateMemberState extends State<CreateMember> {
                                       showDialog(
                                         context: context,
                                         builder: (context) =>
-                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,username: username.text,pass: password.text,),
+                                            PaymentDialog(formKeys: _formKeys,phone: widget.phone,),
                                       );
                                     }
                                       }else{

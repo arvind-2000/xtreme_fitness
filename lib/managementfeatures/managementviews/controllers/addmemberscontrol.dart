@@ -3,16 +3,13 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker_web/image_picker_web.dart';
-
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
-
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/subscription.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 
@@ -100,15 +97,13 @@ class AddMemberController extends GetxController {
     update();
   }
 
-  Future<bool> createuser(String? username, String? pass,String? phone) async {
+  Future<bool> createuser(String? username, String? pass, String? phone) async {
     usererrormessage = null;
     isloading = true;
     update();
     print('In user create usename: $username pass:$pass  phone: $phone');
     Map<int, String> res = await repo.addUser(
-        username!,
-        pass!,
-       phone??xtremer!.mobileNumber!,"Member");
+        username!, pass!, phone ?? xtremer!.mobileNumber!, "Member");
     if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
       usererrormessage = res.entries.first.value;
       _userid = await repo.viewUser(username, pass);
@@ -129,9 +124,10 @@ class AddMemberController extends GetxController {
  
     return false;
   }
-  Future<Subscription?>  addsubscription(Subscription subs)async{
-      Subscription? subss = await repo.addSubscription(subs);
-      return subss;
+
+  Future<Subscription?> addsubscription(Subscription subs) async {
+    Subscription? subss = await repo.addSubscription(subs);
+    return subss;
   }
 
   
@@ -166,11 +162,9 @@ class AddMemberController extends GetxController {
           startDate: DateTime.now(),
           endDate: DateTime.now()
               .add(Duration(days: selectedplan!.durationInMonths * 3)),
-            isActive: true,
-            trainerId: _trainer?.id
-            );
+          isActive: true,
+          trainerId: _trainer?.id);
 
-  
       if (checkdeclaration) {
         Paymententity payments = Paymententity(
             id: 0,
@@ -186,12 +180,12 @@ class AddMemberController extends GetxController {
                 "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
             paymentStatus: "Initiated",
             paymentMethod: ispaymentcash ? "Cash" : "Online",
-            paymentType: selectedservice!=null?selectedservice!.name : "Admission + ${selectedplan!.name}",
+            paymentType: selectedservice != null
+                ? selectedservice!.name
+                : "Admission + ${selectedplan!.name}",
             subscriptionId: selectedplan?.id,
-          
             serviceUsageId: selectedservice?.id,
-            termsAndConditions: paymentdeclaration
-            );
+            termsAndConditions: paymentdeclaration);
         paymentdetails = payments;
         print("adding payments");
         //online
@@ -200,10 +194,10 @@ class AddMemberController extends GetxController {
               userid: xtremer!.XtremerId.toString(), isonline: true);
           if (d["response"] == 200) {
             print("in response: 200");
-            
-            checkpayment(()async{
-                 Subscription? subss = await addsubscription(subs);
-                 creatextremer();
+
+            checkpayment(() async {
+              Subscription? subss = await addsubscription(subs);
+              creatextremer();
             });
           }
           //wait with dialog options
@@ -249,63 +243,67 @@ class AddMemberController extends GetxController {
     }
   }
 
-  
+  void addServiceusage({bool paymentonline = true}) async {
+    Paymententity payments = Paymententity(
+        id: 0,
+        userId: xtremer!.XtremerId!,
+        amount: selectedservice!.nonMemberPrice,
+        discountPercentage: 0,
+        receivedAmount: selectedservice!.nonMemberPrice,
+        paymentDate: DateTime.now(),
+        transactionId: "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
+        paymentStatus: "Initiated",
+        paymentMethod: paymentonline ? "Online" : "Cash",
+        paymentType:
+            selectedservice != null ? selectedservice!.name : "service plan",
+        serviceUsageId: selectedservice?.id,
+        termsAndConditions: true,
+        subscriptionId: null);
+    paymentdetails = payments;
+    if (paymentonline) {
+      var d = await repo.addPayments(payments,
+          userid: xtremer!.XtremerId.toString(), isonline: true);
+      if (d["response"] == 200) {
+        print("in response: 200");
 
-
-void addServiceusage({bool paymentonline = true})async{
-
-          Paymententity payments = Paymententity(
-            id: 0,
-            userId: xtremer!.XtremerId!,
-            amount: selectedservice!.nonMemberPrice,
-            discountPercentage:0,
-            receivedAmount:selectedservice!.nonMemberPrice,
-            paymentDate: DateTime.now(),
-            transactionId:
-                "XTRMPAY${Random().nextInt(1000)}${xtremer!.XtremerId}",
-            paymentStatus: "Initiated",
-            paymentMethod: paymentonline ? "Online" : "Cash",
-            paymentType: selectedservice!=null?selectedservice!.name:"service plan",
-            serviceUsageId: selectedservice?.id,
-            termsAndConditions: true, 
-            subscriptionId: null
-            );
-            paymentdetails = payments;
-        if (paymentonline) {
-          var d = await repo.addPayments(payments,
-              userid: xtremer!.XtremerId.toString(), isonline: true);
-          if (d["response"] == 200) {
-            print("in response: 200");
-            
-            checkpayment(()async{
-              ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.id!, serviceId: selectedservice!.id, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active");
-                ServiceSchedule? serv = await repo.addServiceUsage(s);
-                //  creatextremer();
-                // createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
-            });
-          }
-          //wait with dialog options
+        checkpayment(() async {
+          ServiceSchedule s = ServiceSchedule(
+              id: 0,
+              userId: xtremer!.id!,
+              serviceId: selectedservice!.id,
+              scheduleDate: DateTime.now(),
+              price: selectedservice!.nonMemberPrice,
+              status: "Active");
+          ServiceSchedule? serv = await repo.addServiceUsage(s);
+          //  creatextremer();
+          // createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
+        });
+      }
+      //wait with dialog options
+    } else {
+      var d = await repo.addPayments(payments,
+          userid: xtremer!.XtremerId.toString(), isonline: false);
+      if (d["response"] == 200) {
+        if (selectedservice != null) {
+          print(
+              '${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
+          ServiceSchedule s = ServiceSchedule(
+              id: 0,
+              userId: xtremer!.XtremerId!,
+              serviceId: 5,
+              scheduleDate: DateTime.now(),
+              price: selectedservice!.nonMemberPrice,
+              status: "Active");
+          ServiceSchedule? serv = await repo.addServiceUsage(s);
         } else {
-          var d = await repo.addPayments(payments,
-              userid: xtremer!.XtremerId.toString(), isonline: false);
-          if (d["response"] == 200) {
-            if(selectedservice!=null){
-              print('${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
-          ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.XtremerId!, serviceId: 5, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active");
-                ServiceSchedule? serv = await repo.addServiceUsage(s);
-            }else{
-                    print("no in service usage");
-
-            }
-              
-                  //  createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
-            // creatextremer();
-          }
+          print("no in service usage");
         }
 
-
-}
-
+        //  createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
+        // creatextremer();
+      }
+    }
+  }
 
   void addpersonaldetails({
     required String name,
@@ -318,42 +316,39 @@ void addServiceusage({bool paymentonline = true})async{
     required String emergencycontact,
     required String emergencyname,
   }) {
-    
     // print("in add details $name");
     String names = name;
-    try{
-    xtremer!.firstName = names;
-    print("true");
-    }catch(e){
-         print("in add details $name  $e");
+    try {
+      xtremer!.firstName = names;
+      print("true");
+    } catch (e) {
+      print("in add details $name  $e");
     }
 
-      print("in add details 1");
+    print("in add details 1");
 
-      try{
-  xtremer!.mobileNumber = phone;
-   print("in add details 2");
-  xtremer!.homeNumber = homephone;
-   print("in add details 3");
-  xtremer!.postcode = postalcode;
-   print("in add details 4");
-  xtremer!.occupation = occupation;
-   print("in add details 5");
-  xtremer!.address = address;
-   print("in add details 6");
-  xtremer!.email = email;
-   print("in add details 7");
-  xtremer!.relationship = relation[relationship]!;
-   print("in add details 8");
-  xtremer!.contactNumber = emergencycontact;
-   print("in add details 9");
-  xtremer!.contactName = emergencyname;
- print("in add details 10");
-      }catch(e){
-        print("error");
-
-
-      }
+    try {
+      xtremer!.mobileNumber = phone;
+      print("in add details 2");
+      xtremer!.homeNumber = homephone;
+      print("in add details 3");
+      xtremer!.postcode = postalcode;
+      print("in add details 4");
+      xtremer!.occupation = occupation;
+      print("in add details 5");
+      xtremer!.address = address;
+      print("in add details 6");
+      xtremer!.email = email;
+      print("in add details 7");
+      xtremer!.relationship = relation[relationship]!;
+      print("in add details 8");
+      xtremer!.contactNumber = emergencycontact;
+      print("in add details 9");
+      xtremer!.contactName = emergencyname;
+      print("in add details 10");
+    } catch (e) {
+      print("error");
+    }
 
     update();
   }
@@ -427,17 +422,12 @@ void addServiceusage({bool paymentonline = true})async{
     update();
   }
 
-
-
   void addservices(ServiceEntity services) {
     selectedservice = services;
     update();
   }
 
-
-
-  void addxtremersrenewaledit(Xtremer? xtremere){
-      
+  void addxtremersrenewaledit(Xtremer? xtremere) {
     xtremer = xtremere!;
     update();
   }

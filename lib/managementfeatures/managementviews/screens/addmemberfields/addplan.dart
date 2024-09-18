@@ -13,29 +13,41 @@ import '../../../../widgets/titletext.dart';
 import '../../controllers/pagecontroller.dart';
 
 class PlanSelectionField extends StatelessWidget {
-  const PlanSelectionField({super.key, required this.pagectrl,required this.callback});
+  const PlanSelectionField(
+      {super.key, required this.pagectrl, required this.callback});
   final GetxPageController pagectrl;
   final VoidCallback callback;
-   @override
+  @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return GetBuilder<AddMemberController>(
-          builder: (addmemberctrl) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-                      
-              children: [
-              
-                managectrl.getallplans.isEmpty? const NodataScreen(title: "No Plans", desc: "No plans to show.",onpress: null,): GridView(
-                 shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio:  size<500?1:size<700?4/7.2:3/5,
-                
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            managectrl.getallplans.isEmpty
+                ? const NodataScreen(
+                    title: "No Plans",
+                    desc: "No plans to show.",
+                    onpress: null,
+                  )
+                : GridView(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: size < 500
+                          ? 1
+                          : size < mobilescreen
+                              ? 2
+                              : size > mobilescreen && size < 1200
+                                  ? 3
+                                  : 4,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: size < 500
+                          ? 1
+                          : size < 700
+                              ? 4 / 7.2
+                              : 3 / 5,
                     ),
                     children: managectrl.getallplans.asMap().entries.map((e) => CardwithShadow(
                       // margin: const EdgeInsets.all(16),
@@ -148,7 +160,7 @@ class PlanSelectionField extends StatelessWidget {
             );
           }
         );
-      }
-    );
+      });
+    
   }
 }

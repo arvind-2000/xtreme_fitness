@@ -30,6 +30,8 @@ abstract class ManagementRepo {
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
   Future<List<Xtremer>> viewMemberforoverall();
+  Future<List<Xtremer>> viewinactivemembers();
+  Future<List<Xtremer>> viewpersonalmembers();
   Future<Uint8List?> getImage(int id);
 
   ///subscription renewal function
@@ -74,7 +76,8 @@ abstract class ManagementRepo {
   Future<PaymentDetails?> getpayment(String transcationid);
 
   ///users api
-  Future<Map<int,String>> addUser(String username ,String pass, String phone,String role);
+  Future<Map<int, String>> addUser(
+      String username, String pass, String phone, String role);
   Future<String?> viewUser(String username, String pass);
 
   ///subscription api

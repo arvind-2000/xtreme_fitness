@@ -1,13 +1,15 @@
-import 'dart:ui';
+import 'dart:developer';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
-import '../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
@@ -25,19 +27,33 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  List<Widget> landingwidgets = [const LandingPage1(),const LandingPageServices(),const LandingPagePlan(),const ContactFooter()];
+  List<Widget> landingwidgets = [
+    const LandingPage1(),
+    const LandingPageServices(),
+    const LandingPagePlan(),
+    const ContactFooter()
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
-
-              shrinkWrap: true,
-            itemCount: landingwidgets.length,
-            itemBuilder: (context, index) => landingwidgets[index],
+    log("Width :${MediaQuery.sizeOf(context).width}");
+    GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
+    landctrl.controller.addListener(() {
+      log('fdfdfd');
+      landctrl.setNavIndex(context);
+    });
+    return PageView.builder(
+      physics: Responsive.isMobile(context)
+          ? const NeverScrollableScrollPhysics()
+          : null,
+      pageSnapping: false,
+      scrollDirection: Axis.vertical,
+      controller: landctrl.controller,
+      itemCount: landingwidgets.length,
+      itemBuilder: (context, index) => landingwidgets[index],
     );
   }
 }
-
 
 class LandingPagePlan extends StatefulWidget {
   const LandingPagePlan({
@@ -68,7 +84,7 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 40,
+                  height: 100,
                 ),
                 const HeadingText(
                   "Choose The Best Plan",
@@ -390,132 +406,203 @@ class LandingPageServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GetxLandingcontroller>(
-      builder: (managectrl) {
-        return ResponsivePages(
-          colors: Color.fromARGB(255, 36, 34, 34)!,
-          child1: SizedBox(
-            child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 40,),
-                const HeadingText("The Best Programs We\nOffers For You"),
-         
-                const SizedBox(height: 50,),
-                
-                
-                GridViewWidget(
-                  
-                  size: MediaQuery.sizeOf(context).width, children:managectrl.getallservices.asMap().entries.map((e) => CardwithShadow(
-          onpress: (){},
-          margin:  EdgeInsets.zero,
+    return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
+      return ResponsivePages(
+        colors: const Color.fromARGB(255, 36, 34, 34),
+        child1: SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            HeadingText("${e.key<10?"0":""}${e.key+1}",size: 40,),
-            const SizedBox(height: 25,),
-             HeadingText(e.value.name,size: 24,),
-             const SizedBox(height: 20,),
-                   
-             Expanded(
-               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   const Text("Xtremer"),
-                  RichText(text: TextSpan(children: [  
-                    TextSpan(text:"Rs ${e.value.memberPrice}",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
-                    TextSpan(text:"/ ${e.value.durationInMinutes} mins",style: const TextStyle(fontSize: 14,color: Colors.white38),),
-                    
-                    ],)),
-                   const SizedBox(height: 10,),
-              const Text("Non Xtremer"),
-                    RichText(text: TextSpan(children: [  
-                    TextSpan(text:"Rs ${e.value.nonMemberPrice}",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
-                    TextSpan(text:"/ ${e.value.durationInMinutes} mins",style: const TextStyle(fontSize: 14,color: Colors.white38),),
-                    
-                    ],)),
-                 ],
-               ),
-             ),
-                   const SizedBox(height: 16,),
-                CardBorder(
-                  onpress: (){
-                        managectrl.addServices(e.value);
-                           Get.dialog(
-                                   barrierDismissible: false,
-                               
-                            LoginDialog(signupdialog: true,));  
-
-                  },
-                  margin: EdgeInsets.zero,
-                  color: Colors.grey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                  Text("Learn More",style: TextStyle(color: Colors.white),),
-                  SizedBox(width: 10,),
-                  Icon(Icons.arrow_forward,color: Colors.white,size: 14,),
-                   
-                ],))
+              const SizedBox(
+                height: 100,
+              ),
+              const HeadingText("The Best Programs We\nOffers For You"),
+              const SizedBox(
+                height: 50,
+              ),
+              GridViewWidget(
+                size: MediaQuery.sizeOf(context).width,
+                children: managectrl.getallservices
+                    .asMap()
+                    .entries
+                    .map(
+                      (e) => CardwithShadow(
+                          onpress: () {},
+                          margin: EdgeInsets.zero,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HeadingText(
+                                "${e.key < 10 ? "0" : ""}${e.key + 1}",
+                                size: 40,
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              HeadingText(
+                                e.value.name,
+                                size: 24,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("Xtremer"),
+                                    RichText(
+                                        text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Rs ${e.value.memberPrice}",
+                                          style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              "/ ${e.value.durationInMinutes} mins",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white38),
+                                        ),
+                                      ],
+                                    )),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text("Non Xtremer"),
+                                    RichText(
+                                        text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Rs ${e.value.nonMemberPrice}",
+                                          style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              "/ ${e.value.durationInMinutes} mins",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white38),
+                                        ),
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const CardBorder(
+                                  margin: EdgeInsets.zero,
+                                  color: Colors.grey,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Learn More",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                        size: 14,
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          )),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.maxFinite,
+                child: Cardonly(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 16),
+                    color: Colors.orange,
+                    child: MediaQuery.sizeOf(context).width < mobilescreen
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              RichText(
+                                  text: const TextSpan(children: [
+                                // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
+                                TextSpan(
+                                    text:
+                                        "Exclusive Offer: Free BMI Service for First-time members only.",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold)),
+                              ])),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Cardonly(
+                                  onpress: () {
+                                    Get.toNamed("/signup");
+                                  },
+                                  margin: EdgeInsets.zero,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  child: const Text(
+                                    "Claim Now",
+                                    style: TextStyle(color: Colors.white),
+                                  ))
+                            ],
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RichText(
+                                  text: const TextSpan(children: [
+                                // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
+                                TextSpan(
+                                    text:
+                                        "Exclusive Offer: Free BMI Service for First-time members only.",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold)),
+                              ])),
+                              Cardonly(
+                                  onpress: () {
+                                    Get.toNamed("/signup");
+                                  },
+                                  margin: EdgeInsets.zero,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  child: const Text(
+                                    "Claim Now",
+                                    style: TextStyle(color: Colors.white),
+                                  ))
+                            ],
+                          )),
+              ),
+              const SizedBox(
+                height: 60,
+              ),
             ],
-          )),).toList(), ),
-        const SizedBox(height: 20,),   
-            SizedBox(
-              width: double.maxFinite,
-              child: Cardonly(
-                   margin: const EdgeInsets.symmetric(vertical: 16,horizontal: 0),
-                padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 16),
-                 color: Colors.orange,
-                child:MediaQuery.sizeOf(context).width<mobilescreen?Column(
-                                
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RichText(text: 
-                                            const TextSpan(children: [
-                        // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
-                        TextSpan(text: "Exclusive Offer: Free BMI Service for First-time members only.",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)),
-                                            
-                                            ])),
-                        const SizedBox(height: 16,),
-                                            Cardonly(
-                                                onpress: (){
-                                                  Get.toNamed("/signup");
-                                                },
-                                                margin: EdgeInsets.zero,
-                                              color: Theme.of(context).colorScheme.secondary,
-                                              child: const Text("Claim Now",style: TextStyle(color: Colors.white),))
-                  ],
-                ) : Row(
-                                
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RichText(text: 
-                                            const TextSpan(children: [
-                        // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
-                        TextSpan(text: "Exclusive Offer: Free BMI Service for First-time members only.",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)),
-                                            
-                                            ])),
-              
-                                            Cardonly(
-                                                  onpress: (){
-                                                  Get.toNamed("/signup");
-                                                },
-                                                margin: EdgeInsets.zero,
-                                              color: Theme.of(context).colorScheme.secondary,
-                                              child: const Text("Claim Now",style: TextStyle(color: Colors.white),))
-                  ],
-                )
-                
-                ),
-            ),
-              const SizedBox(height: 60,),
-              ],
-            ),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }
 
@@ -529,9 +616,8 @@ class LandingPage1 extends StatefulWidget {
 }
 
 class _LandingPage1State extends State<LandingPage1> {
+  // final PageController _controller = PageController();
 
-    // final PageController _controller = PageController();
-    
   @override
   void initState() {
     super.initState();
@@ -555,138 +641,246 @@ class _LandingPage1State extends State<LandingPage1> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      
       children: [
-            Positioned(child: SizedBox(
+        Positioned(
+            child: SizedBox(
                 height: 1000,
                 width: MediaQuery.sizeOf(context).width,
-              child: PageView.builder(
-                // controller: _controller,
-                  itemCount: 5,
-                itemBuilder:(c,i)=> Image.asset('assets/backg.jpg',fit: BoxFit.cover,)))),
+                child: PageView.builder(
+                    // controller: _controller,
+                    itemCount: 5,
+                    itemBuilder: (c, i) => Image.asset(
+                          'assets/backg.jpg',
+                          fit: BoxFit.cover,
+                        )))),
         ResponsivePages(
-          // screenheight: MediaQuery.sizeOf(context).height,
-          screenheight: 1000,
-          child1: Padding(
-         padding: const EdgeInsets.all(8.0),
-         child: Center(
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               const SizedBox(height: 60,),
-               HeadingText("Your Fitness, Your Way",size:MediaQuery.sizeOf(context).width<mobilescreen?60:80,color: Colors.white,isbold: true,).animate().shimmer(color:Colors.grey,delay: Duration(seconds: 1),duration: Duration(seconds: 2),curve: Curves.easeIn,),
-               const SizedBox(height: 60,),
-               RichText(
-                text:  const TextSpan(children: [
-                        TextSpan(text: "Revolutionize Your Workout Experience with Personalised Training\n",style: TextStyle(fontSize: 16,color: Colors.white54),),
-                          // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
-                ]),
-               ).animate().slideX(begin: -1,end:0,).fadeIn(),
-                 const SizedBox(height: 20,),
-                 CardwithShadow(
-                  onpress: (){
-                      Get.toNamed("/pricing");
-            
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 32),
-                   color: Theme.of(context).colorScheme.secondary,
-                   child:const Text("Get Started",style: TextStyle(color: Colors.white),) ),
-                   const SizedBox(height: 60,),
-            
-                  SizedBox(
-                  
-                    child: CardwithShadow(
-                       margin: EdgeInsets.zero,
-                      padding: const EdgeInsets.all(16),
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                      child: Column(
-                  
-                   
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    
-                        const SizedBox(height: 20,),
-                        const Row(
-                        //  mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                           Icon(Icons.alarm,size: 16,color: Colors.white60,),
-                           SizedBox(width: 6,),
-                            HeadingText("Timing",size: 24,color: Colors.white60,),
-                          ],
+            // screenheight: MediaQuery.sizeOf(context).height,
+            screenheight: 1000,
+            child1: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    HeadingText(
+                      "Your Fitness, Your Way",
+                      size: MediaQuery.sizeOf(context).width < mobilescreen
+                          ? 60
+                          : MediaQuery.sizeOf(context).width < 1600
+                              ? 70
+                              : 80,
+                      color: Colors.white,
+                      isbold: true,
+                    ).animate().shimmer(
+                          color: Colors.grey,
+                          delay: const Duration(seconds: 1),
+                          duration: const Duration(seconds: 2),
+                          curve: Curves.easeIn,
                         ),
-                        const SizedBox(height: 20,),
-                      MediaQuery.sizeOf(context).width<=mobilescreen?  Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HeadingText("Morning",color: Colors.white60,size: 16,),
-                                Text("5:00 AM - 11:00 AM",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                              ],
-                            ),
-                            const SizedBox(width: 10,),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              width:50,height: 1, color: Colors.white54,),
-                             const SizedBox(width: 10,),
-                            const Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeadingText("Evening",color: Colors.white60,size: 16,),
-                                Text("3:00 PM - 8:00 PM",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
-                        ) :Row(
-                          children: [
-                            const Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HeadingText("Morning",color: Colors.white60,size: 16,),
-                                Text("5:00 AM - 11:00 AM",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                              ],
-                            ),
-                            const SizedBox(width: 10,),
-                            Column(
-                             mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(width:1,height: 50, color: Colors.white54,),
-                              ],
-                            ),
-                             const SizedBox(width: 10,),
-                            const Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeadingText("Evening",color: Colors.white60,size: 16,),
-                                Text("3:00 PM - 8:00 PM",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    RichText(
+                      text: const TextSpan(children: [
+                        TextSpan(
+                          text:
+                              "Revolutionize Your Workout Experience with Personalised Training\n",
+                          style: TextStyle(fontSize: 16, color: Colors.white54),
                         ),
-                        const SizedBox(height: 20,)
-                      ],
-                    )),
-                  ),
-             ],
-           ),
-         ),
-                  ),
-                  child2: const SizedBox()
-                  
-                  ),
+                        // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
+                      ]),
+                    )
+                        .animate()
+                        .slideX(
+                          begin: -1,
+                          end: 0,
+                        )
+                        .fadeIn(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CardwithShadow(
+                        onpress: () {
+                          Get.toNamed("/pricing");
+                        },
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 32),
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: const Text(
+                          "Get Started",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    SizedBox(
+                      child: CardwithShadow(
+                          margin: EdgeInsets.zero,
+                          padding: const EdgeInsets.all(16),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.3),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Row(
+                                //  mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.alarm,
+                                    size: 16,
+                                    color: Colors.white60,
+                                  ),
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  HeadingText(
+                                    "Timing",
+                                    size: 24,
+                                    color: Colors.white60,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              MediaQuery.sizeOf(context).width <= mobilescreen
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            HeadingText(
+                                              "Morning",
+                                              color: Colors.white60,
+                                              size: 16,
+                                            ),
+                                            Text(
+                                              "5:00 AM - 11:00 AM",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 8),
+                                          width: 50,
+                                          height: 1,
+                                          color: Colors.white54,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            HeadingText(
+                                              "Evening",
+                                              color: Colors.white60,
+                                              size: 16,
+                                            ),
+                                            Text("3:00 PM - 8:00 PM",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        const Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            HeadingText(
+                                              "Morning",
+                                              color: Colors.white60,
+                                              size: 16,
+                                            ),
+                                            Text(
+                                              "5:00 AM - 11:00 AM",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              width: 1,
+                                              height: 50,
+                                              color: Colors.white54,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            HeadingText(
+                                              "Evening",
+                                              color: Colors.white60,
+                                              size: 16,
+                                            ),
+                                            Text("3:00 PM - 8:00 PM",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                              const SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child2: const SizedBox()),
       ],
     );
   }
 }
 
-
 class CustomScrollBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
+  Widget buildscrollIndicator(
       BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
