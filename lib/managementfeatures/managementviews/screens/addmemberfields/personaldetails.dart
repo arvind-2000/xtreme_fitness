@@ -30,7 +30,8 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final AuthenticateUseCases authusecase = AuthenticateUseCases();
 
-  final TextEditingController _fullnamecontroller = TextEditingController();
+  final TextEditingController _firstnamecontroller = TextEditingController();
+  final TextEditingController _surnamecontroller = TextEditingController();
 
   final TextEditingController _emailcontroller = TextEditingController();
 
@@ -50,31 +51,13 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final TextEditingController _emergencyphonecontroller =
       TextEditingController();
 
-  // final TextEditingController _fullnamecontroller = TextEditingController(text: "dfbdf");
-
-  // final TextEditingController _emailcontroller = TextEditingController(text: 'fh@gm.com');
-
-  // final TextEditingController _phonecontroller = TextEditingController(text: '90172637464');
-
-  // final TextEditingController _addresscontroller = TextEditingController(text: 'fghdgfh');
-
-  // final TextEditingController _pincodecontroller = TextEditingController(text: '786544');
-
-  // final TextEditingController _occupationcontroller = TextEditingController(text:'fgdhfghd');
-
-  // final TextEditingController _homephonecontroller = TextEditingController(text: '8888888889');
-
-  // final TextEditingController _emergencynamecontroller =
-  //     TextEditingController(text:'fghsg');
-
-  // final TextEditingController _emergencyphonecontroller =
-  //     TextEditingController(text: '17171717171');
 
   final TextEditingController _disabilitycontroller = TextEditingController();
 
   final TextEditingController _othercontroller = TextEditingController();
   Xtremer? xtremers;
-  final FocusNode _fullnameFocusNode = FocusNode();
+  final FocusNode _firstnameFocusNode = FocusNode();
+  final FocusNode _surnameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _phoneFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
@@ -87,7 +70,8 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final FocusNode _otherFocusNode = FocusNode();
   @override
   void dispose() {
-    _fullnamecontroller.dispose();
+    _firstnamecontroller.dispose();
+    _surnamecontroller.dispose();
     _emailcontroller.dispose();
     _phonecontroller.dispose();
     _addresscontroller.dispose();
@@ -100,7 +84,8 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
     _othercontroller.dispose();
 
     // Dispose FocusNode instances
-    _fullnameFocusNode.dispose();
+    _firstnameFocusNode.dispose();
+    _surnameFocusNode.dispose();
     _emailFocusNode.dispose();
     _phoneFocusNode.dispose();
     _addressFocusNode.dispose();
@@ -117,11 +102,12 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   @override
   void initState() {
     super.initState();
-    _fullnameFocusNode.requestFocus();
+    _firstnameFocusNode.requestFocus();
     xtremers = Get.find<AddMemberController>().xtremer;
     _phonecontroller.text = widget.phonenumber ?? "";
     if (xtremers != null && widget.phonenumber==null) {
-      _fullnamecontroller.text = xtremers!.firstName ?? "";
+      _firstnamecontroller.text = xtremers!.firstName ?? "";
+      _surnamecontroller.text = xtremers!.surname??"";
       _emailcontroller.text = xtremers!.email ?? "";
       _phonecontroller.text = xtremers!.mobileNumber ?? "";
       _homephonecontroller.text = xtremers!.homeNumber ?? "";
@@ -149,14 +135,30 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
               Row(
                 children: [
                   Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: TextFieldWidget(
-                        hint: "Full Name",
-                        controller: _fullnamecontroller,
-                        focusnode: _fullnameFocusNode,
+                        hint: "First Name",
+                        controller: _firstnamecontroller,
+                        focusnode: _firstnameFocusNode,
                         validator: () {
                           return authusecase.nameAuth(
-                              _fullnamecontroller.text, "full Name");
+                              _firstnamecontroller.text, "first Name");
+                        },
+                        nextfocusnode: _surnameFocusNode,
+                      )),
+                           SizedBox(
+                    width: size < mobilescreen ? 0 : 16,
+                  ),
+                           size < mobilescreen
+                      ? const SizedBox():   Expanded(
+                      flex: 1,
+                      child: TextFieldWidget(
+                        hint: "Surname",
+                        controller: _surnamecontroller,
+                        focusnode: _surnameFocusNode,
+                        validator: () {
+                          return authusecase.nameAuth(
+                              _surnamecontroller.text, "Surname");
                         },
                         nextfocusnode: _emailFocusNode,
                       )),
@@ -180,6 +182,20 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                 ],
               ),
               SizedBox(
+                height: size < mobilescreen ? 16 : 0,
+              ),
+                 size < mobilescreen
+                  ?   TextFieldWidget(
+                        hint: "Surname",
+                        controller: _surnamecontroller,
+                        focusnode: _surnameFocusNode,
+                        validator: () {
+                          return authusecase.nameAuth(
+                              _surnamecontroller.text, "Surname");
+                        },
+                        nextfocusnode: _emailFocusNode,
+                      ):const SizedBox(),
+           SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
               size < mobilescreen
@@ -599,7 +615,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                     if (_formkey.currentState!.validate() &&
                         addmembrctrl.dob != null) {
                       print(
-                          "${_fullnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${_pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${_emergencynamecontroller.text.trim()} ");
+                          "${_firstnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${_pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${_emergencynamecontroller.text.trim()} ");
                       addmembrctrl.addpersonaldetails(
                         // address: "f",
                         // emergencycontact: "sds",
@@ -610,8 +626,8 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         // phone: "",
                         // postalcode: "",
                         // email: "",
-
-                        name: _fullnamecontroller.text.trim(),
+                        surname: _surnamecontroller.text.trim(),
+                        name: _firstnamecontroller.text.trim(),
                         phone: _phonecontroller.text.trim(),
                         homephone: _homephonecontroller.text.trim(),
                         email: _emailcontroller.text.trim(),

@@ -19,8 +19,8 @@ import '../widgets/dialogswidget.dart';
 
 
 class RenewalScreen extends StatefulWidget {
-  const RenewalScreen({super.key});
-
+  const RenewalScreen({super.key, this.pos});
+  final int? pos;
   @override
   State<RenewalScreen> createState() => _RenewalScreenState();
 }
@@ -50,6 +50,10 @@ class _RenewalScreenState extends State<RenewalScreen> {
   void initState() {
     super.initState();
     _searchfocus.requestFocus();
+    if(widget.pos!=null){
+      pos = widget.pos!;
+    }
+
     Get.put(AddMemberController()).onInit();
     WidgetsBinding.instance.addPostFrameCallback(
 

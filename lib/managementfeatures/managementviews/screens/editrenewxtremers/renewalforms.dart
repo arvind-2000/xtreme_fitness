@@ -92,10 +92,10 @@ class _RenewalFormsState extends State<RenewalForms> {
                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No trainer selected")));
                                       }
                                 }else{
-                                             PaymentDialogs(callback: (){
+                                            
                                            Get.dialog(PaymentDialogs(callback:(){ addmemberctrl.renewalsubmission();} ));
 
-                                     });
+                  
                                 }
                                  
                               }else{

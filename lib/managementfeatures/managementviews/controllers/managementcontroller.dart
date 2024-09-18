@@ -94,8 +94,8 @@ class ManagementController extends GetxController {
 
 
   void getplans() async {
-    // _allplans = dummyplan;
-    _allplans = await managementRepo.getPlans();
+    _allplans = dummyplan;
+    // _allplans = await managementRepo.getPlans();
     _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
     update();
   }
@@ -179,10 +179,9 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    _allxtremer = await managementRepo.viewMember();
-    // _allxtremer = dummyxtremer;
-    _allxtremer = await managementRepo.viewMember();
-    // _allxtremer = dummyxtremer;
+    // _allxtremer = await managementRepo.viewMember();
+    _allxtremer = dummyxtremer;
+  
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -228,8 +227,8 @@ class ManagementController extends GetxController {
   }
 
   void getallServices() async {
-    _allservices = await managementRepo.getServices();
-    // _allservices = dummyservices;
+    // _allservices = await managementRepo.getServices();
+    _allservices = dummyservices;
      _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
@@ -292,8 +291,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    // _alltrainer = dummytrainers;
-    _alltrainer = await managementRepo.viewTrainer();
+    _alltrainer = dummytrainers;
+    // _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }

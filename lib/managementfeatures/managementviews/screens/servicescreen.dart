@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/addserviceusage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addservicesfields/addservicefield.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
@@ -41,179 +43,187 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
-    return GetBuilder<GetxAuthController>(
-      builder: (authcrl) {
-        return GetBuilder<ManagementController>(builder: (managementcontroller) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const HeadingText(
-                      "Service",
-                      size: 30,
+    return GetBuilder<AddMemberController>(
+      builder: (addmemberctrl) {
+        return GetBuilder<GetxAuthController>(
+          builder: (authcrl) {
+            return GetBuilder<ManagementController>(builder: (managementcontroller) {
+              return addmemberctrl.serviceusagepage?const AddServiceUsage(): Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const HeadingText(
+                          "Service",
+                          size: 30,
+                        ),
+                        authcrl.ismember?const SizedBox(): CardBorder(
+                            onpress: (){
+                                          Get.dialog(
+                                            barrierDismissible: false,
+                                            Dialog(
+                                      child: SizedBox(height: 600,width: 500,
+                                      child: AddServiceField(onpress: (){
+                                        Navigator.pop(context);
+                                      }),),
+                                    ));
+                            },
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            child: const Row(
+                              children: [
+                             Icon(
+                                        Icons.add,
+                                        size: 12,
+                                      ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                               
+                                Text("Add Service")
+                              ],
+                            ))
+                      ],
                     ),
-                    authcrl.ismember?const SizedBox(): CardBorder(
-                        onpress: (){
-                                      Get.dialog(
-                                        barrierDismissible: false,
-                                        Dialog(
-                                  child: SizedBox(height: 600,width: 500,
-                                  child: AddServiceField(onpress: (){
-                                    Navigator.pop(context);
-                                  }),),
-                                ));
-                        },
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: const Row(
-                          children: [
-                         Icon(
-                                    Icons.add,
-                                    size: 12,
-                                  ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                           
-                            Text("Add Service")
-                          ],
-                        ))
+                  ),
+                
+               managementcontroller.ismember?SizedBox(): Row(
+                  children: [
+                    Cardonly(
+                      onpress: changeIsActive,
+                      child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
+                    const SizedBox(width: 5,),
+                    Cardonly(
+                      onpress: changeIsActive,
+                      child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
                   ],
                 ),
-              ),
-            
-           managementcontroller.ismember?SizedBox(): Row(
-              children: [
-                Cardonly(
-                  onpress: changeIsActive,
-                  child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
-                const SizedBox(width: 5,),
-                Cardonly(
-                  onpress: changeIsActive,
-                  child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
-              ],
-            ),
-            managementcontroller.getallservices.isEmpty?const NodataScreen(title: "Services", desc: " No Services to show") : Expanded(
-                      child: GridView(
-                          shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: size < 500
-                                ? 1
-                                : size < mobilescreen
-                                    ? 2
-                                    : 4,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: size < 500 ? 1 : 3 / 3.5,
-                          ),
-                          children: managementcontroller.getallservices
-                              .asMap()
-                              .entries.where((element) => element.value.isactive == isactive,)
-                              .map(
-                                (e) => CardwithShadow(
-                                    margin: const EdgeInsets.all(16),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                managementcontroller.getallservices.isEmpty?const NodataScreen(title: "Services", desc: " No Services to show") : Expanded(
+                          child: GridView(
+                              shrinkWrap: true,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: size < 500
+                                    ? 1
+                                    : size < mobilescreen
+                                        ? 2
+                                        : 4,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: size < 500 ? 1 : 3 / 3.5,
+                              ),
+                              children: managementcontroller.getallservices
+                                  .asMap()
+                                  .entries.where((element) => element.value.isactive == isactive,)
+                                  .map(
+                                    (e) => CardwithShadow(
+                                        margin: const EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
-                                              child: HeadingText(
-                                                e.value.name,
-                                                size: 24,
-                                              ),
-                                            ),
-                                            authcrl.ismember?const SizedBox():Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      Get.dialog(Dialog(
-                                                      child: SizedBox(height: 600,
-                                                      width: 500,
-                                                      child: AddServiceField(onpress: ()=>Navigator.pop(context),service: e.value,edit: true,),
-                                                      ),
-                                                      ));
-                                                      // managementcontroller.deletservices(e.value);
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.edit,
-                                                      size: 12,
-                                                    )),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                           
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text("Member Price"),
-                                              Text(
-                                                e.value.memberPrice.toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              const Text("Non Member Price"),
-                                              Text(
-                                                "${e.value.nonMemberPrice}",
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        CardBorder(
-                                            color: Colors.green[300],
-                                            child: const Row(
+                                            Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Icon(
-                                                  Icons.add,
-                                                  color: Colors.white,
+                                                Expanded(
+                                                  child: HeadingText(
+                                                    e.value.name,
+                                                    size: 24,
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  "CheckOut",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
+                                                authcrl.ismember?const SizedBox():Row(
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          Get.dialog(Dialog(
+                                                          child: SizedBox(height: 600,
+                                                          width: 500,
+                                                          child: AddServiceField(onpress: ()=>Navigator.pop(context),service: e.value,edit: true,),
+                                                          ),
+                                                          ));
+                                                          // managementcontroller.deletservices(e.value);
+                                                        },
+                                                        icon: const Icon(
+                                                          Icons.edit,
+                                                          size: 12,
+                                                        )),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                               
+                                                  ],
                                                 )
                                               ],
-                                            ))
-                                      ],
-                                    )),
-                              )
-                              .toList()),
-                    ),
-              const SizedBox(
-                height: 40,
-              )
-            ],
-          );
-        });
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text("Member Price"),
+                                                  Text(
+                                                    e.value.memberPrice.toString(),
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  const Text("Non Member Price"),
+                                                  Text(
+                                                    "${e.value.nonMemberPrice}",
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            CardBorder(
+                                              onpress: (){
+                                              addmemberctrl.addservices(e.value);
+                                              addmemberctrl.changeServiceUsage (ispage: true);
+                                              },
+                                                color: Colors.green[300],
+                                                child: const Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.add,
+                                                      color: Colors.white,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      "CheckOut",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    )
+                                                  ],
+                                                ))
+                                          ],
+                                        )),
+                                  )
+                                  .toList()),
+                        ),
+                  const SizedBox(
+                    height: 40,
+                  )
+                ],
+              );
+            });
+          }
+        );
       }
     );
   }

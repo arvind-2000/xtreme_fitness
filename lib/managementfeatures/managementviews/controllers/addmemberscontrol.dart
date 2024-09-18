@@ -51,6 +51,7 @@ class AddMemberController extends GetxController {
   String surgeryno = "";
   String surgeryaddress = "";
   bool ismember = true;
+  bool serviceusagepage = false;
   /// payments 1[success] 2[failed] 3[initiated] 4[cancel]
 
   /// payments 1[success] 2[failed] 3[initiated] 4[cancel]
@@ -104,13 +105,13 @@ class AddMemberController extends GetxController {
     update();
   }
 
-  Future<bool> createuser(String? username, String? pass, String? phone) async {
+  Future<bool> createuser(String? username, String? pass, String? phone,{String role = 'Member'}) async {
     usererrormessage = null;
     isloading = true;
     update();
     print('In user create usename: $username pass:$pass  phone: $phone');
     Map<int, String> res = await repo.addUser(
-        username!, pass!, phone ?? xtremer!.mobileNumber!, "Member");
+        username!, pass!, phone ?? xtremer!.mobileNumber!,role);
     if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
       usererrormessage = res.entries.first.value;
       _userid = await repo.viewUser(username, pass);
@@ -135,6 +136,15 @@ class AddMemberController extends GetxController {
 
     return false;
   }
+
+
+    //changeservice useage page
+    void changeServiceUsage({bool ispage = false}){
+        serviceusagepage = ispage;
+        update();
+
+    }
+
 
   Future<Subscription?> addsubscription(Subscription subs) async {
     Subscription? subss = await repo.addSubscription(subs);
@@ -264,7 +274,7 @@ String generateUniqueRandomNumber(int length) {
 
 
 
-void addServiceusage({bool paymentonline = true})async{
+void addServiceusage({bool paymentonline = true,bool isMember = true})async{
 
           Paymententity payments = Paymententity(
             id: 0,
@@ -290,7 +300,7 @@ void addServiceusage({bool paymentonline = true})async{
             print("in response: 200");
             
             checkpayment(()async{
-              ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.id!, serviceId: selectedservice!.id, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active");
+              ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.id!, serviceId: selectedservice!.id, scheduleDate: DateTime.now(), price:authctrl.userid!=null&&isMember?selectedservice!.memberPrice :selectedservice!.nonMemberPrice, status: "Active");
                 ServiceSchedule? serv = await repo.addServiceUsage(s);
                 //  creatextremer();
                 // createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
@@ -300,11 +310,14 @@ void addServiceusage({bool paymentonline = true})async{
         } else {
           var d = await repo.addPayments(payments,
               userid: xtremer!.XtremerId.toString(), isonline: false);
+              paymentsdetails =   await repo.getpayment(paymentdetails!.transactionId);
           if (d["response"] == 200) {
             if(selectedservice!=null){
               print('${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
           ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.XtremerId!, serviceId: 5, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active");
                 ServiceSchedule? serv = await repo.addServiceUsage(s);
+                paymentstatus = 1;
+                update();
             }else{
                     print("no in service usage");
 
@@ -321,6 +334,7 @@ void addServiceusage({bool paymentonline = true})async{
 
   void addpersonaldetails({
     required String name,
+    required String surname,
     required String phone,
     required String homephone,
     required String address,
@@ -335,6 +349,7 @@ void addServiceusage({bool paymentonline = true})async{
     String names = name;
     try {
       xtremer!.firstName = names;
+      xtremer!.surname = surname;
       print("true");
     } catch (e) {
       print("in add details $name  $e");
@@ -477,6 +492,7 @@ void addServiceusage({bool paymentonline = true})async{
     // xtremer = null;
     imagesizeerrors = null;
     selectedplan = null;
+    selectedservice = null;
     super.onClose();
   }
 

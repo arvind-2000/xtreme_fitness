@@ -26,7 +26,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
 
   int? otp;
   bool otploading = false;

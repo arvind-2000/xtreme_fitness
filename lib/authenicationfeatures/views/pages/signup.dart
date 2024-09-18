@@ -61,6 +61,8 @@ class _SignUpPageState extends State<SignUpPage> {
     _phonecontroller.dispose();
 
     _phonefocus.dispose();
+
+ 
   }
 
   @override
@@ -196,48 +198,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                     .animate()
                                     .fadeIn()
                                 : const SizedBox(),
-                            // TextFieldWidget(
-                            //   hint: "Password",
-                            //   focusnode: _passwordfocus,
-                            //   icon: const Icon(Icons.lock),
-                            //   obscure: true,
-                            //   interactivetext: false,
-                            //   nextfocusnode: _confirmpasswordfocus,
-                            //   controller: _passwordcontroller,
-                            //   validator: () {
-                            //     // return _authUseCases
-                            //     //     .passwordAuth(_passwordcontroller.text.trim());
-                            //   },
-                            // ),
-                            // const SizedBox(
-                            //   height: 20,
-                            // ),
-                            // TextFieldWidget(
-                            //   hint: "Confirm Password",
-                            //   focusnode: _confirmpasswordfocus,
-                            //   icon: const Icon(Icons.lock),
-                            //   obscure: true,
-                            //   autovalidateMode: AutovalidateMode.disabled,
-                            //   interactivetext: false,
-                            //   fieldsubmitted: () async {
-                            //     bool v = await validateform(
-
-                            //         _emailcontroller.text,
-                            //         _passwordcontroller.text,
-                            //         _phonecontroller.text,
-                            //         _namecontroller.text);
-
-                            // // pageprov.changePage(v?0:1);
-
-                            //   },
-                            //   controller: _confirmpasswordcontroller,
-                            //   validator: () {
-                            //     return _confirmpasswordcontroller.text !=
-                            //             _passwordcontroller.text
-                            //         ? 'Must be same with password'
-                            //         : null;
-                            //   },
-                            // ),
 
                             const SizedBox(
                               height: 20,

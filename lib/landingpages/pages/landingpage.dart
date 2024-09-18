@@ -11,6 +11,7 @@ import 'package:xtreme_fitness/landingpages/pages/gallery.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
+import '../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import '../../widgets/cardborder.dart';
 import '../../widgets/cardswithshadow.dart';
@@ -189,7 +190,7 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
                             .where(
                               (element) {
                                 return element.durationInMonths ==
-                                    managectrl.plandurations;
+                                    managectrl.plandurations && element.isActive!;
                               },
                             )
                             .toList()
@@ -365,7 +366,12 @@ class _LandingPagePlanState extends State<LandingPagePlan> {
                                           child: Cardonly(
                                               onpress: () {
                                                 addmemberctrl.addplan(e.value);
-                                                Get.toNamed("/login");
+                                                     Get.dialog(
+                              barrierDismissible: false,
+                              const LoginDialog(
+                                signupdialog: false,
+                              ),
+                            );
                                               },
                                               margin: EdgeInsets.zero,
                                               color: Theme.of(context)
@@ -419,7 +425,7 @@ class LandingPageServices extends StatelessWidget {
               ),
               GridViewWidget(
                 size: MediaQuery.sizeOf(context).width,
-                children: managectrl.getallservices
+                children: managectrl.getallservices.where((element) => element.isactive,).toList()
                     .asMap()
                     .entries
                     .map(
@@ -496,7 +502,16 @@ class LandingPageServices extends StatelessWidget {
                               const SizedBox(
                                 height: 16,
                               ),
-                              const CardBorder(
+                              CardBorder(
+                                onpress: () {
+                                  managectrl.addServices(e.value);
+                                       Get.dialog(
+                              barrierDismissible: false,
+                              const LoginDialog(
+                                signupdialog: true,
+                              ),
+                            );
+                                },
                                   margin: EdgeInsets.zero,
                                   color: Colors.grey,
                                   child: Row(
@@ -504,7 +519,7 @@ class LandingPageServices extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Learn More",
+                                        "Book Service",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       SizedBox(
@@ -553,7 +568,12 @@ class LandingPageServices extends StatelessWidget {
                               ),
                               Cardonly(
                                   onpress: () {
-                                    Get.toNamed("/signup");
+                                        Get.dialog(
+                              barrierDismissible: false,
+                              const LoginDialog(
+                                signupdialog: true,
+                              ),
+                            );
                                   },
                                   margin: EdgeInsets.zero,
                                   color:
@@ -569,7 +589,7 @@ class LandingPageServices extends StatelessWidget {
                             children: [
                               RichText(
                                   text: const TextSpan(children: [
-                                // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
+                                
                                 TextSpan(
                                     text:
                                         "Exclusive Offer: Free BMI Service for First-time members only.",
@@ -580,7 +600,12 @@ class LandingPageServices extends StatelessWidget {
                               ])),
                               Cardonly(
                                   onpress: () {
-                                    Get.toNamed("/signup");
+                                         Get.dialog(
+                              barrierDismissible: false,
+                              const LoginDialog(
+                                signupdialog: true,
+                              ),
+                            );
                                   },
                                   margin: EdgeInsets.zero,
                                   color:
@@ -634,240 +659,244 @@ class _LandingPage1State extends State<LandingPage1> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-            child: SizedBox(
-                height: 1000,
-                width: MediaQuery.sizeOf(context).width,
-                child: PageView.builder(
-                    // controller: _controller,
-                    itemCount: 5,
-                    itemBuilder: (c, i) => Image.asset(
-                          'assets/backg.jpg',
-                          fit: BoxFit.cover,
-                        )))),
-        ResponsivePages(
-            // screenheight: MediaQuery.sizeOf(context).height,
-            screenheight: 1000,
-            child1: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    HeadingText(
-                      "Your Fitness, Your Way",
-                      size: MediaQuery.sizeOf(context).width < mobilescreen
-                          ? 60
-                          : MediaQuery.sizeOf(context).width < 1600
-                              ? 70
-                              : 80,
-                      color: Colors.white,
-                      isbold: true,
-                    ).animate().shimmer(
-                          color: Colors.grey,
-                          delay: const Duration(seconds: 1),
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.easeIn,
+    return GetBuilder<GetxLandingcontroller>(
+      builder: (landingctrl) {
+        return Stack(
+          children: [
+            Positioned(
+                child: SizedBox(
+                    height: 1000,
+                    width: MediaQuery.sizeOf(context).width,
+                    child: PageView.builder(
+                        // controller: _controller,
+                        itemCount: 5,
+                        itemBuilder: (c, i) => Image.asset(
+                              'assets/backg.jpg',
+                              fit: BoxFit.cover,
+                            )))),
+            ResponsivePages(
+                // screenheight: MediaQuery.sizeOf(context).height,
+                screenheight: 1000,
+                child1: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 100,
                         ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(
-                          text:
-                              "Revolutionize Your Workout Experience with Personalised Training\n",
-                          style: TextStyle(fontSize: 16, color: Colors.white54),
+                        HeadingText(
+                          "Your Fitness, Your Way",
+                          size: MediaQuery.sizeOf(context).width < mobilescreen
+                              ? 60
+                              : MediaQuery.sizeOf(context).width < 1600
+                                  ? 70
+                                  : 80,
+                          color: Colors.white,
+                          isbold: true,
+                        ).animate().shimmer(
+                              color: Colors.grey,
+                              delay: const Duration(seconds: 1),
+                              duration: const Duration(seconds: 2),
+                              curve: Curves.easeIn,
+                            ),
+                        const SizedBox(
+                          height: 60,
                         ),
-                        // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
-                      ]),
-                    )
-                        .animate()
-                        .slideX(
-                          begin: -1,
-                          end: 0,
+                        RichText(
+                          text: const TextSpan(children: [
+                            TextSpan(
+                              text:
+                                  "Revolutionize Your Workout Experience with Personalised Training\n",
+                              style: TextStyle(fontSize: 16, color: Colors.white54),
+                            ),
+                            // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
+                          ]),
                         )
-                        .fadeIn(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CardwithShadow(
-                        onpress: () {
-                          Get.toNamed("/pricing");
-                        },
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 32),
-                        color: Theme.of(context).colorScheme.secondary,
-                        child: const Text(
-                          "Get Started",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    SizedBox(
-                      child: CardwithShadow(
-                          margin: EdgeInsets.zero,
-                          padding: const EdgeInsets.all(16),
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.3),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Row(
-                                //  mainAxisAlignment: MainAxisAlignment.center,
+                            .animate()
+                            .slideX(
+                              begin: -1,
+                              end: 0,
+                            )
+                            .fadeIn(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CardwithShadow(
+                            onpress: () {
+                         landingctrl.setnavindex(2);
+                            },
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 32),
+                            color: Theme.of(context).colorScheme.secondary,
+                            child: const Text(
+                              "Get Started",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        SizedBox(
+                          child: CardwithShadow(
+                              margin: EdgeInsets.zero,
+                              padding: const EdgeInsets.all(16),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    Icons.alarm,
-                                    size: 16,
-                                    color: Colors.white60,
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                  SizedBox(
-                                    width: 6,
+                                  const Row(
+                                    //  mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.alarm,
+                                        size: 16,
+                                        color: Colors.white60,
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      HeadingText(
+                                        "Timing",
+                                        size: 24,
+                                        color: Colors.white60,
+                                      ),
+                                    ],
                                   ),
-                                  HeadingText(
-                                    "Timing",
-                                    size: 24,
-                                    color: Colors.white60,
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              MediaQuery.sizeOf(context).width <= mobilescreen
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            HeadingText(
-                                              "Morning",
-                                              color: Colors.white60,
-                                              size: 16,
-                                            ),
-                                            Text(
-                                              "5:00 AM - 11:00 AM",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 8),
-                                          width: 50,
-                                          height: 1,
-                                          color: Colors.white54,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const Column(
+                                  MediaQuery.sizeOf(context).width <= mobilescreen
+                                      ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            HeadingText(
-                                              "Evening",
-                                              color: Colors.white60,
-                                              size: 16,
+                                            const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                HeadingText(
+                                                  "Morning",
+                                                  color: Colors.white60,
+                                                  size: 16,
+                                                ),
+                                                Text(
+                                                  "5:00 AM - 11:00 AM",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
                                             ),
-                                            Text("3:00 PM - 8:00 PM",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            HeadingText(
-                                              "Morning",
-                                              color: Colors.white60,
-                                              size: 16,
+                                            const SizedBox(
+                                              width: 10,
                                             ),
-                                            Text(
-                                              "5:00 AM - 11:00 AM",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
                                             Container(
-                                              width: 1,
-                                              height: 50,
+                                              margin: const EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              width: 50,
+                                              height: 1,
                                               color: Colors.white54,
                                             ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            HeadingText(
-                                              "Evening",
-                                              color: Colors.white60,
-                                              size: 16,
+                                            const SizedBox(
+                                              width: 10,
                                             ),
-                                            Text("3:00 PM - 8:00 PM",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                            const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                HeadingText(
+                                                  "Evening",
+                                                  color: Colors.white60,
+                                                  size: 16,
+                                                ),
+                                                Text("3:00 PM - 8:00 PM",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      : Row(
+                                          children: [
+                                            const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                HeadingText(
+                                                  "Morning",
+                                                  color: Colors.white60,
+                                                  size: 16,
+                                                ),
+                                                Text(
+                                                  "5:00 AM - 11:00 AM",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Container(
+                                                  width: 1,
+                                                  height: 50,
+                                                  color: Colors.white54,
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                HeadingText(
+                                                  "Evening",
+                                                  color: Colors.white60,
+                                                  size: 16,
+                                                ),
+                                                Text("3:00 PM - 8:00 PM",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                              const SizedBox(
-                                height: 20,
-                              )
-                            ],
-                          )),
+                                  const SizedBox(
+                                    height: 20,
+                                  )
+                                ],
+                              )),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            child2: const SizedBox()),
-      ],
+                child2: const SizedBox()),
+          ],
+        );
+      }
     );
   }
 }
