@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
@@ -17,12 +19,19 @@ class GetxLandingcontroller extends GetxController {
   int get navindex => _navindex;
   int _hoverindex = 0;
   int get hoverindex => _hoverindex;
+
+  int _imagehoverindex = 0;
+  int get imagehoverindex => _imagehoverindex;
   int _currentIndex = 0;
   bool _isUserScroll = true; // Flag to control scroll listener
   List<Plan> _plan = [];
   List<ServiceEntity> _services = [];
   bool _isHovered = false;
   bool get isHovered => _isHovered;
+
+  bool _isHoveredimage = false;
+  bool get isHoveredimage => _isHoveredimage;
+
   List<Plan> get getallplans => _plan;
   List<ServiceEntity> get getallservices => _services;
   ServiceEntity? services;
@@ -82,6 +91,13 @@ class GetxLandingcontroller extends GetxController {
     update();
   }
 
+  void onHoverimage(bool ishov, int ind) {
+    _imagehoverindex = ind;
+    _isHoveredimage = ishov;
+    log(_hoverindex.toString());
+    update();
+  }
+
   void setnavindex(int index) {
     _navindex = index;
     update();
@@ -122,16 +138,32 @@ class GetxLandingcontroller extends GetxController {
     update();
   }
 
+  void sendEmail() async {
+    final Email email = Email(
+      body: 'This is a test message.',
+      subject: 'Contact Form Submission',
+      recipients: ['PETERPARKER@MASTERSTUDY.COM'],
+      isHTML: false,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+      print('Email sent successfully!');
+    } catch (error) {
+      print('Failed to send email: $error');
+    }
+  }
+
   void getPlans() async {
-    _plan = await managementrepoImpl.getPlans();
-    // _plan = dummyplan;
+    // _plan = await managementrepoImpl.getPlans();
+    _plan = dummyplan;
     print(_plan.length);
     update();
   }
 
   void getServices() async {
-    _services = await managementrepoImpl.getServices();
-    // _services = dummyservices;
+    // _services = await managementrepoImpl.getServices();
+    _services = dummyservices;
     update();
   }
 
