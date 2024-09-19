@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/landingpages/sections/services/servicesdesktop.dart';
-import 'package:xtreme_fitness/landingpages/sections/services/servicesmobile.dart';
-import 'package:xtreme_fitness/landingpages/sections/services/servicestablet.dart';
+import 'package:xtreme_fitness/landingpages/sections/services/desktopservices.dart';
+import 'package:xtreme_fitness/landingpages/sections/services/mobileservices.dart';
+import 'package:xtreme_fitness/landingpages/sections/services/tabletservices.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 
-class ServicesPlanPage extends StatelessWidget {
-  const ServicesPlanPage({super.key});
+class Services extends StatelessWidget {
+  const Services({super.key});
 
   @override
   Widget build(BuildContext context) {

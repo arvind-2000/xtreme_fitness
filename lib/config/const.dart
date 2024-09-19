@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
-import 'package:xtreme_fitness/landingpages/pages/servicespage.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contact.dart';
 import 'package:xtreme_fitness/landingpages/sections/gallery/gallery.dart';
 import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
@@ -52,8 +50,8 @@ final List<String> galleryimages = [
 
 List<Widget> landingwidgets = [
   const HomePage(),
-  const PricesPage(),
-  const ServicesPlanPage(),
+  const Prices(),
+  const Services(),
   const Gallery(),
   const Contact()
 ];

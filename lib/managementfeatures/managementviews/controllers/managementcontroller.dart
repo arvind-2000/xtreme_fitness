@@ -82,7 +82,7 @@ class ManagementController extends GetxController {
     viewpayment();
     getpaymentlastest10();
     getAllTraineess(10);
-    
+    getallgeneralextremer();
     checkmember();
     getxtremerforoverall();
 
@@ -104,11 +104,10 @@ class ManagementController extends GetxController {
 
   }
   ///checking member or admin
-  void checkmember(){
+  void checkmember() {
     ismember = authctrl.ismember;
     update();
   }
-
 
   void getplans() async {
     // _allplans = dummyplan;
@@ -117,20 +116,15 @@ class ManagementController extends GetxController {
     update();
   }
 
-
-  Future<List<Trainee>> getAllTraineess(int id)async{
-   List<Trainee> d = [];
+  Future<List<Trainee>> getAllTraineess(int id) async {
+    List<Trainee> d = [];
     // _alltrainee = dummytrainees;
     d = await managementRepo.viewTrainee(id);
-    print( "In trainer list ${_alltrainee.length}");
+    print("In trainer list ${_alltrainee.length}");
     _alltrainee = d;
     update();
     return d;
-
-
-
   }
-
 
   void getinactivextremer() async {
     _allinactivextremer = await managementRepo.viewinactivemembers();
@@ -146,7 +140,6 @@ class ManagementController extends GetxController {
     _allgeneralxtremer = await managementRepo.viewgeneralmembers();
     update();
   }
-
 
   void getxtremerforoverall() async {
     _allinactivextremerforoverall.clear();
@@ -410,11 +403,10 @@ class ManagementController extends GetxController {
     update();
   }
 
-    void inactivextremer() {
+  void inactivextremer() {
     _searchxtremerlist = _allinactivextremer;
     update();
   }
-
 
   void allxtremer() {
     _searchxtremerlist = _allxtremer;

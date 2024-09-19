@@ -6,7 +6,6 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/widget/navbar_actions_button.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
-import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 class NavbarDesktop extends StatelessWidget {
   const NavbarDesktop({super.key});
@@ -108,28 +107,28 @@ class NavbarDesktop extends StatelessWidget {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  CardwithShadow(
-                                    onpress: () {
-                                      Get.dialog(
-                                        barrierDismissible: false,
-                                        const LoginDialog(
-                                          signupdialog: true,
-                                        ),
-                                      );
-                                      // authctrl.changeAuthPage(1);
-                                      // Get.toNamed("/signup");
-                                    },
-                                    color: Colors.red[800],
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32, vertical: 8),
-                                    child: const Text(
-                                      "Sign Up",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
+                                  // CardwithShadow(
+                                  //   onpress: () {
+                                  //     Get.dialog(
+                                  //       barrierDismissible: false,
+                                  //       const LoginDialog(
+                                  //         signupdialog: true,
+                                  //       ),
+                                  //     );
+                                  //     // authctrl.changeAuthPage(1);
+                                  //     // Get.toNamed("/signup");
+                                  //   },
+                                  //   color: Colors.red[800],
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 32, vertical: 8),
+                                  //   child: const Text(
+                                  //     "Sign Up",
+                                  //     style: TextStyle(
+                                  //         fontSize: 14,
+                                  //         fontWeight: FontWeight.bold,
+                                  //         color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

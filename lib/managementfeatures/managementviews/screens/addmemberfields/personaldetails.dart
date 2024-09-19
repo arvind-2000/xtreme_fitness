@@ -51,7 +51,6 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
   final TextEditingController _emergencyphonecontroller =
       TextEditingController();
 
-
   final TextEditingController _disabilitycontroller = TextEditingController();
 
   final TextEditingController _othercontroller = TextEditingController();
@@ -105,9 +104,9 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
     _firstnameFocusNode.requestFocus();
     xtremers = Get.find<AddMemberController>().xtremer;
     _phonecontroller.text = widget.phonenumber ?? "";
-    if (xtremers != null && widget.phonenumber==null) {
+    if (xtremers != null && widget.phonenumber == null) {
       _firstnamecontroller.text = xtremers!.firstName ?? "";
-      _surnamecontroller.text = xtremers!.surname??"";
+      _surnamecontroller.text = xtremers!.surname ?? "";
       _emailcontroller.text = xtremers!.email ?? "";
       _phonecontroller.text = xtremers!.mobileNumber ?? "";
       _homephonecontroller.text = xtremers!.homeNumber ?? "";
@@ -119,7 +118,6 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
       _disabilitycontroller.text = xtremers!.disability ?? "";
       _othercontroller.text = xtremers!.relationship ?? "";
     }
-
   }
 
   @override
@@ -146,22 +144,23 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         },
                         nextfocusnode: _surnameFocusNode,
                       )),
-                           SizedBox(
+                  SizedBox(
                     width: size < mobilescreen ? 0 : 16,
                   ),
-                           size < mobilescreen
-                      ? const SizedBox():   Expanded(
-                      flex: 1,
-                      child: TextFieldWidget(
-                        hint: "Surname",
-                        controller: _surnamecontroller,
-                        focusnode: _surnameFocusNode,
-                        validator: () {
-                          return authusecase.nameAuth(
-                              _surnamecontroller.text, "Surname");
-                        },
-                        nextfocusnode: _emailFocusNode,
-                      )),
+                  size < mobilescreen
+                      ? const SizedBox()
+                      : Expanded(
+                          flex: 1,
+                          child: TextFieldWidget(
+                            hint: "Surname",
+                            controller: _surnamecontroller,
+                            focusnode: _surnameFocusNode,
+                            validator: () {
+                              return authusecase.nameAuth(
+                                  _surnamecontroller.text, "Surname");
+                            },
+                            nextfocusnode: _emailFocusNode,
+                          )),
                   SizedBox(
                     width: size < mobilescreen ? 0 : 16,
                   ),
@@ -184,18 +183,19 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
               SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
-                 size < mobilescreen
-                  ?   TextFieldWidget(
-                        hint: "Surname",
-                        controller: _surnamecontroller,
-                        focusnode: _surnameFocusNode,
-                        validator: () {
-                          return authusecase.nameAuth(
-                              _surnamecontroller.text, "Surname");
-                        },
-                        nextfocusnode: _emailFocusNode,
-                      ):const SizedBox(),
-           SizedBox(
+              size < mobilescreen
+                  ? TextFieldWidget(
+                      hint: "Surname",
+                      controller: _surnamecontroller,
+                      focusnode: _surnameFocusNode,
+                      validator: () {
+                        return authusecase.nameAuth(
+                            _surnamecontroller.text, "Surname");
+                      },
+                      nextfocusnode: _emailFocusNode,
+                    )
+                  : const SizedBox(),
+              SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
               size < mobilescreen
@@ -631,7 +631,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         phone: _phonecontroller.text.trim(),
                         homephone: _homephonecontroller.text.trim(),
                         email: _emailcontroller.text.trim(),
-                   
+
                         address: _addresscontroller.text.trim(),
                         postalcode: _pincodecontroller.text.trim(),
                         occupation: _occupationcontroller.text.trim(),

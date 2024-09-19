@@ -213,6 +213,7 @@ class ManagementrepoImpl implements ManagementRepo {
             }
           }
         }
+        print("General :${generalxtremelist.length}");
         return generalxtremelist;
       }
     } catch (e) {}
@@ -450,14 +451,13 @@ class ManagementrepoImpl implements ManagementRepo {
         final List<dynamic> jsonList = jsonDecode(res.body);
         print("In staff list : ${jsonList.length}");
         // Convert JSON data to List<Plan>
-      stafflist =  jsonList.map((json){ 
-        print(json);
-        return UserEntity.fromJson(json);}).toList();
-      
-           print("In staff list actual: ${stafflist.length}");
-      } else {
+        stafflist = jsonList.map((json) {
+          print(json);
+          return UserEntity.fromJson(json);
+        }).toList();
 
-      }
+        print("In staff list actual: ${stafflist.length}");
+      } else {}
     } catch (e) {
       print("cant load staff $e");
     }
