@@ -6,14 +6,14 @@ import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
-class CarouselWithButtons extends StatefulWidget {
-  const CarouselWithButtons({super.key});
+class Gallerytablet extends StatefulWidget {
+  const Gallerytablet({super.key});
 
   @override
-  _CarouselWithButtonsState createState() => _CarouselWithButtonsState();
+  _GallerytabletState createState() => _GallerytabletState();
 }
 
-class _CarouselWithButtonsState extends State<CarouselWithButtons> {
+class _GallerytabletState extends State<Gallerytablet> {
   int startIndex = 0; // Controls the visible starting index
   final int itemsPerPage = 3; // Number of images to show at once
 

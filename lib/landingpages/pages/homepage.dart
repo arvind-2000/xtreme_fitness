@@ -12,9 +12,7 @@ import 'dart:html' as html;
 import '../../widgets/card.dart';
 import '../../widgets/cardswithshadow.dart';
 
-import 'gallery.dart';
 import 'landingnavbarpage.dart';
-import 'landingpage.dart';
 import 'pricingpage.dart';
 
 class LandingHomePage extends StatefulWidget {
