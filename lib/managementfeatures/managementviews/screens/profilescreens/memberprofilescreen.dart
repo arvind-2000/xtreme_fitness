@@ -5,13 +5,17 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/memberhistory.dart';
 import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/imagewidgets.dart';
 
 import '../../../../config/apis.dart';
+import '../../../../widgets/cardborder.dart';
+import '../../../managementdomain/entities.dart/membership.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
+import '../../widgets/scaffolds.dart';
 
 class MemberProfilescreen extends StatelessWidget {
   const MemberProfilescreen({super.key, this.user, this.pagectrl,});
@@ -129,6 +133,23 @@ class MemberProfilescreen extends StatelessWidget {
                                                 SizedBox(height: 16,),
                                                 Text(managectrl.currentmember!=null?managectrl.currentmember!.bmiUsed!?"Used":"false":"Not Used"),
                                                 SizedBox(height: 16,),
+                                                           SizedBox(
+                                width: double.maxFinite,
+                             
+                              child:   managectrl.currentmember!.bmiUsed!?SizedBox():CardBorder(
+                                onpress: ()async{
+                                  Membership membership = managectrl.currentmember!;
+                                  membership.bmiUsed = false;
+                                  String s  = await  managectrl.managementRepo.editMembership(membership);
+                  
+                                  CustomSnackbar(context, "Bmi Used");
+                                      managectrl.getMembershipbyid(user!.XtremerId!);
+                                },
+                                color: Colors.amber,
+                                margin: EdgeInsets.zero,
+                                child: Center(child: Text("Use Service"))),
+                                
+                            ),
                                               
                                               ],
                                             )),
@@ -149,7 +170,8 @@ class MemberProfilescreen extends StatelessWidget {
                                           ),
                                           
                                         ],
-                                      )
+                                      ),
+                                      MemberServiceHistory(xtremer: user, userid: user!.XtremerId)
                               ],
                             ))),   
                                    

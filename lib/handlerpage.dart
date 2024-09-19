@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/landingpages/sections/main/main_section.dart';
+
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
-import 'package:xtreme_fitness/widgets/navbarmember.dart';
-
-import 'managementfeatures/managementviews/widgets/paymentstatuscard.dart';
-import 'widgets/navbar.dart';
 
 class HandlerPage extends StatefulWidget {
   const HandlerPage({super.key});

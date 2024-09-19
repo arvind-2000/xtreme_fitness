@@ -1,8 +1,8 @@
 class UserEntity {
   int? id;
   String? mobileNumber;
-  String userName;
-  String passwordHash;
+  String? userName;
+  String? passwordHash;
   String? roleName;
   DateTime? createdAt;
   bool? isActive;

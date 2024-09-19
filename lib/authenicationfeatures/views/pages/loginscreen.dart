@@ -238,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Get.offNamed('/signup');
                           widget.changesignup!(true);
                         },
-                  child: Text('Sign Up',
+                  child: Text('Register Member',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.secondary,

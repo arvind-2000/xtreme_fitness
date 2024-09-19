@@ -86,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const HeadingText(
-                      'Sign Up',
+                      'Membership\nRegistration',
                       size: 20,
                     ),
                     IconButton(
@@ -271,7 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an Account?",
+                      "Already a Member?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white60.withOpacity(0.8)),

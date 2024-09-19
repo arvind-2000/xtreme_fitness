@@ -31,7 +31,7 @@ class _PricesmobileState extends State<Pricesmobile> {
       return GetBuilder<GetxLandingcontroller>(builder: (_) {
         return SingleChildScrollView(
           child: ResponsivePages(
-            colors: Colors.black54,
+            colors: const Color.fromARGB(255, 15, 15, 15),
             child1: SizedBox(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

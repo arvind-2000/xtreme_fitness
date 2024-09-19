@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/traineeprofilescreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
@@ -709,20 +710,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
           
                                              String v = await managectrl
                                                   .edittrainer(trainerss);
-                                                     ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                showCloseIcon: true,
-                                                width: 500,
-                                                backgroundColor: Colors.green,
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                                action: SnackBarAction(
-                                                    label: "View",
-                                                    onPressed: () {}),
-                                                content: Text(v),
-                                                duration: Durations.extralong4,
-                                              ));
-          
+                                              CustomSnackbar(context, v);
           
                                               fullnamecontroller.clear();
           
