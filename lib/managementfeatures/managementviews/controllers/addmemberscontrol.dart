@@ -20,7 +20,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
-import '../../managementdomain/entities.dart/paymentdetails.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/servicesentity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -210,23 +209,27 @@ class AddMemberController extends GetxController {
         print("adding payments");
         //online
         if (!ispaymentcash) {
+
+              Subscription? subss = await addsubscription(subs);
+              creatextremer();
           var d = await repo.addPayments(payments,
               userid: xtremer!.XtremerId.toString(), isonline: true);
           if (d["response"] == 200) {
             print("in response: 200");
 
             checkpayment(() async {
-              Subscription? subss = await addsubscription(subs);
-              creatextremer();
+              // Subscription? subss = await addsubscription(subs);
+              // creatextremer();
             });
           }
           //wait with dialog options
         } else {
+            Subscription? subss = await addsubscription(subs);
+            creatextremer();
           var d = await repo.addPayments(payments,
               userid: xtremer!.XtremerId.toString(), isonline: false);
           if (d["response"] == 200) {
-            Subscription? subss = await addsubscription(subs);
-            creatextremer();
+          
           }
         }
 
@@ -275,10 +278,11 @@ String generateUniqueRandomNumber(int length) {
 
 
 void addServiceusage({bool paymentonline = true,bool isMember = true})async{
-
+          print("${authctrl.userid}");
           Paymententity payments = Paymententity(
             id: 0,
-            userId: xtremer!.XtremerId!,
+            userId:isMember?int.tryParse(authctrl.userid!)??0:xtremer!.XtremerId!,
+          
             amount: selectedservice!.nonMemberPrice,
             discountPercentage:0,
             receivedAmount:selectedservice!.nonMemberPrice,
@@ -292,10 +296,11 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
             termsAndConditions: true, 
             subscriptionId: 0
             );
+            print(payments.toJson().toString());
             paymentdetails = payments;
         if (paymentonline) {
           var d = await repo.addPayments(payments,
-              userid: xtremer!.XtremerId.toString(), isonline: true);
+              userid: payments.userId.toString(), isonline: true);
           if (d["response"] == 200) {
             print("in response: 200");
             
@@ -309,12 +314,13 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
           //wait with dialog options
         } else {
           var d = await repo.addPayments(payments,
-              userid: xtremer!.XtremerId.toString(), isonline: false);
+              userid:authctrl.userid!=null?authctrl.userid!: xtremer!.XtremerId.toString(), isonline: false,);
+
               paymentsdetails =   await repo.getpayment(paymentdetails!.transactionId);
           if (d["response"] == 200) {
             if(selectedservice!=null){
               print('${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
-          ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.XtremerId!, serviceId: 5, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active");
+          ServiceSchedule s = ServiceSchedule(id: 0,userId:xtremer!.XtremerId!, serviceId: 5, scheduleDate: DateTime.now(), price: selectedservice!.nonMemberPrice, status: "Active",);
                 ServiceSchedule? serv = await repo.addServiceUsage(s);
                 paymentstatus = 1;
                 update();
@@ -493,6 +499,10 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
     imagesizeerrors = null;
     selectedplan = null;
     selectedservice = null;
+    // xtremer = null;
+    paymentstatus = 0;
+    isloading = false;
+    
     super.onClose();
   }
 
@@ -584,12 +594,12 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
   }
 
   void renewalsubmission() async {
-    print("In renewal submission");
-    if (xtremer!.XtremerId != null) {
-         print("In renewal submission");
+ 
+    // if (xtremer!.XtremerId != null || (authctrl.ismember && authctrl.userid!=null )) {
+         print("In renewal submission  fhjd  ${authctrl.userid}");
   
   Subscription subs = Subscription(
-      userId: xtremer!.XtremerId.toString(),
+      userId:authctrl.ismember?authctrl.userid!: xtremer!.XtremerId.toString(),
       planId: selectedplan!.id,
       startDate: DateTime.now(),
       endDate: DateTime.now()
@@ -600,13 +610,14 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
 
       
         print("adding payments");
-        print(" xtremer: ${xtremer!.XtremerId}  amount: ${selectedplan!.price}  discount: ${selectedplan!.price} paymenttype: ${selectedplan!.name}");
+        // print(" xtremer: ${xtremer!.XtremerId}  amount: ${selectedplan!.price}  discount: ${selectedplan!.price} paymenttype: ${selectedplan!.name}");
+        
         Paymententity payments = Paymententity(
             id: 0,
-            userId: xtremer!.XtremerId!,
-            amount:selectedservice!=null?selectedservice!.memberPrice:selectedplan!.price,
+            userId:ismember?int.tryParse(authctrl.userid!)??0: xtremer!.XtremerId!,
+            amount:selectedplan!.price,
             discountPercentage:selectedservice!=null? 0 : selectedplan!.discountPercentage,
-            receivedAmount:selectedservice!=null? selectedservice!.memberPrice:(selectedplan!.price -
+            receivedAmount:(selectedplan!.price -
                 (selectedplan!.price *
                     (selectedplan!.discountPercentage / 100))),
             paymentDate: DateTime.now(),
@@ -616,15 +627,16 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
             paymentMethod: ispaymentcash ? "Cash" : "Online",
             paymentType: selectedplan!.name,
             subscriptionId: selectedplan?.id,
-            serviceUsageId:selectedservice?.id,
+            serviceUsageId:selectedservice!=null?selectedservice?.id:0,
             termsAndConditions: true);
         paymentdetails = payments;
         print("adding payments");
+        
         payments.printPayment();
         //online
         if (!ispaymentcash) {
           var d = await repo.addPayments(payments,
-              userid: xtremer!.XtremerId.toString(), isonline: true);
+              userid:ismember?authctrl.userid!:xtremer!.XtremerId.toString(), isonline: true);
           if (d["response"] == 200) {
             print("in response: 200");
 
@@ -635,9 +647,12 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
         //wait with dialog options
       } else {
         var d = await repo.addPayments(payments,
-            userid: xtremer!.XtremerId.toString(), isonline: false);
+            userid: ismember?authctrl.userid!:xtremer!.XtremerId.toString(), isonline: false);
         if (d["response"] == 200) {
           Subscription? subss = await repo.addSubscription(subs);
+          changepaymentstatus(1);
+            paymentsdetails =
+              await repo.getpayment(paymentdetails!.transactionId);
           // Xtremer? x = await repo.addSubscription(subs);
         }
       }
@@ -647,7 +662,7 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
       // print("$res  ${dummyxtremer.length}");
       // print(admissionfees!.price);
       // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
-    }
+    
 
     update();
   }

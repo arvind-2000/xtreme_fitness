@@ -317,7 +317,7 @@ class PaymentDialog extends StatelessWidget {
                 Navigator.pop(context);
               },
               yes: () async{
-                bool v = await addmemberctrl.createuser(username, pass,null);
+                bool v = await addmemberctrl.createuser(username, pass,phone);
                 if(v){
                   addmemberctrl.addXtremer();
                 }

@@ -8,8 +8,8 @@ class PieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ManagementController controller = Get.put(ManagementController());
-    return GetBuilder<ManagementController>(builder: (_) {
+    // ManagementController controller = Get.put(ManagementController());
+    return GetBuilder<ManagementController>(builder: (controller) {
       return SfCircularChart(
         onLegendTapped: (legendTapArgs) {},
         legend: const Legend(

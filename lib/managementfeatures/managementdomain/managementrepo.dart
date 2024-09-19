@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 
 import '../../authentifeatures/domain/userentity.dart';
 import 'entities.dart/admission.dart';
+import 'entities.dart/membership.dart';
 import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
 import 'entities.dart/serviceusage.dart';
@@ -93,4 +94,6 @@ abstract class ManagementRepo {
   Future<Admission?> viewadmission();
 
   Future<List<Trainee>> viewTrainee(int id);
+
+  Future<List<Membership>> viewMembership();
 }

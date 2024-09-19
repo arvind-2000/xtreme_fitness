@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addplanfields/addplanscreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 
@@ -45,7 +46,9 @@ bool isactive = true;
       builder: (authctrl) {
         return GetBuilder<AddMemberController>(builder: (_) {
           return GetBuilder<ManagementController>(builder: (_) {
-            return Column(
+            return addmemberctrl.ismember && pagecotrl.isrenewalforms?RenewalForms(callback: () {
+              pagecotrl.changerenewal(false);
+            },) : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -197,7 +200,12 @@ bool isactive = true;
                                               ),
                                               CardBorder(
                                                   onpress: () {
-                                                    pagecotrl.changeNavPage(2);
+                                                    if(authctrl.ismember){
+                                                        pagecotrl.changerenewal(true);
+                                                    }else{
+                                                          pagecotrl.changeNavPage(2);
+                                                    }
+                                                   
                                                     addmemberctrl.addplan(e.value);
                                                   },
                                                   color: Colors.green[300],

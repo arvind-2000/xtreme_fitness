@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/handlerpage.dart';
 
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -26,7 +24,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember = true;
 
   int? otp;
   bool otploading = false;
@@ -112,12 +110,13 @@ class GetxAuthController extends GetxController {
     ).then(
       (value) {},
     );
+      Get.offAllNamed('/home');
     Future.delayed(const Duration(seconds: 2)).then((v) {
       _authentication = false;
       loginloading = false;
       _user = null;
       authentications();
-      // Get.offAllNamed('/home');
+      Get.offAllNamed('/home');
       update();
     });
   }

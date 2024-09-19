@@ -8,6 +8,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/membership.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -22,7 +23,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 
 import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
-import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
@@ -72,7 +72,7 @@ class ManagementrepoImpl implements ManagementRepo {
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
       'Category': xtremer.category?.toString()??'',
-      'IsActive': true.toString(),
+      'IsActive': false.toString(),
     });
 
     // Add the file to the request
@@ -115,7 +115,7 @@ class ManagementrepoImpl implements ManagementRepo {
     // Create the multipart request
     var request = http.MultipartRequest(
         'PUT', Uri.parse('$api/api/Xtremers/${xtremer.id}'));
-
+  print(xtremer.toJson().toString());
     // Add fields to the request
     request.fields.addAll({
       "Id": xtremer.id.toString(),
@@ -151,7 +151,7 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'Category':xtremer.category!,
+      'Category':xtremer.category??"General",
       'IsActive': xtremer.isActive.toString()
     });
 
@@ -754,7 +754,7 @@ class ManagementrepoImpl implements ManagementRepo {
           return {"response": response.statusCode};
         }
       } else {
-        print(response.reasonPhrase);
+        print("${response.reasonPhrase}${response.statusCode}");
       }
       return {"response": response.statusCode};
     } else {
@@ -831,7 +831,7 @@ class ManagementrepoImpl implements ManagementRepo {
 
     // Convert the Trainer instance to JSON
     final body = jsonEncode(
-        {"name": trainer.name, "designation": 'Trainer', "timing": "morning"});
+        {"name": trainer.name, "designation": 'Trainer', "timing": "morning",'isActive':true});
 
     // Send the POST request
     final response = await http.post(
@@ -878,8 +878,8 @@ class ManagementrepoImpl implements ManagementRepo {
 
     // Convert the Trainer instance to JSON
     final body = jsonEncode(
-        {"name": trainer.name, "designation": 'Trainer', "timing": "morning"});
-
+        {"id":trainer.id,"name": trainer.name, "designation": 'Trainer', "timing": trainer.timing,"isActive":trainer.isActive});
+    print(body);
     // Send the POST request
     try {
       final response = await http.put(
@@ -1236,6 +1236,28 @@ class ManagementrepoImpl implements ManagementRepo {
       } else {}
     } catch (e) {
       print("cant load Trainee : $e");
+    }
+
+    return [];
+  }
+
+  @override
+  Future<List<Membership>> viewMembership() async{
+    print("in membership api calls");
+    try {
+      final res = await http.get(Uri.parse("$api/api/Memberships"));
+      print("${res.statusCode}");
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(res.body);
+        print("In Membership list : ${jsonList.length}");
+        List<Membership> membershiplist =
+            jsonList.map((json) => Membership.fromJson(json)).toList();
+
+        return membershiplist;
+      } else {}
+    } catch (e) {
+      print("cant load Membership data : $e");
     }
 
     return [];

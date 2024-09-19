@@ -176,6 +176,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         padding: const EdgeInsets.all(16.0),
                                         child: TextFieldWidget(
                                           hint: 'OTP',
+                                          textalign: TextAlign.center,
+                                        showhint: false,
                                           controller: _confirmotp,
                                           enabletext: !authctrl.otploading,
                                         ),

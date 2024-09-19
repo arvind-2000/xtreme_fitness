@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../managementdomain/entities.dart/admission.dart';
+import '../../managementdomain/entities.dart/membership.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
@@ -65,7 +67,7 @@ class ManagementController extends GetxController {
   List<Trainee> get getallTrainee => _alltrainee;
   String? searchmessage = "";
   int searchposition = 0;
-
+  Membership?  currentmember; 
     GetxAuthController authctrl = Get.find<GetxAuthController>();
   @override
   void onInit() {
@@ -83,9 +85,24 @@ class ManagementController extends GetxController {
     
     checkmember();
     getxtremerforoverall();
+
+    // dashboardTimer();
   }
 
 
+  void dashboardTimer(){
+      
+    Timer.periodic(const Duration(seconds: 5), (timer) {
+    print("In periodic timer");
+    getxtremer();
+    getinactivextremer();
+    getallpersonalextremer();
+    getpaymentlastest10();
+    getAllTraineess(10);
+    getxtremerforoverall();
+      },);
+
+  }
   ///checking member or admin
   void checkmember(){
     ismember = authctrl.ismember;
@@ -94,8 +111,8 @@ class ManagementController extends GetxController {
 
 
   void getplans() async {
-    _allplans = dummyplan;
-    // _allplans = await managementRepo.getPlans();
+    // _allplans = dummyplan;
+    _allplans = await managementRepo.getPlans();
     _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
     update();
   }
@@ -179,8 +196,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    // _allxtremer = await managementRepo.viewMember();
-    _allxtremer = dummyxtremer;
+    _allxtremer = await managementRepo.viewMember();
+    // _allxtremer = dummyxtremer;
   
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
@@ -222,13 +239,13 @@ class ManagementController extends GetxController {
   Future<String> edittrainer(TrainerEntity trainerentity) async {
     String d = await managementRepo.updateTrainer(trainerentity);
     // update plans
-    getplans();
+    getTrainer();
     return d;
   }
 
   void getallServices() async {
-    // _allservices = await managementRepo.getServices();
-    _allservices = dummyservices;
+    _allservices = await managementRepo.getServices();
+    // _allservices = dummyservices;
      _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
@@ -258,6 +275,22 @@ class ManagementController extends GetxController {
 
   Future<Admission?> getadmission() async {
     return await managementRepo.viewadmission();
+  }
+
+
+    void getMembershipbyid(int id) async {
+      
+      List<Membership> d = await managementRepo.viewMembership();
+
+      if(d.isNotEmpty){
+          Membership x =  d.firstWhere((element) => element.userId==id,);
+        currentmember = x;
+        print(x.toJson().toString());
+    
+
+      } 
+     update();
+
   }
 
   Future<String> activateXtremer(Xtremer? xtremer) async {
@@ -291,8 +324,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    _alltrainer = dummytrainers;
-    // _alltrainer = await managementRepo.viewTrainer();
+    // _alltrainer = dummytrainers;
+    _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }

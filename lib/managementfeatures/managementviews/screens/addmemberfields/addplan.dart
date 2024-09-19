@@ -100,7 +100,7 @@ class PlanSelectionField extends StatelessWidget {
                             
                             const SizedBox(height: 6,),
                             DropdownMenu(
-                              
+                              hintText: "Select",
                             menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)),
                               onSelected: (index){
                                   addmemberctrl.addTrainer(index!);

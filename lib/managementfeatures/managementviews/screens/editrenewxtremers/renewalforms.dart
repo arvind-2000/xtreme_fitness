@@ -265,12 +265,12 @@ class PaymentDialogs extends StatelessWidget {
                     //   ],
                     // )
                     
-             const Text(
+         addmemberctrl.ismember?const SizedBox():const Text(
                         "Choose Payment Method"),
                    SizedBox(
                       height:  16,
                     ),
-                 Row(
+               addmemberctrl.ismember?const SizedBox():    Row(
                       children: [
                         Radio(
                             activeColor:

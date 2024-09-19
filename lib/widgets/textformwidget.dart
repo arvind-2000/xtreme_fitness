@@ -13,7 +13,7 @@ class TextFieldWidget extends StatefulWidget {
       this.interactivetext,
       this.obscure = false,
       this.autovalidateMode = AutovalidateMode.onUserInteraction,
-      this.enabletext = true, this.onchanged, this.counter = 25,this.showhint = true});
+      this.enabletext = true, this.onchanged, this.counter = 25,this.showhint = true, this.textalign});
   final String hint;
   final Icon? icon;
   final bool obscure;
@@ -28,6 +28,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool enabletext;
   final int counter;
   final bool showhint;
+  final TextAlign? textalign;
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
 }
@@ -54,7 +55,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
        widget.showhint?Text(widget.hint,style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),fontSize: 12),):const SizedBox(),
         SizedBox(height:  widget.showhint?6:0,),
         TextFormField(
-          
+          textAlign: widget.textalign??TextAlign.start,
           cursorColor: Colors.white,
           cursorHeight: 20,
           controller: widget.controller,

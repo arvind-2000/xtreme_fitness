@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
+
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
@@ -14,10 +13,10 @@ import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
-import '../../../../authentifeatures/domain/userentity.dart';
 import '../../../../config/const.dart';
 import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/headingtext.dart';
+import '../../../../widgets/normaltext.dart';
 import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
@@ -43,6 +42,13 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
     });
   }
 
+bool isactive = true;
+
+  void changeIsActive(){
+    setState(() {
+      isactive = !isactive;
+    });
+  }
   String timing = 'morning';
   TrainerEntity? _user;
 
@@ -51,6 +57,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
     double size = MediaQuery.sizeOf(context).width;
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
       return GetBuilder<ManagementController>(builder: (managectrl) {
+        print("manage control is member: ${managectrl.ismember}");
         return pagectrl.viewprofile && _user != null
             ? TraineeProfile(
                 user: _user,
@@ -209,7 +216,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                     .clear();
                                                                 _phonecontroller
                                                                     .clear();
-
+                                                                addTrainer();
                                                                 Navigator.pop(
                                                                     context);
                                                               },
@@ -373,12 +380,26 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                             const SizedBox(
                               height: 16,
                             ),
+                        
+                        managectrl.ismember?const SizedBox():Row(
+              children: [
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
+                const SizedBox(width: 5,),
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
+              ],
+            ),
+
+
                             managectrl.getalltrainer.isEmpty
                                 ? const NodataScreen(
                                     title: "No Trainers!!",
                                     desc: "Add trainers to get started.")
                                 : Expanded(
-                                    child: GridView.builder(
+                                    child: GridView(
                                         shrinkWrap: true,
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
@@ -394,12 +415,10 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                           childAspectRatio:
                                               size < 500 ? 1 : 3 / 3.5,
                                         ),
-                                        itemCount:
-                                            managectrl.getalltrainer.length,
-                                        itemBuilder: (c, i) {
-                                          bool _isactive = managectrl
-                                              .getalltrainer[i].isActive;
-                                          return CardwithShadow(
+                                      
+                                    children: managectrl.getalltrainer.where((e)=>e.isActive==isactive).map((e) => 
+                                        
+                                        CardwithShadow(
                                                   margin: const EdgeInsets
                                                       .symmetric(
                                                       vertical: 8,
@@ -415,30 +434,23 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                 onpress: () {
                                                                   _fullnamecontroller
                                                                           .text =
-                                                                      managectrl
-                                                                          .getalltrainer[
-                                                                              i]
+                                                                      e
                                                                           .name;
                                                                   setState(() {
-                                                                    timing = managectrl
-                                                                        .getalltrainer[
-                                                                            i]
+                                                                    timing = 
+                                                                        e
                                                                         .timing;
                                                                   });
                                                                   Get.dialog(
                                                                       Dialog(
-                                                                    backgroundColor: Colors
-                                                                        .grey[
-                                                                            700]!
-                                                                        .withOpacity(
-                                                                            0.7),
+                                                                    backgroundColor:Theme.of(context).colorScheme.primary,
                                                                     child:
                                                                         AddEditTrainer(
                                                                       trainer:
-                                                                          managectrl
-                                                                              .getalltrainer[i],
+                                                                          e,
                                                                     ),
                                                                   ));
+
                                                                 },
                                                                 padding:
                                                                     const EdgeInsets
@@ -477,10 +489,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                             const SizedBox(
                                                               height: 20,
                                                             ),
-                                                            TitleText(managectrl
-                                                                .getalltrainer[
-                                                                    i]
-                                                                .name),
+                                                            TitleText(e
+                                                                .name.toString()),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
@@ -492,9 +502,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                 const Text(
                                                                     "Designation : "),
                                                                 Text(
-                                                                  managectrl
-                                                                      .getalltrainer[
-                                                                          i]
+                                                                 e
                                                                       .designation,
                                                                   style: const TextStyle(
                                                                       fontWeight:
@@ -514,9 +522,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                 const Text(
                                                                     "Timing : "),
                                                                 Text(
-                                                                    managectrl
-                                                                        .getalltrainer[
-                                                                            i]
+                                                                    e
                                                                         .timing,
                                                                     style: const TextStyle(
                                                                         fontWeight:
@@ -530,8 +536,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                 onpress: () {
                                                                   pagectrl
                                                                       .changeviewprofile();
-                                                                  _user = managectrl
-                                                                      .getalltrainer[i];
+                                                                  _user = e;
                                                                 },
                                                                 color: const Color
                                                                     .fromARGB(
@@ -546,10 +551,9 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                         ),
                                                       ),
                                                     ],
-                                                  ))
-                                              .animate()
-                                              .slideX(begin: 1, end: 0);
-                                        }),
+                                                  ))).toList()
+                                              
+                                        ),
                                   )
                           ],
                         ))
@@ -589,16 +593,17 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
 
   @override
   Widget build(BuildContext context) {
+ 
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return SizedBox(
         height: 600,
         width: 500,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   HeadingText(
@@ -607,10 +612,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Expanded(
+              Expanded(
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),
@@ -682,164 +684,161 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                             const SizedBox(
                               height: 20,
                             ),
-                            CardwithShadow(
-                                color: Colors.green[300],
-                                onpress: () {
-                                  if (_formkey.currentState!.validate()) {
-                                    TrainerEntity addtrainer = TrainerEntity(
-                                      isActive: true,
-                                      id: Random().nextInt(100),
-                                      name: fullnamecontroller.text,
-                                      designation: "Trainer",
-                                      timing: timing,
-                                    );
-
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => PageDialog(
-                                          no: () {
-                                            Navigator.pop(context);
-                                          },
-                                          yes: () async {
-                                            //        String v = await managementctrl.addplan(plan);
-                                            // widget.onpress();
-                                         
-
-                                            await managectrl
-                                                .edittrainer(addtrainer);
-                                                   ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              showCloseIcon: true,
-                                              width: 500,
-                                              backgroundColor: Colors.green,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              action: SnackBarAction(
-                                                  label: "View",
-                                                  onPressed: () {}),
-                                              content: Text("Trainer updated"),
-                                              duration: Durations.extralong4,
-                                            ));
-
-
-                                            fullnamecontroller.clear();
-
-                                            Navigator.pop(context);
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const TitleText(
-                                                      "Edit Trainer"),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.close))
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              const Text(
-                                                "Trainer Name",
-                                                style: TextStyle(fontSize: 14),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                addtrainer.name,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              const SizedBox(
-                                                height: 16,
-                                              ),
-                                              const Text(
-                                                "Designation",
-                                                style: TextStyle(fontSize: 14),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                addtrainer.designation
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              const SizedBox(
-                                                height: 16,
-                                              ),
-                                              const Text(
-                                                "Timing",
-                                                style: TextStyle(fontSize: 14),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                addtrainer.timing,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                      child: CardwithShadow(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .colorScheme
-                                                              .error
-                                                              .withOpacity(0.6),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(16),
-                                                          child: const Text(
-                                                            "Check Trainer details before Editing?\nPress Yes to confirm",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          )))
-                                                ],
-                                              )
-                                            ],
-                                          )),
-                                    );
-                                  }
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    NavTiles(
-                                      icon: Icons.add,
-                                      title: "Edit Trainer",
-                                    ),
-                                  ],
-                                ))
+                            
                           ],
                         )),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            )
-          ],
+              CardwithShadow(
+                                  color: Colors.green[300],
+                                  onpress: () {
+                                    if (_formkey.currentState!.validate()) {
+                                      Navigator.pop(context);
+                                  
+                                      TrainerEntity trainerss = TrainerEntity(id: widget.trainer.id, name:widget.trainer.name, designation: widget.trainer.designation, timing:timing, isActive: _isactive);
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => PageDialog(
+                                            no: () {
+                                              Navigator.pop(context);
+                                            },
+                                            yes: () async {
+                                              
+          
+          
+                                             String v = await managectrl
+                                                  .edittrainer(trainerss);
+                                                     ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                showCloseIcon: true,
+                                                width: 500,
+                                                backgroundColor: Colors.green,
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                action: SnackBarAction(
+                                                    label: "View",
+                                                    onPressed: () {}),
+                                                content: Text(v),
+                                                duration: Durations.extralong4,
+                                              ));
+          
+          
+                                              fullnamecontroller.clear();
+          
+                                              Navigator.pop(context);
+                                            },
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const TitleText(
+                                                        "Edit Trainer"),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.close))
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                const Text(
+                                                  "Trainer Name",
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                 widget.trainer.name,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                const Text(
+                                                  "Designation",
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                 widget.trainer.designation
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                const Text(
+                                                  "Timing",
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                 widget.trainer.timing,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: CardwithShadow(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .error
+                                                                .withOpacity(0.6),
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(16),
+                                                            child: const Text(
+                                                              "Check Trainer details before Editing?\nPress Yes to confirm",
+                                                              textAlign: TextAlign
+                                                                  .center,
+                                                            )))
+                                                  ],
+                                                )
+                                              ],
+                                            )),
+                                      );
+          
+                                      
+                                    }
+                                  },
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      NavTiles(
+                                        icon: Icons.add,
+                                        title: "Edit Trainer",
+                                      ),
+                                    ],
+                                  ))
+              // const SizedBox(
+              //   height: 40,
+              // )
+            ],
+          ),
         ),
       );
     });

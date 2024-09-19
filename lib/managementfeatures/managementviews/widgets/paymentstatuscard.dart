@@ -14,6 +14,7 @@ class PaymentStatusCard extends StatelessWidget {
   final VoidCallback callback;
   @override
   Widget build(BuildContext context) {
+    
     return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
       return Center(
         child: ConstrainedBox(
@@ -44,21 +45,31 @@ class PaymentStatusCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      CircleAvatar(
-                        maxRadius: 100,
-                        backgroundColor: addmemberctrl.paymentstatus==3?Colors.blue[200]:addmemberctrl.paymentstatus==1?Colors.green[200]:Colors.red[200],
+                      Container(
+                        
+                        height: 160,
+                        width: 160,
+                        padding: const EdgeInsets.all(32),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                            color: addmemberctrl.paymentstatus==3?Colors.blue[200]:addmemberctrl.paymentstatus==1?Colors.green[200]:Colors.red[200],
+                        ),
+                      
                         child: addmemberctrl.paymentstatus == 3
                             ? CircularProgressIndicator(
                                 color: Theme.of(context).colorScheme.onPrimary,
+                                strokeWidth: 3,
                               )
                             : addmemberctrl.paymentstatus == 1
                                 ? const Icon(
                                     Icons.check,
-                                    color: Colors.green,
+                                    color: Colors.white,
+                                    size:80,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.dangerous,
-                                    color: Theme.of(context).colorScheme.error,
+                                    color: Colors.white,
+                                      size:80,
                                   ),
                       ),
                       const SizedBox(

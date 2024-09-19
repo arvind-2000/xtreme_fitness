@@ -295,7 +295,7 @@ class NavBar extends StatelessWidget {
                                 Navigator.pop(context);
                               },
                               yes: () {
-                                // authctrl.logout();
+                                authctrl.logout();
                                 Get.offAllNamed('/home');
                               },
                               child: const Column(

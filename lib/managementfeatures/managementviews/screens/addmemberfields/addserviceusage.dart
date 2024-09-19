@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/dialog
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/normaltext.dart';
+import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
 import '../../../../config/const.dart';
 import '../../../../widgets/cardborder.dart';
@@ -37,6 +38,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
     });
   }
 
+  final TextEditingController _phonenumber = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context).width;
@@ -252,97 +256,172 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                           padding: EdgeInsets.all(16),
                                           margin: EdgeInsets.zero,
                                           onpress: () async {
-                                            Get.dialog(PageDialog(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                            Get.dialog(StatefulBuilder(
+                                              builder: (context,state) {
+                                                return PageDialog(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
                                                     children: [
-                                                      const TitleText(
-                                                          "Payment Method"),
-                                                      IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.close))
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 30,
-                                                  ),
-                                                  NormalText(
-                                                    text: "Bill Details",
-                                                    size: 16,
-                                                  ),
-   Text(
-                                                          addmemberctrl.selectedservice!.name),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const TitleText(
+                                                              "Payment Method"),
+                                                          IconButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.close))
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                      NormalText(
+                                                        text: "Bill Details",
+                                                        size: 16,
+                                                      ),
+                                                   Text(
+                                                              addmemberctrl.selectedservice!.name),
+                                                    
+                                                      SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Amount"),
+                                                          Text(
+                                                              "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Divider(
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Total Amount"),
+                                                          Text(
+                                                              "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                        ],
+                                                      ),
+                                                SizedBox(height: 16,),
+                                                        addmemberctrl.ismember?const SizedBox(): const Text(
+                                                                        "Choose Payment Method"),
+                                                                 
+                                                                  addmemberctrl.ismember?const SizedBox():Row(
+                                                                      children: [
+                                                                        Radio(
+                                                                            activeColor:
+                                                                                Colors.blue,
+                                                                            value: true,
+                                                                           groupValue: addmemberctrl.ispaymentcash,
+                                                                            onChanged: (v) {
+                                                                             state(() {
+                                                                                addmemberctrl
+                                                                                    .setpaymentmethod(
+                                                                                        v!);
+                                                                            
+                                                                              });
+                                                                            }),
+                                                                        const SizedBox(
+                                                                          width: 5,
+                                                                        ),
+                                                                        const Text("Cash"),
+                                                                        const SizedBox(
+                                                                          width: 16,
+                                                                        ),
+                                                                        Radio(
+                                                                            activeColor:
+                                                                                Colors.blue,
+                                                                            value: false,
+                                                                            groupValue: addmemberctrl.ispaymentcash,
+                                                                            onChanged: (v) {
+                                                                              state(() {
+                                                                                addmemberctrl
+                                                                                    .setpaymentmethod(
+                                                                                        v!);
+                                                                             
+                                                                              });
+                                                                            }),
+                                                                        const SizedBox(
+                                                                          width: 5,
+                                                                        ),
+                                                                        const Text("Online"),
+                                                                        const SizedBox(
+                                                                          width: 16,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                               SizedBox(height: 16,),     
+                                                                   authctrl.userid == null ||authctrl.ismember==false?Form(
+                                                                      key: _formkey,
+                                                                      child: Column(
+                                                                        children: [
+                                                                          TextFieldWidget(hint: "Phone Number", controller: _phonenumber),
+                                                                          
+                                                                          TextFieldWidget(hint: "Name", controller: _name),
+                                                                        ],
+                                                                      ),
+                                                                    ):SizedBox(),
                                                 
-                                                  SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text("Amount"),
-                                                      Text(
-                                                          "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                
                                                     ],
                                                   ),
-                                                  SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  Divider(
-                                                    color: Colors.grey[600],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text("Total Amount"),
-                                                      Text(
-                                                          "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              no: () {Navigator.pop(context);},
-                                              yes: () async {
-                                                bool v = true;
-                                                // create user
-                                                if (authctrl.userid == null) {
-                                                  v = await addmemberctrl
-                                                      .createuser(
-                                                    widget.phonenumber,
-                                                    widget.phonenumber,
-                                                    widget.phonenumber,
-                                                  );
-                                                }
+                                                  no: () {Navigator.pop(context);},
+                                                  yes: () async {
+                                                    bool v = true;
+                                                    // create user
+                                                  
+                                                  if (authctrl.userid == null ||authctrl.ismember==false) {
+                                                      if (_formkey.currentState!.validate()) {
+                                                    v = await addmemberctrl
+                                                        .createuser(
+                                                      _phonenumber.text.trim(),
+                                                        _name.text.trim(),
+                                                      _phonenumber.text.trim(),
+                                                      role:authctrl.userid==null || authctrl.ismember==false?"servicemember":"Member"
+                                                    );
 
-                                                // payments
-                                                print(
-                                                    "In service id : ${addmemberctrl.selectedservice!.id}");
-                                                if (v) {
-                                                  addmemberctrl.addServiceusage(
-                                                      paymentonline: false);
-                                                } else {
-                                                  print(
-                                                      "${addmemberctrl.usererrormessage}");
+                                                       if (v) {
+                                             
+                                                    addmemberctrl.addServiceusage(
+                                                        paymentonline: !addmemberctrl.ispaymentcash);
+                                                  } else {
+                                                    print(
+                                                        "${addmemberctrl.usererrormessage}");
+                                                  }
+                                                          Navigator.pop(context);
+                                                  }
+                                               
+                                                }else{
+   
+                                                    addmemberctrl.addServiceusage(
+                                                        paymentonline: !addmemberctrl.ispaymentcash);
+                                                      Navigator.pop(context);
                                                 }
-                                              },
+                                                 
+                                                  },
+                                                );
+                                              }
                                             ));
-                                            // Navigator.pop(context);
+                                           
                                             //
                                           },
-                                          child: Row(
+                                          child: const Row(
                                             children: [
                                               Icon(Icons.add),
                                               SizedBox(

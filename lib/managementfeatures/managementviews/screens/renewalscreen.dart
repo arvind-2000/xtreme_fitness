@@ -272,11 +272,13 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                            onTap: (){
                                              Get.dialog(Dialog(child:PageDialog(
                                                heights: 300,
-                                               child: Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () {
-                                               managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
+                                               child: const Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () async{
+                                              String s = await managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
+                                              print(s);
                                              },)));
                                            },
-                                           child: Text(managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",style:const TextStyle(fontSize: 14)))),
+                                          //  managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",
+                                           child: Text(managectrl.getsearchXtremer[index].category!=null?managectrl.getsearchXtremer[index].category!:"",style:const TextStyle(fontSize: 14)))),
                                           Expanded(
                                             flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
                                        

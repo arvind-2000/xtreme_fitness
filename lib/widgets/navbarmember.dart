@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 
 import '../config/const.dart';
@@ -39,7 +40,7 @@ class NavBarMember extends StatelessWidget {
                 height: 60,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Image.asset("assets/logo1.png"),
+                  child: Image.asset("assets/logo2.png"),
                 )),
           ),
           Container(
@@ -174,6 +175,7 @@ class NavBarMember extends StatelessWidget {
                         },
                         yes: () {
                           authctrl.logout();
+                          Get.offAllNamed('/home');
                         },
                         child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

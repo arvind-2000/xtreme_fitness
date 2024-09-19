@@ -24,15 +24,26 @@ class _HandlerPageState extends State<HandlerPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        // Get.find<GetxAuthController>().authentications();
+        Get.find<GetxAuthController>().authentications();
         Get.put(AddMemberController());
         Get.put(GetxPageController());
+        
+    Get.put(ManagementController());
       },
     );
 
-    Get.put(ManagementController());
+    Get.put(ManagementController()).checkmember();
+     
   }
 
+
+  @override
+  void dispose() {
+    Get.find<AddMemberController>().onClose();
+    Get.find<GetxAuthController>().disposelogin();
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
@@ -60,7 +71,7 @@ class _HandlerPageState extends State<HandlerPage> {
           body: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1900),
               // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-              // child: const SafeArea(child: MainPage())),
+              // child: SafeArea(child: PaymentStatusCard(callback: (){}))),
               child: const SafeArea(child: DashBoardScreen())),
         );
       });
