@@ -66,7 +66,7 @@ class ManagementController extends GetxController {
   String? searchmessage = "";
   int searchposition = 0;
 
-    GetxAuthController authctrl = Get.find<GetxAuthController>();
+  GetxAuthController authctrl = Get.find<GetxAuthController>();
   @override
   void onInit() {
     super.onInit();
@@ -80,40 +80,37 @@ class ManagementController extends GetxController {
     viewpayment();
     getpaymentlastest10();
     getAllTraineess(10);
-    
+    getallgeneralextremer();
     checkmember();
     getxtremerforoverall();
   }
 
-
   ///checking member or admin
-  void checkmember(){
+  void checkmember() {
     ismember = authctrl.ismember;
     update();
   }
 
-
   void getplans() async {
     _allplans = dummyplan;
     // _allplans = await managementRepo.getPlans();
-    _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
+    _allactiveplans = _allplans
+        .where(
+          (element) => element.isActive ?? false,
+        )
+        .toList();
     update();
   }
 
-
-  Future<List<Trainee>> getAllTraineess(int id)async{
-   List<Trainee> d = [];
+  Future<List<Trainee>> getAllTraineess(int id) async {
+    List<Trainee> d = [];
     // _alltrainee = dummytrainees;
     d = await managementRepo.viewTrainee(id);
-    print( "In trainer list ${_alltrainee.length}");
+    print("In trainer list ${_alltrainee.length}");
     _alltrainee = d;
     update();
     return d;
-
-
-
   }
-
 
   void getinactivextremer() async {
     _allinactivextremer = await managementRepo.viewinactivemembers();
@@ -129,7 +126,6 @@ class ManagementController extends GetxController {
     _allgeneralxtremer = await managementRepo.viewgeneralmembers();
     update();
   }
-
 
   void getxtremerforoverall() async {
     _allinactivextremerforoverall.clear();
@@ -179,9 +175,9 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    // _allxtremer = await managementRepo.viewMember();
-    _allxtremer = dummyxtremer;
-  
+    _allxtremer = await managementRepo.viewMember();
+    // _allxtremer = dummyxtremer;
+
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -229,7 +225,8 @@ class ManagementController extends GetxController {
   void getallServices() async {
     // _allservices = await managementRepo.getServices();
     _allservices = dummyservices;
-     _allactiveservices = _allservices.where((element) => element.isactive).toList();
+    _allactiveservices =
+        _allservices.where((element) => element.isactive).toList();
     update();
   }
 
@@ -377,11 +374,10 @@ class ManagementController extends GetxController {
     update();
   }
 
-    void inactivextremer() {
+  void inactivextremer() {
     _searchxtremerlist = _allinactivextremer;
     update();
   }
-
 
   void allxtremer() {
     _searchxtremerlist = _allxtremer;

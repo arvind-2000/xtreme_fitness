@@ -116,7 +116,7 @@ class Xtremer {
         declaration: json['Declaration'] ?? false,
         submittedBy: json['SubmittedBy'],
         isActive: json['IsActive'] ?? false,
-          category: json['Category'],
+        category: json['Category'] ?? "General",
         createddate:
             DateTime.parse(json['CreatedAt'] ?? DateTime.now().toString()));
   }

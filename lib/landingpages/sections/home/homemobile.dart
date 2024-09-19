@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
+import 'package:xtreme_fitness/widgets/gradientbutton.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class HomeMobile extends StatefulWidget {
@@ -41,24 +43,22 @@ class _HomeDesktopState extends State<HomeMobile> {
 
   @override
   Widget build(BuildContext context) {
+    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
+
     return Stack(
       children: [
         Positioned(
             child: SizedBox(
-                height: 1000,
+                height: MediaQuery.sizeOf(context).height,
                 width: MediaQuery.sizeOf(context).width,
-                child: PageView.builder(
-                    // controller: _controller,
-                    itemCount: 5,
-                    itemBuilder: (c, i) => Image.asset(
-                          'assets/backg.jpg',
-                          fit: BoxFit.cover,
-                        )))),
+                child: Image.asset(
+                  'assets/backg.jpg',
+                  fit: BoxFit.cover,
+                ))),
         ResponsivePages(
-            // screenheight: MediaQuery.sizeOf(context).height,
-            screenheight: 1000,
+            screenheight: MediaQuery.sizeOf(context).height,
             child1: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(0),
               child: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,56 +67,63 @@ class _HomeDesktopState extends State<HomeMobile> {
                     const SizedBox(
                       height: 100,
                     ),
-                    HeadingText(
-                      "Your Fitness, Your Way",
-                      size: MediaQuery.sizeOf(context).width < mobilescreen
-                          ? 60
-                          : MediaQuery.sizeOf(context).width < 1600
-                              ? 70
-                              : 80,
-                      color: Colors.white,
-                      isbold: true,
-                    ).animate().shimmer(
-                          color: Colors.grey,
-                          delay: const Duration(seconds: 1),
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.easeIn,
-                        ),
-                    const SizedBox(
-                      height: 60,
+                    Center(
+                      child: const HeadingText(
+                        "Your Fitness, Your Way",
+                        size: 32,
+                        color: Colors.white,
+                        isbold: true,
+                      ).animate().shimmer(
+                            color: Colors.grey,
+                            delay: const Duration(seconds: 1),
+                            duration: const Duration(seconds: 2),
+                            curve: Curves.easeIn,
+                          ),
                     ),
-                    RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(
-                          text:
-                              "Revolutionize Your Workout Experience with Personalised Training\n",
-                          style: TextStyle(fontSize: 16, color: Colors.white54),
-                        ),
-                        // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
-                      ]),
-                    )
-                        .animate()
-                        .slideX(
-                          begin: -1,
-                          end: 0,
-                        )
-                        .fadeIn(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Center(
+                      child: RichText(
+                        textAlign: TextAlign.justify,
+                        text: const TextSpan(children: [
+                          TextSpan(
+                            text:
+                                "Revolutionize Your Workout Experience with Personalised Training\n",
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.white54),
+                          ),
+                          // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
+                        ]),
+                      )
+                          .animate()
+                          .slideX(
+                            begin: -1,
+                            end: 0,
+                          )
+                          .fadeIn(),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    CardwithShadow(
+                    GradientButton(
                         onpress: () {
-                          Get.toNamed("/pricing");
+                          Get.dialog(
+                            barrierDismissible: false,
+                            const LoginDialog(
+                              signupdialog: true,
+                            ),
+                          );
                         },
                         padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 32),
+                            vertical: 15, horizontal: 20),
                         color: Theme.of(context).colorScheme.secondary,
-                        child: const Text(
-                          "Get Started",
-                          style: TextStyle(color: Colors.white),
-                        )),
+                        child: const Text("Become a Member",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 219, 218, 218),
+                                fontWeight: FontWeight.bold))),
                     const SizedBox(
-                      height: 60,
+                      height: 30,
                     ),
                     SizedBox(
                       child: CardwithShadow(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
+import 'package:xtreme_fitness/widgets/gradientbutton.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class HomeTablet extends StatefulWidget {
@@ -41,19 +43,18 @@ class _HomeTabletState extends State<HomeTablet> {
 
   @override
   Widget build(BuildContext context) {
+    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
+
     return Stack(
       children: [
         Positioned(
             child: SizedBox(
                 height: 1000,
                 width: MediaQuery.sizeOf(context).width,
-                child: PageView.builder(
-                    // controller: _controller,
-                    itemCount: 5,
-                    itemBuilder: (c, i) => Image.asset(
-                          'assets/backg.jpg',
-                          fit: BoxFit.cover,
-                        )))),
+                child: Image.asset(
+                  'assets/backg.jpg',
+                  fit: BoxFit.cover,
+                ))),
         ResponsivePages(
             // screenheight: MediaQuery.sizeOf(context).height,
             screenheight: 1000,
@@ -67,13 +68,9 @@ class _HomeTabletState extends State<HomeTablet> {
                     const SizedBox(
                       height: 100,
                     ),
-                    HeadingText(
+                    const HeadingText(
                       "Your Fitness, Your Way",
-                      size: MediaQuery.sizeOf(context).width < mobilescreen
-                          ? 60
-                          : MediaQuery.sizeOf(context).width < 1600
-                              ? 70
-                              : 80,
+                      size: 45,
                       color: Colors.white,
                       isbold: true,
                     ).animate().shimmer(
@@ -83,7 +80,7 @@ class _HomeTabletState extends State<HomeTablet> {
                           curve: Curves.easeIn,
                         ),
                     const SizedBox(
-                      height: 60,
+                      height: 40,
                     ),
                     RichText(
                       text: const TextSpan(children: [
@@ -104,19 +101,24 @@ class _HomeTabletState extends State<HomeTablet> {
                     const SizedBox(
                       height: 20,
                     ),
-                    CardwithShadow(
+                    GradientButton(
                         onpress: () {
-                          Get.toNamed("/pricing");
+                          Get.dialog(
+                            barrierDismissible: false,
+                            const LoginDialog(
+                              signupdialog: true,
+                            ),
+                          );
                         },
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 32),
                         color: Theme.of(context).colorScheme.secondary,
-                        child: const Text(
-                          "Get Started",
-                          style: TextStyle(color: Colors.white),
-                        )),
+                        child: const Text("Become a Member",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 219, 218, 218),
+                                fontWeight: FontWeight.bold))),
                     const SizedBox(
-                      height: 60,
+                      height: 30,
                     ),
                     SizedBox(
                       child: CardwithShadow(

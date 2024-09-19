@@ -38,11 +38,13 @@ class MyApp extends StatelessWidget {
       // theme:lightThemes,
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
-      
+
       initialRoute: '/',
       unknownRoute: GetPage(
         name: '/',
-        page: () => const LandingHomePage(index: 4,),
+        page: () => const LandingHomePage(
+          index: 4,
+        ),
       ),
       getPages: [
         GetPage(
@@ -55,9 +57,7 @@ class MyApp extends StatelessWidget {
         //     transition: Transition.noTransition),
         GetPage(
             name: '/',
-            page: () => const MainPage(
-                  
-                ),
+            page: () => const MainPage(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/pricing',

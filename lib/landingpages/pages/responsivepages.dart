@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 
 class ResponsivePages extends StatelessWidget {
   const ResponsivePages(
@@ -16,10 +16,9 @@ class ResponsivePages extends StatelessWidget {
   final bool issize;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context).width;
     return Container(
       color: colors,
-      child: size <= mobilescreen
+      child: Responsive.isMobile(context) || Responsive.isTablet(context)
           ? SizedBox(
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
@@ -37,8 +36,12 @@ class ResponsivePages extends StatelessWidget {
                   SizedBox(
                     width: issize ? 100 : 0,
                   ),
-                  Expanded(child: child1),
-                  child2 != null ? Expanded(child: child2!) : const SizedBox(),
+                  Expanded(
+                      flex: MediaQuery.of(context).size.width < 1200 ? 4 : 1,
+                      child: child1),
+                  child2 != null
+                      ? Expanded(flex: 1, child: child2!)
+                      : const SizedBox(),
                   SizedBox(
                     width: issize ? 100 : 0,
                   ),

@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
       landctrl.setNavIndex(context);
     });
     return PageView.builder(
-      physics: Responsive.isMobile(context)
+      physics: Responsive.isMobile(context) || Responsive.isTablet(context)
           ? const NeverScrollableScrollPhysics()
           : null,
       pageSnapping: false,
