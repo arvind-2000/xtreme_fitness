@@ -1,3 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
+import 'package:xtreme_fitness/landingpages/pages/servicespage.dart';
+import 'package:xtreme_fitness/landingpages/sections/contact/contact.dart';
+import 'package:xtreme_fitness/landingpages/sections/gallery/gallery.dart';
+import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
+import 'package:xtreme_fitness/landingpages/sections/prices/prices.dart';
+import 'package:xtreme_fitness/landingpages/sections/services/services.dart';
+
 double navbarsize = 1000;
 double mobilescreen = 800;
 
@@ -39,4 +48,12 @@ final List<String> galleryimages = [
   'assets/images/9.jpeg',
   'assets/images/10.jpeg',
   'assets/images/11.jpeg',
+];
+
+List<Widget> landingwidgets = [
+  const HomePage(),
+  const PricesPage(),
+  const ServicesPlanPage(),
+  const Gallery(),
+  const Contact()
 ];

@@ -1,23 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/widget/navbar_actions_button.dart';
-import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
-import 'package:xtreme_fitness/widgets/normaltext.dart';
+import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
-import '../../widgets/cardswithshadow.dart';
-
-class LandingNavBarItemsWidget extends StatelessWidget {
-  const LandingNavBarItemsWidget({
-    super.key,
-  });
+class NavbarDesktop extends StatelessWidget {
+  const NavbarDesktop({super.key});
 
   @override
   Widget build(BuildContext context) {

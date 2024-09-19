@@ -7,7 +7,11 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(galleryimages[index]);
+    return Image.asset(
+      height: 600,
+      galleryimages[index],
+      fit: BoxFit.cover,
+    );
 
     // CachedNetworkImage(
     //             fit: BoxFit.cover,

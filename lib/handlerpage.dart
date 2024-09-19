@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
-import 'package:xtreme_fitness/landingpages/pages/landingnavbarpage.dart';
-import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
+import 'package:xtreme_fitness/landingpages/sections/main/main_section.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';

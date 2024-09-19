@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/pages/contactuspage.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../widgets/headingtext.dart';
-
-class ContactFooter extends StatelessWidget {
-  const ContactFooter({
+class ContactMobile extends StatelessWidget {
+  const ContactMobile({
     super.key,
   });
 

@@ -230,59 +230,62 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       const SizedBox(
                         height: 6,
                       ),
-                      CardBorder(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.6),
-                        onpress: () {
-                          showDatePicker(
-                                  builder: (context, child) {
-                                    return Theme(
-                                        data: ThemeData(
-                                            colorScheme: ColorScheme.dark(
-                                                primary: Colors.blue[200]!),
-                                            buttonTheme: const ButtonThemeData(
-                                                buttonColor: Colors.white)),
-                                        child: child!);
-                                  },
-                                  context: context,
-                                  firstDate: DateTime(1950),
-                                  lastDate: DateTime(DateTime.now().year + 1))
-                              .then(
-                            (value) {
-                              addmembrctrl.addDOB(value ?? DateTime.now());
-                              _addressFocusNode.requestFocus();
-                            },
-                          );
-                        },
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        margin: EdgeInsets.zero,
-                        child: Row(
-                          children: [
-                            const Text(
-                              "D.O.B:",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.date_range,
-                                  size: 14,
-                                ),
-                                addmembrctrl.dob == null
-                                    ? const SizedBox()
-                                    : Text(
-                                        "${addmembrctrl.dob!.day}/${addmembrctrl.dob!.month}/${addmembrctrl.dob!.year}",
-                                        style: const TextStyle(fontSize: 14),
-                                      )
-                              ],
-                            ),
-                          ],
+                      Expanded(
+                        flex:1,
+                        child: CardBorder(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.6),
+                          onpress: () {
+                            showDatePicker(
+                                    builder: (context, child) {
+                                      return Theme(
+                                          data: ThemeData(
+                                              colorScheme: ColorScheme.dark(
+                                                  primary: Colors.blue[200]!),
+                                              buttonTheme: const ButtonThemeData(
+                                                  buttonColor: Colors.white)),
+                                          child: child!);
+                                    },
+                                    context: context,
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime(DateTime.now().year + 1))
+                                .then(
+                              (value) {
+                                addmembrctrl.addDOB(value ?? DateTime.now());
+                                _addressFocusNode.requestFocus();
+                              },
+                            );
+                          },
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          margin: EdgeInsets.zero,
+                          child: Row(
+                            children: [
+                              const Text(
+                                "D.O.B:",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.date_range,
+                                    size: 14,
+                                  ),
+                                  addmembrctrl.dob == null
+                                      ? const SizedBox()
+                                      : Text(
+                                          "${addmembrctrl.dob!.day}/${addmembrctrl.dob!.month}/${addmembrctrl.dob!.year}",
+                                          style: const TextStyle(fontSize: 14),
+                                        )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

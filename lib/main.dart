@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
-import 'package:xtreme_fitness/landingpages/pages/main_section.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
+import 'config/scroll.dart';
 import 'config/themes/themenew.dart';
 import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
-import 'landingpages/pages/landingpage.dart';
+import 'landingpages/sections/main/main_section.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 void main() async {
