@@ -77,34 +77,51 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const HeadingText(
-                      'Membership\nRegistration',
-                      size: 20,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          // Get.offAndToNamed('/home');
-                          authctrl.signupclose();
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.close)),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Image.asset(
-                  'assets/logo2.png',
-                  height: 60,
-                ),
-                const SizedBox(
-                  height: 30,
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                // Get.offAndToNamed('/home');
+                                authctrl.signupclose();
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Image.asset(
+                          'assets/logo2.png',
+                          height: 75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: authctrl.numberexists != null &&
+                                authctrl.numberexists == false
+                            ? const HeadingText(
+                                'OTP Verification',
+                                size: 30,
+                              )
+                            : const HeadingText(
+                                'Membership Registration',
+                                size: 30,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: Form(
@@ -113,9 +130,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: ListView(
                           shrinkWrap: true,
                           children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
+                            authctrl.numberexists != null &&
+                                    authctrl.numberexists == false
+                                ? const SizedBox()
+                                : const SizedBox(
+                                    height: 30,
+                                  ),
                             authctrl.numberexists != null &&
                                     authctrl.numberexists == false
                                 ? const SizedBox()
@@ -135,9 +155,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                       authctrl.signup(_phonecontroller.text);
                                     },
                                   ),
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            authctrl.numberexists != null &&
+                                    authctrl.numberexists == false
+                                ? const SizedBox()
+                                : const SizedBox(
+                                    height: 20,
+                                  ),
                             authctrl.signuperror != null
                                 ? AnimatedOpacity(
                                     duration: Durations.extralong1,
@@ -181,7 +204,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         child: TextFieldWidget(
                                           hint: 'OTP',
                                           textalign: TextAlign.center,
-                                        showhint: false,
+                                          showhint: false,
                                           controller: _confirmotp,
                                           enabletext: !authctrl.otploading,
                                         ),
@@ -296,6 +319,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           )),
                     )
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),
