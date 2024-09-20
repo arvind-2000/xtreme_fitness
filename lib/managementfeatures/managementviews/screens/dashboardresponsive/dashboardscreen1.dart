@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 
-import 'dashboardresponsive/dashboarddesktop.dart';
-import 'dashboardresponsive/dashboardmobile.dart';
+import 'dashboarddesktop.dart';
+import 'dashboardmobile.dart';
+
 
 
 class DashBoardScreen1 extends StatelessWidget {

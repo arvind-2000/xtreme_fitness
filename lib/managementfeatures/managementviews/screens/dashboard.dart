@@ -4,8 +4,6 @@ import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontro
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addstaffscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addtrainer/addtrainerscreen.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/edituserscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/plansscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/renewalscreen.dart';
@@ -15,12 +13,12 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 import '../controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmembersscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/analyticsscreen.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardscreen1.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/servicescreen.dart';
 
 
 import '../../../widgets/navbar.dart';
 import 'dashboardmemberpage/dashboard1.dart';
+import 'dashboardresponsive/dashboardscreen1.dart';
 
 
 class DashBoardScreen extends StatelessWidget {
