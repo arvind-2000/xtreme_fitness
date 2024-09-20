@@ -12,6 +12,7 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../../widgets/cardswithshadow.dart';
 import '../../../../widgets/textformwidget.dart';
+import '../../widgets/scaffolds.dart';
 
 class AddServiceField extends StatefulWidget {
   AddServiceField({super.key, required this.onpress, this.edit= false, this.service});
@@ -124,7 +125,7 @@ class _AddPlanFieldsState extends State<AddServiceField> {
 
                            
                         widget.onpress();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(d),duration: Durations.extralong1,));
+                         CustomSnackbar(context, d);
                           
                           Navigator.pop(context);
                             },

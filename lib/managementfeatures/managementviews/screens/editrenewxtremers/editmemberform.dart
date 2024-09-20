@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 
 
 import '../../../../widgets/cardborderhover.dart';
@@ -73,9 +74,11 @@ class _EditmemberFormState extends State<EditmemberForm> {
                                         pagectrl.changeaddMemberPage(2);
                                                       
                              },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(buttontext: "Edit Xtremer",callback: ()async{
-                                 String x = await  addmemberctrl.updateXtremer();
-
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(x)));
+                                 Map<String,bool> x = await  addmemberctrl.updateXtremer();
+                                  if(x.entries.first.value){
+                                    pagectrl.changeeditform(false);
+                                  }
+                                CustomSnackbar(context, x.entries.first.key);
                              },),
                            ],
                          ),

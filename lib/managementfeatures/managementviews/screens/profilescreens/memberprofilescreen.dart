@@ -17,11 +17,31 @@ import '../../../managementdomain/entities.dart/membership.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
 import '../../widgets/scaffolds.dart';
 
-class MemberProfilescreen extends StatelessWidget {
+class MemberProfilescreen extends StatefulWidget {
   const MemberProfilescreen({super.key, this.user, this.pagectrl,});
   final Xtremer? user;
   final GetxPageController? pagectrl;
-  
+
+  @override
+  State<MemberProfilescreen> createState() => _MemberProfilescreenState();
+}
+
+class _MemberProfilescreenState extends State<MemberProfilescreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    if(widget.user!=null){
+    Get.find<ManagementController>().getMembershipbyid(widget.user!.XtremerId!);
+    }
+    } ,);
+
+       
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -30,7 +50,7 @@ class MemberProfilescreen extends StatelessWidget {
         return GetBuilder<ManagementController>(
           builder: (managectrl) {
             
-                managectrl.getMembershipbyid(user!.XtremerId!);
+         
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -41,14 +61,14 @@ class MemberProfilescreen extends StatelessWidget {
                   children: [
                     const HeadingText("Profile",size: 30,),
                     IconButton(onPressed: (){
-                        pagectrl!.changeviewprofile();
+                        widget.pagectrl!.changeviewprofile();
               
                     }, icon:const Icon(Icons.close))
                   ],
                 ),
                 const SizedBox(height: 20,),
                   //body for desktop
-                  user==null?const Center(child: Text("No User"),) : Expanded(
+                  widget.user==null?const Center(child: Text("No User"),) : Expanded(
                     child: Row(
                       children: [
                           SizedBox(
@@ -67,7 +87,7 @@ class MemberProfilescreen extends StatelessWidget {
                                         child:SizedBox(
                                           height: 100,
                                           width: 100,
-                                          child: MemoryImageWidget(id: user!.id)),
+                                          child: MemoryImageWidget(id: widget.user!.id)),
                                       ),
             
                                       IconButton(onPressed: (){}, icon: const Icon(Icons.edit,size: 16,))
@@ -82,7 +102,7 @@ class MemberProfilescreen extends StatelessWidget {
                                   const SizedBox(height: 20,),
                                   const Text("Phone"),
                                      const SizedBox(height: 10,),
-                                  Text(user!.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(widget.user!.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 20,),
                                   const Text("Designation"),
                                      const SizedBox(height: 10,),
@@ -90,11 +110,11 @@ class MemberProfilescreen extends StatelessWidget {
                                   const SizedBox(height: 20,),
                                   const Text("Address"),
                                      const SizedBox(height: 10,),
-                                  Text(user!.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(widget.user!.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 20,),
                                   const Text("Email"),
                                      const SizedBox(height: 10,),
-                                  Text(user!.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(widget.user!.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 16,),
                                     // CardwithShadow(
                                     //   color: Colors.blue[300],
@@ -117,61 +137,49 @@ class MemberProfilescreen extends StatelessWidget {
                                                 const Text("Plan"),
                                             
                                                 const SizedBox(height: 16,),
-                                                Text(user!.category!=null?"${user!.category}":""),
+                                                Text(widget.user!.category!=null?"${widget.user!.category}":""),
                                                 const SizedBox(height: 16,),
                                           
                                               ],
                                             )),
                                           ),
-                                                    Expanded(
-                                            child: CardwithShadow(
-                                              margin: const EdgeInsets.only(right: 16),
-                                              child: Column(
-                                              children: [
-                                                const Text("BMI Used"),
+                            //                        managectrl.currentmember==null?SizedBox():Expanded(
+                            //                 child: CardwithShadow(
+                            //                   margin: const EdgeInsets.only(right: 16),
+                            //                   child: Column(
+                            //                   children: [
+                            //                     const Text("BMI Used"),
                                             
-                                                const SizedBox(height: 16,),
-                                                Text(managectrl.currentmember!=null?managectrl.currentmember!.bmiUsed!?"Used":"false":"Not Used"),
-                                                SizedBox(height: 16,),
-                                                           SizedBox(
-                                width: double.maxFinite,
+                            //                     const SizedBox(height: 16,),
+                            //                     // Text(managectrl.currentmember!=null?managectrl.currentmember!.bmiUsed!?"Used":"false":"Not Used"),
+                            //                     SizedBox(height: 16,),
+                            //                                SizedBox(
+                            //     width: double.maxFinite,
                              
-                              child:   managectrl.currentmember!.bmiUsed!?SizedBox():CardBorder(
-                                onpress: ()async{
-                                  Membership membership = managectrl.currentmember!;
-                                  membership.bmiUsed = false;
-                                  String s  = await  managectrl.managementRepo.editMembership(membership);
+                            //   child:   managectrl.currentmember!.bmiUsed!?SizedBox():CardBorder(
+                            //     onpress: ()async{
+                            //       Membership membership = managectrl.currentmember!;
+                            //       membership.bmiUsed = false;
+                            //       String s  = await  managectrl.managementRepo.editMembership(membership);
                   
-                                  CustomSnackbar(context, "Bmi Used");
-                                      managectrl.getMembershipbyid(user!.XtremerId!);
-                                },
-                                color: Colors.amber,
-                                margin: EdgeInsets.zero,
-                                child: Center(child: Text("Use Service"))),
+                            //       CustomSnackbar(context, "Bmi Used");
+                            //           managectrl.getMembershipbyid(widget.user!.XtremerId!);
+                            //     },
+                            //     color: Colors.amber,
+                            //     margin: EdgeInsets.zero,
+                            //     child: Center(child: Text("Use Service"))),
                                 
-                            ),
+                            // ),
                                               
-                                              ],
-                                            )),
-                                          ),          const Expanded(
-                                            child: CardwithShadow(
-                                                   margin: EdgeInsets.only(right: 16),
-                                              child: Column(
-                                              children: [
-                                                Text("Plan"),
-                                            
-                                                SizedBox(height: 16,),
-                                                Text("Personal"),
-                                                SizedBox(height: 16,),
-                                                //amount
-                                                Text("Rs 1200")
-                                              ],
-                                            )),
-                                          ),
+                            //                   ],
+                            //                 )),
+                            //               ),        
+                      
                                           
                                         ],
                                       ),
-                                      MemberServiceHistory(xtremer: user, userid: user!.XtremerId)
+                                      SizedBox(height: 16,),
+                                      MemberServiceHistory(xtremer: widget.user, userid: widget.user!.XtremerId)
                               ],
                             ))),   
                                    

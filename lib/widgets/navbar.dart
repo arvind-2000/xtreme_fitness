@@ -261,8 +261,8 @@ class NavBar extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 16),
                       child: const NavTiles(
-                        icon: Icons.settings,
-                        title: 'Settings',
+                        icon: Icons.payment,
+                        title: 'Payments',
                       )),
                 ],
               ),
@@ -279,17 +279,7 @@ class NavBar extends StatelessWidget {
                 }
                 Get.dialog(
                   Dialog(
-                    child: authctrl.loginloading
-                          ? const SizedBox(
-                              height: 300,
-                              width: 400,
-                              child: Cardonly(
-                                  child: Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )))
-                          : PageDialog(
+                    child:PageDialog(
                               heights: 300,
                               no: () {
                                 Navigator.pop(context);

@@ -187,7 +187,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                 ],
                                               ),
                                             ),
-                                            CardBorder(
+                                         e.value.isactive?CardBorder(
                                               onpress: (){
                                               addmemberctrl.addservices(e.value);
                                               addmemberctrl.changeServiceUsage (ispage: true);
@@ -210,7 +210,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                           color: Colors.white),
                                                     )
                                                   ],
-                                                ))
+                                                )):SizedBox()
                                           ],
                                         )),
                                   )

@@ -84,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const HeadingText(
-                      'Membership\nRegistration',
+                      'Xtremer Registration',
                       size: 20,
                     ),
                     IconButton(
@@ -99,9 +99,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Image.asset(
-                  'assets/logo2.png',
-                  height: 60,
+                Center(
+                  child: Image.asset(
+                    'assets/logo2.png',
+                    height: 60,
+                  ),
                 ),
                 const SizedBox(
                   height: 30,

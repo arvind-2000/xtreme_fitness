@@ -14,7 +14,7 @@ class ContactFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: ResponsivePages(
-        issize: false,
+        issize: true,
         colors: const Color.fromARGB(255, 29, 28, 28),
         child1: SizedBox(
           height: 900,

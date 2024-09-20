@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -50,7 +51,8 @@ class _CreateMemberState extends State<CreateMember> {
                     addmemberctrl.changepaymentstatus(0);
                     
                     if(addmemberctrl.ismember ){
-                            Get.toNamed('/home');
+                            Get.offAllNamed('/home');
+                            Get.dialog(const LoginDialog());
                     }else{
                       pagectrl.changeaddMemberPage(0);
                     }
@@ -215,7 +217,7 @@ class _CreateMemberState extends State<CreateMember> {
                                   },),
                                   const Text(
                                    
-                                    "By accepting you agree to our terms and privacy policies."),
+                                    "By accepting you agree to our terms and policies."),
                                 ],
                               ),
                           const SizedBox(height: 16,),
@@ -228,7 +230,7 @@ class _CreateMemberState extends State<CreateMember> {
                                   const InkWell(
                                     child: Text(
                                      
-                                      "Agree Terms and Conditions",style: TextStyle(color: Colors.blue),),
+                                      "By accepting you agree to the payments Terms and Conditions",style: TextStyle(color: Colors.blue),),
                                   ),
                                 ],
                               ),

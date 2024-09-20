@@ -40,13 +40,15 @@ int? userid;
     super.initState();
     
     Get.put(GetxPageController());
-    
-    userid = int.tryParse( Get.put(GetxAuthController()).userid!=null? Get.put(GetxAuthController()).userid!:"0");
+      WidgetsBinding.instance.addPostFrameCallback((c){
+  userid = int.tryParse( Get.put(GetxAuthController()).userid!=null? Get.put(GetxAuthController()).userid!:"0");
     if(userid!=null){
    xtremer = Get.find<ManagementController>().getxtremerbyId(userid!);
-
+ Get.find<ManagementController>().getMembershipbyid(xtremer!.XtremerId!);
     }
   xtremer = Xtremer(id: 1,XtremerId: 2,firstName: "fdfdf",surname: "fdfd",email: "ffdfd",category: "Personal");
+      });
+  
 
   }
 
@@ -58,9 +60,6 @@ int? userid;
      
       builder: (managectrl) {
 
-         if(xtremer!=null){
-           managectrl.getMembershipbyid(xtremer!.XtremerId!);
-         }
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
             return pagectrl.isrenewalforms?RenewalForms(): SingleChildScrollView(
@@ -117,44 +116,44 @@ int? userid;
                         ),
                       ),
                   
-                      managectrl.currentmember!=null? 
-                      Padding(padding: EdgeInsets.all(32,),child: SizedBox(
-                        width:MediaQuery.sizeOf(context).width<mobilescreen? MediaQuery.sizeOf(context).width:350,
-                        child: Cardonly(
-                          margin: EdgeInsets.zero,
-                          child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HeadingText("BMI Service"),
-                            SizedBox(height: 20,),
-                            NormalText(text: managectrl.currentmember!.bmiUsed!?"BMI Service already used":"Free one time BMI"),
-                            SizedBox(height: 30,),
-                            SizedBox(
-                                width: double.maxFinite,
+                      // managectrl.currentmember!=null? 
+                      // Padding(padding: EdgeInsets.all(32,),child: SizedBox(
+                      //   width:MediaQuery.sizeOf(context).width<mobilescreen? MediaQuery.sizeOf(context).width:350,
+                      //   child: Cardonly(
+                      //     margin: EdgeInsets.zero,
+                      //     child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       HeadingText("BMI Service"),
+                      //       SizedBox(height: 20,),
+                      //       NormalText(text: managectrl.currentmember!.bmiUsed!?"BMI Service already used":"Free one time BMI"),
+                      //       SizedBox(height: 30,),
+                      //       SizedBox(
+                      //           width: double.maxFinite,
                              
-                              child:   managectrl.currentmember!.bmiUsed!?SizedBox():CardBorder(
-                                onpress: ()async{
-                                  Membership membership = managectrl.currentmember!;
-                                  membership.bmiUsed = false;
-                                  String s  = await  managectrl.managementRepo.editMembership(membership);
+                      //         child:   managectrl.currentmember!.bmiUsed!?SizedBox():CardBorder(
+                      //           onpress: ()async{
+                      //             Membership membership = managectrl.currentmember!;
+                      //             membership.bmiUsed = false;
+                      //             String s  = await  managectrl.managementRepo.editMembership(membership);
                   
-                                  CustomSnackbar(context, "Bmi Used");
-                                      managectrl.getMembershipbyid(xtremer!.XtremerId!);
-                                },
-                                color: Colors.amber,
-                                margin: EdgeInsets.zero,
-                                child: Center(child: Text("Use Service"))),
+                      //             CustomSnackbar(context, "Bmi Used");
+                      //                 managectrl.getMembershipbyid(xtremer!.XtremerId!);
+                      //           },
+                      //           color: Colors.amber,
+                      //           margin: EdgeInsets.zero,
+                      //           child: Center(child: Text("Use Service"))),
                                 
-                            ),
-                            SizedBox(height: 10,)
-                          ],
-                        )),
-                      ),)
-                      :SizedBox()
+                      //       ),
+                      //       SizedBox(height: 10,)
+                      //     ],
+                      //   )),
+                      // ),)
+                      // :SizedBox()
                     ],
                   ),
 
-                  MemberServiceHistory(xtremer: xtremer, userid: userid)
+                  Expanded(child: MemberServiceHistory(xtremer: xtremer, userid: userid))
                 ],
               ),
             );

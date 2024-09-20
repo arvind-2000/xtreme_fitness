@@ -26,6 +26,7 @@ class ManagementController extends GetxController {
   List<Plan> _allactiveplans = [];
   List<ServiceEntity> _allactiveservices = [];
   List<Alluserpaymentmodel> _allpayments = [];
+  List<Alluserpaymentmodel> _searchpayments = [];
   List<Paymentlatest10> _latestpayment10 = [];
   List<UserEntity> _allstaff = [];
   List<Xtremer> _allxtremer = [];
@@ -59,6 +60,7 @@ class ManagementController extends GetxController {
   List<ServiceEntity> _allservices = [];
   List<Trainee> _alltrainee = [];
   List<Alluserpaymentmodel> get getallpayments => _allpayments;
+  List<Alluserpaymentmodel> get getsearchpayments => _searchpayments;
   List<Plan> get getallplans => _allplans;
   List<Plan> get getallactiveplans => _allactiveplans;
   List<UserEntity> get getallstaff => _allstaff;
@@ -274,11 +276,28 @@ class ManagementController extends GetxController {
     void getMembershipbyid(int id) async {
       
       List<Membership> d = await managementRepo.viewMembership();
-
+    print('$id');
       if(d.isNotEmpty){
-          Membership x =  d.firstWhere((element) => element.userId==id,);
-        currentmember = x;
-        print(x.toJson().toString());
+
+          try {
+            for(Membership i in d){
+              print(i.userId);
+              if(i.userId == id){
+                  currentmember = i;
+                  print("membership found");
+                  update();
+                  return;
+              }
+            }
+  // d.firstWhereOrNull((element){
+  //   print("membership id ${element.id}");
+  //   return element.userId==id;});
+          // currentmember = x;
+          // print('in memberships ${x!.toJson().toString()}');
+} on Exception catch (e) {
+  // TODO
+  print(e);
+}
     
 
       } 
@@ -353,7 +372,7 @@ class ManagementController extends GetxController {
 
   void viewpayment() async {
     _allpayments = await managementRepo.viewpayment();
-
+    _searchpayments = _allpayments;
     update();
   }
 
@@ -412,6 +431,34 @@ class ManagementController extends GetxController {
         : "Found ${_searchxtremerlist.length} records with keyoword: $keyword";
     update();
   }
+
+
+ void searchpayments(String keyword) {
+    searchmessage = "";
+    if (keyword.isEmpty) {
+    
+        _searchpayments = _allpayments;
+      
+        _searchxtremerlist = _allpersonalxtremer;
+ 
+        _searchxtremerlist = _allgeneralxtremer;
+      
+    } else {
+      _searchpayments = _allpayments.where(
+        (element) {
+          return element.transactionId.toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase());
+        },
+      ).toList();
+    }
+
+    searchmessage = keyword.isEmpty
+        ? ""
+        : "Found ${_searchpayments.length} records with keyoword: $keyword";
+    update();
+  }
+
 
   ///call in search to make personal only
   void personalxtremer() {

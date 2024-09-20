@@ -125,9 +125,15 @@ class AddMemberController extends GetxController {
       return true;
     } else {
       print("in user create in create member: failed to create");
-      usererrormessage = res.entries.first.value;
+     
       userexist = true;
+      if(res.entries.first.key>=400 && res.entries.first.key<500 && phone!=null){
+          _userid = await repo.viewUser(username, pass);
+           usererrormessage = "User found";
+          return true;
+      }
       isloading = false;
+       usererrormessage = res.entries.first.value;
       update();
     }
 
@@ -145,19 +151,19 @@ class AddMemberController extends GetxController {
     return subss;
   }
 
-  Future<String> updateXtremer() async {
+  Future<Map<String,bool>> updateXtremer() async {
     print("In update xtremer");
     if (xtremer != null) {
       try {
         String d = await repo.updateMember(xtremer!);
 
-        return d;
+        return {d:true};
       } on Exception catch (e) {
         // TODO
-        return "error updating member";
+        return {"error updating member":false};
       }
     } else {
-      return "xtremer null";
+      return {"xtremer null":false};
     }
   }
 
@@ -226,10 +232,6 @@ class AddMemberController extends GetxController {
         update();
         print("error");
       }
-
-      // print("$res  ${dummyxtremer.length}");
-      // print(admissionfees!.price);
-      // print(percentprice(selectedplan!.price, selectedplan!.discountPercentage));
     }
 
     update();
@@ -581,7 +583,10 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
  
     // if (xtremer!.XtremerId != null || (authctrl.ismember && authctrl.userid!=null )) {
          print("In renewal submission  fhjd  ${authctrl.userid}");
-  
+         if(authctrl.ismember){
+            xtremer = managectrl.getallXtremer.firstWhere((element) => element.XtremerId.toString()==authctrl.userid,);
+         }
+ 
   Subscription subs = Subscription(
       userId:authctrl.ismember?authctrl.userid!: xtremer!.XtremerId.toString(),
       planId: selectedplan!.id,
@@ -625,7 +630,13 @@ void addServiceusage({bool paymentonline = true,bool isMember = true})async{
             print("in response: 200");
 
           checkpayment(() async {
-            Subscription? subss = await repo.addSubscription(subs);
+            try {
+  Subscription? subss = await repo.addSubscription(subs);
+  xtremer!.isActive = true;
+  String s = await repo.updateMember(xtremer!);
+} on Exception catch (e) {
+  print(" In check payment $e");
+}
           });
         }
         //wait with dialog options

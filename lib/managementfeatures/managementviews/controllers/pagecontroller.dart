@@ -57,6 +57,6 @@ class GetxPageController extends GetxController {
     viewprofile = false;
     isrenewalforms = false;
     iseditforms = false;
-    navpage=0;
+    // navpage=0;
   }
 }

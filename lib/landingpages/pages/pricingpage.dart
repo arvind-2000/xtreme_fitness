@@ -39,7 +39,7 @@ class PricingPage extends StatelessWidget {
                   
                              
                         size: size,
-                        children: managementcontroller.getallplans.asMap().entries.map((e) => SizedBox(
+                        children: managementcontroller.getallplans.where((element) => element.isActive!,).toList().asMap().entries.map((e) => SizedBox(
                                            width: 400,
                        child: CardwithShadow(
                         margin: const EdgeInsets.symmetric(vertical: 32,horizontal: 16),

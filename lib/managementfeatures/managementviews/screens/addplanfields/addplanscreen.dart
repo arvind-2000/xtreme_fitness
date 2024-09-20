@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/dialogswidget.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../../widgets/cardswithshadow.dart';
@@ -174,7 +175,7 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
 
                         
                     widget.onpress();
-                    ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(snack),duration: Durations.extralong1,));
+                    CustomSnackbar(context, snack);
                       
                       Navigator.pop(context);
                         },

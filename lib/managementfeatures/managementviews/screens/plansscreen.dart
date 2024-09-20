@@ -198,7 +198,7 @@ bool isactive = true;
                                                   ],
                                                 ),
                                               ),
-                                              CardBorder(
+                                             e.value.isActive!?CardBorder(
                                                   onpress: () {
                                                     if(authctrl.ismember){
                                                         pagecotrl.changerenewal(true);
@@ -226,7 +226,7 @@ bool isactive = true;
                                                             color: Colors.white),
                                                       )
                                                     ],
-                                                  ))
+                                                  )):SizedBox()
                                             ],
                                           )),
                                     )

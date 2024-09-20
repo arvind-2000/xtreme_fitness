@@ -77,7 +77,7 @@ class DashBoardScreen extends StatelessWidget {
                                       children: [
                                         Icon(Icons.person,size: 14,color:Theme.of(context).colorScheme.onSurface),
                                         SizedBox(width: 6,),
-                                  Text( authctrl.getuser!=null?authctrl.getuser!.roleName??"Member":"Member"),
+                                  Text( authctrl.getuser!=null?'${authctrl.getuser!.roleName}\n${authctrl.getuser!.userName}' ??"Member ":"Member"),
                                       ],
                                     ))
                                 ],) 

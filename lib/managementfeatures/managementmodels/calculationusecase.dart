@@ -3,6 +3,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
+import 'dart:html' as html;
 
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
@@ -154,10 +155,24 @@ double percentprice(double? actualprice,double? dis){
   );
 
 
+  
     final pdfData = await pdf.save();
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdfData,
-    );
+  
+    // Create a blob from the PDF bytes
+  final blob = html.Blob([pdfData], 'application/pdf');
+
+  // Create a download link
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute('download', '${paymentDetails.transactionId}.pdf')
+    ..click();
+
+  // Cleanup
+  html.Url.revokeObjectUrl(url);
+  
+    // await Printing.layoutPdf(
+    //   onLayout: (PdfPageFormat format) async => pdfData,
+    // );
 
     // final outputFile = await _getOutputFile();
     // final file = File(outputFile.path);

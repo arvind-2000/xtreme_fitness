@@ -29,8 +29,8 @@ class _LoginDialogMobileState extends State<LoginDialogMobile> {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
         child: SizedBox(
-          height: 400,
-          width: 200,
+          height: 600,
+          width: double.maxFinite,
           child: Cardonly(
               margin: EdgeInsets.zero,
               color: Colors.grey[800]!.withOpacity(0.6),

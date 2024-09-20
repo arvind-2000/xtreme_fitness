@@ -25,15 +25,13 @@ class MemberServiceHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ManagementController>(
       builder: (managectrl) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: Cardonly(
-            margin: EdgeInsets.symmetric(vertical: 16,horizontal: 16),
-            padding: EdgeInsets.symmetric(vertical: 32,horizontal: 32),
-        
+        return Expanded(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1000),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                
                 HeadingText("Service History"),
                 SizedBox(height: 16,),
                 xtremer==null || userid==null?Center(child:  Text("No Service Used")) :
@@ -48,19 +46,12 @@ class MemberServiceHistory extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Payment Details"),
-                          Text("${e.paymentType}"),
+                          Text("${e.paymentType}",style: const TextStyle(fontSize: 16),),
                           SizedBox(height:10),
                            Row(
                              children: [
-                               Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Text("Date"),
-                                      SizedBox(height: 16,),
-                                                                         Text("${e.paymentDate.day} / ${e.paymentDate.month} /${e.paymentDate.year}"),
-                                 ],
-                               ),
-                               SizedBox(width: 16,),
+                      
+                
                                   Column(
                                  crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
@@ -69,7 +60,7 @@ class MemberServiceHistory extends StatelessWidget {
                                        Text("Transaction ID"),
                                        SizedBox(width: 10,),
                                        IconButton(onPressed: (){
-        
+                    
                                             Clipboard.setData(ClipboardData(text: "${e.transactionId}"));
                                             CustomSnackbar(context, "Text copied to Clipboard");
                                        }, icon: Icon(Icons.copy,size: 14,
@@ -85,16 +76,26 @@ class MemberServiceHistory extends StatelessWidget {
                           SizedBox(height:10),
                           ],
                                                       ),
-                                                      CardBorder(
-                                                        onpress: (){
-                                                          createAndPrintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true));
-                                                        },
-                                                        child: Text("print PDF")),
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                        children: [
+                                                          CardBorder(
+                                                            margin: EdgeInsets.zero,
+                                                            color: Colors.green,
+                                                            onpress: (){
+                                                              createAndPrintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true));
+                                                            },
+                                                            child: Text("print PDF")),
+                                                            SizedBox(height: 16,),
+                                                              Text("${e.paymentDate.day} / ${e.paymentDate.month} /${e.paymentDate.year}")
+                                                        ],
+                                                      ),
                       ],
                     )),).toList()
                 ),
               ],
-            )),
+            ),
+          ),
         );
       }
     );
