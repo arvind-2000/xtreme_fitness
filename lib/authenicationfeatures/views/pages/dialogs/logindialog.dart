@@ -29,7 +29,7 @@ class _LoginDialogState extends State<LoginDialog> {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
         child: SizedBox(
-          height: 600,
+          height: isSignup ? 500 : 600,
           width: 500,
           child: Cardonly(
               margin: EdgeInsets.zero,

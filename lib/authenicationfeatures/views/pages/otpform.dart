@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -54,8 +55,13 @@ class PhoneInputScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         IntlPhoneField(
+                          pickerDialogStyle: PickerDialogStyle(width: 500),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    const BorderSide(color: Colors.green)),
                             hoverColor: Colors.amber,
                             labelStyle: const TextStyle(
                                 color: Color.fromARGB(255, 98, 96, 96)),
@@ -115,15 +121,6 @@ class PhoneInputScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    // Handle sign up with email
-                  },
-                  child: const Text(
-                    "Signup with email",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ],
             ),
           ),

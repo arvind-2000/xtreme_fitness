@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialogmobile.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
-import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';

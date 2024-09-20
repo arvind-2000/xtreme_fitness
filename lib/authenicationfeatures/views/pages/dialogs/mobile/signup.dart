@@ -3,24 +3,24 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
+import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
+import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
-import '../../../authentifeatures/models/usecasesimpl.dart';
-import '../../../widgets/headingtext.dart';
-import '../../../widgets/textformwidget.dart';
-
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({
+class SignUpPageMobile extends StatefulWidget {
+  const SignUpPageMobile({
     super.key,
     this.changelogin,
   });
   final Function(bool)? changelogin;
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignUpPageMobile> createState() => _SignUpPageMobileState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageMobileState extends State<SignUpPageMobile> {
   final _formkey = GlobalKey<FormState>();
 
   final TextEditingController _confirmotp = TextEditingController();
@@ -72,56 +72,33 @@ class _SignUpPageState extends State<SignUpPage> {
           alignment: Alignment.center,
           // color: Theme.of(context).colorScheme.primary,
           child: SizedBox(
-            width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                // Get.offAndToNamed('/home');
-                                authctrl.signupclose();
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          'assets/logo2.png',
-                          height: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Center(
-                        child: authctrl.numberexists != null &&
-                                authctrl.numberexists == false
-                            ? const HeadingText(
-                                'OTP Verification',
-                                size: 30,
-                              )
-                            : const HeadingText(
-                                'Membership Registration',
-                                size: 30,
-                              ),
-                      ),
-                    ],
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/logo2.png',
+                    height: Responsive.isTablet(context) ? 60 : 40,
                   ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: authctrl.numberexists != null &&
+                          authctrl.numberexists == false
+                      ? HeadingText(
+                          'OTP Verification',
+                          size: Responsive.isTablet(context) ? 25 : 16,
+                        )
+                      : HeadingText(
+                          'Membership Registration',
+                          size: Responsive.isTablet(context) ? 25 : 16,
+                        ),
                 ),
                 Expanded(
                   child: Form(
@@ -181,6 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ? Column(
                                     children: [
                                       const Text(
+                                              textAlign: TextAlign.justify,
                                               "We have send an OTP to your number")
                                           .animate()
                                           .slideY(begin: 1, end: 0),
