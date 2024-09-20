@@ -8,10 +8,12 @@ import '../../../widgets/textformwidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
-    super.key, this.changepass, this.changesignup,
+    super.key,
+    this.changepass,
+    this.changesignup,
   });
   final Function(bool)? changepass;
-    final Function(bool)? changesignup;
+  final Function(bool)? changesignup;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -74,147 +76,149 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: Form(
-                  key: _formkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedOpacity(
-                        opacity: authctrl.loginerrortext == null ? 0 : 1,
-                        duration: Durations.extralong1,
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          child: Cardonly(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(0.5),
-                              child: Center(
-                                  child: Text(authctrl.loginerrortext ?? "",
-                                      textAlign: TextAlign.center))),
-                        ),
-                      ),
-                      TextFieldWidget(
-                        hint: "Username",
-                        icon: const Icon(Icons.person),
-                        controller: _emailcontroller,
-                        focusnode: _emailfocus,
-                        enabletext: !authctrl.loginloading,
-                        nextfocusnode: _passwordfocus,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFieldWidget(
-                        hint: "Password",
-                        focusnode: _passwordfocus,
-                        icon: const Icon(Icons.lock),
-                        obscure: true,
-                        enabletext: !authctrl.loginloading,
-                        fieldsubmitted: () {
-                          if (_formkey.currentState!.validate()) {
-                            authctrl
-                                .authenticate(_emailcontroller.text,
-                                    _passwordcontroller.text)
-                                .then(
-                              (value) {
-                                if (!value.entries.first.key) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                          content: Text(
-                                    "Error Logging in",
-                                  )));
-                                }
-                              },
-                            );
-                          }
-                        },
-                        controller: _passwordcontroller,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      FittedBox(
-                        alignment: Alignment.bottomLeft,
-                        fit: BoxFit.fitWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: authctrl.loginloading
-                                  ? null
-                                  : () {
-
-                                      authctrl.disposelogin();
-                                      widget.changepass!(true);
-                                      // Get.offNamed('/forgotpassword');
-                                    },
-                              child: Text(
-                                "Forgot Password?",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
+            Center(
+              child: Image.asset(
+                'assets/logo2.png',
+                height: 60,
+              ),
+            ),
+            Form(
+                key: _formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedOpacity(
+                      opacity: authctrl.loginerrortext == null ? 0 : 1,
+                      duration: Durations.extralong1,
+                      child: SizedBox(
                         width: double.maxFinite,
                         child: Cardonly(
-                          margin: EdgeInsets.zero,
-                          // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                          onpress: authctrl.loginloading
-                              ? null
-                              : () {
-                                  if (_formkey.currentState!.validate()) {
-                                    authctrl
-                                        .authenticate(_emailcontroller.text,
-                                            _passwordcontroller.text)
-                                        .then(
-                                      (value) {
-                                        if (!value.entries.first.key) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                            "Error Logging in",
-                                          )));
-                                        }
-                                      },
-                                    );
-                                  }
-                                },
-                          color: Theme.of(context).colorScheme.secondary,
-
-                          padding: const EdgeInsets.all(16),
-                          child: Center(
-                            child: authctrl.loginloading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                    backgroundColor: Colors.transparent,
-                                  )
-                                : const Text('Log in',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    )),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(0.5),
+                            child: Center(
+                                child: Text(authctrl.loginerrortext ?? "",
+                                    textAlign: TextAlign.center))),
+                      ),
+                    ),
+                    TextFieldWidget(
+                      hint: "Username",
+                      icon: const Icon(Icons.person),
+                      controller: _emailcontroller,
+                      focusnode: _emailfocus,
+                      enabletext: !authctrl.loginloading,
+                      nextfocusnode: _passwordfocus,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFieldWidget(
+                      hint: "Password",
+                      focusnode: _passwordfocus,
+                      icon: const Icon(Icons.lock),
+                      obscure: true,
+                      enabletext: !authctrl.loginloading,
+                      fieldsubmitted: () {
+                        if (_formkey.currentState!.validate()) {
+                          authctrl
+                              .authenticate(_emailcontroller.text,
+                                  _passwordcontroller.text)
+                              .then(
+                            (value) {
+                              if (!value.entries.first.key) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                        content: Text(
+                                  "Error Logging in",
+                                )));
+                              }
+                            },
+                          );
+                        }
+                      },
+                      controller: _passwordcontroller,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FittedBox(
+                      alignment: Alignment.bottomLeft,
+                      fit: BoxFit.fitWidth,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: authctrl.loginloading
+                                ? null
+                                : () {
+                                    authctrl.disposelogin();
+                                    widget.changepass!(true);
+                                    // Get.offNamed('/forgotpassword');
+                                  },
+                            child: Text(
+                              "Forgot Password?",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Cardonly(
+                        margin: EdgeInsets.zero,
+                        // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                        onpress: authctrl.loginloading
+                            ? null
+                            : () {
+                                if (_formkey.currentState!.validate()) {
+                                  authctrl
+                                      .authenticate(_emailcontroller.text,
+                                          _passwordcontroller.text)
+                                      .then(
+                                    (value) {
+                                      if (!value.entries.first.key) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
+                                          "Error Logging in",
+                                        )));
+                                      }
+                                    },
+                                  );
+                                }
+                              },
+                        color: Theme.of(context).colorScheme.secondary,
+
+                        padding: const EdgeInsets.all(16),
+                        child: Center(
+                          child: authctrl.loginloading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  backgroundColor: Colors.transparent,
+                                )
+                              : const Text('Log in',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )),
-            ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -234,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: authctrl.loginloading
                       ? null
                       : () {
-                        authctrl.disposelogin();
+                          authctrl.disposelogin();
                           // Get.offNamed('/signup');
                           widget.changesignup!(true);
                         },

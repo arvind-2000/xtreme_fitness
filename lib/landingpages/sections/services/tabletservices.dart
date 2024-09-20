@@ -23,7 +23,7 @@ class ServicesTablet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Expanded(
-              flex: 3,
+              flex: 35,
               child: Column(
                 children: [
                   SizedBox(
@@ -41,7 +41,7 @@ class ServicesTablet extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 7,
+              flex: 70,
               child: SingleChildScrollView(
                 child: Column(
                   children: [

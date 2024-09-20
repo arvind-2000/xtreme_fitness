@@ -5,14 +5,14 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/signup.dart';
 
 import '../../../../widgets/card.dart';
 
-class LoginDialog extends StatefulWidget {
-  const LoginDialog({super.key, this.signupdialog});
+class LoginDialogMobile extends StatefulWidget {
+  const LoginDialogMobile({super.key, this.signupdialog});
   final bool? signupdialog;
   @override
-  State<LoginDialog> createState() => _LoginDialogState();
+  State<LoginDialogMobile> createState() => _LoginDialogMobileState();
 }
 
-class _LoginDialogState extends State<LoginDialog> {
+class _LoginDialogMobileState extends State<LoginDialogMobile> {
   bool isforgot = false;
   bool isSignup = false;
 
@@ -29,8 +29,8 @@ class _LoginDialogState extends State<LoginDialog> {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
         child: SizedBox(
-          height: 600,
-          width: 500,
+          height: 400,
+          width: 200,
           child: Cardonly(
               margin: EdgeInsets.zero,
               color: Colors.grey[800]!.withOpacity(0.6),
