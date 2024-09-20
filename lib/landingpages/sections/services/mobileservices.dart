@@ -6,7 +6,6 @@ import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../controllers/getxcontrol.dart';
 
 class ServicesMobile extends StatelessWidget {
@@ -47,6 +46,7 @@ class ServicesMobile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

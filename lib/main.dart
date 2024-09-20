@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/otpform.dart';
-import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
 import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
@@ -44,11 +43,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       unknownRoute: GetPage(
         name: '/unknownPage',
-        page: () => NotfoundPage(),
+        page: () => const NotfoundPage(),
       ),
       getPages: [
         GetPage(
-            name: '/',
+            name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 
