@@ -43,12 +43,12 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       unknownRoute: GetPage(
-        name: '/unknownPage',
-        page: () => NotfoundPage(),
+        name: '/',
+        page: () => MainPage(),
       ),
       getPages: [
         GetPage(
-            name: '/',
+            name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         //     page: () => const LandingHomePage(index: 4,),
         //     transition: Transition.noTransition),
         GetPage(
-            name: '/',
+            name: '/home',
             page: () => const MainPage(),
             transition: Transition.noTransition),
         // GetPage(

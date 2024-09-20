@@ -87,7 +87,7 @@ class DashBoardScreen extends StatelessWidget {
           //   width:double.maxFinite,
           //   color: Theme.of(context).colorScheme.secondary.withOpacity(0.3), 
           // ),
-                   authctrl.ismember? Expanded(child:pagectrl.navpage ==0? const DashBoardMemberScreen(): pagectrl.navpage == 3?ServicesScreen():pagectrl.navpage == 5?PlansScreen():RenewalScreen()):Expanded(
+                   authctrl.ismember? Expanded(child:pagectrl.navpage == 3?ServicesScreen():PlansScreen()):Expanded(
                            child: pagectrl.navpage ==0? const DashBoardScreen1():pagectrl.navpage ==1?const AnalyticsScreen():pagectrl.navpage==2?AddMemberScreen():pagectrl.navpage==3?const ServicesScreen():pagectrl.navpage==4?const AddStaffScreen():pagectrl.navpage==5?const PlansScreen():pagectrl.navpage==6?const RenewalScreen():pagectrl.navpage==10?const AddTrainerScreen():const EditUserScreen(),
                          )
                         ],
