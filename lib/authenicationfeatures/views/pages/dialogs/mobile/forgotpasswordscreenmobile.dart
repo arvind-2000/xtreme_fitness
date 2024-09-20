@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
+import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
+import 'package:xtreme_fitness/widgets/card.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
+import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
-import '../../../authentifeatures/models/usecasesimpl.dart';
-import '../../../widgets/card.dart';
-import '../../../widgets/headingtext.dart';
-import '../../../widgets/textformwidget.dart';
-import 'createmembers.dart';
-
-class ForgotPassWordScreen extends StatefulWidget {
-  const ForgotPassWordScreen({super.key, this.changelogin});
+class ForgotPassWordScreenMobile extends StatefulWidget {
+  const ForgotPassWordScreenMobile({super.key, this.changelogin});
   final Function(bool)? changelogin;
   @override
-  State<ForgotPassWordScreen> createState() => _ForgotPassWordScreenState();
+  State<ForgotPassWordScreenMobile> createState() =>
+      _ForgotPassWordScreenMobileState();
 }
 
-class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
+class _ForgotPassWordScreenMobileState
+    extends State<ForgotPassWordScreenMobile> {
   final _formkey = GlobalKey<FormState>();
   final _formkeyrenewpass = GlobalKey<FormState>();
   bool? _otpcorrect;
@@ -68,21 +69,6 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                          onPressed: authctrl.otploading
-                              ? null
-                              : () {
-                                  authctrl.disposeforgotpass();
-                                  Navigator.pop(context);
-                                  // Get.offAndToNamed('/login');
-                                },
-                          icon: const Icon(Icons.close)),
-                      // SizedBox(height: 10,),
-                    ],
-                  ),
                   Center(
                     child: Image.asset(
                       'assets/logo2.png',
@@ -90,7 +76,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialogmobile.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
@@ -110,7 +109,7 @@ class _HomeDesktopState extends State<HomeMobile> {
                     GradientButton(
                         onpress: () {
                           Get.dialog(
-                            barrierDismissible: false,
+                            barrierDismissible: true,
                             const LoginDialogMobile(
                               signupdialog: true,
                             ),
