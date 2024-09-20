@@ -82,15 +82,15 @@ class MemberProfilescreen extends StatelessWidget {
                                   const SizedBox(height: 20,),
                                   const Text("Designation"),
                                      const SizedBox(height: 10,),
-                                  Text("Member",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                  const Text("Member",style: TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 20,),
                                   const Text("Address"),
                                      const SizedBox(height: 10,),
-                                  Text(user!.address??"",style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(user!.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 20,),
                                   const Text("Email"),
                                      const SizedBox(height: 10,),
-                                  Text(user!.email??"",style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(user!.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   const SizedBox(height: 16,),
                                     // CardwithShadow(
                                     //   color: Colors.blue[300],
@@ -107,32 +107,32 @@ class MemberProfilescreen extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: CardwithShadow(
-                                                   margin: EdgeInsets.only(right: 16),
+                                                   margin: const EdgeInsets.only(right: 16),
                                               child: Column(
                                               children: [
-                                                Text("Plan"),
+                                                const Text("Plan"),
                                             
-                                                SizedBox(height: 16,),
+                                                const SizedBox(height: 16,),
                                                 Text(user!.category!=null?"${user!.category}":""),
-                                                SizedBox(height: 16,),
+                                                const SizedBox(height: 16,),
                                           
                                               ],
                                             )),
                                           ),
                                                     Expanded(
                                             child: CardwithShadow(
-                                              margin: EdgeInsets.only(right: 16),
+                                              margin: const EdgeInsets.only(right: 16),
                                               child: Column(
                                               children: [
-                                                Text("BMI Used"),
+                                                const Text("BMI Used"),
                                             
-                                                SizedBox(height: 16,),
+                                                const SizedBox(height: 16,),
                                                 Text(managectrl.currentmember!=null?managectrl.currentmember!.bmiUsed!?"Used":"false":"Not Used"),
-                                                SizedBox(height: 16,),
+                                                const SizedBox(height: 16,),
                                               
                                               ],
                                             )),
-                                          ),          Expanded(
+                                          ),          const Expanded(
                                             child: CardwithShadow(
                                                    margin: EdgeInsets.only(right: 16),
                                               child: Column(
