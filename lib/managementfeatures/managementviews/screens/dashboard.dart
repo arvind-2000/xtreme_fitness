@@ -17,7 +17,6 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../widgets/navbar.dart';
 import '../controllers/pagecontroller.dart';
-import 'dashboardmemberpage/dashboard1.dart';
 
 class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({super.key});
@@ -103,13 +102,9 @@ class DashBoardScreen extends StatelessWidget {
                         // ),
                         authctrl.ismember
                             ? Expanded(
-                                child: pagectrl.navpage == 0
-                                    ? const DashBoardMemberScreen()
-                                    : pagectrl.navpage == 3
-                                        ? const ServicesScreen()
-                                        : pagectrl.navpage == 5
-                                            ? const PlansScreen()
-                                            : const RenewalScreen())
+                                child: pagectrl.navpage == 3
+                                    ? const ServicesScreen()
+                                    : const PlansScreen())
                             : Expanded(
                                 child: pagectrl.navpage == 0
                                     ? const DashBoardScreen1()

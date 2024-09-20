@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/otpform.dart';
-import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -42,8 +41,8 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       unknownRoute: GetPage(
-        name: '/unknownPage',
-        page: () => const NotfoundPage(),
+        name: '/',
+        page: () => const MainPage(),
       ),
       getPages: [
         GetPage(
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
         //     page: () => const LandingHomePage(index: 4,),
         //     transition: Transition.noTransition),
         GetPage(
-            name: '/',
+            name: '/home',
             page: () => const MainPage(),
             transition: Transition.noTransition),
         // GetPage(
