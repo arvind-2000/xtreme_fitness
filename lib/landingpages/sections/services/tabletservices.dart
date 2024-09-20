@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
@@ -177,7 +178,7 @@ class ServicesTablet extends StatelessWidget {
                     SizedBox(
                       child: Cardonly(
                           margin: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 0),
+                              vertical: 16, horizontal: 100),
                           padding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           color: Colors.orange,
@@ -201,8 +202,7 @@ class ServicesTablet extends StatelessWidget {
                                     ),
                                     Cardonly(
                                         onpress: () {
-                                          Get.toNamed("/signup");
-                                        },
+                                          Get.dialog(const LoginDialog(signupdialog: true,));},
                                         margin: EdgeInsets.zero,
                                         color: Theme.of(context)
                                             .colorScheme
@@ -230,7 +230,7 @@ class ServicesTablet extends StatelessWidget {
                                     ])),
                                     Cardonly(
                                         onpress: () {
-                                          Get.toNamed("/signup");
+                                          Get.dialog(const LoginDialog(signupdialog: true,));
                                         },
                                         margin: EdgeInsets.zero,
                                         color: Theme.of(context)

@@ -27,7 +27,7 @@ class ContactDesktop extends StatelessWidget {
                 flex: 5,
                 child: Container(
                   padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
-                  color: Colors.black,
+                  color: const Color.fromARGB(255, 15, 15, 15),
                   child: MediaQuery.sizeOf(context).width < mobilescreen
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

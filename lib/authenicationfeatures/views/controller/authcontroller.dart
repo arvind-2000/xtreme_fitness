@@ -24,7 +24,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
 
   int? otp;
   bool otploading = false;
@@ -110,20 +110,18 @@ class GetxAuthController extends GetxController {
     ).then(
       (value) {},
     );
-      Get.offAllNamed('/home');
     Future.delayed(const Duration(seconds: 2)).then((v) {
       _authentication = false;
       loginloading = false;
       _user = null;
       authentications();
-      Get.offAllNamed('/home');
       update();
     });
   }
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      Get.offAllNamed("/home");
+      // Get.offAllNamed("/home");
     }
   }
 

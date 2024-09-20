@@ -305,6 +305,18 @@ class ManagementController extends GetxController {
     }
   }
 
+
+  Xtremer? getxtremerbyId(int id){
+
+      return _allxtremer.firstWhereOrNull((element) {
+        return element.XtremerId == id;
+      },);
+
+
+  }
+
+
+
   void getStaff() async {
     // _allstaff = dummystaff;
     _allstaff = await managementRepo.viewStaff();
@@ -356,6 +368,16 @@ class ManagementController extends GetxController {
       getplans();
     });
   }
+
+
+  Future<String> updateStaffs(UserEntity staff) async {
+    String v = await managementRepo.updateStaff(staff);
+  
+    getStaff();
+    return v;
+  }
+
+
 
   void searchusers(String keyword) {
     searchmessage = "";
@@ -412,6 +434,10 @@ class ManagementController extends GetxController {
     _searchxtremerlist = _allxtremer;
     update();
   }
+
+  
+
+
 
 //   void exXtremer(){
 

@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/traineeprofilescreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
@@ -17,6 +18,7 @@ import '../../../authentifeatures/domain/userentity.dart';
 import '../../../config/const.dart';
 import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
+import '../../../widgets/normaltext.dart';
 import '../../../widgets/titletext.dart';
 import '../widgets/dialogswidget.dart';
 
@@ -30,6 +32,7 @@ class AddStaffScreen extends StatefulWidget {
 class _AddStaffScreenState extends State<AddStaffScreen> {
   bool isStaffadd = false;
     final GlobalKey<FormState>  _globalkey = GlobalKey<FormState>();
+    final GlobalKey<FormState>  _globalkey2 = GlobalKey<FormState>();
   final TextEditingController _usernamecontroller  = TextEditingController();
   final TextEditingController _fullnamecontroller  = TextEditingController();
   final TextEditingController _passwordcontroller  = TextEditingController();
@@ -39,6 +42,15 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
   addstaff(){
     setState(() {
       isStaffadd = !isStaffadd;
+    });
+  }
+
+  bool isactive = true;
+  bool _isactive = true;
+
+  void changeIsActive(){
+    setState(() {
+      isactive = !isactive;
     });
   }
   // UserEntity? _user; 
@@ -219,8 +231,19 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         ],
                       ),
                       const SizedBox(height: 16,),
+                                         managectrl.ismember?const SizedBox():Row(
+              children: [
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text: "Active",color: isactive?Theme.of(context).colorScheme.secondary:null,)),
+                const SizedBox(width: 5,),
+                Cardonly(
+                  onpress: changeIsActive,
+                  child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
+              ],
+            ),
                       Expanded(
-                        child: GridView.builder(
+                        child: GridView(
                           shrinkWrap: true,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
@@ -229,8 +252,8 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     childAspectRatio:  size<500?1:3/3.5,
                                 
                                     ),
-                          itemCount: managectrl.getallstaff.length,
-                          itemBuilder: (c,i){
+                          
+                          children:managectrl.getallstaff.where((element) => element.isActive==isactive,).map((e){
                           return CardwithShadow(
                             margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
                             child: Column(
@@ -242,13 +265,13 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     const SizedBox(height: 20,),
                                     CircleAvatar(backgroundColor: Colors.grey[100],child: const Icon(Icons.person,size: 30,color: Colors.grey,),),
                                     const SizedBox(height: 20,),
-                                    TitleText(managectrl.getallstaff[i].userName),
+                                    TitleText(e.userName!),
                                     const SizedBox(height: 10,),
                                     const Text("phone"),
-                                    Text(managectrl.getallstaff[i].mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(e.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 6,),
                                        const Text("Designation"),
-                                    Text(managectrl.getallstaff[i].roleName??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                    Text(e.roleName??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                                   ],
                                                         ),
                                 ),
@@ -260,66 +283,115 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        const CardwithShadow(
-                                          padding: EdgeInsets.all(8),
-                                     
-                                          child: Icon(Icons.edit,color: Colors.white,size: 12,)),
+                                
                                         const SizedBox(width: 6,),
                                         CardwithShadow(
                                           onpress: (){
-                                            showDialog(context: context, builder: (context) => PageDialog(child:  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TitleText("Delete"),
-                                IconButton(onPressed: (){
-                                  Navigator.pop(context);
-                                }, icon: const Icon(Icons.close))
-                              ],
-                            ),
-                            const SizedBox(height: 20,),
-                                      
-                            const Text("User Name"),
-                            const SizedBox(height: 5,),
-                            Text(managectrl.getallstaff[i].userName,style: const TextStyle(fontWeight: FontWeight.bold),),
-                            Expanded(
-                        
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Expanded(child: CardwithShadow(
-                                    color: Theme.of(context).colorScheme.error.withOpacity(0.6),
-                                    margin: const EdgeInsets.all(16),
-                                    child: const Text("Are you sure you want to delete this user?\nPress Yes to confirm",textAlign: TextAlign.center,)))
-                                ],
-                              ),
-                            )
-                          ],
-                                                  ), no: (){
-                                                Navigator.pop(context);
-                                            }, yes: (){
-                                              Navigator.pop(context);
-                                            }),);
+                                            _phonecontroller.text = e.mobileNumber!;
+                                            _usernamecontroller.text = e.userName!;
+
+                                            
+                                            showDialog(context: context, builder: (context) => StatefulBuilder(
+                                              builder: (context,s) {
+                                                return PageDialog(child:  Column(
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                const TitleText("Edit Staff"),
+                                                                                IconButton(onPressed: (){
+                                                                                  Navigator.pop(context);
+                                                                                }, icon: const Icon(Icons.close))
+                                                                              ],
+                                                                            ),
+                                                                            const SizedBox(height: 20,),
+                                                                            SizedBox(
+                                                                              width: double.maxFinite,
+                                                                              child: Form(
+                                                                                key: _globalkey2,
+                                                                                child: Column(
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                   TextFieldWidget(hint: "Phone", controller: _phonecontroller),
+                                                   const SizedBox(height: 10,),
+                                                  //  TextFieldWidget(hint: "Full Name", controller: _fullnamecontroller),
+                                                   const SizedBox(height: 10,),
+                                                   TextFieldWidget(hint: "Username", controller: _usernamecontroller),],
+                                                                              )),
+                                                                            ),
+                                                                                
+                                                                                      SizedBox(
+                                                                              height: 20,
+                                                                            ),
+                                                                            _isactive
+                                                                                ? const Text("Staff Active")
+                                                                                : const Text("Staff InActive"),
+                                                                            Switch(
+                                                                              activeColor: Colors.blue,
+                                                                              hoverColor: Colors.blue.withOpacity(0.5),
+                                                                              activeTrackColor: Colors.white,
+                                                                              inactiveTrackColor: Colors.grey[300],
+                                                                              value: _isactive,
+                                                                              onChanged: (value) {
+                                                                                s(() {
+                                                                                  _isactive = value;
+                                                                                });
+                                                                              },
+                                                                            ),
+                                                                         
+                                                                          
+                                                                            Expanded(
+                                                                        
+                                                                              child: Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                children: [
+                                                                                  Expanded(child: CardwithShadow(
+                                                                                    color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+                                                                                    margin: const EdgeInsets.all(16),
+                                                                                    child: const Text("Are you sure you want to edit this user?\nPress Yes to confirm",textAlign: TextAlign.center,)))
+                                                                                ],
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                      ), no: (){
+                                                    Navigator.pop(context);
+                                                }, yes: (){
+                                                    if(_globalkey2.currentState!.validate()){
+                                                       managectrl.updateStaffs(UserEntity(userName:_usernamecontroller.text,id: e.id,mobileNumber: _phonecontroller.text,isActive: _isactive,roleName: "Staff", passwordHash: e.passwordHash));
+                                                
+                                                      CustomSnackbar(context, "stafff updated");
+                                                
+                                                    Navigator.pop(context);
+                                                    }
+                                                                                         
+                                                });
+                                              }
+                                            ),);
                                           },
                                             padding: const EdgeInsets.all(8),
                                           color: Colors.red[300]!.withOpacity(0.3),
-                                          child: const Icon(Icons.delete,color: Colors.white,size: 12,)),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.edit,color: Colors.white,size: 12,),
+                                              SizedBox(width: 6,),
+                                              Text("Edit")
+                                            ],
+                                          )),
                                     ],),
                                     const SizedBox(height: 16,),
-                                     CardwithShadow(
-                                      onpress: (){
+                                    //  CardwithShadow(
+                                    //   onpress: (){
                                          
-                                            // _user = managectrl.getallstaff[i];
-                                      },
-                                      color: const Color.fromARGB(255, 175, 210, 238),
-                                      child: const Text("View"))
+                                    //         // _user = managectrl.getallstaff[i];
+                                    //   },
+                                    //   color: const Color.fromARGB(255, 175, 210, 238),
+                                    //   child: const Text("View"))
                                   ],
                                 )
                               ],
                             )).animate().slideX(begin: 1,end: 0);
-                        }),
+                        }).toList()),
                       )
                     ],
                   ),

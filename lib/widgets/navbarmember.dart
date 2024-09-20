@@ -9,7 +9,6 @@ import '../managementfeatures/managementviews/widgets/dialogswidget.dart';
 import 'card.dart';
 
 import 'headingtext.dart';
-import 'titletext.dart';
 
 class NavBarMember extends StatelessWidget {
   const NavBarMember({

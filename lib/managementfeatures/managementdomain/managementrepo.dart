@@ -20,7 +20,7 @@ import 'entities.dart/xtremer.dart';
 abstract class ManagementRepo {
   ///adding staff for management
   Future<Map<int, String>> addStaff(Staff staff);
-  Future<String> updateStaff(Staff staff);
+  Future<String> updateStaff(UserEntity staff);
   Future<String> deleteStaff(Staff staff);
   Future<List<UserEntity>> viewStaff();
 
@@ -96,4 +96,5 @@ abstract class ManagementRepo {
   Future<List<Trainee>> viewTrainee(int id);
 
   Future<List<Membership>> viewMembership();
+  Future<String> editMembership(Membership membership);
 }

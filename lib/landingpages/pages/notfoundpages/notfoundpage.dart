@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/landingpages/pages/footerpage.dart';
-import 'package:xtreme_fitness/landingpages/pages/landingnavbarpage.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../../widgets/card.dart';
 
 class NotfoundPage extends StatelessWidget {
   const NotfoundPage({super.key});

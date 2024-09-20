@@ -693,9 +693,33 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateStaff(Staff staff) {
-    // TODO: implement updateStaff
-    throw UnimplementedError();
+  Future<String> updateStaff(UserEntity staff) async{
+     final uri = Uri.parse(
+        '$api/api/Users/${staff.id}'); // Replace with your API endpoint
+
+    // Convert the Service instance to JSON
+    final body = jsonEncode(staff.toJson());
+
+    // Send the POST request
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
+
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return 'Staff updated successfully.';
+      } else {
+        return 'Failed to update staff. Status code: ${response.statusCode}';
+        // print('Response body: ${response.body}');
+      }
+    } on Exception {
+      return "Error updating staff.";
+    }
   }
 
   //payments
@@ -1261,5 +1285,35 @@ class ManagementrepoImpl implements ManagementRepo {
     }
 
     return [];
+  }
+  
+  @override
+  Future<String> editMembership(Membership membership) async{
+       final uri = Uri.parse('$api/api/Membership/${membership.id}');
+
+    // Convert the Plan instance to JSON
+    final body = jsonEncode(membership.toJson());
+
+    // Send the PUT request
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
+
+      // Check the response status
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return "Membership Updated Successfully";
+      } else {
+        return 'Failed to update membership. Status code: ${response.statusCode}';
+        // print('Response body: ${response.body}');
+      }
+    } on Exception {
+      // TODO
+      return "Error updating membership";
+    }
   }
 }

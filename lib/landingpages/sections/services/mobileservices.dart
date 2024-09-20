@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../controllers/getxcontrol.dart';
 
 class ServicesMobile extends StatelessWidget {
@@ -193,7 +194,7 @@ class ServicesMobile extends StatelessWidget {
                                     ),
                                     Cardonly(
                                         onpress: () {
-                                          Get.toNamed("/signup");
+                                       Get.dialog(const LoginDialog(signupdialog: true,));
                                         },
                                         margin: EdgeInsets.zero,
                                         color: Theme.of(context)
@@ -222,7 +223,7 @@ class ServicesMobile extends StatelessWidget {
                                     ])),
                                     Cardonly(
                                         onpress: () {
-                                          Get.toNamed("/signup");
+                                           Get.dialog(const LoginDialog(signupdialog: true,));
                                         },
                                         margin: EdgeInsets.zero,
                                         color: Theme.of(context)
