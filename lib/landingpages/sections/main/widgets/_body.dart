@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
-import 'package:xtreme_fitness/responsive/responsive.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -18,9 +17,9 @@ class Body extends StatelessWidget {
       landctrl.setNavIndex(context);
     });
     return PageView.builder(
-      physics: Responsive.isMobile(context) || Responsive.isTablet(context)
-          ? const NeverScrollableScrollPhysics()
-          : null,
+      // physics: Responsive.isMobile(context) || Responsive.isTablet(context)
+      //     ? const NeverScrollableScrollPhysics()
+      //     : null,
       pageSnapping: false,
       scrollDirection: Axis.vertical,
       controller: landctrl.controller,

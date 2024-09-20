@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/forgotpasswordscreenmobile.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/loginscreen.dart';
@@ -32,7 +31,7 @@ class _LoginDialogMobileState extends State<LoginDialogMobile> {
       return Dialog(
         insetPadding: Responsive.isTablet(context)
             ? EdgeInsets.zero
-            : const EdgeInsets.symmetric(vertical: 250, horizontal: 50),
+            : const EdgeInsets.symmetric(vertical: 200, horizontal: 50),
         child: SizedBox(
           height: Responsive.isTablet(context) ? 500 : null,
           width: Responsive.isTablet(context) ? 400 : null,
