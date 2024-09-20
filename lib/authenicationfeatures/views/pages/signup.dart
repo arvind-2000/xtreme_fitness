@@ -61,8 +61,6 @@ class _SignUpPageState extends State<SignUpPage> {
     _phonecontroller.dispose();
 
     _phonefocus.dispose();
-
- 
   }
 
   @override
@@ -101,6 +99,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 10,
                 ),
+                Image.asset(
+                  'assets/logo2.png',
+                  height: 60,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
                 Expanded(
                   child: Form(
                       key: _formkey,
@@ -111,7 +116,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 30,
                             ),
-
                             authctrl.numberexists != null &&
                                     authctrl.numberexists == false
                                 ? const SizedBox()
@@ -185,7 +189,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ),
                                   )
                                 : const SizedBox(),
-
                             !authctrl.otploading &&
                                     otpcorrect != null &&
                                     otpcorrect == false
@@ -200,7 +203,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                     .animate()
                                     .fadeIn()
                                 : const SizedBox(),
-
                             const SizedBox(
                               height: 20,
                             ),

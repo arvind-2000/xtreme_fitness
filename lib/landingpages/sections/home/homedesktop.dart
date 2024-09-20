@@ -106,12 +106,13 @@ class _HomeDesktopState extends State<HomeDesktop> {
                     ),
                     GradientButton(
                         onpress: () {
-                          Get.dialog(
-                            barrierDismissible: false,
-                            const LoginDialog(
-                              signupdialog: true,
-                            ),
-                          );
+                          Get.toNamed('/signupmobile');
+                          // Get.dialog(
+                          //   barrierDismissible: false,
+                          //   const LoginDialog(
+                          //     signupdialog: true,
+                          //   ),
+                          // );
                         },
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 32),

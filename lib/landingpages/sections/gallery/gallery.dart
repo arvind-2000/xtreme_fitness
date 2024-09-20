@@ -11,7 +11,7 @@ class Gallery extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Responsive(
       mobile: GalleryMobile(),
-      tablet: Gallerytablet(),
+      tablet: GalleryTablet(),
       desktop: GalleryDesktop(),
     );
   }

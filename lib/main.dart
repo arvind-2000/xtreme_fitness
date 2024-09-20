@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/otpform.dart';
 import 'package:xtreme_fitness/landingpages/pages/homepage.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
@@ -50,6 +51,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/dashboard',
             page: () => const HandlerPage(),
+            transition: Transition.noTransition),
+
+        GetPage(
+            name: '/signupmobile',
+            page: () => const PhoneInputScreen(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/',

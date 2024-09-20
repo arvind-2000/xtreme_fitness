@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class ContactUsPage extends StatelessWidget {
@@ -24,19 +25,19 @@ class ContactUsPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 const Divider(color: Colors.red, thickness: 2),
                 const SizedBox(height: 20),
-                _buildContactInfo(
+                buildContactInfo(
                   icon: Icons.location_on,
                   title: 'POSTAL ADDRESS:',
                   content: 'MANTRIPUKHRI,\nIMPHAL EAST, MANIPUR\n795002.',
                 ),
                 const SizedBox(height: 20),
-                _buildContactInfo(
+                buildContactInfo(
                   icon: Icons.phone,
                   title: 'PHONE:',
                   content: '+91 12345467890',
                 ),
                 const SizedBox(height: 20),
-                _buildContactInfo(
+                buildContactInfo(
                   icon: Icons.email,
                   title: 'EMAIL:',
                   content: 'noreply@support.xtreme.com',
@@ -67,13 +68,13 @@ class ContactUsPage extends StatelessWidget {
                 //   ),
                 // ),
                 const SizedBox(height: 30),
-                _buildTextField('Name'),
+                buildTextField('Name'),
                 const SizedBox(height: 10),
-                _buildTextField('Email Address'),
+                buildTextField('Email Address'),
                 const SizedBox(height: 10),
-                _buildTextField('Subject'),
+                buildTextField('Subject'),
                 const SizedBox(height: 10),
-                _buildTextField('Your Message', maxLines: 3),
+                buildTextField('Your Message', maxLines: 3),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
@@ -91,44 +92,6 @@ class ContactUsPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildContactInfo(
-      {required IconData icon,
-      required String title,
-      required String content}) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.red, size: 25),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Text(content),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTextField(String hint, {int maxLines = 1}) {
-    return TextFormField(
-      cursorColor: Colors.white,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        hintStyle: const TextStyle(color: Color.fromARGB(255, 80, 80, 80)),
-        border: const OutlineInputBorder(),
-        hintText: hint,
       ),
     );
   }

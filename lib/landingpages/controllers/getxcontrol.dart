@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
@@ -169,8 +170,8 @@ class GetxLandingcontroller extends GetxController {
     }
 
   void addServices(ServiceEntity servic) async {
-    _services = await managementrepoImpl.getServices();
-    // services = servic;
+    // _services = await managementrepoImpl.getServices();
+    services = servic;
   }
 
   void changelandingpage(int pageindex) {
