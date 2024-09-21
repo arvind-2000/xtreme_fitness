@@ -90,7 +90,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ),
                   ),
                 
-               managementcontroller.ismember?SizedBox(): Row(
+               managementcontroller.ismember||managementcontroller.getallservices.isEmpty?const SizedBox(): Row(
                   children: [
                     Cardonly(
                       onpress: changeIsActive,
@@ -101,7 +101,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
                   ],
                 ),
-                managementcontroller.getallservices.isEmpty?const NodataScreen(title: "Services", desc: " No Services to show") : Expanded(
+                managementcontroller.getallservices.isEmpty?const Expanded(child: NodataScreen(title: "Services", desc: " No Services to show")) : Expanded(
                           child: GridView(
                               shrinkWrap: true,
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -109,9 +109,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                     ? 1
                                     : size < mobilescreen
                                         ? 2
-                                        : 4,
+                                        : size>=mobilescreen&&size<1200?3:4,
                                 mainAxisSpacing: 10,
-                                childAspectRatio: size < 500 ? 1 : 3 / 3.5,
+                                childAspectRatio: size < 500 ? 1 :size>=mobilescreen&&size<1300?3/4.4 :size < mobilescreen?3/4 :3 / 3.5,
                               ),
                               children: managementcontroller.getallservices
                                   .asMap()
@@ -210,7 +210,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                           color: Colors.white),
                                                     )
                                                   ],
-                                                )):SizedBox()
+                                                )):const SizedBox()
                                           ],
                                         )),
                                   )

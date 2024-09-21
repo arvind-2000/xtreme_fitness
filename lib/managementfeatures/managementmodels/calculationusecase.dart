@@ -7,6 +7,7 @@ import 'dart:html' as html;
 
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
+import '../managementdomain/entities.dart/userpaymentmodel.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -197,3 +198,89 @@ double percentprice(double? actualprice,double? dis){
     }
   }
 
+
+// Function to group payments by month and year
+Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
+    List<Alluserpaymentmodel> payments,DateTime date) {
+  
+  Map<int, List<Alluserpaymentmodel>> paymentsByMonth = {};
+
+  for (var payment in payments) {
+    // Format the date to 'Month Year' (e.g., "July 2023")
+
+    if(payment.paymentDate.year == date.year){
+    int monthYear = payment.paymentDate.month;
+    print("in fliterpayment function");
+    if (paymentsByMonth.containsKey(monthYear)) {
+       print("in fliterpayment functionds");
+      // If the month-year key exists, add the payment to the list
+      paymentsByMonth[monthYear]!.add(payment);
+    } else {
+      // If the month-year key does not exist, create a new list
+     print("in fliterpayment functionree");
+      paymentsByMonth[monthYear] = [payment];
+    }
+    }
+
+  }
+  
+  return paymentsByMonth;
+}
+
+
+// Function to group payments by month and year
+Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
+    List<Alluserpaymentmodel> payments,DateTime date) {
+  
+  Map<int, List<Alluserpaymentmodel>> paymentsByday = {};
+
+  for (var payment in payments) {
+    // Format the date to 'Month Year' (e.g., "July 2023")
+
+    if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
+      
+    int days = payment.paymentDate.day;
+    print("in fliterpayment function");
+    if (paymentsByday.containsKey(days)) {
+       print("in fliterpayment functionds");
+      // If the month-year key exists, add the payment to the list
+      paymentsByday[days]!.add(payment);
+    } else {
+      // If the month-year key does not exist, create a new list
+     print("in fliterpayment functionree");
+      paymentsByday[days] = [payment];
+    }
+    }
+
+  }
+  
+  return paymentsByday;
+
+}
+
+
+Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
+    List<Alluserpaymentmodel> payments) {
+  
+  Map<int, List<Alluserpaymentmodel>> paymentsByYear = {};
+
+  for (var payment in payments) {
+    // Format the date to 'Month Year' (e.g., "July 2023")
+
+    int year = payment.paymentDate.year;
+    print("in fliterpayment function");
+    if (paymentsByYear.containsKey(year)) {
+       print("in fliterpayment functionds");
+      // If the month-year key exists, add the payment to the list
+      paymentsByYear[year]!.add(payment);
+    } else {
+      // If the month-year key does not exist, create a new list
+     print("in fliterpayment functionree");
+      paymentsByYear[year] = [payment];
+    }
+
+  }
+  
+  return paymentsByYear;
+
+}

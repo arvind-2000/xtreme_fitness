@@ -55,3 +55,6 @@ List<Widget> landingwidgets = [
   const Gallery(),
   const Contact()
 ];
+
+
+List<String> months = ["Jan","Feb","March","April","May","June","July","August","Sept","Oct","Nov","Dec"];

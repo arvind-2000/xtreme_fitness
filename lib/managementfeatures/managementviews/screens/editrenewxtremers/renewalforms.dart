@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardborderhover.dart';
@@ -83,19 +84,18 @@ class _RenewalFormsState extends State<RenewalForms> {
                               if(addmemberctrl.selectedplan!=null){
                                 if(addmemberctrl.selectedplan!.category.toLowerCase()=="personal"){
                                       if(addmemberctrl.gettrainer!=null){
-
+                                            Navigator.pop(context);
                                             Get.dialog(PaymentDialogs(callback:(){ addmemberctrl.renewalsubmission();  } ));
 
 
                                          
                                       }else{
-                                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No trainer selected")));
+                                        CustomSnackbar(context, "No Trainers Selected");
                                       }
                                 }else{
                                             
                                            Get.dialog(PaymentDialogs(callback:(){
-                                            
-                                              Navigator.pop(context);
+                                               Navigator.pop(context);
                                              addmemberctrl.renewalsubmission();
                                          
                                            } ));

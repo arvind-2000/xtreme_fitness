@@ -382,7 +382,7 @@ bool isactive = true;
                               height: 16,
                             ),
                         
-                        managectrl.ismember?const SizedBox():Row(
+                        managectrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -396,9 +396,11 @@ bool isactive = true;
 
 
                             managectrl.getalltrainer.isEmpty
-                                ? const NodataScreen(
-                                    title: "No Trainers!!",
-                                    desc: "Add trainers to get started.")
+                                ? const Expanded(
+                                  child: NodataScreen(
+                                      title: "No Trainers",
+                                      desc: "No trainers to show"),
+                                )
                                 : Expanded(
                                     child: GridView(
                                         shrinkWrap: true,
@@ -604,7 +606,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   HeadingText(
@@ -664,7 +666,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                         .toList()),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             _isactive

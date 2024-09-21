@@ -78,7 +78,7 @@ bool isactive = true;
                   ),
                 ),
 
-                        managementcontroller.ismember?SizedBox():Row(
+                        managementcontroller.ismember ||   managementcontroller.getallplans.isEmpty?SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -90,30 +90,24 @@ bool isactive = true;
               ],
             ),
                 managementcontroller.getallplans.isEmpty
-                        ? const NodataScreen(
-                            title: "No Plans",
-                            desc: "No plans to show",
-                            // onpress: isaddplan,
-                          )
+                        ? Expanded(
+                          child: const NodataScreen(
+                              title: "No Plans",
+                              desc: "No plans to show",
+                              // onpress: isaddplan,
+                            ),
+                        )
                         : Expanded(
                             child: GridView(
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: size < 500
-                                      ? 1
-                                      : size < mobilescreen
-                                          ? 1
-                                          : size > mobilescreen && size < 800
-                                              ? 2
-                                              : size > 800 && size < 1200
-                                                  ? 3
-                                                  : 4,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: size < 500
-                                      ? 1
-                                      : size < mobilescreen
-                                          ? 1.5 / 1.8
-                                          : 3 / 4,
+                                crossAxisCount: size < 500
+                                    ? 1
+                                    : size < mobilescreen
+                                        ? 2
+                                        : size>=mobilescreen&&size<1200?3:4,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: size < 500 ? 1 :size>=mobilescreen&&size<1350?3/4.9 :size < mobilescreen?3/4.4 :3 / 3.8,
                                 ),
                                 shrinkWrap: true,
                                 children: managementcontroller.getallplans

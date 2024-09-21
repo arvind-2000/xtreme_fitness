@@ -19,7 +19,7 @@ class DashboardDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ManagementController controller = Get.put(ManagementController());
     return GetBuilder<ManagementController>(builder: (_) {
-      return SingleChildScrollView(
+      return controller.managementloading?Center(child: CircularProgressIndicator(color:Theme.of(context).colorScheme.secondary,),):SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

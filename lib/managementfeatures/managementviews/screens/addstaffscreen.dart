@@ -21,6 +21,7 @@ import '../../../widgets/headingtext.dart';
 import '../../../widgets/normaltext.dart';
 import '../../../widgets/titletext.dart';
 import '../widgets/dialogswidget.dart';
+import 'nodatascreen.dart/nodatascreen.dart';
 
 class AddStaffScreen extends StatefulWidget {
   const AddStaffScreen({super.key});
@@ -136,11 +137,10 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                                            Navigator.pop(context);
                                                                          },
                                                                          yes: () async{
-                                               //        String v = await managementctrl.addplan(plan);
-                                               // widget.onpress();
-                                                                        managectrl.addStaffs(addstaff);
-                                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added new Staff"),duration: Durations.extralong1,));
-                                                 _fullnamecontroller.clear();
+                                               
+                                                                        String v = await managectrl.addStaffs(addstaff);
+                                                                        CustomSnackbar(context, v);
+                                                  _fullnamecontroller.clear();
                                                  _confirmpasswordcontroller.clear();
                                                  _passwordcontroller.clear();
                                                  _usernamecontroller.clear();
@@ -231,7 +231,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         ],
                       ),
                       const SizedBox(height: 16,),
-                                         managectrl.ismember?const SizedBox():Row(
+                                         managectrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -242,7 +242,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                   child: NormalText(text:"Disable",color: !isactive?Theme.of(context).colorScheme.secondary:null,)),
               ],
             ),
-                      Expanded(
+                    managectrl.getallstaff.isEmpty?const Expanded(child: NodataScreen(title: "Staff", desc: " No Staff to show")):Expanded(
                         child: GridView(
                           shrinkWrap: true,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

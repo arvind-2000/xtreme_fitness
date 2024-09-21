@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
+import 'package:xtreme_fitness/widgets/normaltext.dart';
+import 'package:xtreme_fitness/widgets/titletext.dart';
 
+import '../../../../widgets/cardswithshadow.dart';
 import '../dashboardchilds/dashboardchild1.dart';
 import '../dashboardchilds/dashboardchild2.dart';
 import '../dashboardchilds/dashboardchild3.dart';
@@ -13,33 +18,89 @@ class DashboardMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ///appbar heights
-            // SizedBox(height: 80,),
-            SizedBox(height: 400, child: DashboardChild1()),
-            SizedBox(
-              height: 24,
+    return GetBuilder<ManagementController>(
+      builder: (controller) {
+        return controller.managementloading?Center(child: CircularProgressIndicator(color:Theme.of(context).colorScheme.secondary,),): SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                ///appbar heights
+                // SizedBox(height: 80,),
+                 SizedBox(
+                   height: 250,
+                   child: CardwithShadow(
+                     padding: EdgeInsets.all(32),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         NormalText(text:"Total",size: 16,),
+                    
+                         SizedBox(height: 10,),
+                        TitleText(controller.getallXtremer.length.toString(),size: 30,),
+               
+                        SizedBox(height: 20,),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             Column(
+                               children: [
+                                 TitleText(controller.allpersonalxtremer.length.toString()),
+                                 Text("Personal")
+                               ],
+                             ),
+                     
+                                       Column(
+                                         children: [
+                                           TitleText(controller.allgeneralxtremer.length.toString()),
+                                           Text("General")
+                                         ],
+                                       ),
+                                       Column(
+                                         children: [
+                                           TitleText((controller.getallXtremer.length -
+                                             (controller.allinactivextremer.length +
+                                                 controller.allgeneralxtremer.length +
+                                                 controller.allpersonalxtremer.length)).toString()),
+                                           Text("Others")
+                                         ],
+                                       ),
+                                  Column(
+                                    children: [
+                                      TitleText(controller.allinactivextremer.length.toString()),
+                                      Text("Inactive")
+                                    ],
+                                  ),
+                    
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
+                 ),
+                 SizedBox(height: 16,),
+                const SizedBox(height: 400, child: DashboardChild1()),
+                const SizedBox(
+                  height: 24,
+                ),
+                const SizedBox(height: 400, child: DashboardChild2()),
+                const SizedBox(
+                  height: 24,
+                ),
+                const SizedBox(height: 400, child: DashboardChild3()),
+                const SizedBox(
+                  height: 10,
+                ),
+                const SizedBox(height: 400, child: DashboardChild4()),
+                const SizedBox(
+                  height: 24,
+                ),
+                const SizedBox(height: 400, child: Dashboardchild5()),
+              ],
             ),
-            SizedBox(height: 400, child: DashboardChild2()),
-            SizedBox(
-              height: 24,
-            ),
-            SizedBox(height: 400, child: DashboardChild3()),
-            SizedBox(
-              height: 10,
-            ),
-            SizedBox(height: 400, child: DashboardChild4()),
-            SizedBox(
-              height: 24,
-            ),
-            SizedBox(height: 400, child: Dashboardchild5()),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

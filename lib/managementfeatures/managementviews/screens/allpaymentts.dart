@@ -46,7 +46,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
       builder: (pagectrl) {
         return GetBuilder<ManagementController>(
           builder: (managectrl) {
-            return Column(
+            return managectrl.getsearchpayments.isEmpty?const NodataScreen(title: "Payments", desc: "No payment Records") : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
              
               children: [
@@ -108,7 +108,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                                 ),
                               ),
                        
-              Expanded(child:managectrl.getsearchpayments.isEmpty?const NodataScreen(title: "Payments", desc: "No payment Records") :ListView.builder(
+              Expanded(child:ListView.builder(
                 itemCount: managectrl.getsearchpayments.length,
                 itemBuilder: (c,i)=> ListCard(payment: managectrl.getsearchpayments[i] ,userss: (){  Get.dialog(Dialog(
                     child: SizedBox(

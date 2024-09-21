@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/xtremer.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 
 import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/cardswithshadow.dart';
@@ -17,11 +18,12 @@ class PersonaldetailsField extends StatefulWidget {
     super.key,
     required this.pagectrl,
     this.phonenumber,
-    required this.callback,
+    required this.callback, this.buttonText,
   });
   final String? phonenumber;
   final GetxPageController pagectrl;
   final VoidCallback callback;
+  final String? buttonText;
   @override
   State<PersonaldetailsField> createState() => _PersonaldetailsFieldState();
 }
@@ -641,30 +643,25 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       widget.callback();
                     } else {
                       if (addmembrctrl.dob == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("DOB field cannot be empty.")));
+                        CustomSnackbar(context, "DOB field cannot be empty.");
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    "Add required fields before proceeding")));
+                        CustomSnackbar(context,  "Add required fields before proceeding");
                       }
                     }
                   },
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "Add plan",
-                        style: TextStyle(color: Colors.white),
+                       widget.buttonText?? "Add plan",
+                        style: const TextStyle(color: Colors.white),
                       )
                     ],
                   ))

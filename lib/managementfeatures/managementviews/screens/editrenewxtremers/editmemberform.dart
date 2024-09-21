@@ -73,7 +73,7 @@ class _EditmemberFormState extends State<EditmemberForm> {
                              pagectrl.addmemberpages==0?PersonaldetailsField(pagectrl: pagectrl, callback: () {
                                         pagectrl.changeaddMemberPage(2);
                                                       
-                             },):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(buttontext: "Edit Xtremer",callback: ()async{
+                             },buttonText: "Edit Member",):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(iseditform: true,buttontext: "Edit Xtremer",callback: ()async{
                                  Map<String,bool> x = await  addmemberctrl.updateXtremer();
                                   if(x.entries.first.value){
                                     pagectrl.changeeditform(false);

@@ -5,20 +5,23 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationus
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../../widgets/normaltext.dart';
 import '../../../../widgets/textformwidget.dart';
 import '../../../../widgets/titletext.dart';
 import '../../widgets/dialogswidget.dart';
 
 class CreateMember extends StatefulWidget {
   const CreateMember(
-      {super.key, this.phone, this.renewal, this.buttontext, this.callback});
+      {super.key, this.phone, this.renewal, this.buttontext, this.callback,  this.iseditform=false});
   final String? phone;
   final int? renewal;
   final String? buttontext;
   final VoidCallback? callback;
+  final bool iseditform;
   @override
   State<CreateMember> createState() => _CreateMemberState();
 }
@@ -89,8 +92,8 @@ class _CreateMemberState extends State<CreateMember> {
                       const SizedBox(height: 16,),
                       pagectrl.isrenewalforms?const SizedBox(): Text(
                         addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null
-                            ? "Add\nPhoto must be less or equal to 500 x 500 px"
-                            :addmemberctrl.imagesizeerrors??"Add photo\nPhoto must be less or equal to 500 x 500 px",
+                            ?widget.iseditform? "Change Profile picture\nPhoto must be less or equal to 500 x 500 px": "Add\nPhoto must be less or equal to 500 x 500 px"
+                            :widget.iseditform? "Change Profile picture\nPhoto must be less or equal to 500 x 500 px":addmemberctrl.imagesizeerrors??"Add photo\nPhoto must be less or equal to 500 x 500 px",
                         style: TextStyle(
                             color:addmemberctrl.isimagesize==null && addmemberctrl.imagesizeerrors==null?Theme.of(context).colorScheme.onSecondary
                                 :addmemberctrl.isimagesize!=null && addmemberctrl.isimagesize!? Colors.green[300]
@@ -215,9 +218,9 @@ class _CreateMemberState extends State<CreateMember> {
                                   Checkbox(value: addmemberctrl.checkdeclaration, onChanged: (value) {
                                      addmemberctrl.changedeclaration(value!);
                                   },),
-                                  const Text(
+                                  const NormalText(
                                    
-                                    "By accepting you agree to our terms and policies."),
+                                    text: "By accepting you agree to our terms and policies."),
                                 ],
                               ),
                           const SizedBox(height: 16,),
@@ -228,9 +231,9 @@ class _CreateMemberState extends State<CreateMember> {
                                      addmemberctrl.changepaymentdeclaration(value!);
                                   },),
                                   const InkWell(
-                                    child: Text(
-                                     
-                                      "By accepting you agree to the payments Terms and Conditions",style: TextStyle(color: Colors.blue),),
+                                    child: NormalText(
+                                      
+                                      text:"By accepting you agree to the payments Terms and Conditions",color: Colors.blue,),
                                   ),
                                 ],
                               ),
@@ -249,7 +252,7 @@ class _CreateMemberState extends State<CreateMember> {
                                       
                                       //   child: PaymentStatusCard(status: 1,),
                                       //  ));
-                                      if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration&& addmemberctrl.paymentdeclaration){
+                                      if(_formkey.currentState!.validate() && addmemberctrl.checkdeclaration&& addmemberctrl.paymentdeclaration && addmemberctrl.getprofile!=null){
         
                                         //   if (await addmemberctrl.createuser(
                                         // username.text, password.text)) {
@@ -261,7 +264,8 @@ class _CreateMemberState extends State<CreateMember> {
                                       );
                                     }
                                       }else{
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(!addmemberctrl.checkdeclaration?"Agree declaration to proceed":"Error")));
+                                      CustomSnackbar(context,!addmemberctrl.checkdeclaration?"Agree declaration to proceed":"Error");
+                                      addmemberctrl.getprofile==null?CustomSnackbar(context,"No image choose"):null;
                                       }
                                   },
                                   color: Colors.blue[300],
@@ -319,11 +323,12 @@ class PaymentDialog extends StatelessWidget {
                 Navigator.pop(context);
               },
               yes: () async{
+                Navigator.pop(context);
                 bool v = await addmemberctrl.createuser(username, pass,phone);
                 if(v){
                   addmemberctrl.addXtremer();
                 }
-                Navigator.pop(context);
+                
               },
               child: Form(
                 key: _formKeys,

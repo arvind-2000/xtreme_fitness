@@ -26,6 +26,16 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _confirmotp = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
   final FocusNode _confirmotpfocus = FocusNode();
+    final TextEditingController _otp1Controller = TextEditingController();
+  final TextEditingController _otp2Controller = TextEditingController();
+  final TextEditingController _otp3Controller = TextEditingController();
+  final TextEditingController _otp4Controller = TextEditingController();
+  // FocusNodes to control focus shifting
+  final FocusNode _otp1FocusNode = FocusNode();
+  final FocusNode _otp2FocusNode = FocusNode();
+  final FocusNode _otp3FocusNode = FocusNode();
+  final FocusNode _otp4FocusNode = FocusNode();
+
 
   final FocusNode _phonefocus = FocusNode();
   final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
@@ -67,15 +77,13 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxLandingcontroller>(builder: (landingcontroller) {
       return GetBuilder<GetxAuthController>(builder: (authctrl) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          // color: Theme.of(context).colorScheme.primary,
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
+        return SizedBox(
+          // width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   flex: 1,
@@ -87,6 +95,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                                // Center(
+                      //   child: Image.asset(
+                      //     'assets/logo2.png',
+                      //     height: 75,
+                      //   ),
+                      // ),
+                   
                           IconButton(
                               onPressed: () {
                                 // Get.offAndToNamed('/home');
@@ -101,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       Center(
                         child: Image.asset(
-                          'assets/logo2.png',
+                          'assets/logo1.png',
                           height: 75,
                         ),
                       ),
@@ -113,11 +128,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                 authctrl.numberexists == false
                             ? const HeadingText(
                                 'OTP Verification',
-                                size: 30,
+                                size: 20,
                               )
                             : const HeadingText(
                                 'Membership Registration',
-                                size: 30,
+                                size: 20,
                               ),
                       ),
                     ],
@@ -193,24 +208,43 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   )
                                 : const SizedBox(),
-                            authctrl.numberexists != null &&
+                            authctrl.otp != null &&
                                     authctrl.numberexists == false
-                                ? Center(
-                                    child: ConstrainedBox(
-                                      constraints:
-                                          const BoxConstraints(maxWidth: 300),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: TextFieldWidget(
-                                          hint: 'OTP',
-                                          textalign: TextAlign.center,
-                                          showhint: false,
-                                          controller: _confirmotp,
-                                          enabletext: !authctrl.otploading,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                ? 
+                                Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // First OTP field
+              _otpTextField(_otp1Controller, _otp1FocusNode, _otp2FocusNode,enabletext: !authctrl.otploading),
+              // Second OTP field
+              _otpTextField(_otp2Controller, _otp2FocusNode, _otp3FocusNode,enabletext: !authctrl.otploading),
+              // Third OTP field
+              _otpTextField(_otp3Controller, _otp3FocusNode, _otp4FocusNode,enabletext: !authctrl.otploading),
+              // Fourth OTP field
+              _otpTextField(_otp4Controller, _otp4FocusNode, null,enabletext: !authctrl.otploading),
+            ],
+          ),
+        ),
+      )
+                                // Center(
+                                //     child: ConstrainedBox(
+                                //       constraints:
+                                //           const BoxConstraints(maxWidth: 300),
+                                //       child: Padding(
+                                //         padding: const EdgeInsets.all(16.0),
+                                //         child: TextFieldWidget(
+                                //           hint: 'OTP',
+                                //           textalign: TextAlign.center,
+                                //           showhint: false,
+                                //           controller: _confirmotp,
+                                //           enabletext: !authctrl.otploading,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   )
                                 : const SizedBox(),
                             !authctrl.otploading &&
                                     otpcorrect != null &&
@@ -239,14 +273,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                         if (_formkey.currentState!.validate()) {
                                           if (authctrl.otp != null) {
                                             if (authctrl
-                                                .confirmotp(_confirmotp.text)) {
+                                                .confirmotp(_otp1Controller.text+_otp2Controller.text+_otp3Controller.text+_otp4Controller.text)) {
                                               Get.to(() => CreateXtremers(
                                                     phonenumber:
                                                         _phonecontroller.text,
                                                     services: landingcontroller
                                                         .services,
                                                   ));
-
+                    
                                               setState(() {
                                                 otpcorrect = true;
                                               });
@@ -263,6 +297,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             setState(() {
                                               otpshow = true;
                                             });
+                                            _otp1FocusNode.requestFocus();
                                           }
                                         }
                                       },
@@ -329,5 +364,57 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       });
     });
+
+
+
+
+    
+  }
+
+
+    Widget _otpTextField(TextEditingController controller, FocusNode currentFocus, FocusNode? nextFocus,{bool enabletext = true}) {
+    return SizedBox(
+      width: 50,
+      child: TextFormField(
+        controller: controller,
+        focusNode: currentFocus,
+        maxLength: 1,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        cursorColor: Theme.of(context).colorScheme.onPrimary,
+        decoration: InputDecoration(
+          
+          counterText: "",  // Hides the character count
+          border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+          enabled: enabletext,
+        focusedBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Theme.of(context).colorScheme.onPrimary),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+
+        ),
+        
+
+        onChanged: (value) {
+          if (value.length == 1) {
+            // Move to the next field when the user enters a digit
+            if (nextFocus != null) {
+              FocusScope.of(context).requestFocus(nextFocus);
+            } else {
+              currentFocus.unfocus(); // If it's the last field, unfocus the input
+            }
+          }
+        },
+
+
+        
+        onFieldSubmitted: (value) {
+          currentFocus.unfocus(); // When pressing enter, unfocus the current field
+        },
+      ),
+    );
   }
 }
+  // Helper function to create a single OTP TextField

@@ -108,34 +108,40 @@ class AddMemberController extends GetxController {
     isloading = true;
     update();
     print('In user create usename: $username pass:$pass  phone: $phone');
-    Map<int, String> res = await repo.addUser(
-        username!, pass!, phone ?? xtremer!.mobileNumber!, role);
-    if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
-      usererrormessage = res.entries.first.value;
-      _userid = await repo.viewUser(username, pass);
-      print("in user create in create member: ${_userid!}");
-      xtremer!.XtremerId = int.tryParse(_userid!);
-      if (xtremer!.submittedBy == null) {
-        xtremer!.submittedBy = xtremer!.XtremerId;
-      }
-      userexist = false;
-      // addXtremer();
-      // addXtremer();
-      update();
-      return true;
-    } else {
-      print("in user create in create member: failed to create");
-     
-      userexist = true;
-      if(res.entries.first.key>=400 && res.entries.first.key<500 && phone!=null){
-          _userid = await repo.viewUser(username, pass);
-           usererrormessage = "User found";
-          return true;
-      }
-      isloading = false;
-       usererrormessage = res.entries.first.value;
-      update();
+    try {
+  Map<int, String> res = await repo.addUser(
+      username!, pass!, phone ?? (xtremer!=null && xtremer!.mobileNumber!=null? xtremer!.mobileNumber!:""), role);
+  if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
+    usererrormessage = res.entries.first.value;
+    _userid = await repo.viewUser(username, pass);
+    print("in user create in create member: ${_userid!}");
+    xtremer!.XtremerId = int.tryParse(_userid!);
+    if (xtremer!.submittedBy == null) {
+      xtremer!.submittedBy = xtremer!.XtremerId;
     }
+    userexist = false;
+    // addXtremer();
+    // addXtremer();
+    update();
+    return true;
+  } else {
+    print("in user create in create member: failed to create");
+   
+    userexist = true;
+    if(res.entries.first.key>=400 && res.entries.first.key<500 && phone!=null){
+        _userid = await repo.viewUser(username, pass);
+         usererrormessage = "User found";
+        return true;
+    }
+    isloading = false;
+     usererrormessage = res.entries.first.value;
+    update();
+  }
+} on Exception catch (e) {
+   isloading = false;
+   update();
+  // TODO
+}
 
     return false;
   }
@@ -152,19 +158,27 @@ class AddMemberController extends GetxController {
   }
 
   Future<Map<String,bool>> updateXtremer() async {
+    isloading = true;
+    update();
     print("In update xtremer");
     if (xtremer != null) {
       try {
         String d = await repo.updateMember(xtremer!);
-
+   isloading = false;
+    update();
         return {d:true};
       } on Exception catch (e) {
         // TODO
+          isloading = false;
+    update();
         return {"error updating member":false};
       }
     } else {
+        isloading = false;
+    update();
       return {"xtremer null":false};
     }
+    
   }
 
   void addXtremer() async {

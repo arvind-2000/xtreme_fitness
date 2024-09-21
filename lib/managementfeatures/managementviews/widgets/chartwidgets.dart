@@ -14,7 +14,7 @@ class GraphsWidget extends StatelessWidget {
       this.isyearly = false,
       this.axis = true,
       this.plotbands = true,
-      this.threshold});
+      this.threshold, this.tooltip});
 
   final ChartType charttype;
   final List<double> seriesdata;
@@ -24,6 +24,7 @@ class GraphsWidget extends StatelessWidget {
   final bool axis;
   final bool plotbands;
   final double? threshold;
+  final Widget Function(dynamic data,ChartPoint<dynamic> point,ChartSeries<dynamic, dynamic> series,int pointIndex,int seriesIndex)? tooltip;
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
@@ -35,11 +36,11 @@ class GraphsWidget extends StatelessWidget {
           // enablePinching: true,
 
           zoomMode: ZoomMode.x,
-          enableSelectionZooming: true),
+          enableSelectionZooming: false),
 
       tooltipBehavior: TooltipBehavior(
           enable: true,
-          builder: (data, point, series, pointIndex, seriesIndex) =>
+          builder:tooltip??(data, point, series, pointIndex, seriesIndex) =>
               CardwithShadow(
                 padding: const EdgeInsets.all(8),
                 child: SizedBox(

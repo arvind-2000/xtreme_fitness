@@ -16,6 +16,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 import '../widgets/dialogswidget.dart';
+import 'nodatascreen.dart/nodatascreen.dart';
 
 
 class RenewalScreen extends StatefulWidget {
@@ -184,7 +185,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                 ),
                               ),
                        
-                              Padding(
+                                managectrl.getsearchXtremer.isEmpty
+                                ? SizedBox():  Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +233,13 @@ class _RenewalScreenState extends State<RenewalScreen> {
                               ),
                          
                       
-                              Expanded(
+                             managectrl.getsearchXtremer.isEmpty
+                                ? const Expanded(
+                                  child: NodataScreen(
+                                      title: "No Xtremers",
+                                      desc: "No Xtremers to show"),
+                                )
+                                : Expanded(
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => Container(

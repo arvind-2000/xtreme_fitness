@@ -8,6 +8,7 @@ import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/planentity.dart';
 import '../managementdomain/entities.dart/trainee.dart';
 import '../managementdomain/entities.dart/user.dart';
+import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 List<Plan> dummyplan = [
@@ -29,7 +30,7 @@ List<ServiceEntity> dummyservices = [
   ServiceEntity(id: Random().nextInt(1000), name: "Sauna", memberPrice: 300, nonMemberPrice: 400, durationInMinutes: 30,isactive: true),
 
 ];
-List<Paymententity> dummypayments = [];
+
 List<Xtremer> dummyxtremer = [
     Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
     Xtremer(id: 1,XtremerId: 2,firstName: "Boka",surname: 'Sarungbam',address: "keis",mobileNumber: '1234567899',isActive: true),
@@ -73,4 +74,39 @@ List<TrainerEntity> dummytrainers = [
     Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
     Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
     Trainee(id: 0, userId: 20, firstName: "raashi", mobileNumber: '839849381', trainerId: 20, email: 'fdfh@gm.com', subscriptionId: 10, startDate: DateTime.now(), endDate: DateTime.now(), isActive: true),
+  ];
+
+   List<Alluserpaymentmodel> dummypayments = [
+    Alluserpaymentmodel(
+        id: 1,
+          amount: 1000,
+        receivedAmount: 100.0,
+        paymentDate: DateTime.now().subtract(Duration(days: 2)), 
+        
+        
+        paymentMethod: 'fdfdf', paymentStatus: 'success', paymentType: 'cash', transactionId: 'vxvxvxvxvxv', userId: 68
+        
+        
+        
+        ),
+    Alluserpaymentmodel(
+        id: 2,
+        receivedAmount: 150.0,
+        paymentDate: DateTime.now().subtract(Duration(days: 10)), amount: 300,
+         paymentMethod: 'fdfdf', paymentStatus: 'success', paymentType: 'cash', transactionId: 'vxvxvxvxvxv', userId: 68
+        ),
+    Alluserpaymentmodel(
+        id: 3,
+        receivedAmount: 200.0,
+         amount: 500,
+        paymentDate: DateTime.now().subtract(Duration(days: 40)),
+         paymentMethod: 'fdfdf', paymentStatus: 'success', paymentType: 'cash', transactionId: 'vxvxvxvxvxv', userId: 68
+        ),
+    Alluserpaymentmodel(
+        id: 4,
+        receivedAmount: 250.0,
+          amount: 600,
+        paymentDate: DateTime.now().subtract(Duration(days: 370)),
+         paymentMethod: 'fdfdf', paymentStatus: 'success', paymentType: 'cash', transactionId: 'vxvxvxvxvxv', userId: 68
+        ),
   ];

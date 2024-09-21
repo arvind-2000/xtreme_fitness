@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CardBorder extends StatelessWidget {
+class CardBorder extends StatefulWidget {
   const CardBorder(
       {super.key,
       this.padding,
@@ -13,25 +13,38 @@ class CardBorder extends StatelessWidget {
   final Widget child;
   final VoidCallback? onpress;
   final Color? color;
+
+  @override
+  State<CardBorder> createState() => _CardBorderState();
+}
+
+class _CardBorderState extends State<CardBorder> {
+  bool hover = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
+        color: hover?Colors.blue.withOpacity(0.3):null,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             width: 1,
-            color: color ??
+            color: widget.color ??
                 Theme.of(context).colorScheme.secondary.withOpacity(0.3),
           )),
       child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: onpress,
+          onTap: widget.onpress,
+          onHover: (v){
+            setState(() {
+              hover = v;
+            });
+          },
           child: Padding(
-            padding: padding ??
+            padding: widget.padding ??
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: child,
+            child: widget.child,
           )),
     );
   }

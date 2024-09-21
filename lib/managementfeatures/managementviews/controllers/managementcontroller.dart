@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
@@ -71,6 +73,19 @@ class ManagementController extends GetxController {
   int searchposition = 0;
   Membership?  currentmember; 
     GetxAuthController authctrl = Get.find<GetxAuthController>();
+
+  /// 0 [week] 1[month]
+  int servicefilter = 1;
+  Map<int,List<Alluserpaymentmodel>> filterpayments = {};
+  bool managementloading = true;
+
+  int planloadingstatus = 0;
+  int serviceloadingstatus = 0;
+  int trainerloadingstatus = 0;
+  int staffloadingstatus = 0;
+  int xtremerloadingstatus = 0;
+
+
   @override
   void onInit() {
     super.onInit();
@@ -89,6 +104,12 @@ class ManagementController extends GetxController {
     getxtremerforoverall();
 
     // dashboardTimer();
+
+    _allpayments = dummypayments;
+
+    changeservicefilter(servicefilter);
+  
+    update();
   }
 
 
@@ -112,9 +133,11 @@ class ManagementController extends GetxController {
   }
 
   void getplans() async {
-    // _allplans = dummyplan;
-    _allplans = await managementRepo.getPlans();
+    _allplans = dummyplan;
+    // _allplans = await managementRepo.getPlans();
     _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
+       
+    
     update();
   }
 
@@ -191,8 +214,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    _allxtremer = await managementRepo.viewMember();
-    // _allxtremer = dummyxtremer;
+    // _allxtremer = await managementRepo.viewMember();
+    _allxtremer = dummyxtremer;
   
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
@@ -239,8 +262,8 @@ class ManagementController extends GetxController {
   }
 
   void getallServices() async {
-    _allservices = await managementRepo.getServices();
-    // _allservices = dummyservices;
+    // _allservices = await managementRepo.getServices();
+    _allservices = dummyservices;
      _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
@@ -337,19 +360,24 @@ class ManagementController extends GetxController {
 
 
   void getStaff() async {
-    // _allstaff = dummystaff;
-    _allstaff = await managementRepo.viewStaff();
+    _allstaff = dummystaff;
+    // _allstaff = await managementRepo.viewStaff();
     update();
   }
 
-  void addStaffs(Staff staff) async {
-    await managementRepo.addStaff(staff);
-    getStaff();
+ Future<String> addStaffs(Staff staff) async {
+    var v =await managementRepo.addStaff(staff);
+    if(v.entries.first.key==200){
+      getStaff();
+    }
+  
+  return v.entries.first.value;
+    
   }
 
   void getTrainer() async {
-    // _alltrainer = dummytrainers;
-    _alltrainer = await managementRepo.viewTrainer();
+    _alltrainer = dummytrainers;
+    // _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }
@@ -366,7 +394,11 @@ class ManagementController extends GetxController {
   }
 
   void getpaymentlastest10() async {
+    managementloading = true;
+    update();
     _latestpayment10 = await managementRepo.viewlatest10payment();
+    managementloading = false;
+    
     update();
   }
 
@@ -482,7 +514,24 @@ class ManagementController extends GetxController {
     update();
   }
 
-  
+
+
+
+    void changeservicefilter(int i){
+        servicefilter = i;
+        update();
+
+        if(servicefilter == 0){
+          filterpayments = groupPaymentsBydate(_allpayments, DateTime.now());
+        }    
+        else if(servicefilter == 2){
+
+            filterpayments = groupPaymentsByyear(_allpayments);
+        }else{
+            filterpayments = groupPaymentsByMonth(_allpayments, DateTime.now());
+        }
+        update();
+    }
 
 
 

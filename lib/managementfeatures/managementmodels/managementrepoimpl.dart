@@ -112,6 +112,7 @@ class ManagementrepoImpl implements ManagementRepo {
     // dummyxtremer.add(xtremer);
     // print("In add member : userid $userid");
 
+try{
     // Create the multipart request
     var request = http.MultipartRequest(
         'PUT', Uri.parse('$api/api/Xtremers/${xtremer.id}'));
@@ -165,7 +166,7 @@ class ManagementrepoImpl implements ManagementRepo {
     //   ));
     // }
 
-    try {
+  
       var response = await request.send();
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -181,7 +182,7 @@ class ManagementrepoImpl implements ManagementRepo {
       }
     } catch (e) {
       // print('Error occurred: $e');
-      return "Error occurred";
+    throw e;
     }
   }
 
