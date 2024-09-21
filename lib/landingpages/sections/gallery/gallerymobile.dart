@@ -45,8 +45,10 @@ class _GalleryMobileState extends State<GalleryMobile> {
             const SizedBox(
               height: 20,
             ),
-            Expanded(
+            SizedBox(
+              height: 450,
               child: GridView.builder(
+                scrollDirection: Axis.horizontal,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Number of columns (adjust if needed)
                   crossAxisSpacing: 15,
@@ -100,13 +102,20 @@ class _GalleryMobileState extends State<GalleryMobile> {
                         ),
                       );
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // color: appProvider.isDark ? Colors.grey[900] : Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ImageWidget(
-                        index: currentIndex, // Correct index
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Container(
+                        width: 400,
+                        decoration: BoxDecoration(
+                          // color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: ImageWidget(
+                            index: currentIndex, // Correct index
+                          ),
+                        ),
                       ),
                     ),
                   );

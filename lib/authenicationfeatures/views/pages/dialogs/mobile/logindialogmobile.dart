@@ -28,44 +28,55 @@ class _LoginDialogMobileState extends State<LoginDialogMobile> {
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, state) {
-      return Dialog(
-        insetPadding: Responsive.isTablet(context)
-            ? EdgeInsets.zero
-            : const EdgeInsets.symmetric(vertical: 200, horizontal: 50),
-        child: SizedBox(
-          height: Responsive.isTablet(context) ? 500 : null,
-          width: Responsive.isTablet(context) ? 400 : null,
-          child: Cardonly(
-              margin: EdgeInsets.zero,
-              color: Colors.grey[800]!.withOpacity(0.6),
-              child: isforgot
-                  ? ForgotPassWordScreenMobile(
-                      changelogin: (v) {
-                        state(() {
-                          isforgot = v;
-                        });
-                      },
-                    )
-                  : isSignup
-                      ? SignUpPageMobile(
-                          changelogin: (v) {
-                            state(() {
-                              isSignup = false;
-                            });
-                          },
-                        )
-                      : LoginScreenMobile(
-                          changesignup: (v) {
-                            state(() {
-                              isSignup = v;
-                            });
-                          },
-                          changepass: (v) {
-                            state(() {
-                              isforgot = v;
-                            });
-                          },
-                        )),
+      return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Cardonly(
+                    margin: EdgeInsets.zero,
+                    color: Colors.grey[800]!.withOpacity(0.6),
+                    child: Container(
+                      width: Responsive.isTablet(context)
+                          ? MediaQuery.of(context).size.width / 2
+                          : null,
+                      padding: const EdgeInsets.all(16),
+                      alignment: Alignment.center,
+                      child: isforgot
+                          ? ForgotPassWordScreenMobile(
+                              changelogin: (v) {
+                                state(() {
+                                  isforgot = v;
+                                });
+                              },
+                            )
+                          : isSignup
+                              ? SignUpPageMobile(
+                                  changelogin: (v) {
+                                    state(() {
+                                      isSignup = false;
+                                    });
+                                  },
+                                )
+                              : LoginScreenMobile(
+                                  changesignup: (v) {
+                                    state(() {
+                                      isSignup = v;
+                                    });
+                                  },
+                                  changepass: (v) {
+                                    state(() {
+                                      isforgot = v;
+                                    });
+                                  },
+                                ),
+                    )),
+              ),
+            ],
+          ),
         ),
       );
     });

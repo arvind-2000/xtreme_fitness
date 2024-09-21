@@ -28,9 +28,10 @@ class _LoginDialogState extends State<LoginDialog> {
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: SizedBox(
-          height: isSignup ? 500 : 600,
-          width: 500,
+          width: MediaQuery.of(context).size.width / 3,
+          height: isSignup || isforgot ? 500 : 600,
           child: Cardonly(
               margin: EdgeInsets.zero,
               color: Colors.grey[800]!.withOpacity(0.6),

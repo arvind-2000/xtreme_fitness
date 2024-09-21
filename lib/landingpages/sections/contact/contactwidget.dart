@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 Widget buildContactInfo(
-    {required IconData icon, required String title, required String content}) {
+    {required IconData icon,
+    required String title,
+    required String content,
+    double? size}) {
   return Row(
     children: [
-      Icon(icon, color: Colors.red, size: 25),
+      Icon(icon, color: Colors.red, size: size ?? 25),
       const SizedBox(width: 10),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,

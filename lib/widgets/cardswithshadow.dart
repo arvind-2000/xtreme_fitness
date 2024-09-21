@@ -22,6 +22,7 @@ class CardwithShadow extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color.fromARGB(255, 72, 72, 72)),
         color: color ?? Theme.of(context).colorScheme.primary,
         // boxShadow:color == Colors.transparent?null:[
         //   BoxShadow(
