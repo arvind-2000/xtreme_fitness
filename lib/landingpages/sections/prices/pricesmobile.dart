@@ -166,7 +166,7 @@ class _PricesmobileState extends State<Pricesmobile> {
                 height: 30,
               ),
               SizedBox(
-                height: 400,
+                height: 370,
                 child: Center(
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -199,20 +199,19 @@ class _PricesmobileState extends State<Pricesmobile> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HeadingText(
-                                  isbold: true,
-                                  e.category,
-                                  size: 16,
-                                  color: Colors.white60,
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    HeadingText(
+                                      isbold: true,
+                                      e.category,
+                                      size: 18,
+                                      color: Colors.white60,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
                                     Row(
                                       children: [
                                         Text(
@@ -242,103 +241,52 @@ class _PricesmobileState extends State<Pricesmobile> {
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                    MediaQuery.of(context).size.width > 450
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              const Text(
-                                                "Features",
-                                                style: TextStyle(
-                                                  color: Colors.white60,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 16,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  e.category.toLowerCase() ==
-                                                          "personal"
-                                                      ? const Icon(
-                                                          Icons.check,
-                                                          color: Colors.green,
-                                                          size: 14,
-                                                        )
-                                                      : const Icon(
-                                                          Icons.close,
-                                                          color: Colors.red,
-                                                          size: 14,
-                                                        ),
-                                                  const SizedBox(
-                                                    width: 16,
-                                                  ),
-                                                  e.category.toLowerCase() ==
-                                                          "personal"
-                                                      ? Text(
-                                                          "Trainer Included",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onSurface
-                                                                  .withOpacity(
-                                                                      0.7)),
-                                                        )
-                                                      : Text(
-                                                          "No Trainers",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onSurface
-                                                                  .withOpacity(
-                                                                      0.7)),
-                                                        ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Icon(Icons.check,
-                                                      color: Colors.green,
-                                                      size: 14),
-                                                  const SizedBox(
-                                                    width: 16,
-                                                  ),
-                                                  Text(
-                                                    "Service Discount",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .onSurface
-                                                            .withOpacity(0.7)),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Icon(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Text(
+                                          "Features",
+                                          style: TextStyle(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Row(
+                                          children: [
+                                            e.category.toLowerCase() ==
+                                                    "personal"
+                                                ? const Icon(
                                                     Icons.check,
                                                     color: Colors.green,
                                                     size: 14,
+                                                  )
+                                                : const Icon(
+                                                    Icons.close,
+                                                    color: Colors.red,
+                                                    size: 14,
                                                   ),
-                                                  const SizedBox(
-                                                    width: 16,
-                                                  ),
-                                                  Text(
-                                                    "One time BMI Free",
+                                            const SizedBox(
+                                              width: 16,
+                                            ),
+                                            e.category.toLowerCase() ==
+                                                    "personal"
+                                                ? Text(
+                                                    "Trainer Included",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withOpacity(0.7)),
+                                                  )
+                                                : Text(
+                                                    "No Trainers",
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         color: Theme.of(context)
@@ -346,26 +294,71 @@ class _PricesmobileState extends State<Pricesmobile> {
                                                             .onSurface
                                                             .withOpacity(0.7)),
                                                   ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox(),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.check,
+                                                color: Colors.green, size: 14),
+                                            const SizedBox(
+                                              width: 16,
+                                            ),
+                                            Text(
+                                              "Service Discount",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withOpacity(0.7)),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                              size: 14,
+                                            ),
+                                            const SizedBox(
+                                              width: 16,
+                                            ),
+                                            Text(
+                                              "One time BMI Free",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withOpacity(0.7)),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                SizedBox(
+                                Align(
+                                  alignment: Alignment.center,
                                   child: Cardonly(
                                     onpress: () {
                                       addmemberctrl.addplan(e);
-                                      Get.dialog(
-                                        barrierDismissible: false,
-                                        const LoginDialogMobile(
+
+                                      Get.to(
+                                        () => const LoginDialogMobile(
                                           signupdialog: true,
                                         ),
                                       );

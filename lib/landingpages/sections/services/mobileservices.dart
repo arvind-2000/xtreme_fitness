@@ -32,20 +32,22 @@ class ServicesMobile extends StatelessWidget {
               height: 30,
             ),
             SizedBox(
-              height: 300,
+              height: 450,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 20),
                 child: Center(
-                  child: ListView.builder(
+                  child: GridView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //   crossAxisCount: 2, // Number of items in a row
-                    //   childAspectRatio: MediaQuery.of(context).size.width /
-                    //       530, // Adjust the aspect ratio as needed
-                    //   mainAxisSpacing: 16, // Space between rows
-                    //   crossAxisSpacing: 16, // Space between columns
-                    // ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of items in a row
+                      childAspectRatio: 470 /
+                          MediaQuery.of(context)
+                              .size
+                              .width, // Adjust the aspect ratio as needed
+                      mainAxisSpacing: 10, // Space between rows
+                      crossAxisSpacing: 10, // Space between columns
+                    ),
                     itemCount: managectrl
                         .getallservices.length, // Total number of items
                     itemBuilder: (context, index) {
@@ -167,35 +169,37 @@ class ServicesMobile extends StatelessWidget {
                         vertical: 16, horizontal: 16),
                     color: Colors.orange,
                     child: MediaQuery.sizeOf(context).width < mobilescreen
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              RichText(
-                                  text: const TextSpan(children: [
-                                // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
-                                TextSpan(
-                                    text:
-                                        "Exclusive Offer: Free BMI Service for First-time members only.",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.bold)),
-                              ])),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Cardonly(
-                                  onpress: () {
-                                    Get.toNamed("/signup");
-                                  },
-                                  margin: EdgeInsets.zero,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  child: const Text(
-                                    "Claim Now",
-                                    style: TextStyle(color: Colors.white),
-                                  ))
-                            ],
+                        ? FittedBox(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                RichText(
+                                    text: const TextSpan(children: [
+                                  // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
+                                  TextSpan(
+                                      text:
+                                          "Exclusive Offer: Free BMI Service for First-time members only.",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.bold)),
+                                ])),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Cardonly(
+                                    onpress: () {
+                                      Get.toNamed("/signup");
+                                    },
+                                    margin: EdgeInsets.zero,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    child: const Text(
+                                      "Claim Now",
+                                      style: TextStyle(color: Colors.white),
+                                    ))
+                              ],
+                            ),
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
