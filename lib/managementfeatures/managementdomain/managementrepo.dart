@@ -72,7 +72,7 @@ abstract class ManagementRepo {
   Future<Map<String, dynamic>> addPayments(Paymententity payment,
       {bool isonline, required String userid});
   Future<String> deletePayment(Paymententity payment);
-  Future<String> updatePayment(Paymententity payment);
+  Future<String> updatePayment(Alluserpaymentmodel payment);
   Future<List<Alluserpaymentmodel>> viewpayment();
   Future<List<Paymentlatest10>> viewlatest10payment();
   Future<Paymententity?> getpayment(String transcationid);

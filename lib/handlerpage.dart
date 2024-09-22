@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashbo
 import 'config/const.dart';
 import 'widgets/navbar.dart';
 import 'widgets/navbarmember.dart';
+import 'widgets/titletext.dart';
 
 class HandlerPage extends StatefulWidget {
   const HandlerPage({super.key});
@@ -52,7 +53,7 @@ class _HandlerPageState extends State<HandlerPage> {
           appBar: MediaQuery.sizeOf(context).width < mobilescreen
               ? AppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
-                  // title: TitleText(navtitles[pagectrl.navpage]),
+                  // title: TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
                   centerTitle: true,
                 )
               : null,

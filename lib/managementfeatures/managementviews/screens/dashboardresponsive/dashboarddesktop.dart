@@ -4,6 +4,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
+import '../../../../widgets/cardborder.dart';
 import '../dashboardchilds/dashboardchild1.dart';
 import '../dashboardchilds/dashboardchild2.dart';
 import '../dashboardchilds/dashboardchild3.dart';
@@ -23,43 +24,39 @@ class DashboardDesktopScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(height: 80,
-            // child: Row(),),
-            // Cardonly(
-            //   child: Row(
-
-            //      children: [
-            //        const Cardonly(
-            //          color: Colors.transparent,
-            //          child: Text("Today"),
-            //        ),
-            //        const Cardonly(
-            //          color: Colors.transparent,
-            //          child: Text("Week"),
-            //        ),
-            //                 Cardonly(
-            //                   color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
-            //          child: const Text("Monthly"),
-            //        ),
-            //             Container(width:1,height:50,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),),
-            //                         Cardonly(
-            //                   color: Colors.transparent,
-            //          child: const Text("Renewals"),
-
-            //        ),
-            //                              Cardonly(
-            //                   color: Colors.transparent,
-            //          child: const Text("Members"),
-
-            //        ),
-            //      ],
-            //    ),
-            // ),
-            //       Container(
-            //   height: 0.5,
-            //   width:double.maxFinite,
-            //   color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
-            // ),
+                        SizedBox(
+                          height: 70,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
+                                const TitleText("OverView"),
+                                Row(
+                                  children: [
+                                    CardBorder(
+                                        child: Row(
+                                      children: [
+                                        Icon(Icons.person,
+                                            size: 14,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface),
+                                        const SizedBox(
+                                          width: 6,
+                                        ),
+                                        Text(controller.authctrl.getuser != null
+                                            ? controller.authctrl.getuser!.roleName ??
+                                                "Member"
+                                            : "Member"),
+                                      ],
+                                    ))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(

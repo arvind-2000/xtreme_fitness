@@ -821,9 +821,56 @@ try{
   }
 
   @override
-  Future<String> updatePayment(Paymententity payment) {
-    // TODO: implement updatePayment
-    throw UnimplementedError();
+  Future<String> updatePayment(Alluserpaymentmodel payment) async{
+
+        double amount = payment.amount!;
+    double discount = payment.discountPercentage!.toDouble();
+    double receivedAmount = payment.receivedAmount;
+    String transid = payment.transactionId!;
+    String status = payment.paymentStatus!;
+    String method = payment.paymentMethod!;
+    String type = payment.paymentType!;
+    int? subsid = payment.subscriptionId;
+    int? serviceid = payment.serviceUsageId;
+    String dates = payment.paymentDate.toString();
+    bool tnc = true;
+
+    print(
+        "$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
+    //online
+   
+      var headers = {'Content-Type': 'application/json'};
+      try {
+  var response = await http.put(
+      headers: headers,
+      Uri.parse('$api/api/Payments/${payment.id}'),
+      body: jsonEncode({
+        // payment.toJson()
+        "id":payment.id,
+        "userId": payment.userId,
+        "amount": amount,
+        "discountPercentage": discount.round(),
+        "receivedAmount": receivedAmount,
+        "paymentDate": dates,
+        "transactionId": transid,
+        "paymentStatus": status,
+        "paymentMethod": method,
+        "paymentType": type,
+        "subscriptionId": subsid,
+      }));
+  
+  if (response.statusCode >= 200 && response.statusCode < 300) {
+    print("payment updated : ${response.statusCode}");
+    return "Payment Updated Successfully";
+  } else {
+    print(response.reasonPhrase);
+    return "Failed to update payments.";
+  }
+} on Exception catch (e) {
+  // TODO
+  return "Error updating payments";
+}
+    
   }
 
   @override

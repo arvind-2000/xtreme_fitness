@@ -27,6 +27,9 @@ class EditUserScreen extends StatefulWidget {
 }
 
 class _EditUserScreenState extends State<EditUserScreen> {
+
+  String? paymentStatus;
+  List<String> paymetstatusList = ["Success","Failed","Cancel","Initiated"];
   @override
   void initState() {
     super.initState();
@@ -46,19 +49,19 @@ class _EditUserScreenState extends State<EditUserScreen> {
       builder: (pagectrl) {
         return GetBuilder<ManagementController>(
           builder: (managectrl) {
-            return managectrl.getsearchpayments.isEmpty?const NodataScreen(title: "Payments", desc: "No payment Records") : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            return managectrl.getallpayments.isEmpty?const NodataScreen(title: "Payments", desc: "No payment Records") : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
              
               children: [
            Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child:Column(
 
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     // const Text("All Members",style: TextStyle(fontSize: 20,),),
 
-                                    HeadingText("All Payments"),
+                                    const HeadingText("All Payments"),
                                     
                                     const SizedBox(
                                       height: 16,
@@ -108,76 +111,210 @@ class _EditUserScreenState extends State<EditUserScreen> {
                                 ),
                               ),
                        
-              Expanded(child:ListView.builder(
-                itemCount: managectrl.getsearchpayments.length,
-                itemBuilder: (c,i)=> ListCard(payment: managectrl.getsearchpayments[i] ,userss: (){  Get.dialog(Dialog(
-                    child: SizedBox(
-                      width: 500,
-                      height: 600,
-                      child: Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                             SizedBox(height: 16,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            managectrl.getsearchpayments.isEmpty?const NodataScreen(title: "Payments", desc: "No payment Records") :   Expanded(child:Center(
+                child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth:600),
+                  child: ListView.builder(
+                    itemCount: managectrl.getsearchpayments.length,
+                    itemBuilder: (c,i)=> ListCard(payment: managectrl.getsearchpayments[i] ,edit: (){
+            Get.dialog(Dialog(
+                        child: SizedBox(
+                          width: 500,
+                          height: 600,
+                          child: Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HeadingText("Payment Details"),
-                                IconButton(onPressed: (){
-                                  Navigator.pop(context);
-                                }, icon: Icon(Icons.close,size:16,))
+                                 const SizedBox(height: 16,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const HeadingText("Payment Details"),
+                                    IconButton(onPressed: (){
+                                      Navigator.pop(context);
+                                    }, icon: const Icon(Icons.close,size:16,))
+                                  ],
+                                ),
+                                 const SizedBox(height: 16,),
+                                Expanded(
+                                  child: managectrl.iseditpayment? Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.secondary,),):SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                    
+                                                
+                                    
+                                                Row(
+                                          children: [
+                                            const Text("Transaction Id",style: TextStyle(fontSize: 14),),
+                                            const SizedBox(width: 10,),
+                                            IconButton(onPressed: (){
+                                             Clipboard.setData(ClipboardData(text: "${managectrl.getsearchpayments[i].transactionId}"));
+                                                CustomSnackbar(context, "Text copied to Clipboard");
+                                            }, icon: Icon(Icons.copy,size: 14,color: Colors.grey[300],))
+                                          ],
+                                        ),
+                                            Text(
+                                            "${managectrl.getsearchpayments[i].transactionId}"),
+                                             const SizedBox(height: 16,),
+                                         const SizedBox(height: 16,),
+                                        const Text("Payment Method",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].paymentMethod}"),
+                                             const SizedBox(height: 16,),
+                                                                
+                                        const Text("Amount",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].receivedAmount}",style: const TextStyle(fontSize: 16),),
+                                             const SizedBox(height: 16,),
+                                    DropdownMenu(
+                      menuStyle: MenuStyle(backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)),
+                        onSelected: (index){
+                          setState(() {
+                           paymentStatus = paymetstatusList[(index??0)%paymetstatusList.length];
+                          });
+                        },  
+                        hintText: "Status",
+                        dropdownMenuEntries: paymetstatusList.asMap().entries.map((e)=>DropdownMenuEntry(value: e.key, label: e.value,style: ButtonStyle(
+                          backgroundColor: WidgetStateColor.resolveWith((states) => Theme.of(context).colorScheme.primary,)
+                        ))).toList()),
+                                          
+                                        const Text("Date",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",style: const TextStyle(fontSize: 16),),
+                                        const SizedBox(height: 16,),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                  
+                                SizedBox(width: double.maxFinite,child: CardBorder(
+                                    margin: EdgeInsets.zero,
+                                  color: Colors.blue,
+                                  onpress: ()async{
+                                    
+                                    String s = await managectrl.managementRepo.updatePayment(managectrl.getsearchpayments[i]);
+                                    // createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
+                                    Navigator.pop(context);
+                                    CustomSnackbar(context, s);
+                                  },
+                                  child: const Center(child: Text("Edit Payment",style: TextStyle(fontSize: 16),))),),                 ],
+                            ),
+                          ),
+                        ),
+                      ));
+          
+                    },userss: (){  Get.dialog(Dialog(
+                        child: SizedBox(
+                          width: 500,
+                          height: 600,
+                          child: Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 const SizedBox(height: 16,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const HeadingText("Payment Details"),
+                                    IconButton(onPressed: (){
+                                      Navigator.pop(context);
+                                    }, icon: const Icon(Icons.close,size:16,))
+                                  ],
+                                ),
+                                 const SizedBox(height: 16,),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                    
+                                                 Center(
+                                                   child: Container(
+                                                                           
+                                                                           height: 70,
+                                                                           width: 70,
+                                                                      
+                                                                           alignment: Alignment.center,
+                                                                           decoration: BoxDecoration(
+                                                                             shape: BoxShape.circle,
+                                                                               color:managectrl.getsearchpayments[i].paymentStatus!.toLowerCase() =="success"?Colors.green[200]:Colors.red[200],
+                                                                           ),
+                                                                         
+                                                                           child:managectrl.getsearchpayments[i].paymentStatus!.toLowerCase() =="success"
+                                                                                   ? const Icon(
+                                                                                       Icons.check,
+                                                                                       color: Colors.white,
+                                                                                       size:40,
+                                                                                     )
+                                                                                   : const Icon(
+                                                                                       Icons.dangerous,
+                                                                                       color: Colors.white,
+                                                                                         size:40,
+                                                                                     ),
+                                                                         ),
+                                                 ),
+                                                          SizedBox(height: 16,),
+                                                          Center(child: TitleText(managectrl.getsearchpayments[i].paymentStatus!.toUpperCase())),
+                                                          Divider(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),),
+                                    
+                                                Row(
+                                          children: [
+                                            const Text("Transaction Id",style: TextStyle(fontSize: 14),),
+                                            const SizedBox(width: 10,),
+                                            IconButton(onPressed: (){
+                                             Clipboard.setData(ClipboardData(text: "${managectrl.getsearchpayments[i].transactionId}"));
+                                                CustomSnackbar(context, "Text copied to Clipboard");
+                                            }, icon: Icon(Icons.copy,size: 14,color: Colors.grey[300],))
+                                          ],
+                                        ),
+                                            Text(
+                                            "${managectrl.getsearchpayments[i].transactionId}"),
+                                             const SizedBox(height: 16,),
+                                         const SizedBox(height: 16,),
+                                        const Text("Payment Method",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].paymentMethod}"),
+                                             const SizedBox(height: 16,),
+                                                                
+                                        const Text("Amount",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].receivedAmount}",style: const TextStyle(fontSize: 16),),
+                                             const SizedBox(height: 16,),
+                                        const Text("Date",style: TextStyle(fontSize: 14),),
+                                        Text(
+                                            "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",style: const TextStyle(fontSize: 16),),
+                                        const SizedBox(height: 16,),
+                                                                     
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                  
+                                SizedBox(width: double.maxFinite,child: CardBorder(
+                                    margin: EdgeInsets.zero,
+                                  color: Colors.blue,
+                                  onpress: (){
+                                    createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
+                                  },
+                                  child: const Center(child: Text("Print Receipt",style: TextStyle(fontSize: 16),))),),
+
+                                  
+
+
                               ],
                             ),
-                             SizedBox(height: 16,),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                          Row(
-                                    children: [
-                                      Text("Transaction Id",style: TextStyle(fontSize: 14),),
-                                      SizedBox(width: 10,),
-                                      IconButton(onPressed: (){
-                                       Clipboard.setData(ClipboardData(text: "${managectrl.getsearchpayments[i].transactionId}"));
-                                          CustomSnackbar(context, "Text copied to Clipboard");
-                                      }, icon: Icon(Icons.copy,size: 14,color: Colors.grey[300],))
-                                    ],
-                                  ),
-                                   SizedBox(height: 16,),
-                                  Text("Payment Method",style: TextStyle(fontSize: 14),),
-                                  Text(
-                                      "${managectrl.getsearchpayments[i].paymentMethod}"),
-                                       SizedBox(height: 16,),
-                         
-                                  Text(
-                                      "${managectrl.getsearchpayments[i].transactionId}"),
-                                       SizedBox(height: 16,),
-                                  Text("Amount",style: TextStyle(fontSize: 14),),
-                                  Text(
-                                      "${managectrl.getsearchpayments[i].receivedAmount}",style: TextStyle(fontSize: 16),),
-                                       SizedBox(height: 16,),
-                                  Text("Date",style: TextStyle(fontSize: 14),),
-                                  Text(
-                                      "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",style: TextStyle(fontSize: 16),),
-                                  SizedBox(height: 16,),
-                             
-                                ],
-                              ),
-                            ),
-
-                            SizedBox(width: double.maxFinite,child: CardBorder(
-                                margin: EdgeInsets.zero,
-                              color: Colors.blue,
-                              onpress: (){
-                                createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
-                              },
-                              child: Center(child: Text("Print Receipt",style: TextStyle(fontSize: 16),))),)
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ));}),).animate().slideX(begin: 1,end: 0)),
+                      ));
+                      }
+                      
+                      ),).animate().slideX(begin: 1,end: 0),
+                ),
+              )),
                          const SizedBox(height: 40,)
               ],
             );
@@ -190,11 +327,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
 class ListCard extends StatelessWidget {
   const ListCard({
-    super.key,required this.payment, required this.userss,
+    super.key,required this.payment, required this.userss, this.edit,
   });
 
   final Alluserpaymentmodel payment;
   final VoidCallback userss;
+  final VoidCallback? edit;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(
@@ -209,10 +347,10 @@ class ListCard extends StatelessWidget {
                           children: [
                           
                             TitleText("Id:${payment.transactionId}",size: 16,),
-                            SizedBox(height: 10,),
-                            Text("Payment Type"),
-                            Text(payment.paymentType != null?payment.paymentType!:"",style: TextStyle(fontWeight: FontWeight.bold)),
-                            SizedBox(height: 6,),
+                            const SizedBox(height: 10,),
+                            const Text("Payment Type"),
+                            Text(payment.paymentType != null?payment.paymentType!:"",style: const TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 6,),
                            
                           ],
                                                 ),
@@ -222,14 +360,15 @@ class ListCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                      
-                            CardwithShadow(
-                              padding: EdgeInsets.symmetric(vertical: 8,horizontal: 32),
+                            IconButton(onPressed: edit, icon: Icon(Icons.edit,size: 14,)),
+                            CardBorder(
+                              padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 32),
+                              margin: EdgeInsets.zero,
                               onpress: userss,
                                 color: Colors.blue,
-                              child: Text("View")),
-                              SizedBox(height: 16,),
-                               Text('${payment.paymentDate.day}/${payment.paymentDate.month}/${payment.paymentDate.year}',style: TextStyle(fontSize: 14)),
+                              child: const Text("View")),
+                              const SizedBox(height: 16,),
+                               Text('${payment.paymentDate.day}/${payment.paymentDate.month}/${payment.paymentDate.year}',style: const TextStyle(fontSize: 14)),
 
                           ],
                         )

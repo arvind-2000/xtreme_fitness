@@ -120,6 +120,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                         child: const Text(
                           "Become a Member",
                           style: TextStyle(
+                            fontSize:20,
                               color: Color.fromARGB(255, 219, 218, 218),
                               fontWeight: FontWeight.bold),
                         )),

@@ -179,7 +179,7 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
                                         ],
                                       ),
                                       SizedBox(height: 16,),
-                                      MemberServiceHistory(xtremer: widget.user, userid: widget.user!.XtremerId)
+                                      MemberServiceHistory()
                               ],
                             ))),   
                                    

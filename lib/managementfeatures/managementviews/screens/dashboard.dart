@@ -63,44 +63,13 @@ class DashBoardScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 70,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TitleText("Overview"),
-                                Row(
-                                  children: [
-                                    CardBorder(
-                                        child: Row(
-                                      children: [
-                                        Icon(Icons.person,
-                                            size: 14,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(authctrl.getuser != null
-                                            ? authctrl.getuser!.roleName ??
-                                                "Member"
-                                            : "Member"),
-                                      ],
-                                    ))
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),),
+            
                                   //  Container(
           //   height: 0.5,
           //   width:double.maxFinite,
           //   color: Theme.of(context).colorScheme.secondary.withOpacity(0.3), 
           // ),
-                   authctrl.ismember? Expanded(child:pagectrl.navpage == 3?ServicesScreen():PlansScreen()):Expanded(
+                   authctrl.ismember? Expanded(child:pagectrl.navpage==0?DashBoardMemberScreen() :pagectrl.navpage == 3?ServicesScreen():PlansScreen()):Expanded(
                            child: pagectrl.navpage ==0? const DashBoardScreen1():pagectrl.navpage ==1?const AnalyticsScreen():pagectrl.navpage==2?AddMemberScreen():pagectrl.navpage==3?const ServicesScreen():pagectrl.navpage==4?const AddStaffScreen():pagectrl.navpage==5?const PlansScreen():pagectrl.navpage==6?const RenewalScreen():pagectrl.navpage==10?const AddTrainerScreen():const EditUserScreen(),
                          )
                         ],

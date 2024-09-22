@@ -20,7 +20,7 @@ class GetxAuthController extends GetxController {
   String? loginerrortext;
   UserEntity? _user;
   UserEntity? get getuser => _user;
-  String? userid;
+  String? userid ="12";
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();

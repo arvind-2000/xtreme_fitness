@@ -37,7 +37,7 @@ class DashboardMobileScreen extends StatelessWidget {
                          NormalText(text:"Total",size: 16,),
                     
                          SizedBox(height: 10,),
-                        TitleText(controller.getallXtremer.length.toString(),size: 30,),
+                        TitleText("${controller.getallXtremer.length} ${controller.getallXtremer.length>1?"Members":"Member"}",size: 30,),
                
                         SizedBox(height: 20,),
                          Row(

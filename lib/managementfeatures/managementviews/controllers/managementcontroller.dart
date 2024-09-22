@@ -14,6 +14,7 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../../authentifeatures/domain/userentity.dart';
+import '../../../landingpages/controllers/getxcontrol.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/membership.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
@@ -34,6 +35,7 @@ class ManagementController extends GetxController {
   List<Xtremer> _allxtremer = [];
   List<Xtremer> _allxtremerforoverall = [];
   List<Xtremer> _allinactivextremer = [];
+  List<Membership> _allmembership = [];
   bool ismember = true;
   List<Xtremer> get allinactivextremer => _allinactivextremer;
   List<Xtremer> _allpersonalxtremer = [];
@@ -69,27 +71,29 @@ class ManagementController extends GetxController {
   List<ServiceEntity> get getallservices => _allservices;
   List<ServiceEntity> get getallactiveservices => _allactiveservices;
   List<Trainee> get getallTrainee => _alltrainee;
+  List<Membership> get getallMembership => _allmembership;
   String? searchmessage = "";
   int searchposition = 0;
   Membership?  currentmember; 
     GetxAuthController authctrl = Get.find<GetxAuthController>();
-
+Xtremer? xtremer; 
   /// 0 [week] 1[month]
   int servicefilter = 1;
   Map<int,List<Alluserpaymentmodel>> filterpayments = {};
   bool managementloading = true;
-
   int planloadingstatus = 0;
   int serviceloadingstatus = 0;
   int trainerloadingstatus = 0;
   int staffloadingstatus = 0;
   int xtremerloadingstatus = 0;
-
-
+  int membershiploadingstatus = 0;
+  bool iseditpayment = false;
   @override
   void onInit() {
     super.onInit();
     getplans();
+    
+    checkmember();
     getxtremer();
     getinactivextremer();
     getallpersonalextremer();
@@ -100,9 +104,9 @@ class ManagementController extends GetxController {
     getpaymentlastest10();
     getAllTraineess(10);
     getallgeneralextremer();
-    checkmember();
+   
     getxtremerforoverall();
-
+      getMemberships();
     // dashboardTimer();
 
     _allpayments = dummypayments;
@@ -216,7 +220,11 @@ class ManagementController extends GetxController {
   void getxtremer() async {
     // _allxtremer = await managementRepo.viewMember();
     _allxtremer = dummyxtremer;
-  
+    if(authctrl.ismember){
+        print("In get xtremer");
+        xtremer = _allxtremer.firstWhereOrNull((element) => element.XtremerId.toString()==authctrl.userid,)??dummyxtremer[0];
+        update();
+    }
     //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
     for (var element in _allxtremer) {
@@ -251,6 +259,17 @@ class ManagementController extends GetxController {
     String d = await managementRepo.updatePlans(plan: plan);
     // update plans
     getplans();
+    return d;
+  }
+
+  
+  Future<String> editpayments(Alluserpaymentmodel paymnet) async {
+    iseditpayment = true;
+    update();
+    String d = await managementRepo.updatePayment(paymnet);
+    iseditpayment= false;
+    update();
+    viewpayment();
     return d;
   }
 
@@ -297,13 +316,12 @@ class ManagementController extends GetxController {
 
 
     void getMembershipbyid(int id) async {
-      
-      List<Membership> d = await managementRepo.viewMembership();
+    
     print('$id');
-      if(d.isNotEmpty){
+      if(_allmembership.isNotEmpty){
 
           try {
-            for(Membership i in d){
+            for(Membership i in _allmembership){
               print(i.userId);
               if(i.userId == id){
                   currentmember = i;
@@ -312,11 +330,6 @@ class ManagementController extends GetxController {
                   return;
               }
             }
-  // d.firstWhereOrNull((element){
-  //   print("membership id ${element.id}");
-  //   return element.userId==id;});
-          // currentmember = x;
-          // print('in memberships ${x!.toJson().toString()}');
 } on Exception catch (e) {
   // TODO
   print(e);
@@ -358,6 +371,17 @@ class ManagementController extends GetxController {
   }
 
 
+
+  void getMemberships() async {
+    // _allstaff = dummystaff;
+    _allmembership = await managementRepo.viewMembership();
+    if(authctrl.ismember){
+      print("In current meber");
+      // currentmember = _allmembership.firstWhere((element) => element.userId.toString() == authctrl.userid && element.isActive!,);
+      currentmember = Membership(id: 1,userId: 12,membershipId: 1200,admissionId: 12,admissionFeePaid: true,bmiUsed: false,isActive: true,startDate: DateTime.now());
+    }
+    update();
+  }
 
   void getStaff() async {
     _allstaff = dummystaff;
@@ -403,7 +427,8 @@ class ManagementController extends GetxController {
   }
 
   void viewpayment() async {
-    _allpayments = await managementRepo.viewpayment();
+    _allpayments = dummypayments;
+    // _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
     update();
   }
@@ -479,6 +504,8 @@ class ManagementController extends GetxController {
       _searchpayments = _allpayments.where(
         (element) {
           return element.transactionId.toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||  element.userId.toString()
                   .toLowerCase()
                   .contains(keyword.toLowerCase());
         },
