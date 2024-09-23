@@ -71,7 +71,7 @@ class ManagementrepoImpl implements ManagementRepo {
       'SurgeryAddress': xtremer.surgeryAddress ?? '',
       'Declaration': xtremer.declaration?.toString() ?? 'false',
       'SubmittedBy': xtremer.submittedBy.toString(),
-      'Category': xtremer.category?.toString()??'',
+      'Category': xtremer.category?.toString() ?? '',
       'IsActive': false.toString(),
     });
 
@@ -112,61 +112,60 @@ class ManagementrepoImpl implements ManagementRepo {
     // dummyxtremer.add(xtremer);
     // print("In add member : userid $userid");
 
-try{
-    // Create the multipart request
-    var request = http.MultipartRequest(
-        'PUT', Uri.parse('$api/api/Xtremers/${xtremer.id}'));
-  print(xtremer.toJson().toString());
-    // Add fields to the request
-    request.fields.addAll({
-      "Id": xtremer.id.toString(),
-      'UserId': xtremer.XtremerId.toString(),
-      'FirstName': xtremer.firstName!,
-      'Surname': xtremer.surname ?? '',
-      'DateOfBirth': xtremer.dateOfBirth.toString(),
-      'Address': xtremer.address ?? '',
-      'Postcode': xtremer.postcode ?? '',
-      'Occupation': xtremer.occupation ?? '',
-      'HomeNumber': xtremer.homeNumber ?? '',
-      'MobileNumber': xtremer.homeNumber ?? '',
-      'Email': xtremer.email ?? '',
-      'Disability': xtremer.disability ?? '',
-      'PreferTiming': xtremer.preferTiming ?? '',
-      'ContactName': xtremer.contactName ?? '',
-      'ContactNumber': xtremer.contactNumber ?? '',
-      'Relationship': xtremer.relationship ?? '',
-      'UnableToExercise': xtremer.unableToExercise.toString(),
-      'PhysicianAdvisedAgainst': xtremer.physicianAdvisedAgainst.toString(),
-      'CardiacIssues': xtremer.cardiacIssues.toString(),
-      'RespiratoryDifficulties': xtremer.respiratoryDifficulties.toString(),
-      'FaintingMigraines': xtremer.faintingMigraines.toString(),
-      'BoneJointMuscleIssues': xtremer.boneJointMuscleIssues.toString(),
-      'FamilyHeartDisease': xtremer.familyHeartDisease.toString(),
-      'ChestPain': xtremer.chestPain.toString(),
-      'HighBloodPressure': xtremer.highBloodPressure.toString(),
-      'ElevatedCholesterol': xtremer.elevatedCholesterol.toString(),
-      'PrescribedMedication': xtremer.prescribedMedication.toString(),
-      'DoctorName': xtremer.doctorName ?? '',
-      'SurgeryName': xtremer.surgeryName ?? '',
-      'SurgeryNumber': xtremer.surgeryNumber ?? '',
-      'SurgeryAddress': xtremer.surgeryAddress ?? '',
-      'Declaration': xtremer.declaration?.toString() ?? 'false',
-      'SubmittedBy': xtremer.submittedBy.toString(),
-      'Category':xtremer.category??"General",
-      'IsActive': xtremer.isActive.toString()
-    });
+    try {
+      // Create the multipart request
+      var request = http.MultipartRequest(
+          'PUT', Uri.parse('$api/api/Xtremers/${xtremer.id}'));
+      print(xtremer.toJson().toString());
+      // Add fields to the request
+      request.fields.addAll({
+        "Id": xtremer.id.toString(),
+        'UserId': xtremer.XtremerId.toString(),
+        'FirstName': xtremer.firstName!,
+        'Surname': xtremer.surname ?? '',
+        'DateOfBirth': xtremer.dateOfBirth.toString(),
+        'Address': xtremer.address ?? '',
+        'Postcode': xtremer.postcode ?? '',
+        'Occupation': xtremer.occupation ?? '',
+        'HomeNumber': xtremer.homeNumber ?? '',
+        'MobileNumber': xtremer.homeNumber ?? '',
+        'Email': xtremer.email ?? '',
+        'Disability': xtremer.disability ?? '',
+        'PreferTiming': xtremer.preferTiming ?? '',
+        'ContactName': xtremer.contactName ?? '',
+        'ContactNumber': xtremer.contactNumber ?? '',
+        'Relationship': xtremer.relationship ?? '',
+        'UnableToExercise': xtremer.unableToExercise.toString(),
+        'PhysicianAdvisedAgainst': xtremer.physicianAdvisedAgainst.toString(),
+        'CardiacIssues': xtremer.cardiacIssues.toString(),
+        'RespiratoryDifficulties': xtremer.respiratoryDifficulties.toString(),
+        'FaintingMigraines': xtremer.faintingMigraines.toString(),
+        'BoneJointMuscleIssues': xtremer.boneJointMuscleIssues.toString(),
+        'FamilyHeartDisease': xtremer.familyHeartDisease.toString(),
+        'ChestPain': xtremer.chestPain.toString(),
+        'HighBloodPressure': xtremer.highBloodPressure.toString(),
+        'ElevatedCholesterol': xtremer.elevatedCholesterol.toString(),
+        'PrescribedMedication': xtremer.prescribedMedication.toString(),
+        'DoctorName': xtremer.doctorName ?? '',
+        'SurgeryName': xtremer.surgeryName ?? '',
+        'SurgeryNumber': xtremer.surgeryNumber ?? '',
+        'SurgeryAddress': xtremer.surgeryAddress ?? '',
+        'Declaration': xtremer.declaration?.toString() ?? 'false',
+        'SubmittedBy': xtremer.submittedBy.toString(),
+        'Category': xtremer.category ?? "General",
+        'IsActive': xtremer.isActive.toString()
+      });
 
-    // Add the file to the request
-    // if (filepath != null) {
-    //   request.files.add(http.MultipartFile.fromBytes(
-    //     'ProfilePhotoFile',
-    //     filepath,
-    //     filename: 'prof${Random().nextInt(100)}.png',
-    //     contentType: MediaType('image', 'png'),
-    //   ));
-    // }
+      // Add the file to the request
+      // if (filepath != null) {
+      //   request.files.add(http.MultipartFile.fromBytes(
+      //     'ProfilePhotoFile',
+      //     filepath,
+      //     filename: 'prof${Random().nextInt(100)}.png',
+      //     contentType: MediaType('image', 'png'),
+      //   ));
+      // }
 
-  
       var response = await request.send();
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -182,7 +181,7 @@ try{
       }
     } catch (e) {
       // print('Error occurred: $e');
-    throw e;
+      rethrow;
     }
   }
 
@@ -694,8 +693,8 @@ try{
   }
 
   @override
-  Future<String> updateStaff(UserEntity staff) async{
-     final uri = Uri.parse(
+  Future<String> updateStaff(UserEntity staff) async {
+    final uri = Uri.parse(
         '$api/api/Users/${staff.id}'); // Replace with your API endpoint
 
     // Convert the Service instance to JSON
@@ -767,12 +766,13 @@ try{
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var url = await response.stream.bytesToString();
         if (await canLaunchUrl(Uri.parse(url))) {
-          await launchUrl(Uri.parse(url)
-              // forceSafariVC: true,
-              // forceWebView: true,
-              // enableJavaScript: true,
-              // webOnlyWindowName: '_self',
-              );
+          await launchUrl(
+            Uri.parse(url),
+            // forceSafariVC: true,
+            // forceWebView: true,
+            // enableJavaScript: true,
+            webOnlyWindowName: '_self',
+          );
 
           return {"response": 200};
         } else {
@@ -821,9 +821,8 @@ try{
   }
 
   @override
-  Future<String> updatePayment(Alluserpaymentmodel payment) async{
-
-        double amount = payment.amount!;
+  Future<String> updatePayment(Alluserpaymentmodel payment) async {
+    double amount = payment.amount!;
     double discount = payment.discountPercentage!.toDouble();
     double receivedAmount = payment.receivedAmount;
     String transid = payment.transactionId!;
@@ -838,39 +837,38 @@ try{
     print(
         "$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
     //online
-   
-      var headers = {'Content-Type': 'application/json'};
-      try {
-  var response = await http.put(
-      headers: headers,
-      Uri.parse('$api/api/Payments/${payment.id}'),
-      body: jsonEncode({
-        // payment.toJson()
-        "id":payment.id,
-        "userId": payment.userId,
-        "amount": amount,
-        "discountPercentage": discount.round(),
-        "receivedAmount": receivedAmount,
-        "paymentDate": dates,
-        "transactionId": transid,
-        "paymentStatus": status,
-        "paymentMethod": method,
-        "paymentType": type,
-        "subscriptionId": subsid,
-      }));
-  
-  if (response.statusCode >= 200 && response.statusCode < 300) {
-    print("payment updated : ${response.statusCode}");
-    return "Payment Updated Successfully";
-  } else {
-    print(response.reasonPhrase);
-    return "Failed to update payments.";
-  }
-} on Exception catch (e) {
-  // TODO
-  return "Error updating payments";
-}
-    
+
+    var headers = {'Content-Type': 'application/json'};
+    try {
+      var response = await http.put(
+          headers: headers,
+          Uri.parse('$api/api/Payments/${payment.id}'),
+          body: jsonEncode({
+            // payment.toJson()
+            "id": payment.id,
+            "userId": payment.userId,
+            "amount": amount,
+            "discountPercentage": discount.round(),
+            "receivedAmount": receivedAmount,
+            "paymentDate": dates,
+            "transactionId": transid,
+            "paymentStatus": status,
+            "paymentMethod": method,
+            "paymentType": type,
+            "subscriptionId": subsid,
+          }));
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print("payment updated : ${response.statusCode}");
+        return "Payment Updated Successfully";
+      } else {
+        print(response.reasonPhrase);
+        return "Failed to update payments.";
+      }
+    } on Exception catch (e) {
+      // TODO
+      return "Error updating payments";
+    }
   }
 
   @override
@@ -902,8 +900,12 @@ try{
         Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
 
     // Convert the Trainer instance to JSON
-    final body = jsonEncode(
-        {"name": trainer.name, "designation": 'Trainer', "timing": "morning",'isActive':true});
+    final body = jsonEncode({
+      "name": trainer.name,
+      "designation": 'Trainer',
+      "timing": "morning",
+      'isActive': true
+    });
 
     // Send the POST request
     final response = await http.post(
@@ -949,8 +951,13 @@ try{
         '$api/api/Trainers/${trainer.id}'); // Replace with your API endpoint
 
     // Convert the Trainer instance to JSON
-    final body = jsonEncode(
-        {"id":trainer.id,"name": trainer.name, "designation": 'Trainer', "timing": trainer.timing,"isActive":trainer.isActive});
+    final body = jsonEncode({
+      "id": trainer.id,
+      "name": trainer.name,
+      "designation": 'Trainer',
+      "timing": trainer.timing,
+      "isActive": trainer.isActive
+    });
     print(body);
     // Send the POST request
     try {
@@ -1314,7 +1321,7 @@ try{
   }
 
   @override
-  Future<List<Membership>> viewMembership() async{
+  Future<List<Membership>> viewMembership() async {
     print("in membership api calls");
     try {
       final res = await http.get(Uri.parse("$api/api/Memberships"));
@@ -1334,10 +1341,10 @@ try{
 
     return [];
   }
-  
+
   @override
-  Future<String> editMembership(Membership membership) async{
-       final uri = Uri.parse('$api/api/Membership/${membership.id}');
+  Future<String> editMembership(Membership membership) async {
+    final uri = Uri.parse('$api/api/Membership/${membership.id}');
 
     // Convert the Plan instance to JSON
     final body = jsonEncode(membership.toJson());

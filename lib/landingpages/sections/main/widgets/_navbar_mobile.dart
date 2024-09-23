@@ -12,7 +12,7 @@ class NavBarMobile extends StatelessWidget {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
 
     return Container(
-      color: Colors.black54,
+      color: Colors.black,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(

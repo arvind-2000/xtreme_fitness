@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/loginscreen.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/signup.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/otpform.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember%20copy.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -19,7 +18,7 @@ void main() async {
 //  workerManager.log = true;
 //   await workerManager.init();
 
-  // setUrlStrategy(PathUrlStrategy());
+  setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
 
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       unknownRoute: GetPage(
         name: '/',
-        page: () => MainPage(),
+        page: () => const MainPage(),
       ),
       getPages: [
         GetPage(
@@ -64,6 +63,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/home',
             page: () => const MainPage(),
+            transition: Transition.noTransition),
+
+        GetPage(
+            name: '/createmember',
+            page: () => const CreateMemberpaid(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/pricing',
