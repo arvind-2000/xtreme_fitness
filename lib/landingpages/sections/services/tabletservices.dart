@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
@@ -17,6 +19,7 @@ class ServicesTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AddMemberController addmemberctrl = Get.put(AddMemberController());
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return Container(
         color: const Color.fromARGB(255, 36, 34, 34),
@@ -146,29 +149,34 @@ class ServicesTablet extends StatelessWidget {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const CardBorder(
-                                  margin: EdgeInsets.zero,
-                                  color: Colors.grey,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Learn More", // Button text
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(
-                                        Icons
-                                            .arrow_forward, // Forward arrow icon
-                                        color: Colors.white,
-                                        size: 14,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                  CardBorder(
+                                  onpress: (){
+                                    Get.dialog(
+                                      
+                                      const LoginDialogMobile(signupdialog: true,));
+                                      addmemberctrl.addservices(e);
+
+                                  },
+                                    margin: EdgeInsets.zero,
+                                    color: Colors.grey,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Choose Service",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                      ],
+                                    ))
                               ],
                             ),
                           );

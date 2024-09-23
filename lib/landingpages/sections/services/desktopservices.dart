@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
@@ -16,6 +17,8 @@ class ServicesDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AddMemberController addmemberctrl = Get.put(AddMemberController());
+    
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return Container(
         height: 1000,
@@ -139,7 +142,14 @@ class ServicesDesktop extends StatelessWidget {
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                const CardBorder(
+                                 CardBorder(
+                                  onpress: (){
+                                    Get.dialog(
+                                      
+                                      const LoginDialog(signupdialog: true,));
+                                      addmemberctrl.addservices(e);
+
+                                  },
                                     margin: EdgeInsets.zero,
                                     color: Colors.grey,
                                     child: Row(
@@ -147,7 +157,7 @@ class ServicesDesktop extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Learn More",
+                                          "Choose Service",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         SizedBox(

@@ -91,6 +91,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
   
   @override
   Widget build(BuildContext context) {
+    final AddMemberController addMemberController = Get.put(AddMemberController());
     return PopScope(
    canPop: canpos,
       onPopInvoked: (didPop) {
@@ -116,7 +117,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
           _showExitWarningDialog(context);
                   },
                   child: Image.asset(height: 60,width: 60,"assets/logo1.png")),),),
-                 Expanded(child: CardBorderHover(child:widget.services!=null?AddServiceUsage(serviceEntity: widget.services,phonenumber:widget.phonenumber):AddMemberScreen(phonenumber: widget.phonenumber,))),
+                 Expanded(child: CardBorderHover(child:addMemberController.selectedservice!=null?AddServiceUsage(serviceEntity: addMemberController.selectedservice,phonenumber:widget.phonenumber):AddMemberScreen(phonenumber: widget.phonenumber,))),
                ],
              )),
         ),
