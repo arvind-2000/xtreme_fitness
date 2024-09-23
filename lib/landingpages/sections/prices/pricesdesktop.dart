@@ -46,7 +46,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                     isbold: true,
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   const Text(
                     "Choose a plan that's right for you. Flexible, Simple & no hidden prices",
@@ -170,7 +170,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                   ),
                   SizedBox(
                     width: double.maxFinite,
-                    height: 500,
+                    height: 470,
                     child: Center(
                       child: ListView(
                         shrinkWrap: true,

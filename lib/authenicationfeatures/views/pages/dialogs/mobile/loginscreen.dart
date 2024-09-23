@@ -50,199 +50,201 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
-      return Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 5,
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Image.asset(
+              'assets/logo2.png',
+              height: Responsive.isMobile(context) ? 50 : 60,
             ),
-            Center(
-              child: Image.asset(
-                'assets/logo2.png',
-                height: Responsive.isMobile(context) ? 30 : 40,
-              ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Center(
+            child: HeadingText(
+              'Log In',
+              size: Responsive.isMobile(context) ? 20 : 25,
             ),
-            Center(
-              child: HeadingText(
-                'Log In',
-                size: Responsive.isMobile(context) ? 20 : 25,
-              ),
-            ),
-            Expanded(
-              child: Form(
-                  key: _formkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedOpacity(
-                        opacity: authctrl.loginerrortext == null ? 0 : 1,
-                        duration: Durations.extralong1,
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          child: Cardonly(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(0.5),
-                              child: Center(
-                                  child: Text(authctrl.loginerrortext ?? "",
-                                      textAlign: TextAlign.center))),
-                        ),
-                      ),
-                      TextFieldWidget(
-                        hint: "Username",
-                        icon: const Icon(Icons.person),
-                        controller: _emailcontroller,
-                        enabletext: !authctrl.loginloading,
-                        nextfocusnode: _passwordfocus,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFieldWidget(
-                        hint: "Password",
-                        focusnode: _passwordfocus,
-                        icon: const Icon(Icons.lock),
-                        obscure: true,
-                        enabletext: !authctrl.loginloading,
-                        fieldsubmitted: () {
-                          if (_formkey.currentState!.validate()) {
-                            authctrl
-                                .authenticate(_emailcontroller.text,
-                                    _passwordcontroller.text)
-                                .then(
-                              (value) {
-                                if (!value.entries.first.key) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                          content: Text(
-                                    "Error Logging in",
-                                  )));
-                                }
-                              },
-                            );
-                          }
-                        },
-                        controller: _passwordcontroller,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      FittedBox(
-                        alignment: Alignment.bottomLeft,
-                        fit: BoxFit.fitWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: authctrl.loginloading
-                                  ? null
-                                  : () {
-                                      authctrl.disposelogin();
-                                      widget.changepass!(true);
-                                      // Get.offNamed('/forgotpassword');
-                                    },
-                              child: Text(
-                                "Forgot Password?",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        child: Cardonly(
-                          margin: EdgeInsets.zero,
-                          // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                          onpress: authctrl.loginloading
+          ),
+          Form(
+              key: _formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedOpacity(
+                    opacity: authctrl.loginerrortext == null ? 0 : 1,
+                    duration: Durations.extralong1,
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: Cardonly(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.5),
+                          child: Center(
+                              child: Text(authctrl.loginerrortext ?? "",
+                                  textAlign: TextAlign.center))),
+                    ),
+                  ),
+                  TextFieldWidget(
+                    hint: "Username",
+                    icon: const Icon(Icons.person),
+                    controller: _emailcontroller,
+                    enabletext: !authctrl.loginloading,
+                    nextfocusnode: _passwordfocus,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFieldWidget(
+                    hint: "Password",
+                    focusnode: _passwordfocus,
+                    icon: const Icon(Icons.lock),
+                    obscure: true,
+                    enabletext: !authctrl.loginloading,
+                    fieldsubmitted: () {
+                      if (_formkey.currentState!.validate()) {
+                        authctrl
+                            .authenticate(
+                                _emailcontroller.text, _passwordcontroller.text)
+                            .then(
+                          (value) {
+                            if (!value.entries.first.key) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                      content: Text(
+                                "Error Logging in",
+                              )));
+                            }
+                          },
+                        );
+                      }
+                    },
+                    controller: _passwordcontroller,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FittedBox(
+                    alignment: Alignment.bottomLeft,
+                    fit: BoxFit.fitWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: authctrl.loginloading
                               ? null
                               : () {
-                                  if (_formkey.currentState!.validate()) {
-                                    authctrl
-                                        .authenticate(_emailcontroller.text,
-                                            _passwordcontroller.text)
-                                        .then(
-                                      (value) {
-                                        if (!value.entries.first.key) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                            "Error Logging in",
-                                          )));
-                                        }
-                                      },
-                                    );
-                                  }
+                                  authctrl.disposelogin();
+                                  widget.changepass!(true);
+                                  // Get.offNamed('/forgotpassword');
                                 },
-                          color: Theme.of(context).colorScheme.secondary,
-
-                          padding: const EdgeInsets.all(16),
-                          child: Center(
-                            child: authctrl.loginloading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                    backgroundColor: Colors.transparent,
-                                  )
-                                : const Text('Log in',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    )),
+                          child: Text(
+                            "Forgot Password?",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.secondary),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Cardonly(
+                      margin: EdgeInsets.zero,
+                      // disabledColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                      onpress: authctrl.loginloading
+                          ? null
+                          : () {
+                              if (_formkey.currentState!.validate()) {
+                                authctrl
+                                    .authenticate(_emailcontroller.text,
+                                        _passwordcontroller.text)
+                                    .then(
+                                  (value) {
+                                    if (!value.entries.first.key) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                        "Error Logging in",
+                                      )));
+                                    }
+                                  },
+                                );
+                              }
+                            },
+                      color: Theme.of(context).colorScheme.secondary,
+
+                      padding: const EdgeInsets.all(16),
+                      child: Center(
+                        child: authctrl.loginloading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                backgroundColor: Colors.transparent,
+                              )
+                            : const Text('Log in',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.8)),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  onTap: authctrl.loginloading
-                      ? null
-                      : () {
-                          authctrl.disposelogin();
-                          // Get.offNamed('/signup');
-                          widget.changesignup!(true);
-                        },
-                  child: Text('Register Member',
-                      style: TextStyle(
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              )),
+          SizedBox(
+            width: double.infinity,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )),
-                )
-              ],
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.8)),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: authctrl.loginloading
+                        ? null
+                        : () {
+                            authctrl.disposelogin();
+                            // Get.offNamed('/signup');
+                            widget.changesignup!(true);
+                          },
+                    child: Text('Register',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        )),
+                  )
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
   }

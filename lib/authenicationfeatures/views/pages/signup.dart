@@ -77,255 +77,219 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxLandingcontroller>(builder: (landingcontroller) {
       return GetBuilder<GetxAuthController>(builder: (authctrl) {
-        return SizedBox(
-          // width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
+        return Container(
+          padding: const EdgeInsets.all(16),
+          alignment: Alignment.center,
+          // color: Theme.of(context).colorScheme.primary,
+          child: SizedBox(
+            // width: MediaQuery.sizeOf(context).width > 300 ? 400 : null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                                // Center(
-                      //   child: Image.asset(
-                      //     'assets/logo2.png',
-                      //     height: 75,
-                      //   ),
-                      // ),
-                   
-                          IconButton(
-                              onPressed: () {
-                                // Get.offAndToNamed('/home');
-                                authctrl.signupclose();
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          'assets/logo1.png',
-                          height: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Center(
-                        child: authctrl.numberexists != null &&
-                                authctrl.numberexists == false
-                            ? const HeadingText(
-                                'OTP Verification',
-                                size: 20,
-                              )
-                            : const HeadingText(
-                                'Membership Registration',
-                                size: 20,
-                              ),
-                      ),
-                    ],
-                  ),
+                const SizedBox(
+                  height: 5,
                 ),
-                Expanded(
-                  child: Form(
-                      key: _formkey,
-                      child: Center(
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: [
-                            authctrl.numberexists != null &&
-                                    authctrl.numberexists == false
-                                ? const SizedBox()
-                                : const SizedBox(
-                                    height: 30,
-                                  ),
-                            authctrl.numberexists != null &&
-                                    authctrl.numberexists == false
-                                ? const SizedBox()
-                                : TextFieldWidget(
-                                    hint: "Phone",
-                                    icon: const Icon(Icons.phone),
-                                    controller: _phonecontroller,
-                                    focusnode: _phonefocus,
-                                    enabletext: !authctrl.otploading,
-                                    // nextfocusnode: _passwordfocus,
-                                    validator: () {
-                                      return _authUseCases.phoneAuth(
-                                          _phonecontroller.text.trim(),
-                                          "Phone NUmber");
-                                    },
-                                    fieldsubmitted: () {
-                                      authctrl.signup(_phonecontroller.text);
-                                    },
-                                  ),
-                            authctrl.numberexists != null &&
-                                    authctrl.numberexists == false
-                                ? const SizedBox()
-                                : const SizedBox(
-                                    height: 20,
-                                  ),
-                            authctrl.signuperror != null
-                                ? AnimatedOpacity(
-                                    duration: Durations.extralong1,
-                                    opacity:
-                                        authctrl.signuperror != null ? 1 : 0,
-                                    child: Cardonly(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                            .withOpacity(0.5),
-                                        child: Text(
-                                          authctrl.signuperror ?? "",
-                                          textAlign: TextAlign.center,
-                                        )))
-                                : const SizedBox(),
-                            authctrl.numberexists != null &&
-                                    authctrl.numberexists == false
-                                ? Column(
-                                    children: [
-                                      const Text(
-                                              "We have send an OTP to your number")
-                                          .animate()
-                                          .slideY(begin: 1, end: 0),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(_phonecontroller.text)
-                                          .animate()
-                                          .slideY(begin: 1, end: 0),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                            authctrl.otp != null &&
-                                    authctrl.numberexists == false
-                                ? 
-                                Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // First OTP field
-              _otpTextField(_otp1Controller, _otp1FocusNode, _otp2FocusNode,enabletext: !authctrl.otploading),
-              // Second OTP field
-              _otpTextField(_otp2Controller, _otp2FocusNode, _otp3FocusNode,enabletext: !authctrl.otploading),
-              // Third OTP field
-              _otpTextField(_otp3Controller, _otp3FocusNode, _otp4FocusNode,enabletext: !authctrl.otploading),
-              // Fourth OTP field
-              _otpTextField(_otp4Controller, _otp4FocusNode, null,enabletext: !authctrl.otploading),
-            ],
-          ),
-        ),
-      )
-                                // Center(
-                                //     child: ConstrainedBox(
-                                //       constraints:
-                                //           const BoxConstraints(maxWidth: 300),
-                                //       child: Padding(
-                                //         padding: const EdgeInsets.all(16.0),
-                                //         child: TextFieldWidget(
-                                //           hint: 'OTP',
-                                //           textalign: TextAlign.center,
-                                //           showhint: false,
-                                //           controller: _confirmotp,
-                                //           enabletext: !authctrl.otploading,
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   )
-                                : const SizedBox(),
-                            !authctrl.otploading &&
-                                    otpcorrect != null &&
-                                    otpcorrect == false
-                                ? Center(
-                                        child: Text(
-                                    "You have entered a wrong number. Try again",
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                                  ).animate().slideY(begin: 1, end: 0))
-                                    .animate()
-                                    .fadeIn()
-                                : const SizedBox(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: double.maxFinite,
-                              child: Cardonly(
-                                margin: EdgeInsets.zero,
-                                onpress: authctrl.otploading
-                                    ? null
-                                    : () async {
-                                        if (_formkey.currentState!.validate()) {
-                                          if (authctrl.otp != null) {
-                                            if (authctrl
-                                                .confirmotp(_otp1Controller.text+_otp2Controller.text+_otp3Controller.text+_otp4Controller.text)) {
-                                              Get.to(() => CreateXtremers(
-                                                    phonenumber:
-                                                        _phonecontroller.text,
-                                                    services: landingcontroller
-                                                        .services,
-                                                  ));
-                    
-                                              setState(() {
-                                                otpcorrect = true;
-                                              });
-                                            } else {
-                                              setState(() {
-                                                otpcorrect = false;
-                                              });
-                                            }
-                                            //confirm otp
-                                          } else {
-                                            //send otp
-                                            authctrl
-                                                .signup(_phonecontroller.text);
-                                            setState(() {
-                                              otpshow = true;
-                                            });
-                                            _otp1FocusNode.requestFocus();
-                                          }
-                                        }
-                                      },
-                                color: Theme.of(context).colorScheme.secondary,
-                                padding: const EdgeInsets.all(16),
-                                child: Center(
-                                  child: authctrl.otploading
-                                      ? CircularProgressIndicator(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary,
-                                        )
-                                      : Text(
-                                          authctrl.otp == null
-                                              ? "Send OTP"
-                                              : 'Confirm OTP',
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          )),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          // Get.offAndToNamed('/home');
+                          authctrl.signupclose();
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.close)),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/logo2.png',
+                    height: 75,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: authctrl.numberexists != null &&
+                          authctrl.numberexists == false
+                      ? const HeadingText(
+                          'OTP Verification',
+                          size: 30,
+                        )
+                      : const HeadingText(
+                          'Membership Registration',
+                          size: 30,
+                        ),
+                ),
+                Form(
+                    key: _formkey,
+                    child: Center(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? const SizedBox()
+                              : const SizedBox(
+                                  height: 30,
+                                ),
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? const SizedBox()
+                              : TextFieldWidget(
+                                  hint: "Phone",
+                                  icon: const Icon(Icons.phone),
+                                  controller: _phonecontroller,
+                                  focusnode: _phonefocus,
+                                  enabletext: !authctrl.otploading,
+                                  // nextfocusnode: _passwordfocus,
+                                  validator: () {
+                                    return _authUseCases.phoneAuth(
+                                        _phonecontroller.text.trim(),
+                                        "Phone NUmber");
+                                  },
+                                  fieldsubmitted: () {
+                                    authctrl.signup(_phonecontroller.text);
+                                  },
+                                ),
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? const SizedBox()
+                              : const SizedBox(
+                                  height: 20,
+                                ),
+                          authctrl.signuperror != null
+                              ? AnimatedOpacity(
+                                  duration: Durations.extralong1,
+                                  opacity: authctrl.signuperror != null ? 1 : 0,
+                                  child: Cardonly(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary
+                                          .withOpacity(0.5),
+                                      child: Text(
+                                        authctrl.signuperror ?? "",
+                                        textAlign: TextAlign.center,
+                                      )))
+                              : const SizedBox(),
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? Column(
+                                  children: [
+                                    const Text(
+                                            "We have send an OTP to your number")
+                                        .animate()
+                                        .slideY(begin: 1, end: 0),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(_phonecontroller.text)
+                                        .animate()
+                                        .slideY(begin: 1, end: 0),
+                                  ],
+                                )
+                              : const SizedBox(),
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? Center(
+                                  child: ConstrainedBox(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 300),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: TextFieldWidget(
+                                        hint: 'OTP',
+                                        textalign: TextAlign.center,
+                                        showhint: false,
+                                        controller: _confirmotp,
+                                        enabletext: !authctrl.otploading,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          !authctrl.otploading &&
+                                  otpcorrect != null &&
+                                  otpcorrect == false
+                              ? Center(
+                                      child: Text(
+                                  "You have entered a wrong number. Try again",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
+                                ).animate().slideY(begin: 1, end: 0))
+                                  .animate()
+                                  .fadeIn()
+                              : const SizedBox(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: double.maxFinite,
+                            child: Cardonly(
+                              margin: EdgeInsets.zero,
+                              onpress: authctrl.otploading
+                                  ? null
+                                  : () async {
+                                      if (_formkey.currentState!.validate()) {
+                                        if (authctrl.otp != null) {
+                                          if (authctrl
+                                              .confirmotp(_confirmotp.text)) {
+                                            Get.to(() => CreateXtremers(
+                                                  phonenumber:
+                                                      _phonecontroller.text,
+                                                  services: landingcontroller
+                                                      .services,
+                                                ));
+
+                                            setState(() {
+                                              otpcorrect = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              otpcorrect = false;
+                                            });
+                                          }
+                                          //confirm otp
+                                        } else {
+                                          //send otp
+                                          authctrl
+                                              .signup(_phonecontroller.text);
+                                          setState(() {
+                                            otpshow = true;
+                                          });
+                                        }
+                                      }
+                                    },
+                              color: Theme.of(context).colorScheme.secondary,
+                              padding: const EdgeInsets.all(16),
+                              child: Center(
+                                child: authctrl.otploading
+                                    ? CircularProgressIndicator(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                      )
+                                    : Text(
+                                        authctrl.otp == null
+                                            ? "Send OTP"
+                                            : 'Confirm OTP',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        )),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+                const SizedBox(
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

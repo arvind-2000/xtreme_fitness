@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/loginscreen.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/signup.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/otpform.dart';
-import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -52,8 +54,8 @@ class MyApp extends StatelessWidget {
             transition: Transition.noTransition),
 
         GetPage(
-            name: '/signupmobile',
-            page: () => const PhoneInputScreen(),
+            name: '/loginmobile',
+            page: () => const LoginDialogMobile(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/',

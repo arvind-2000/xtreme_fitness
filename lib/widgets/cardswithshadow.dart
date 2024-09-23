@@ -8,20 +8,24 @@ class CardwithShadow extends StatelessWidget {
       required this.child,
       this.onpress,
       this.color,
-      this.isShadow = true});
+      this.isShadow = true,
+      this.height});
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Widget child;
   final VoidCallback? onpress;
   final Color? color;
   final bool isShadow;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       margin: margin,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color.fromARGB(255, 72, 72, 72)),
         color: color ?? Theme.of(context).colorScheme.primary,
         // boxShadow:color == Colors.transparent?null:[
         //   BoxShadow(

@@ -32,11 +32,11 @@ class NavBarMobile extends StatelessWidget {
               children: [
                 CardBorder(
                   onpress: () {
-                    Get.dialog(
-                        barrierDismissible: true,
-                        const LoginDialogMobile(
-                          signupdialog: false,
-                        ));
+                    Get.to(
+                        () => const LoginDialogMobile(
+                              signupdialog: false,
+                            ),
+                        transition: Transition.fadeIn);
                   },
                   margin: const EdgeInsets.all(4),
                   color: Colors.red[800],

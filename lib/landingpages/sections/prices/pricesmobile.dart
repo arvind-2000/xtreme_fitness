@@ -34,162 +34,151 @@ class _PricesmobileState extends State<Pricesmobile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                flex: 34,
-                child: Column(
+              const SizedBox(
+                height: 100,
+              ),
+              const HeadingText(
+                "Choose The Best Plan",
+                size: 30,
+                isbold: true,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Choose a plan that's right for you. Flexible, Simple & no hidden prices",
+                  style: TextStyle(color: Colors.white60),
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    const HeadingText(
-                      "Choose The Best Plan",
-                      size: 30,
-                      isbold: true,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Center(
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Choose a plan that's right for you. Flexible, Simple & no hidden prices",
-                        style: TextStyle(color: Colors.white60),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    FittedBox(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                managectrl.changeplanduration(1);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.red),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: managectrl.plandurations == 1
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : null,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "1 Month",
-                                    style: TextStyle(
-                                        // color: managectrl.plandurations == 1
-                                        //     ? Theme.of(context).colorScheme.secondary
-                                        //     : null,
-                                        fontSize: managectrl.plandurations == 1
-                                            ? 16
-                                            : 14),
-                                  ),
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
+                    InkWell(
+                        onTap: () {
+                          managectrl.changeplanduration(1);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.circular(10),
+                            color: managectrl.plandurations == 1
+                                ? Theme.of(context).colorScheme.secondary
+                                : null,
                           ),
-                          InkWell(
-                              onTap: () {
-                                managectrl.changeplanduration(3);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.red),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: managectrl.plandurations == 3
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : null,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "3 Months",
-                                    style: TextStyle(
-                                        fontSize: managectrl.plandurations == 3
-                                            ? 16
-                                            : 14),
-                                  ),
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "1 Month",
+                              style: TextStyle(
+                                  // color: managectrl.plandurations == 1
+                                  //     ? Theme.of(context).colorScheme.secondary
+                                  //     : null,
+                                  fontSize:
+                                      managectrl.plandurations == 1 ? 16 : 14),
+                            ),
                           ),
-                          InkWell(
-                              onTap: () {
-                                managectrl.changeplanduration(6);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.red),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: managectrl.plandurations == 6
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : null,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "6 Months",
-                                    style: TextStyle(
-                                        fontSize: managectrl.plandurations == 6
-                                            ? 16
-                                            : 14),
-                                  ),
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                              onTap: () {
-                                managectrl.changeplanduration(12);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.red),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: managectrl.plandurations == 12
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : null,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "12 Months",
-                                    style: TextStyle(
-                                        fontSize: managectrl.plandurations == 12
-                                            ? 16
-                                            : 14),
-                                  ),
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
+                        )),
                     const SizedBox(
-                      height: 30,
+                      width: 20,
                     ),
+                    InkWell(
+                        onTap: () {
+                          managectrl.changeplanduration(3);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.circular(10),
+                            color: managectrl.plandurations == 3
+                                ? Theme.of(context).colorScheme.secondary
+                                : null,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "3 Months",
+                              style: TextStyle(
+                                  fontSize:
+                                      managectrl.plandurations == 3 ? 16 : 14),
+                            ),
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          managectrl.changeplanduration(6);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.circular(10),
+                            color: managectrl.plandurations == 6
+                                ? Theme.of(context).colorScheme.secondary
+                                : null,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "6 Months",
+                              style: TextStyle(
+                                  fontSize:
+                                      managectrl.plandurations == 6 ? 16 : 14),
+                            ),
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          managectrl.changeplanduration(12);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.circular(10),
+                            color: managectrl.plandurations == 12
+                                ? Theme.of(context).colorScheme.secondary
+                                : null,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "12 Months",
+                              style: TextStyle(
+                                  fontSize:
+                                      managectrl.plandurations == 12 ? 16 : 14),
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
-              Expanded(
-                flex: 50,
+              const SizedBox(
+                height: 30,
+              ),
+              SizedBox(
+                height: 370,
                 child: Center(
-                  child: GridView.builder(
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Number of items in a row
-                      childAspectRatio: MediaQuery.of(context).size.width > 450
-                          ? 2 / 3.5
-                          : 2 / 3, // Adjust the aspect ratio as needed
-                      mainAxisSpacing: 10, // Space between rows
-                      crossAxisSpacing: 10, // Space between columns
-                    ),
+                    scrollDirection: Axis.horizontal,
+                    // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //   crossAxisCount: 2, // Number of items in a row
+                    //   childAspectRatio: MediaQuery.of(context).size.width > 450
+                    //       ? 2 / 3.5
+                    //       : 2 / 3, // Adjust the aspect ratio as needed
+                    //   mainAxisSpacing: 10, // Space between rows
+                    //   crossAxisSpacing: 10, // Space between columns
+                    // ),
                     itemCount: managectrl.getallplans
                         .where((element) =>
                             element.durationInMonths ==
@@ -203,194 +192,190 @@ class _PricesmobileState extends State<Pricesmobile> {
                           .toList();
                       var e = filteredPlans[index];
 
-                      return SizedBox(
-                        child: CardwithShadow(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HeadingText(
-                                isbold: true,
-                                e.category,
-                                size: 16,
-                                color: Colors.white60,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Rs ${e.price - (e.price * (e.discountPercentage / 100))}",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  e.discountPercentage <= 0
-                                      ? const SizedBox()
-                                      : const Text(
-                                          "Discount",
-                                          style: TextStyle(
-                                            color: Colors.white60,
-                                          ),
-                                        ),
-                                  e.discountPercentage <= 0
-                                      ? const SizedBox()
-                                      : Text(
-                                          "${e.discountPercentage}%",
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: SizedBox(
+                          child: CardwithShadow(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                            child: Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    HeadingText(
+                                      isbold: true,
+                                      e.category,
+                                      size: 18,
+                                      color: Colors.white60,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Rs ${e.price - (e.price * (e.discountPercentage / 100))}",
                                           style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                  MediaQuery.of(context).size.width > 450
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    e.discountPercentage <= 0
+                                        ? const SizedBox()
+                                        : const Text(
+                                            "Discount",
+                                            style: TextStyle(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                    e.discountPercentage <= 0
+                                        ? const SizedBox()
+                                        : Text(
+                                            "${e.discountPercentage}%",
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Text(
+                                          "Features",
+                                          style: TextStyle(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Row(
                                           children: [
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            const Text(
-                                              "Features",
-                                              style: TextStyle(
-                                                color: Colors.white60,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            Row(
-                                              children: [
-                                                e.category.toLowerCase() ==
-                                                        "personal"
-                                                    ? const Icon(
-                                                        Icons.check,
-                                                        color: Colors.green,
-                                                        size: 14,
-                                                      )
-                                                    : const Icon(
-                                                        Icons.close,
-                                                        color: Colors.red,
-                                                        size: 14,
-                                                      ),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                e.category.toLowerCase() ==
-                                                        "personal"
-                                                    ? Text(
-                                                        "Trainer Included",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .onSurface
-                                                                .withOpacity(
-                                                                    0.7)),
-                                                      )
-                                                    : Text(
-                                                        "No Trainers",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .onSurface
-                                                                .withOpacity(
-                                                                    0.7)),
-                                                      ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.check,
+                                            e.category.toLowerCase() ==
+                                                    "personal"
+                                                ? const Icon(
+                                                    Icons.check,
                                                     color: Colors.green,
-                                                    size: 14),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                Text(
-                                                  "Service Discount",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onSurface
-                                                          .withOpacity(0.7)),
-                                                ),
-                                              ],
-                                            ),
+                                                    size: 14,
+                                                  )
+                                                : const Icon(
+                                                    Icons.close,
+                                                    color: Colors.red,
+                                                    size: 14,
+                                                  ),
                                             const SizedBox(
-                                              height: 10,
+                                              width: 16,
                                             ),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.check,
-                                                  color: Colors.green,
-                                                  size: 14,
-                                                ),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                Text(
-                                                  "One time BMI Free",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onSurface
-                                                          .withOpacity(0.7)),
-                                                ),
-                                              ],
-                                            ),
+                                            e.category.toLowerCase() ==
+                                                    "personal"
+                                                ? Text(
+                                                    "Trainer Included",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withOpacity(0.7)),
+                                                  )
+                                                : Text(
+                                                    "No Trainers",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withOpacity(0.7)),
+                                                  ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.check,
+                                                color: Colors.green, size: 14),
                                             const SizedBox(
-                                              height: 10,
+                                              width: 16,
+                                            ),
+                                            Text(
+                                              "Service Discount",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withOpacity(0.7)),
                                             ),
                                           ],
-                                        )
-                                      : const SizedBox(),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                child: Cardonly(
-                                  onpress: () {
-                                    addmemberctrl.addplan(e);
-                                    Get.dialog(
-                                      barrierDismissible: false,
-                                      const LoginDialogMobile(
-                                        signupdialog: true,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                              size: 14,
+                                            ),
+                                            const SizedBox(
+                                              width: 16,
+                                            ),
+                                            Text(
+                                              "One time BMI Free",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withOpacity(0.7)),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Cardonly(
+                                    onpress: () {
+                                      addmemberctrl.addplan(e);
+
+                                      Get.to(
+                                        () => const LoginDialogMobile(
+                                          signupdialog: true,
+                                        ),
+                                      );
+                                    },
+                                    margin: EdgeInsets.zero,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    child: const Center(
+                                      child: Text(
+                                        "Choose Plan",
+                                        style: TextStyle(fontSize: 12),
                                       ),
-                                    );
-                                  },
-                                  margin: EdgeInsets.zero,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  child: const Center(
-                                    child: Text(
-                                      "Choose Plan",
-                                      style: TextStyle(fontSize: 12),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );

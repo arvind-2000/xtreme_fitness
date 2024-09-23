@@ -36,9 +36,6 @@ class GetxAuthController extends GetxController {
     // update();
   }
 
-  
-     
-
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
     loginerrortext = null;
@@ -214,7 +211,7 @@ class GetxAuthController extends GetxController {
     otp = rand;
     update();
     debugPrint(otp.toString());
-     authrepo.sendOTP(rand.toString(), "10",phone);
+    authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
   bool confirmotp(String confirmotp) {
@@ -234,7 +231,6 @@ class GetxAuthController extends GetxController {
     signuperror = null;
     update();
   }
-
 
   void changepassword(String newpass) async {
     otploading = true;

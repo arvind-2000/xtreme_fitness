@@ -11,10 +11,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/allpay
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/plansscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/renewalscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/servicescreen.dart';
-import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
-import 'package:xtreme_fitness/widgets/titletext.dart';
-
 import '../../../widgets/navbar.dart';
 import '../controllers/pagecontroller.dart';
 import 'dashboardmemberpage/dashboard1.dart';
