@@ -577,12 +577,10 @@ class AddMemberController extends GetxController {
   void checkpaymentafterpaid() async {
     final prefs = await SharedPreferences.getInstance();
 
-    var trans = prefs.getString('tranid')!;
-    update();
-
     print("payments checking");
 
     if (prefs.containsKey('tranid')) {
+      var trans = prefs.getString('tranid')!;
       paymentsdetails = await repo.getpayment(trans);
       if (paymentsdetails != null) {
         if (paymentsdetails!.paymentStatus.toLowerCase() == "success") {

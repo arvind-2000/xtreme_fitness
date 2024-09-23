@@ -56,7 +56,8 @@ class _CreateMemberState extends State<CreateMember> {
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
-                child: addmemberctrl.paymentstatus != 0
+                child: addmemberctrl.isloading ||
+                        addmemberctrl.paymentstatus != 0
                     ? PaymentStatusCard(
                         callback: () {
                           addmemberctrl.changepaymentstatus(0);
@@ -333,6 +334,7 @@ class _CreateMemberState extends State<CreateMember> {
                                           // username.text, password.text)) {
                                           if (true) {
                                             showDialog(
+                                              useSafeArea: true,
                                               context: context,
                                               builder: (context) =>
                                                   PaymentDialog(
@@ -356,37 +358,22 @@ class _CreateMemberState extends State<CreateMember> {
                                         }
                                       },
                               color: Colors.blue[300],
-                              child: addmemberctrl.isloading
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CircularProgressIndicator(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary
-                                              .withOpacity(0.6),
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.money,
-                                          color: Colors.white,
-                                        ),
-                                        const SizedBox(
-                                          width: 16,
-                                        ),
-                                        Text(
-                                          widget.buttontext ?? "pay",
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                      ],
-                                    ))
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.money,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Text(
+                                    widget.buttontext ?? "pay",
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ))
                         ],
                       ),
               ),

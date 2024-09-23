@@ -8,8 +8,8 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
-class CreateMemberpaid extends StatefulWidget {
-  const CreateMemberpaid(
+class PaymentRedirectPage extends StatefulWidget {
+  const PaymentRedirectPage(
       {super.key,
       this.phone,
       this.renewal,
@@ -22,10 +22,10 @@ class CreateMemberpaid extends StatefulWidget {
   final VoidCallback? callback;
   final bool iseditform;
   @override
-  State<CreateMemberpaid> createState() => _CreateMemberpaidState();
+  State<PaymentRedirectPage> createState() => _PaymentRedirectPageState();
 }
 
-class _CreateMemberpaidState extends State<CreateMemberpaid> {
+class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
   final GlobalKey<FormState> _formkey = GlobalKey();
   final GlobalKey<FormState> _formKeys = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
