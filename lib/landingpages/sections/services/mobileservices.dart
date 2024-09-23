@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
-import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../controllers/getxcontrol.dart';
 
 class ServicesMobile extends StatelessWidget {
@@ -132,34 +130,33 @@ class ServicesMobile extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                         CardBorder(
-                                  onpress: (){
-                                    Get.dialog(
-                                      
-                                      const LoginDialog(signupdialog: true,));
-                                      addmemberctrl.addservices(e);
-
+                              CardBorder(
+                                  onpress: () {
+                                    Get.dialog(const LoginDialogMobile(
+                                      signupdialog: true,
+                                    ));
+                                    addmemberctrl.addservices(e);
                                   },
-                                    margin: EdgeInsets.zero,
-                                    color: Colors.grey,
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Choose Service",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.white,
-                                          size: 14,
-                                        ),
-                                      ],
-                                    ))
+                                  margin: EdgeInsets.zero,
+                                  color: Colors.grey,
+                                  child: const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Choose Service",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                        size: 14,
+                                      ),
+                                    ],
+                                  ))
                             ],
                           ),
                         ),
@@ -178,66 +175,39 @@ class ServicesMobile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 16),
                     color: Colors.orange,
-                    child: MediaQuery.sizeOf(context).width < mobilescreen
-                        ? FittedBox(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                RichText(
-                                    text: const TextSpan(children: [
-                                  // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
-                                  TextSpan(
-                                      text:
-                                          "Exclusive Offer: Free BMI Service for First-time members only.",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.bold)),
-                                ])),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                Cardonly(
-                                    onpress: () {
-                                      Get.toNamed("/signup");
-                                    },
-                                    margin: EdgeInsets.zero,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    child: const Text(
-                                      "Claim Now",
-                                      style: TextStyle(color: Colors.white),
-                                    ))
-                              ],
-                            ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              RichText(
-                                  text: const TextSpan(children: [
-                                // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
-                                TextSpan(
-                                    text:
-                                        "Exclusive Offer: Free BMI Service for First-time members only.",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.bold)),
-                              ])),
-                              Cardonly(
-                                  onpress: () {
-                                    Get.toNamed("/signup");
-                                  },
-                                  margin: EdgeInsets.zero,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  child: const Text(
-                                    "Claim Now",
-                                    style: TextStyle(color: Colors.white),
-                                  ))
-                            ],
-                          )),
+                    child: FittedBox(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          RichText(
+                              text: const TextSpan(children: [
+                            // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
+                            TextSpan(
+                                text:
+                                    "Exclusive Offer: Free BMI Service for First-time members only.",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                          ])),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Cardonly(
+                              onpress: () {
+                                Get.dialog(const LoginDialogMobile(
+                                  signupdialog: true,
+                                ));
+                              },
+                              margin: EdgeInsets.zero,
+                              color: Theme.of(context).colorScheme.secondary,
+                              child: const Text(
+                                "Claim Now",
+                                style: TextStyle(color: Colors.white),
+                              ))
+                        ],
+                      ),
+                    )),
               ),
             ),
           ],

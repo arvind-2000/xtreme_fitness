@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -73,9 +72,10 @@ class ManagementController extends GetxController {
   List<Membership> get getallMembership => _allmembership;
   String? searchmessage = "";
   int searchposition = 0;
-  Membership?  currentmember; 
-    GetxAuthController authctrl = Get.find<GetxAuthController>();
-Xtremer? xtremer; 
+  Membership? currentmember;
+  GetxAuthController authctrl = Get.find<GetxAuthController>();
+  Xtremer? xtremer;
+
   /// 0 [week] 1[month]
   int servicefilter = 1;
   Map<int,List<Alluserpaymentmodel>> filterpayments = {};
@@ -94,7 +94,7 @@ Xtremer? xtremer;
   void onInit() {
     super.onInit();
     getplans();
-    
+
     checkmember();
     getxtremer();
     getinactivextremer();
@@ -106,9 +106,9 @@ Xtremer? xtremer;
     getpaymentlastest10();
     getAllTraineess(10);
     getallgeneralextremer();
-   
+
     getxtremerforoverall();
-      getMemberships();
+    getMemberships();
     // dashboardTimer();
 
     _allpayments = dummypayments;
@@ -118,20 +118,21 @@ Xtremer? xtremer;
     update();
   }
 
-
-  void dashboardTimer(){
-      
-    Timer.periodic(const Duration(seconds: 5), (timer) {
-    print("In periodic timer");
-    getxtremer();
-    getinactivextremer();
-    getallpersonalextremer();
-    getpaymentlastest10();
-    getAllTraineess(10);
-    getxtremerforoverall();
-      },);
-
+  void dashboardTimer() {
+    Timer.periodic(
+      const Duration(seconds: 5),
+      (timer) {
+        print("In periodic timer");
+        getxtremer();
+        getinactivextremer();
+        getallpersonalextremer();
+        getpaymentlastest10();
+        getAllTraineess(10);
+        getxtremerforoverall();
+      },
+    );
   }
+
   ///checking member or admin
   void checkmember() {
     ismember = authctrl.ismember;
@@ -264,12 +265,11 @@ Xtremer? xtremer;
     return d;
   }
 
-  
   Future<String> editpayments(Alluserpaymentmodel paymnet) async {
     iseditpayment = true;
     update();
     String d = await managementRepo.updatePayment(paymnet);
-    iseditpayment= false;
+    iseditpayment = false;
     update();
     viewpayment();
     return d;
@@ -316,31 +316,25 @@ Xtremer? xtremer;
     return await managementRepo.viewadmission();
   }
 
-
-    void getMembershipbyid(int id) async {
-    
+  void getMembershipbyid(int id) async {
     print('$id');
-      if(_allmembership.isNotEmpty){
-
-          try {
-            for(Membership i in _allmembership){
-              print(i.userId);
-              if(i.userId == id){
-                  currentmember = i;
-                  print("membership found");
-                  update();
-                  return;
-              }
-            }
-} on Exception catch (e) {
-  // TODO
-  print(e);
-}
-    
-
-      } 
-     update();
-
+    if (_allmembership.isNotEmpty) {
+      try {
+        for (Membership i in _allmembership) {
+          print(i.userId);
+          if (i.userId == id) {
+            currentmember = i;
+            print("membership found");
+            update();
+            return;
+          }
+        }
+      } on Exception catch (e) {
+        // TODO
+        print(e);
+      }
+    }
+    update();
   }
 
   Future<String> activateXtremer(Xtremer? xtremer) async {
@@ -362,22 +356,18 @@ Xtremer? xtremer;
     }
   }
 
-
-  Xtremer? getxtremerbyId(int id){
-
-      return _allxtremer.firstWhereOrNull((element) {
+  Xtremer? getxtremerbyId(int id) {
+    return _allxtremer.firstWhereOrNull(
+      (element) {
         return element.XtremerId == id;
-      },);
-
-
+      },
+    );
   }
-
-
 
   void getMemberships() async {
     // _allstaff = dummystaff;
     _allmembership = await managementRepo.viewMembership();
-    if(authctrl.ismember){
+    if (authctrl.ismember) {
       print("In current meber");
       currentmember = _allmembership.firstWhere((element) => element.userId.toString() == authctrl.userid && element.isActive!,);
       // currentmember = Membership(id: 1,userId: 12,membershipId: 1200,admissionId: 12,admissionFeePaid: true,bmiUsed: false,isActive: true,startDate: DateTime.now());
@@ -391,14 +381,13 @@ Xtremer? xtremer;
     update();
   }
 
- Future<String> addStaffs(Staff staff) async {
-    var v =await managementRepo.addStaff(staff);
-    if(v.entries.first.key==200){
+  Future<String> addStaffs(Staff staff) async {
+    var v = await managementRepo.addStaff(staff);
+    if (v.entries.first.key == 200) {
       getStaff();
     }
-  
-  return v.entries.first.value;
-    
+
+    return v.entries.first.value;
   }
 
   void getTrainer() async {
@@ -424,11 +413,13 @@ Xtremer? xtremer;
     update();
     _latestpayment10 = await managementRepo.viewlatest10payment();
     managementloading = false;
-    
+
     update();
   }
 
   void viewpayment() async {
+    // _allpayments = dummypayments;
+    _allpayments = await managementRepo.viewpayment();
     // _allpayments = dummypayments;
     _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
@@ -450,15 +441,12 @@ Xtremer? xtremer;
     });
   }
 
-
   Future<String> updateStaffs(UserEntity staff) async {
     String v = await managementRepo.updateStaff(staff);
-  
+
     getStaff();
     return v;
   }
-
-
 
   void searchusers(String keyword) {
     searchmessage = "";
@@ -494,23 +482,23 @@ Xtremer? xtremer;
     update();
   }
 
-
- void searchpayments(String keyword) {
+  void searchpayments(String keyword) {
     searchmessage = "";
     if (keyword.isEmpty) {
-    
-        _searchpayments = _allpayments;
-      
-        _searchxtremerlist = _allpersonalxtremer;
- 
-        _searchxtremerlist = _allgeneralxtremer;
-      
+      _searchpayments = _allpayments;
+
+      _searchxtremerlist = _allpersonalxtremer;
+
+      _searchxtremerlist = _allgeneralxtremer;
     } else {
       _searchpayments = _allpayments.where(
         (element) {
-          return element.transactionId.toString()
+          return element.transactionId
+                  .toString()
                   .toLowerCase()
-                  .contains(keyword.toLowerCase()) ||  element.userId.toString()
+                  .contains(keyword.toLowerCase()) ||
+              element.userId
+                  .toString()
                   .toLowerCase()
                   .contains(keyword.toLowerCase());
         },
@@ -522,7 +510,6 @@ Xtremer? xtremer;
         : "Found ${_searchpayments.length} records with keyoword: $keyword";
     update();
   }
-
 
   ///call in search to make personal only
   void personalxtremer() {
@@ -565,8 +552,6 @@ Xtremer? xtremer;
     //     // }
     //     // update();
     // }
-
-
 
 //   void exXtremer(){
 

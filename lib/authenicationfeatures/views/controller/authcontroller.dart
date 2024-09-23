@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -20,7 +22,7 @@ class GetxAuthController extends GetxController {
   String? loginerrortext;
   UserEntity? _user;
   UserEntity? get getuser => _user;
-  String? userid ="12";
+  String? userid = "12";
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
@@ -42,7 +44,7 @@ class GetxAuthController extends GetxController {
     update();
     Map<String?, String> d;
     _user = UserEntity(id: 0, userName: "", passwordHash: "");
-
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       debugPrint('in email authenticate');
 
@@ -55,6 +57,9 @@ class GetxAuthController extends GetxController {
           _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
+            print('Saving user and password to local');
+            pref.setString('userid', email);
+            pref.setString('password', pass);
             print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
@@ -64,15 +69,14 @@ class GetxAuthController extends GetxController {
             if (_user != null) {
               print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
-               loginloading = false;
+              loginloading = false;
               update();
               Get.toNamed('/dashboard');
- 
             } else {
               print("user null");
-               _authentication = false;
-          ismember = true;
-          loginloading = false;
+              _authentication = false;
+              ismember = true;
+              loginloading = false;
             }
           }
         } else {
@@ -92,20 +96,19 @@ class GetxAuthController extends GetxController {
     } catch (e) {
       debugPrint('in sign up catch');
       _authentication = false;
-       ismember = true;
+      ismember = true;
       loginloading = false;
       update();
       return {_authentication: responseCode(0)};
     }
-    loginloading = false; 
-     ismember = true;
+    loginloading = false;
+    ismember = true;
     _authentication = false;
     update();
     return {_authentication: responseCode(1)};
   }
 
   void logout() async {
-
     await authrepo.logout().then(
       (value) {
         print(value);
@@ -117,10 +120,10 @@ class GetxAuthController extends GetxController {
       _authentication = false;
       loginloading = false;
       _user = null;
-       ismember = true;
-       signupclose();
-       disposelogin();
-       disposeforgotpass();
+      ismember = true;
+      signupclose();
+      disposelogin();
+      disposeforgotpass();
       authentications();
       update();
     });
@@ -166,7 +169,31 @@ class GetxAuthController extends GetxController {
     //   numberexists = false;
     //   otploading = false;
     //   sendotp(phone);
-    //   //testing
+    // } else {
+    //   if (d.entries.first.key! > 0) {
+    //     signuperror =
+    //         "A user with the number already exists.\nTry another number";
+    //   } else {
+    //     if (d.entries.first.key == -1) {
+    //       signuperror =
+    //           "There is an issue at our end.\nWe will get back to you as soon as possible.";
+    //     } else {
+    //       signuperror =
+    //           "There  may be an issue with the connection or with the browser.\nTry again.";
+    //     }
+    //   }
+    //   otploading = false;
+
+    //   numberexists = true;
+    //   otp = null;
+    //   update();
+    // }
+
+    //testing
+    numberexists = false;
+    otploading = false;
+    sendotp(phone);
+    //testing
     otploading = false;
     update();
   }
@@ -278,7 +305,6 @@ class GetxAuthController extends GetxController {
   void disposelogin() {
     loginerrortext = null;
     loginloading = false;
-
 
     update();
   }
