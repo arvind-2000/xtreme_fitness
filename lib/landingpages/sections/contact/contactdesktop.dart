@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/pages/contactuspage.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
+import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class ContactDesktop extends StatelessWidget {
@@ -26,7 +28,7 @@ class ContactDesktop extends StatelessWidget {
               Expanded(
                 flex: 5,
                 child: Container(
-                  padding: const EdgeInsets.only(left: 40, right: 40, top: 30),
+                  padding: const EdgeInsets.only(left: 100, right: 100, top: 30),
                   color: const Color.fromARGB(255, 15, 15, 15),
                   child: MediaQuery.sizeOf(context).width < mobilescreen
                       ? Column(
@@ -112,7 +114,7 @@ class ContactDesktop extends StatelessWidget {
                             const SizedBox(
                               height: 60,
                             ),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -139,11 +141,16 @@ class ContactDesktop extends StatelessWidget {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Privacy Policy",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
+                               InkWell(
+                                          onTap: (){
+                                                Get.to(()=>Policies());
+                                          },
+                                          child: Text(
+                                            "Privacy Policy",
+                                            style:
+                                                TextStyle(color: Colors.white60),
+                                          ),
+                                        ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -231,6 +238,7 @@ class ContactDesktop extends StatelessWidget {
                           ],
                         )
                       : Container(
+                        
                           child: Column(
                             children: [
                               Row(
@@ -319,7 +327,7 @@ class ContactDesktop extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const FittedBox(
+                                  FittedBox(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -349,10 +357,15 @@ class ContactDesktop extends StatelessWidget {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Privacy Policy",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                        InkWell(
+                                          onTap: (){
+                                                Get.to(()=>Policies());
+                                          },
+                                          child: Text(
+                                            "Privacy Policy",
+                                            style:
+                                                TextStyle(color: Colors.white60),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -503,7 +516,7 @@ class ContactDesktop extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(16.0),
+                                            padding: const EdgeInsets.symmetric(vertical:16.0),
                                             child: Row(
                                               children: [
                                                 SizedBox(

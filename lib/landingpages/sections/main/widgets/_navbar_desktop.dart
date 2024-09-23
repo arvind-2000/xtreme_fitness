@@ -27,7 +27,7 @@ class NavbarDesktop extends StatelessWidget {
                       child: Row(
                         children: [
                           const SizedBox(
-                            width: 50,
+                            width: 100,
                           ),
                           Row(
                             children: [
@@ -74,11 +74,12 @@ class NavbarDesktop extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 20),
+                              padding: const EdgeInsets.only(right: 0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   CardBorder(
+                                    margin:EdgeInsets.zero,      
                                     padding: EdgeInsets.zero,
                                     onpress: () {
                                       Get.dialog(
@@ -105,7 +106,7 @@ class NavbarDesktop extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width: 10,
+                                    width: 100,
                                   ),
                                   // CardwithShadow(
                                   //   onpress: () {
