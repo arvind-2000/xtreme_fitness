@@ -136,13 +136,13 @@ class ServicesMobile extends StatelessWidget {
                                   onpress: (){
                                     Get.dialog(
                                       
-                                      const LoginDialogMobile(signupdialog: true,));
+                                      const LoginDialog(signupdialog: true,));
                                       addmemberctrl.addservices(e);
 
                                   },
                                     margin: EdgeInsets.zero,
                                     color: Colors.grey,
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [

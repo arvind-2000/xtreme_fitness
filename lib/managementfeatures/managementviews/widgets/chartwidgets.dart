@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../config/const.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../config/manageconfig.dart';
 
@@ -14,11 +15,12 @@ class GraphsWidget extends StatelessWidget {
       this.isyearly = false,
       this.axis = true,
       this.plotbands = true,
-      this.threshold, this.tooltip});
+      this.threshold, this.tooltip, this.graphaxisnames});
 
   final ChartType charttype;
   final List<double> seriesdata;
   final Function(DateTime)? ontap;
+  final ChartAxisLabel Function(AxisLabelRenderDetails)? graphaxisnames;
   final bool ticklines;
   final bool isyearly;
   final bool axis;
@@ -87,7 +89,8 @@ class GraphsWidget extends StatelessWidget {
         minorTickLines: const MinorTickLines(size: 0, width: 0),
         // maximum: 400,
         minimum: 0,
-
+     
+       
         axisLabelFormatter: (x) {
           return ChartAxisLabel("", const TextStyle());
         },
@@ -102,8 +105,9 @@ class GraphsWidget extends StatelessWidget {
         isVisible: axis,
         majorGridLines: const MajorGridLines(width: 0),
 
-        // axisLabelFormatter:(axisLabelRenderArgs) => ChartAxisLabel(isyearly?months[riverdetails[_logics.getMaxIndex2(riverdetails)].river[int.tryParse(axisLabelRenderArgs.text)??0].date.month-1]:axisLabelRenderArgs.text,const TextStyle()),
+        axisLabelFormatter:graphaxisnames,
         interval: 1,
+          //  maximum: 10,
       ),
 
       series: [

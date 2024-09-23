@@ -25,14 +25,14 @@ class Dashboardchild5 extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitleText("Activities"),
-                      SizedBox(
+                      const TitleText("Members"),
+                      const SizedBox(
                         height: 5,
                       ),
-                      Text("OverAll"),
+                      Text(pgctrl.overalldropdownname),
                     ],
                   ),
                   Card(

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/forgotpasswordscreen.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/loginscreen.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/signup.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
@@ -87,16 +84,16 @@ class _AuthHandlerPageState extends State<AuthHandlerPage> {
                                 ],
                               ),
                             )),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: authctrl.changeAuthindex == 0
-                              ? const LoginScreen()
-                              : authctrl.changeAuthindex == 1
-                                  ? const SignUpPage()
-                                  : const ForgotPassWordScreen(),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(16.0),
+                      //     child: authctrl.changeAuthindex == 0
+                      //         ? const LoginScreen(formkey: ,)
+                      //         : authctrl.changeAuthindex == 1
+                      //             ? const SignUpPage()
+                      //             : const ForgotPassWordScreen(),
+                      //   ),
+                      // ),
                     ],
                   ),
                 )

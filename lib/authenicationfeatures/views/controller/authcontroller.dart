@@ -136,37 +136,37 @@ class GetxAuthController extends GetxController {
     signuperror = null;
     otploading = true;
     update();
-    // var d = await authrepo.getUserbyNumber(phone);
+    var d = await authrepo.getUserbyNumber(phone);
 
-    // if (d.entries.first.key == null) {
-    //   numberexists = false;
-    //   otploading = false;
-    //   sendotp(phone);
-    // } else {
-    //   if (d.entries.first.key! > 0) {
-    //     signuperror =
-    //         "A user with the number already exists.\nTry another number";
-    //   } else {
-    //     if (d.entries.first.key == -1) {
-    //       signuperror =
-    //           "There is an issue at our end.\nWe will get back to you as soon as possible.";
-    //     } else {
-    //       signuperror =
-    //           "There  may be an issue with the connection or with the browser.\nTry again.";
-    //     }
-    //   }
-    //   otploading = false;
-
-    //   numberexists = true;
-    //   otp = null;
-    //   update();
-    // }
-
-    //testing
+    if (d.entries.first.key == null) {
       numberexists = false;
       otploading = false;
       sendotp(phone);
-      //testing
+    } else {
+      if (d.entries.first.key! > 0) {
+        signuperror =
+            "A user with the number already exists.\nTry another number";
+      } else {
+        if (d.entries.first.key == -1) {
+          signuperror =
+              "There is an issue at our end.\nWe will get back to you as soon as possible.";
+        } else {
+          signuperror =
+              "There  may be an issue with the connection or with the browser.\nTry again.";
+        }
+      }
+      otploading = false;
+
+      numberexists = true;
+      otp = null;
+      update();
+    }
+
+    // //testing
+    //   numberexists = false;
+    //   otploading = false;
+    //   sendotp(phone);
+    //   //testing
     otploading = false;
     update();
   }

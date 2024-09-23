@@ -15,7 +15,7 @@ class LoginDialog extends StatefulWidget {
 class _LoginDialogState extends State<LoginDialog> {
   bool isforgot = false;
   bool isSignup = false;
-
+  final _formkey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -29,40 +29,43 @@ class _LoginDialogState extends State<LoginDialog> {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width / 3,
-          height: isSignup || isforgot ? 500 : 600,
-          child: Cardonly(
-              margin: EdgeInsets.zero,
-              color: Colors.grey[800]!.withOpacity(0.6),
-              child: isforgot
-                  ? ForgotPassWordScreen(
-                      changelogin: (v) {
-                        state(() {
-                          isforgot = v;
-                        });
-                      },
-                    )
-                  : isSignup
-                      ? SignUpPage(
-                          changelogin: (v) {
-                            state(() {
-                              isSignup = false;
-                            });
-                          },
-                        )
-                      : LoginScreen(
-                          changesignup: (v) {
-                            state(() {
-                              isSignup = v;
-                            });
-                          },
-                          changepass: (v) {
-                            state(() {
-                              isforgot = v;
-                            });
-                          },
-                        )),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 3,
+            height: isSignup || isforgot ? 600 : 650,
+            child: Cardonly(
+                margin: EdgeInsets.zero,
+                color: Colors.grey[800]!.withOpacity(0.6),
+                child: isforgot
+                    ? ForgotPassWordScreen(
+                        changelogin: (v) {
+                          state(() {
+                            isforgot = v;
+                          });
+                        },
+                      )
+                    : isSignup
+                        ? SignUpPage(
+                            changelogin: (v) {
+                              state(() {
+                                isSignup = false;
+                              });
+                            },
+                          )
+                        : LoginScreen(
+                          formkey: _formkey,
+                            changesignup: (v) {
+                              state(() {
+                                isSignup = v;
+                              });
+                            },
+                            changepass: (v) {
+                              state(() {
+                                isforgot = v;
+                              });
+                            },
+                          )),
+          ),
         ),
       );
     });

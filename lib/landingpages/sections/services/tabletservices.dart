@@ -153,7 +153,7 @@ class ServicesTablet extends StatelessWidget {
                                   onpress: (){
                                     Get.dialog(
                                       
-                                      const LoginDialogMobile(signupdialog: true,));
+                                      const LoginDialog(signupdialog: true,));
                                       addmemberctrl.addservices(e);
 
                                   },

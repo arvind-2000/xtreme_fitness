@@ -5,6 +5,7 @@ import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
 import 'dart:html' as html;
 
+import '../../config/const.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
@@ -207,10 +208,11 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
 
   for (var payment in payments) {
     // Format the date to 'Month Year' (e.g., "July 2023")
-
+    print("in payments serarches ${date.year}");
     if(payment.paymentDate.year == date.year){
+    
     int monthYear = payment.paymentDate.month;
-    print("in fliterpayment function");
+    print("in fliterpayment function ${months[monthYear-1]} ");
     if (paymentsByMonth.containsKey(monthYear)) {
        print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
@@ -223,7 +225,10 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
     }
 
   }
-  
+  for(var i in paymentsByMonth.entries){
+      print(" ${months[i.key]}  ${i.value.length}");
+
+  }
   return paymentsByMonth;
 }
 

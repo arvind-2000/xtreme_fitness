@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
 import '../../../widgets/headingtext.dart';
@@ -10,16 +11,18 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({
     super.key,
     this.changepass,
-    this.changesignup,
+    this.changesignup, required this.formkey,
+
   });
   final Function(bool)? changepass;
   final Function(bool)? changesignup;
+  final GlobalKey<FormState> formkey;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formkey = GlobalKey<FormState>();
+
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
   final FocusNode _passwordfocus = FocusNode();
@@ -83,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Form(
-                key: _formkey,
+                key: widget.formkey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscure: true,
                       enabletext: !authctrl.loginloading,
                       fieldsubmitted: () {
-                        if (_formkey.currentState!.validate()) {
+                        if (widget.formkey.currentState!.validate()) {
                           authctrl
                               .authenticate(_emailcontroller.text,
                                   _passwordcontroller.text)
@@ -181,18 +184,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         onpress: authctrl.loginloading
                             ? null
                             : () {
-                                if (_formkey.currentState!.validate()) {
+                                if (widget.formkey.currentState!.validate()) {
                                   authctrl
                                       .authenticate(_emailcontroller.text,
                                           _passwordcontroller.text)
                                       .then(
                                     (value) {
                                       if (!value.entries.first.key) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                          "Error Logging in",
-                                        )));
+                                          CustomSnackbar(context, "Log in Error");
                                       }
                                     },
                                   );

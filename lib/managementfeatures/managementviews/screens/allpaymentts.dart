@@ -130,7 +130,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const HeadingText("Payment Details"),
+                                    const HeadingText("Edit Payments"),
                                     IconButton(onPressed: (){
                                       Navigator.pop(context);
                                     }, icon: const Icon(Icons.close,size:16,))
@@ -194,8 +194,9 @@ class _EditUserScreenState extends State<EditUserScreen> {
                                     margin: EdgeInsets.zero,
                                   color: Colors.blue,
                                   onpress: ()async{
-                                    
-                                    String s = await managectrl.managementRepo.updatePayment(managectrl.getsearchpayments[i]);
+                                    Alluserpaymentmodel payments = Alluserpaymentmodel(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId, amount: managectrl.getsearchpayments[i].amount, receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate:managectrl.getsearchpayments[i].paymentDate, transactionId: managectrl.getsearchpayments[i].transactionId, paymentStatus: paymentStatus??managectrl.getsearchpayments[i].paymentStatus, paymentMethod: managectrl.getsearchpayments[i].paymentMethod, paymentType: managectrl.getsearchpayments[i].paymentType,discountPercentage: managectrl.getsearchpayments[i].discountPercentage,serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId,subscriptionId: managectrl.getsearchpayments[i].subscriptionId);
+                                  
+                                    String s = await managectrl.editpayments(payments);
                                     // createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
                                     Navigator.pop(context);
                                     CustomSnackbar(context, s);

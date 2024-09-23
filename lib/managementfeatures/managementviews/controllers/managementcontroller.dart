@@ -14,7 +14,6 @@ import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrep
 
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../../authentifeatures/domain/userentity.dart';
-import '../../../landingpages/controllers/getxcontrol.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/membership.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
@@ -80,6 +79,7 @@ Xtremer? xtremer;
   /// 0 [week] 1[month]
   int servicefilter = 1;
   Map<int,List<Alluserpaymentmodel>> filterpayments = {};
+  Map<int,List<Alluserpaymentmodel>> weeklypayments = {};
   bool managementloading = true;
   int planloadingstatus = 0;
   int serviceloadingstatus = 0;
@@ -88,6 +88,8 @@ Xtremer? xtremer;
   int xtremerloadingstatus = 0;
   int membershiploadingstatus = 0;
   bool iseditpayment = false;
+
+
   @override
   void onInit() {
     super.onInit();
@@ -111,7 +113,7 @@ Xtremer? xtremer;
 
     _allpayments = dummypayments;
 
-    changeservicefilter(servicefilter);
+    // changeservicefilter(servicefilter);
   
     update();
   }
@@ -137,8 +139,8 @@ Xtremer? xtremer;
   }
 
   void getplans() async {
-    _allplans = dummyplan;
-    // _allplans = await managementRepo.getPlans();
+    // _allplans = dummyplan;
+    _allplans = await managementRepo.getPlans();
     _allactiveplans = _allplans.where((element) => element.isActive??false,).toList();
        
     
@@ -218,8 +220,8 @@ Xtremer? xtremer;
   }
 
   void getxtremer() async {
-    // _allxtremer = await managementRepo.viewMember();
-    _allxtremer = dummyxtremer;
+    _allxtremer = await managementRepo.viewMember();
+    // _allxtremer = dummyxtremer;
     if(authctrl.ismember){
         print("In get xtremer");
         xtremer = _allxtremer.firstWhereOrNull((element) => element.XtremerId.toString()==authctrl.userid,)??dummyxtremer[0];
@@ -281,8 +283,8 @@ Xtremer? xtremer;
   }
 
   void getallServices() async {
-    // _allservices = await managementRepo.getServices();
-    _allservices = dummyservices;
+    _allservices = await managementRepo.getServices();
+    // _allservices = dummyservices;
      _allactiveservices = _allservices.where((element) => element.isactive).toList();
     update();
   }
@@ -377,15 +379,15 @@ Xtremer? xtremer;
     _allmembership = await managementRepo.viewMembership();
     if(authctrl.ismember){
       print("In current meber");
-      // currentmember = _allmembership.firstWhere((element) => element.userId.toString() == authctrl.userid && element.isActive!,);
-      currentmember = Membership(id: 1,userId: 12,membershipId: 1200,admissionId: 12,admissionFeePaid: true,bmiUsed: false,isActive: true,startDate: DateTime.now());
+      currentmember = _allmembership.firstWhere((element) => element.userId.toString() == authctrl.userid && element.isActive!,);
+      // currentmember = Membership(id: 1,userId: 12,membershipId: 1200,admissionId: 12,admissionFeePaid: true,bmiUsed: false,isActive: true,startDate: DateTime.now());
     }
     update();
   }
 
   void getStaff() async {
-    _allstaff = dummystaff;
-    // _allstaff = await managementRepo.viewStaff();
+    // _allstaff = dummystaff;
+    _allstaff = await managementRepo.viewStaff();
     update();
   }
 
@@ -427,9 +429,12 @@ Xtremer? xtremer;
   }
 
   void viewpayment() async {
-    _allpayments = dummypayments;
-    // _allpayments = await managementRepo.viewpayment();
+    // _allpayments = dummypayments;
+    _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
+    filterpayments = groupPaymentsByMonth(_allpayments.where((element) => element.paymentStatus!.toLowerCase()=='success',).toList(), DateTime.now());
+    weeklypayments = groupPaymentsBydate(_allpayments.where((element) => element.paymentStatus!.toLowerCase()=='success',).toList(), DateTime.now());
+    print("In view payment : ${_allpayments.length}");
     update();
   }
 
@@ -544,21 +549,22 @@ Xtremer? xtremer;
 
 
 
-    void changeservicefilter(int i){
-        servicefilter = i;
-        update();
+    // void changeservicefilter(int i){
+    //     // servicefilter = i;
+    //     // update();
 
-        if(servicefilter == 0){
-          filterpayments = groupPaymentsBydate(_allpayments, DateTime.now());
-        }    
-        else if(servicefilter == 2){
+    //     // if(servicefilter == 0){
+    //     //   filterpayments = groupPaymentsBydate(_allpayments, DateTime.now());
+    //     // }    
+    //     // else if(servicefilter == 2){
 
-            filterpayments = groupPaymentsByyear(_allpayments);
-        }else{
-            filterpayments = groupPaymentsByMonth(_allpayments, DateTime.now());
-        }
-        update();
-    }
+    //     //     filterpayments = groupPaymentsByyear(_allpayments);
+    //     // }else{
+    //     //   print(_allpayments.length);
+    //     //     filterpayments = groupPaymentsByMonth(_allpayments, DateTime.now());
+    //     // }
+    //     // update();
+    // }
 
 
 

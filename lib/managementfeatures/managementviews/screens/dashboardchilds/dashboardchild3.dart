@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
@@ -55,37 +56,34 @@ class DashboardChild3 extends StatelessWidget {
                       ),
                       onChanged: (value) {
 
-                        managectrl.changeservicefilter(value!%3);
+                        // managectrl.changeservicefilter(value!%3);
                       },
                     )
                   ],
                 ),
               ),
-              Expanded(
+             managectrl.filterpayments.isEmpty?SizedBox():Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GraphsWidget(
                   charttype: ChartType.bar,
-              //     tooltip: (data, point, series, pointIndex, seriesIndex) =>
-              // CardwithShadow(
-              //   padding: const EdgeInsets.all(8),
-              //   child: SizedBox(
-              //     // height: 100,
-              //     child: Column(
-              //       mainAxisSize: MainAxisSize.min,
-              //       children: [
-              //         Text(managectrl.servicefilter==0?"${managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.day}/ ${managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.month}/${managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.year}" :
-              //         managectrl.servicefilter==1?months[(managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.month-1)%12]:"${managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.year}"),
-              //         Text("Rs. $data"),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+                  graphaxisnames: (axisLabelRenderArgs) => ChartAxisLabel(months[(managectrl.filterpayments.values.elementAt(int.tryParse(axisLabelRenderArgs.text)??0).last.paymentDate.month-1)%12],const TextStyle()),
+                  tooltip: (data, point, series, pointIndex, seriesIndex) =>
+              SizedBox(
+                // height: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(months[(managectrl.filterpayments.values.elementAt(pointIndex).last.paymentDate.month-1)%12]),
+                    Text("Rs. ${data.toStringAsFixed(0)}"),
+                  ],
+                ),
+              ),
                   seriesdata: managectrl.filterpayments.entries.map((e){
                     double d = 0;
                     for(Alluserpaymentmodel x in e.value){
 
-                        d = d + x.amount!;
+                        d = d + x.receivedAmount??0;
 
                     }
 
