@@ -208,37 +208,40 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   ),
                 ],
               )),
-          FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.8)),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  onTap: authctrl.loginloading
-                      ? null
-                      : () {
-                          authctrl.disposelogin();
-                          // Get.offNamed('/signup');
-                          widget.changesignup!(true);
-                        },
-                  child: Text('Register',
-                      style: TextStyle(
+          SizedBox(
+            width: double.infinity,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )),
-                )
-              ],
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.8)),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: authctrl.loginloading
+                        ? null
+                        : () {
+                            authctrl.disposelogin();
+                            // Get.offNamed('/signup');
+                            widget.changesignup!(true);
+                          },
+                    child: Text('Register',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ],
