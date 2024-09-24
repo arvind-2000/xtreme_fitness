@@ -334,6 +334,7 @@ class _CreateMemberState extends State<CreateMember> {
                                           // username.text, password.text)) {
                                           if (true) {
                                             showDialog(
+                                              useSafeArea: true,
                                               context: context,
                                               builder: (context) =>
                                                   PaymentDialog(
