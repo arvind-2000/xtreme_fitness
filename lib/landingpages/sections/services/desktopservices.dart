@@ -18,7 +18,7 @@ class ServicesDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AddMemberController addmemberctrl = Get.put(AddMemberController());
-    
+
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return Container(
         height: 1000,
@@ -64,7 +64,7 @@ class ServicesDesktop extends StatelessWidget {
                         managectrl.getallservices[index]; // Access the service
 
                     return Padding(
-                      padding: const EdgeInsets.only(left: 50),
+                      padding: const EdgeInsets.only(left: 100, right: 16),
                       child: SizedBox(
                         width: 300,
                         height: 400,
@@ -142,17 +142,16 @@ class ServicesDesktop extends StatelessWidget {
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                 CardBorder(
-                                  onpress: (){
-                                    Get.dialog(
-                                      
-                                      const LoginDialog(signupdialog: true,));
+                                CardBorder(
+                                    onpress: () {
+                                      Get.dialog(const LoginDialog(
+                                        signupdialog: true,
+                                      ));
                                       addmemberctrl.addservices(e);
-
-                                  },
+                                    },
                                     margin: EdgeInsets.zero,
                                     color: Colors.grey,
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -182,15 +181,15 @@ class ServicesDesktop extends StatelessWidget {
               ),
               Row(
                 children: [
-                     SizedBox(
+                  const SizedBox(
                     width: 100,
                   ),
                   Expanded(
                     child: SizedBox(
                       // width: double.maxFinite,
                       child: Cardonly(
-                          margin:
-                              const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 0),
                           padding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           color: Colors.orange,
@@ -214,11 +213,14 @@ class ServicesDesktop extends StatelessWidget {
                                     ),
                                     Cardonly(
                                         onpress: () {
-                                           Get.dialog(const LoginDialog(signupdialog: true,));
+                                          Get.dialog(const LoginDialog(
+                                            signupdialog: true,
+                                          ));
                                         },
                                         margin: EdgeInsets.zero,
-                                        color:
-                                            Theme.of(context).colorScheme.secondary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         child: const Text(
                                           "Claim Now",
                                           style: TextStyle(color: Colors.white),
@@ -226,9 +228,9 @@ class ServicesDesktop extends StatelessWidget {
                                   ],
                                 )
                               : Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    
                                     RichText(
                                         text: const TextSpan(children: [
                                       // const TextSpan(text: "Exclusive Offer\n\n",style: TextStyle(color: Colors.white,fontSize: 24)),
@@ -242,11 +244,14 @@ class ServicesDesktop extends StatelessWidget {
                                     ])),
                                     Cardonly(
                                         onpress: () {
-                                           Get.dialog(const LoginDialog(signupdialog: true,));
+                                          Get.dialog(const LoginDialog(
+                                            signupdialog: true,
+                                          ));
                                         },
                                         margin: EdgeInsets.zero,
-                                        color:
-                                            Theme.of(context).colorScheme.secondary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         child: const Text(
                                           "Claim Now",
                                           style: TextStyle(color: Colors.white),
@@ -255,7 +260,7 @@ class ServicesDesktop extends StatelessWidget {
                                 )),
                     ),
                   ),
-                     SizedBox(
+                  const SizedBox(
                     width: 100,
                   ),
                 ],

@@ -32,6 +32,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
       return GetBuilder<GetxLandingcontroller>(builder: (_) {
         return SingleChildScrollView(
           child: ResponsivePages(
+            issize: false,
             colors: const Color.fromARGB(255, 15, 15, 15),
             child1: SizedBox(
               child: Column(
@@ -190,194 +191,199 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                             .asMap()
                             .entries
                             .map(
-                              (e) => SizedBox(
-                                width: 400,
-                                child: CardwithShadow(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 32, horizontal: 16),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 32, horizontal: 32),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        HeadingText(
-                                          e.value.category,
-                                          size: 20,
-                                          color: Colors.white60,
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Rs ${e.value.price - (e.value.price * (e.value.discountPercentage / 100))}",
-                                                  style: const TextStyle(
-                                                      fontSize: 26,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                    "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}")
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            e.value.discountPercentage <= 0
-                                                ? const SizedBox()
-                                                : const Text(
-                                                    "Discount",
-                                                    style: TextStyle(
-                                                      color: Colors.white60,
-                                                    ),
-                                                  ),
-                                            e.value.discountPercentage <= 0
-                                                ? const SizedBox()
-                                                : Text(
-                                                    "${e.value.discountPercentage}%",
+                              (e) => Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 100, right: 16),
+                                child: SizedBox(
+                                  width: 400,
+                                  child: CardwithShadow(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 32, horizontal: 0),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 32, horizontal: 32),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          HeadingText(
+                                            e.value.category,
+                                            size: 20,
+                                            color: Colors.white60,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Rs ${e.value.price - (e.value.price * (e.value.discountPercentage / 100))}",
                                                     style: const TextStyle(
-                                                        fontSize: 18,
+                                                        fontSize: 26,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                            const Text(
-                                              "Features",
-                                              style: TextStyle(
-                                                color: Colors.white60,
+                                                  Text(
+                                                      "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}")
+                                                ],
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            Row(
-                                              children: [
-                                                e.value.category
-                                                            .toLowerCase() ==
-                                                        "personal"
-                                                    ? const Icon(
-                                                        Icons.check,
-                                                        color: Colors.green,
-                                                        size: 14,
-                                                      )
-                                                    : const Icon(
-                                                        Icons.close,
-                                                        color: Colors.red,
-                                                        size: 14,
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              e.value.discountPercentage <= 0
+                                                  ? const SizedBox()
+                                                  : const Text(
+                                                      "Discount",
+                                                      style: TextStyle(
+                                                        color: Colors.white60,
                                                       ),
-                                                const SizedBox(
-                                                  width: 16,
+                                                    ),
+                                              e.value.discountPercentage <= 0
+                                                  ? const SizedBox()
+                                                  : Text(
+                                                      "${e.value.discountPercentage}%",
+                                                      style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                              const Text(
+                                                "Features",
+                                                style: TextStyle(
+                                                  color: Colors.white60,
                                                 ),
-                                                e.value.category
-                                                            .toLowerCase() ==
-                                                        "personal"
-                                                    ? Text(
-                                                        "Trainer Included",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .onSurface
-                                                                .withOpacity(
-                                                                    0.7)),
-                                                      )
-                                                    : Text(
-                                                        "No Trainers",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .onSurface
-                                                                .withOpacity(
-                                                                    0.7)),
-                                                      ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.check,
-                                                    color: Colors.green,
-                                                    size: 14),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                Text(
-                                                  "Service Discount",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onSurface
-                                                          .withOpacity(0.7)),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.check,
-                                                  color: Colors.green,
-                                                  size: 14,
-                                                ),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                Text(
-                                                  "One time BMI Free",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onSurface
-                                                          .withOpacity(0.7)),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: double.maxFinite,
-                                          child: Cardonly(
-                                              onpress: () {
-                                                addmemberctrl.addplan(e.value);
-                                                Get.dialog(
-                                                  barrierDismissible: false,
-                                                  const LoginDialog(
-                                                    signupdialog: true,
+                                              ),
+                                              const SizedBox(
+                                                height: 16,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  e.value.category
+                                                              .toLowerCase() ==
+                                                          "personal"
+                                                      ? const Icon(
+                                                          Icons.check,
+                                                          color: Colors.green,
+                                                          size: 14,
+                                                        )
+                                                      : const Icon(
+                                                          Icons.close,
+                                                          color: Colors.red,
+                                                          size: 14,
+                                                        ),
+                                                  const SizedBox(
+                                                    width: 16,
                                                   ),
-                                                );
-                                              },
-                                              margin: EdgeInsets.zero,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                              child: const Center(
-                                                  child: Text(
-                                                "Choose Plan",
-                                                style: TextStyle(),
-                                              ))),
-                                        )
-                                      ],
-                                    )),
+                                                  e.value.category
+                                                              .toLowerCase() ==
+                                                          "personal"
+                                                      ? Text(
+                                                          "Trainer Included",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onSurface
+                                                                  .withOpacity(
+                                                                      0.7)),
+                                                        )
+                                                      : Text(
+                                                          "No Trainers",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onSurface
+                                                                  .withOpacity(
+                                                                      0.7)),
+                                                        ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.check,
+                                                      color: Colors.green,
+                                                      size: 14),
+                                                  const SizedBox(
+                                                    width: 16,
+                                                  ),
+                                                  Text(
+                                                    "Service Discount",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withOpacity(0.7)),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.check,
+                                                    color: Colors.green,
+                                                    size: 14,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 16,
+                                                  ),
+                                                  Text(
+                                                    "One time BMI Free",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withOpacity(0.7)),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: double.maxFinite,
+                                            child: Cardonly(
+                                                onpress: () {
+                                                  addmemberctrl
+                                                      .addplan(e.value);
+                                                  Get.dialog(
+                                                    barrierDismissible: false,
+                                                    const LoginDialog(
+                                                      signupdialog: true,
+                                                    ),
+                                                  );
+                                                },
+                                                margin: EdgeInsets.zero,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                child: const Center(
+                                                    child: Text(
+                                                  "Choose Plan",
+                                                  style: TextStyle(),
+                                                ))),
+                                          )
+                                        ],
+                                      )),
+                                ),
                               ),
                             )
                             .toList(),

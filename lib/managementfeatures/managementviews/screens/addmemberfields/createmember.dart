@@ -332,19 +332,17 @@ class _CreateMemberState extends State<CreateMember> {
                                             addmemberctrl.getprofile != null) {
                                           //   if (await addmemberctrl.createuser(
                                           // username.text, password.text)) {
-                                          if (true) {
-                                            showDialog(
-                                              useSafeArea: true,
-                                              context: context,
-                                              builder: (context) =>
-                                                  PaymentDialog(
-                                                formKeys: _formKeys,
-                                                phone: widget.phone,
-                                                username: username.text,
-                                                pass: password.text,
-                                              ),
-                                            );
-                                          }
+
+                                          showDialog(
+                                            useSafeArea: true,
+                                            context: context,
+                                            builder: (context) => PaymentDialog(
+                                              formKeys: _formKeys,
+                                              phone: widget.phone,
+                                              username: username.text,
+                                              pass: password.text,
+                                            ),
+                                          );
                                         } else {
                                           CustomSnackbar(
                                               context,
@@ -405,12 +403,18 @@ class PaymentDialog extends StatelessWidget {
               no: () {
                 Navigator.pop(context);
               },
-              yes: () async {
+              yes: () {
                 Navigator.pop(context);
-                bool v = await addmemberctrl.createuser(username, pass, phone);
-                if (v) {
-                  addmemberctrl.addXtremer();
-                }
+                addmemberctrl.changepaymentstatus(3);
+                Future.delayed(const Duration(seconds: 3), () async {
+                  bool v =
+                      await addmemberctrl.createuser(username, pass, phone);
+                  if (v) {
+                    addmemberctrl.addXtremer();
+                  } else {
+                    addmemberctrl.changepaymentstatus(4);
+                  }
+                });
               },
               child: Form(
                 key: _formKeys,
