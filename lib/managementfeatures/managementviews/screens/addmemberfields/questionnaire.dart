@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/radiobuttonwidget.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
+import '../../../../config/const.dart';
 import '../../../../widgets/titletext.dart';
 import '../../controllers/pagecontroller.dart';
 
@@ -45,7 +46,7 @@ class Questionnare extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TitleText("Questionnaire"),
+                        TitleText("Questionnaire",size: MediaQuery.sizeOf(context).width<mobilescreen?16:null,),
                                 Row(
                           children: [
                               Checkbox(

@@ -9,6 +9,8 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/gradientbutton.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../widgets/titletext.dart';
+
 class HomeDesktop extends StatefulWidget {
   const HomeDesktop({
     super.key,
@@ -48,7 +50,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
       children: [
         Positioned(
             child: SizedBox(
-                height: 1000,
+                height: MediaQuery.sizeOf(context).width<=mobilescreen?900:1000,
                 width: MediaQuery.sizeOf(context).width,
                 child: Image.asset(
                   'assets/backg.jpg',
@@ -56,7 +58,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                 ))),
         ResponsivePages(
             // screenheight: MediaQuery.sizeOf(context).height,
-            screenheight: 1000,
+              screenheight: MediaQuery.sizeOf(context).width<=mobilescreen?900:1000,
             child1: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
@@ -70,7 +72,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                     HeadingText(
                       "Your Fitness, Your Way",
                       size: MediaQuery.sizeOf(context).width < mobilescreen
-                          ? 60
+                          ? 40
                           : MediaQuery.sizeOf(context).width < 1600
                               ? 70
                               : 80,
@@ -117,17 +119,17 @@ class _HomeDesktopState extends State<HomeDesktop> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 32),
                         color: Theme.of(context).colorScheme.secondary,
-                        child: const Text(
+                        child:  TitleText(
                           "Become a Member",
-                          style: TextStyle(
-                            fontSize:20,
-                              color: Color.fromARGB(255, 219, 218, 218),
-                              fontWeight: FontWeight.bold),
-                        )),
+                         size:MediaQuery.sizeOf(context).width<=mobilescreen?16:20,
+                              // color: Color.fromARGB(255, 219, 218, 218),
+                              ),
+                        ),
                     const SizedBox(
                       height: 60,
                     ),
-                    SizedBox(
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 400),
                       child: CardwithShadow(
                           margin: EdgeInsets.zero,
                           padding: const EdgeInsets.all(16),

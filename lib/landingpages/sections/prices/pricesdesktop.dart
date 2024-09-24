@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
+
+import '../../../widgets/cardborder.dart';
 
 class Pricesdesktop extends StatefulWidget {
   const Pricesdesktop({
@@ -39,7 +42,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   const HeadingText(
                     "Choose The Best Plan",
@@ -56,130 +59,179 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                   const SizedBox(
                     height: 40,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            managectrl.changeplanduration(1);
+
+                  CardBorder(
+                    margin: EdgeInsets.zero,
+                    padding: EdgeInsets.zero,
+                    child: Row(
+                    mainAxisAlignment:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisAlignment.spaceBetween: MainAxisAlignment.center,
+                    mainAxisSize:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisSize.max : MainAxisSize.min,
+                      children:[
+                        Cardonly(
+                          margin: EdgeInsets.zero,
+                          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                          onpress: (){
+                              managectrl.changeplanduration(1);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                              color: managectrl.plandurations == 1
+                                        color: managectrl.plandurations == 1
                                   ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "1 Month",
-                                style: TextStyle(
-                                    // color: managectrl.plandurations == 1
-                                    //     ? Theme.of(context).colorScheme.secondary
-                                    //     : null,
-                                    fontSize: managectrl.plandurations == 1
-                                        ? 16
-                                        : 14),
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            managectrl.changeplanduration(3);
+                                  :Colors.transparent,
+                          child: Text("1 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "month"}")),
+                                Cardonly(
+                                      margin: EdgeInsets.zero,
+                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                          onpress: (){
+                               managectrl.changeplanduration(3);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                              color: managectrl.plandurations == 3
+                                        color: managectrl.plandurations == 3
                                   ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "3 Months",
-                                style: TextStyle(
-                                    fontSize: managectrl.plandurations == 3
-                                        ? 16
-                                        : 14),
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            managectrl.changeplanduration(6);
+                                  : Colors.transparent,
+                          child: Text("3 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                                Cardonly(
+                                      margin: EdgeInsets.zero,
+                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                          onpress: (){
+                              managectrl.changeplanduration(6);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                              color: managectrl.plandurations == 6
+                                        color: managectrl.plandurations == 6
                                   ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "6 Months",
-                                style: TextStyle(
-                                    fontSize: managectrl.plandurations == 6
-                                        ? 16
-                                        : 14),
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            managectrl.changeplanduration(12);
+                                  : Colors.transparent,
+                          child: Text("6 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                                Cardonly(
+                                      margin: EdgeInsets.zero,
+                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                          onpress: (){
+                              managectrl.changeplanduration(12);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                              color: managectrl.plandurations == 12
+                                        color: managectrl.plandurations == 12
                                   ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "12 Months",
-                                style: TextStyle(
-                                    fontSize: managectrl.plandurations == 12
-                                        ? 16
-                                        : 14),
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                                  : Colors.transparent,
+                          child: Text("12 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                      ]
+                    ),
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     InkWell(
+                  //         onTap: () {
+                  //           managectrl.changeplanduration(1);
+                  //         },
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             border: Border.all(color: Colors.red),
+                  //             borderRadius: BorderRadius.circular(10),
+                  //             color: managectrl.plandurations == 1
+                  //                 ? Theme.of(context).colorScheme.secondary
+                  //                 : null,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Text(
+                  //               "1 Month",
+                  //               style: TextStyle(
+                  //                   // color: managectrl.plandurations == 1
+                  //                   //     ? Theme.of(context).colorScheme.secondary
+                  //                   //     : null,
+                  //                   fontSize: managectrl.plandurations == 1
+                  //                       ? 16
+                  //                       : 14),
+                  //             ),
+                  //           ),
+                  //         )),
+                  //     const SizedBox(
+                  //       width: 20,
+                  //     ),
+                  //     InkWell(
+                  //         onTap: () {
+                  //           managectrl.changeplanduration(3);
+                  //         },
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             border: Border.all(color: Colors.red),
+                  //             borderRadius: BorderRadius.circular(10),
+                  //             color: managectrl.plandurations == 3
+                  //                 ? Theme.of(context).colorScheme.secondary
+                  //                 : null,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Text(
+                  //               "3 Months",
+                  //               style: TextStyle(
+                  //                   fontSize: managectrl.plandurations == 3
+                  //                       ? 16
+                  //                       : 14),
+                  //             ),
+                  //           ),
+                  //         )),
+                  //     const SizedBox(
+                  //       width: 20,
+                  //     ),
+                  //     InkWell(
+                  //         onTap: () {
+                  //           managectrl.changeplanduration(6);
+                  //         },
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             border: Border.all(color: Colors.red),
+                  //             borderRadius: BorderRadius.circular(10),
+                  //             color: managectrl.plandurations == 6
+                  //                 ? Theme.of(context).colorScheme.secondary
+                  //                 : null,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Text(
+                  //               "6 Months",
+                  //               style: TextStyle(
+                  //                   fontSize: managectrl.plandurations == 6
+                  //                       ? 16
+                  //                       : 14),
+                  //             ),
+                  //           ),
+                  //         )),
+                  //     const SizedBox(
+                  //       width: 20,
+                  //     ),
+                  //     InkWell(
+                  //         onTap: () {
+                  //           managectrl.changeplanduration(12);
+                  //         },
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             border: Border.all(color: Colors.red),
+                  //             borderRadius: BorderRadius.circular(10),
+                  //             color: managectrl.plandurations == 12
+                  //                 ? Theme.of(context).colorScheme.secondary
+                  //                 : null,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Text(
+                  //               "12 Months",
+                  //               style: TextStyle(
+                  //                   fontSize: managectrl.plandurations == 12
+                  //                       ? 16
+                  //                       : 14),
+                  //             ),
+                  //           ),
+                  //         )),
+                  //     const SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     width: double.maxFinite,
-                    height: 470,
+                    height:MediaQuery.sizeOf(context).width<=mobilescreen?null:470,
                     child: Center(
                       child: ListView(
                         shrinkWrap: true,
-
+                        physics:MediaQuery.sizeOf(context).width<=mobilescreen? const NeverScrollableScrollPhysics():const BouncingScrollPhysics(),
                         // controller: PageController(viewportFraction: 0.3,initialPage: 1),
-
-                        scrollDirection: Axis.horizontal,
-
+                        scrollDirection:MediaQuery.sizeOf(context).width<=mobilescreen?Axis.vertical:Axis.horizontal,
                         children: managectrl.getallplans
                             .where(
                               (element) {
@@ -193,9 +245,9 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                             .map(
                               (e) => Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 100, right: 16),
+                                 MediaQuery.sizeOf(context).width<=mobilescreen?EdgeInsets.zero:const EdgeInsets.only(left: 100, right: 16),
                                 child: SizedBox(
-                                  width: 400,
+                                  width: MediaQuery.sizeOf(context).width<=mobilescreen?double.maxFinite:400,
                                   child: CardwithShadow(
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 32, horizontal: 0),
@@ -390,6 +442,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 50,)
                 ],
               ),
             ),

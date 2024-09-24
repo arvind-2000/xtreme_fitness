@@ -5,7 +5,12 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/pricingpage.dart';
+import 'package:xtreme_fitness/landingpages/sections/contact/contactdesktop.dart';
+import 'package:xtreme_fitness/landingpages/sections/gallery/gallerydesktop.dart';
 import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
+import 'package:xtreme_fitness/landingpages/sections/home/homedesktop.dart';
+import 'package:xtreme_fitness/landingpages/sections/prices/pricesdesktop.dart';
+import 'package:xtreme_fitness/landingpages/sections/services/desktopservices.dart';
 
 import '../../contact/contact.dart';
 import '../../gallery/gallery.dart';
@@ -23,18 +28,32 @@ class Body extends StatelessWidget {
       log('fdfdfd');
       landctrl.setNavIndex(context);
     });
-    return PageView.builder(
-      // physics: Responsive.isMobile(context) || Responsive.isTablet(context)
-      //     ? const NeverScrollableScrollPhysics()
-      //     : null,
-      pageSnapping: false,
-      scrollDirection: Axis.vertical,
-      controller: landctrl.controller,
-      itemCount: landingwidgets.length,
-      itemBuilder: (context, index) => landingwidgets[index],
-    );
+    // return PageView.builder(
+    //   // physics: Responsive.isMobile(context) || Responsive.isTablet(context)
+    //   //     ? const NeverScrollableScrollPhysics()
+    //   //     : null,
+    //   pageSnapping: false,
+    //   scrollDirection: Axis.vertical,
+    //   controller: landctrl.controller,
+    //   itemCount: landingwidgets.length,
+    //   itemBuilder: (context, index) => landingwidgets[index],
+    // );
 
-;
+      return  ListView(
+        children: [
+        // HomePage(),
+        HomeDesktop(),
+        // Prices(),
+        Pricesdesktop(),
+        // // Services(),
+        ServicesDesktop(),
+        // // Gallery(),
+        GalleryDesktop(),
+        // // Contact()
+        ContactDesktop()
+        ],
+      );
+
 
   }
 }

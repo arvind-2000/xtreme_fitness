@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
@@ -21,24 +22,23 @@ class ServicesDesktop extends StatelessWidget {
 
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return Container(
-        height: 1000,
+        height: 800,
+        padding: EdgeInsets.all( MediaQuery.sizeOf(context).width<=mobilescreen?16:0),
         color: const Color.fromARGB(255, 36, 34, 34),
         child: SizedBox(
           child: Column(
             children: [
               const SizedBox(
-                height: 100,
+                height: 50,
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 100,
-                  ),
-                  HeadingText(
-                      align: TextAlign.left,
-                      "The Best Programs We\nOffers For You"),
-                ],
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: HeadingText(
+                    // align: TextAlign.left,
+                    "The Best Programs\nWe Offers For You"),
               ),
               const SizedBox(
                 height: 50,
@@ -64,7 +64,7 @@ class ServicesDesktop extends StatelessWidget {
                         managectrl.getallservices[index]; // Access the service
 
                     return Padding(
-                      padding: const EdgeInsets.only(left: 100, right: 16),
+                     padding:MediaQuery.sizeOf(context).width<=mobilescreen?EdgeInsets.symmetric(horizontal: 16):const EdgeInsets.only(left: 100, right: 16),
                       child: SizedBox(
                         width: 300,
                         height: 400,
@@ -181,15 +181,15 @@ class ServicesDesktop extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const SizedBox(
-                    width: 100,
+               SizedBox(
+                    width:   MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
                   ),
                   Expanded(
                     child: SizedBox(
                       // width: double.maxFinite,
                       child: Cardonly(
                           margin: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 0),
+                              vertical: 16, horizontal: 16),
                           padding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           color: Colors.orange,
@@ -260,8 +260,8 @@ class ServicesDesktop extends StatelessWidget {
                                 )),
                     ),
                   ),
-                  const SizedBox(
-                    width: 100,
+                 SizedBox(
+                     width: MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
                   ),
                 ],
               ),

@@ -21,7 +21,7 @@ class ResponsivePages extends StatelessWidget {
       child: Responsive.isMobile(context) || Responsive.isTablet(context)
           ? SizedBox(
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [child1, child2 ?? const SizedBox()],

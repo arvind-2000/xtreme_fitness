@@ -4,6 +4,7 @@ import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontro
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
+import '../../../config/const.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: Image.asset(
                 'assets/logo2.png',
-                height: 75,
+                height: 40,
               ),
             ),
             Form(
