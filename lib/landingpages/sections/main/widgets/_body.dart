@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
+import 'package:xtreme_fitness/landingpages/pages/pricingpage.dart';
+import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
+
+import '../../contact/contact.dart';
+import '../../gallery/gallery.dart';
+import '../../prices/prices.dart';
+import '../../services/services.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -26,5 +33,8 @@ class Body extends StatelessWidget {
       itemCount: landingwidgets.length,
       itemBuilder: (context, index) => landingwidgets[index],
     );
+
+;
+
   }
 }

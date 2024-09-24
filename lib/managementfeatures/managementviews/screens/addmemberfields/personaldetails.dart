@@ -416,7 +416,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       counter: 10,
                       enabletext: widget.phonenumber == null,
                       controller: _phonecontroller,
-                      focusnode: _occupationFocusNode,
+                      focusnode: _phoneFocusNode,
                       nextfocusnode: _homephoneFocusNode,
                       validator: () {
                         return authusecase.phoneAuth(
