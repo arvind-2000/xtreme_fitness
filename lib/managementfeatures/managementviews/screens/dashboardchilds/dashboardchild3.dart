@@ -40,25 +40,25 @@ class DashboardChild3 extends StatelessWidget {
                         Text("Services"),
                       ],
                     ),
-                    DropdownButton(
-                      underline: const SizedBox(),
-                      hint:  Text(
-                        dayslist[managectrl.servicefilter],
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      value: managectrl.servicefilter,
-                      items: List.generate(
-                        3,
-                        (index) => DropdownMenuItem(
-                            value: index,
-                            child: Text(dayslist[index],
-                                style: const TextStyle(fontSize: 10))),
-                      ),
-                      onChanged: (value) {
+                    // DropdownButton(
+                    //   underline: const SizedBox(),
+                    //   hint:  Text(
+                    //     dayslist[managectrl.servicefilter],
+                    //     style: TextStyle(fontSize: 10),
+                    //   ),
+                    //   value: managectrl.servicefilter,
+                    //   items: List.generate(
+                    //     3,
+                    //     (index) => DropdownMenuItem(
+                    //         value: index,
+                    //         child: Text(dayslist[index],
+                    //             style: const TextStyle(fontSize: 10))),
+                    //   ),
+                    //   onChanged: (value) {
 
-                        // managectrl.changeservicefilter(value!%3);
-                      },
-                    )
+                    //     // managectrl.changeservicefilter(value!%3);
+                    //   },
+                    // )
                   ],
                 ),
               ),

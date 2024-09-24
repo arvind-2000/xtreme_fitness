@@ -36,6 +36,11 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
+         textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white, // Cursor color
+          selectionColor: Colors.blue.withOpacity(0.3), // Selection highlight color
+          selectionHandleColor: Colors.grey.withOpacity(0.3), // Selection handle color
+        ),
         // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
         scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
       ),

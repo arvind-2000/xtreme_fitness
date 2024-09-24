@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../../widgets/cardborder.dart';
@@ -32,7 +33,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 // TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
-                                const TitleText("OverView"),
+                                const HeadingText("OverView"),
                                 Row(
                                   children: [
                                     CardBorder(

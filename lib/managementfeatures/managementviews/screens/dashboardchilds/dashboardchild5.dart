@@ -35,37 +35,37 @@ class Dashboardchild5 extends StatelessWidget {
                       Text(pgctrl.overalldropdownname),
                     ],
                   ),
-                  Card(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: DropdownButton<String>(
-                            alignment: Alignment.center,
-                            borderRadius: BorderRadius.circular(10),
-                            style: const TextStyle(color: Colors.black),
-                            underline: const SizedBox(),
-                            value: pgctrl.overalldropdownname,
-                            dropdownColor: Colors.white,
-                            items: dayslist2.map((String option) {
-                              return DropdownMenuItem<String>(
-                                value: option,
-                                child: Text(option,
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    )),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              pgctrl.overalldropdown(newValue!);
-                            }),
-                      ),
-                    ),
-                  )
+                  // Card(
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       color: Colors.white,
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //       child: DropdownButton<String>(
+                  //           alignment: Alignment.center,
+                  //           borderRadius: BorderRadius.circular(10),
+                  //           style: const TextStyle(color: Colors.black),
+                  //           underline: const SizedBox(),
+                  //           value: pgctrl.overalldropdownname,
+                  //           dropdownColor: Colors.white,
+                  //           items: dayslist2.map((String option) {
+                  //             return DropdownMenuItem<String>(
+                  //               value: option,
+                  //               child: Text(option,
+                  //                   style: const TextStyle(
+                  //                     fontSize: 10,
+                  //                     color: Colors.black,
+                  //                   )),
+                  //             );
+                  //           }).toList(),
+                  //           onChanged: (String? newValue) {
+                  //             pgctrl.overalldropdown(newValue!);
+                  //           }),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
