@@ -76,107 +76,95 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                 children: [
                       Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: HeadingText(widget.phonenumber!=null?"Xtreme Registration":"Add Membership",size: 30,),
+                    child: HeadingText(widget.phonenumber!=null?"Xtreme Registration":"Add Membership",size:MediaQuery.sizeOf(context).width<=mobilescreen?20: 30,),
                   ),
               
                   Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 800),
-                      child:  Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                        
-                            Column(children: [
-                              CardwithShadow(
+                      child:   Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      
+                          Column(children: [
+                            CardwithShadow(
+                              margin: EdgeInsets.symmetric(horizontal: 4),
                               
-                                onpress: (){
-                                  pagectrl.changeaddMemberPage(0);
-                                },
-                                color: pagectrl.addmemberpages>=0?Theme.of(context).colorScheme.secondary:null,
-                                child:  Center(child: Text("1",style: TextStyle(color:pagectrl.addmemberpages>0?Colors.white:null ),))),
-                              // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():const  Text("Personal Details")
-                            ],),
-                               AnimatedOpacity(
-        
-                                 duration:Durations.extralong1,
-                                 opacity: pagectrl.addmemberpages>0?1:0,
-                                 child: Container(
-                                     width: 50,
-                                                           height: 1,
-                                                           color: Theme.of(context).colorScheme.secondary,
-                                                         ),
-                               ),
-                                     Column(children: [
-                              CardwithShadow(
-                                     onpress: (){
-                                  pagectrl.changeaddMemberPage(1);
-                                },
-                                   color: pagectrl.addmemberpages==1?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>1?Theme.of(context).colorScheme.secondary:null,
-                                child: Center(child: Text("2",style: TextStyle(color:pagectrl.addmemberpages>1?Colors.white:null ),))),
-                                  //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Plan")
-                            ],),
-                    AnimatedOpacity(
-        
-                                 duration:Durations.extralong1,
-                                 opacity: pagectrl.addmemberpages>1?1:0,
-                                 child: Container(
-                                     width: 50,
-                                                           height: 1,
-                                                           color: Theme.of(context).colorScheme.secondary,
-                                                         ),
-                               ),        
-                             Column(children: [
-                              CardwithShadow(
-                                     onpress: (){
-                                  pagectrl.changeaddMemberPage(2);
-                                },
-                                   color: pagectrl.addmemberpages==2?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>2?Theme.of(context).colorScheme.secondary:null,
-                                child: Center(child: Text("3",style: TextStyle(color:pagectrl.addmemberpages>2?Colors.white:null ),))),
-                                    // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Questionnare (PARQ)")
-                            ],),
-                          AnimatedOpacity(
-        
-                                 duration:Durations.extralong1,
-                                 opacity: pagectrl.addmemberpages>2?1:0,
-                                 child: Container(
-                                     width: 50,
-                                                           height: 1,
-                                                           color: Theme.of(context).colorScheme.secondary,
-                                                         ),
-                               ),   
-                             Column(children: [
-                              CardwithShadow(
-                                     onpress: (){
-                                  pagectrl.changeaddMemberPage(3);
-                                },
-                                   color: pagectrl.addmemberpages==3?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>3?Theme.of(context).colorScheme.secondary:null,
-                                child: Center(child: Text("4",style: TextStyle(color:pagectrl.addmemberpages>3?Colors.white:null ),))),
-                                    // MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox(): const Text("Doctor Details")
-                            ],),
-                      AnimatedOpacity(
-        
-                                 duration:Durations.extralong1,
-                                 opacity: pagectrl.addmemberpages>3?1:0,
-                                 child: Container(
-                                     width: 50,
-                                                           height: 1,
-                                                           color: Theme.of(context).colorScheme.secondary,
-                                                         ),),
-                               
-              
-                                      Column(children: [
-                              CardwithShadow(
-                                onpress: (){
-                                  pagectrl.changeaddMemberPage(4);
-                                },
-                                color: pagectrl.addmemberpages==4?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>4?Theme.of(context).colorScheme.secondary:null,
-                                child:  Center(child: Text("5",style: TextStyle(color:pagectrl.addmemberpages>4?Colors.white:null ),))),
-                                  //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():  const Text("Create Membership")
-                            ],),
-                        ],),
-                      ),
+                              onpress: (){
+                                pagectrl.changeaddMemberPage(0);
+                              },
+                              color: pagectrl.addmemberpages>=0?Theme.of(context).colorScheme.secondary:null,
+                              child:  Center(child: Text("1",style: TextStyle(color:pagectrl.addmemberpages>0?Colors.white:null ),))),
+                           
+                          ],),
+                             AnimatedOpacity(
+                              
+                               duration:Durations.extralong1,
+                               opacity: pagectrl.addmemberpages>0?1:0,
+                               child: Container(
+                                   width: MediaQuery.sizeOf(context).width<mobilescreen?20:50,
+                                                         height: 1,
+                                                         color: Theme.of(context).colorScheme.secondary,
+                                                       ),
+                             ),
+                                   CardwithShadow(
+                                          onpress: (){
+                                       pagectrl.changeaddMemberPage(1);
+                                     },
+                                        color: pagectrl.addmemberpages==1?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>1?Theme.of(context).colorScheme.secondary:null,
+                                     child: Center(child: Text("2",style: TextStyle(color:pagectrl.addmemberpages>1?Colors.white:null ),))),
+                                          AnimatedOpacity(
+                              
+                               duration:Durations.extralong1,
+                               opacity: pagectrl.addmemberpages>1?1:0,
+                               child: Container(
+                                   width: MediaQuery.sizeOf(context).width<mobilescreen?20:50,
+                                                         height: 1,
+                                                         color: Theme.of(context).colorScheme.secondary,
+                                                       ),
+                             ),        
+                           CardwithShadow(
+                                  onpress: (){
+                               pagectrl.changeaddMemberPage(2);
+                             },
+                                color: pagectrl.addmemberpages==2?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>2?Theme.of(context).colorScheme.secondary:null,
+                             child: Center(child: Text("3",style: TextStyle(color:pagectrl.addmemberpages>2?Colors.white:null ),))),
+                        AnimatedOpacity(
+                              
+                               duration:Durations.extralong1,
+                               opacity: pagectrl.addmemberpages>2?1:0,
+                               child: Container(
+                                //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():  const Text("Create Membership")
+                                //  MediaQuery.sizeOf(context).width<mobilescreen?const SizedBox():  const Text("Create Membership")
+                                   width:   MediaQuery.sizeOf(context).width<mobilescreen?20: 50,
+                                                         height: 1,
+                                                         color: Theme.of(context).colorScheme.secondary,
+                                                       ),
+                             ),   
+                           CardwithShadow(
+                                  onpress: (){
+                               pagectrl.changeaddMemberPage(3);
+                             },
+                                color: pagectrl.addmemberpages==3?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>3?Theme.of(context).colorScheme.secondary:null,
+                             child: Center(child: Text("4",style: TextStyle(color:pagectrl.addmemberpages>3?Colors.white:null ),))),
+                                            AnimatedOpacity(
+                              
+                               duration:Durations.extralong1,
+                               opacity: pagectrl.addmemberpages>3?1:0,
+                               child: Container(
+                                   width: MediaQuery.sizeOf(context).width<mobilescreen?20:50,
+                                                         height: 1,
+                                                         color: Theme.of(context).colorScheme.secondary,
+                                                       ),),
+                             
+                                    
+                                    CardwithShadow(
+                                      onpress: (){
+                                        pagectrl.changeaddMemberPage(4);
+                                      },
+                                      color: pagectrl.addmemberpages==4?Theme.of(context).colorScheme.secondary.withOpacity(0.5):pagectrl.addmemberpages>4?Theme.of(context).colorScheme.secondary:null,
+                                      child:  Center(child: Text("5",style: TextStyle(color:pagectrl.addmemberpages>4?Colors.white:null ),))),
+                      ],),
                     ),
                   ),
                 CardBorder(

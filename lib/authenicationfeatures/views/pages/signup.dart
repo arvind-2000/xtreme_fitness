@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
 import '../../../authentifeatures/models/usecasesimpl.dart';
+import '../../../config/const.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -108,7 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Center(
                   child: Image.asset(
                     'assets/logo2.png',
-                    height: 75,
+                    height: 40,
                   ),
                 ),
                 const SizedBox(
@@ -117,13 +118,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 Center(
                   child: authctrl.numberexists != null &&
                           authctrl.numberexists == false
-                      ? const HeadingText(
+                      ? HeadingText(
                           'OTP Verification',
-                          size: 30,
+                          size: MediaQuery.sizeOf(context).width<=mobilescreen?20: 30,
                         )
-                      : const HeadingText(
+                      : HeadingText(
                           'Membership Registration',
-                          size: 30,
+                          size:  MediaQuery.sizeOf(context).width<=mobilescreen?20: 30,
                         ),
                 ),
                 Form(

@@ -3,6 +3,7 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/forgotpasswords
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/loginscreen.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/signup.dart';
 
+import '../../../../config/const.dart';
 import '../../../../widgets/card.dart';
 
 class LoginDialog extends StatefulWidget {
@@ -28,43 +29,49 @@ class _LoginDialogState extends State<LoginDialog> {
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        insetPadding: EdgeInsets.all(8),
+        backgroundColor: Colors.grey[900],
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width / 3,
-            height: isSignup || isforgot ? 600 : 650,
-            child: Cardonly(
-                margin: EdgeInsets.zero,
-                color: Colors.grey[800]!.withOpacity(0.6),
-                child: isforgot
-                    ? ForgotPassWordScreen(
-                        changelogin: (v) {
-                          state(() {
-                            isforgot = v;
-                          });
-                        },
-                      )
-                    : isSignup
-                        ? SignUpPage(
-                            changelogin: (v) {
-                              state(() {
-                                isSignup = false;
-                              });
-                            },
-                          )
-                        : LoginScreen(
-                          formkey: _formkey,
-                            changesignup: (v) {
-                              state(() {
-                                isSignup = v;
-                              });
-                            },
-                            changepass: (v) {
-                              state(() {
-                                isforgot = v;
-                              });
-                            },
-                          )),
+          child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 500),
+              
+              child: SizedBox(
+                     
+              height:  MediaQuery.sizeOf(context).width<=mobilescreen?500:isSignup || isforgot ? 600 : 650,
+              child: Cardonly(
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  color: Colors.grey[800]!.withOpacity(0.6),
+                  child: isforgot
+                      ? ForgotPassWordScreen(
+                          changelogin: (v) {
+                            state(() {
+                              isforgot = v;
+                            });
+                          },
+                        )
+                      : isSignup
+                          ? SignUpPage(
+                              changelogin: (v) {
+                                state(() {
+                                  isSignup = false;
+                                });
+                              },
+                            )
+                          : LoginScreen(
+                            formkey: _formkey,
+                              changesignup: (v) {
+                                state(() {
+                                  isSignup = v;
+                                });
+                              },
+                              changepass: (v) {
+                                state(() {
+                                  isforgot = v;
+                                });
+                              },
+                            )),
+            ),
           ),
         ),
       );

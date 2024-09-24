@@ -18,559 +18,556 @@ class ContactDesktop extends StatelessWidget {
     return SingleChildScrollView(
       child: ResponsivePages(
         issize: false,
-        colors: const Color.fromARGB(255, 29, 28, 28),
+         colors: const Color.fromARGB(255, 15, 15, 15),
         child1: SizedBox(
-          height: 900,
+          // height: 900,
           child: Column(
             children: [
               const SizedBox(
                 height: 100,
               ),
-              const Expanded(flex: 8, child: ContactUsPage()),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 100, right: 100, top: 30),
-                  color: const Color.fromARGB(255, 15, 15, 15),
-                  child: MediaQuery.sizeOf(context).width < mobilescreen
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Company",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Text(
-                                  "About Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Why Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Partnership",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 60,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Services",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Text(
-                                  "BMI",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Steam Bath",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Massage Chair",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 60,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Help",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Text(
-                                  "Account",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Support Center",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                               InkWell(
-                                          onTap: ()async {
-                                              final String url = Uri.base.toString() + '/policies';      
-                                            js.context.callMethod('open',[url,'_blank']);
-                                          },
-                                          child: Text(
-                                            "Privacy Policy",
-                                            style:
-                                                TextStyle(color: Colors.white60),
-                                          ),
-                                        ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 60,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Contact Us",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.phone,
-                                        size: 16,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text(
-                                      "+91 12345467890",
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white60),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.email,
-                                        size: 16,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text(
-                                      "noreply@support.xtreme.com",
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white60),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.location_on,
-                                        size: 16,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text(
-                                      "Mantripukhri, 795002",
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white60),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 60,
-                            ),
-                          ],
-                        )
-                      : Container(
-                        
-                          child: Column(
+              ContactUsPage(),
+              Container(
+                padding: EdgeInsets.only(left:MediaQuery.sizeOf(context).width<=mobilescreen?16:100, right:MediaQuery.sizeOf(context).width<=mobilescreen?16: 100, top: 30),
+                color: const Color.fromARGB(255, 15, 15, 15),
+                child: MediaQuery.sizeOf(context).width < mobilescreen
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                "Company",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Text(
+                                "About Us",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Why Us",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Partnership",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Services",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Text(
+                                "BMI",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Steam Bath",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Massage Chair",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Help",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Text(
+                                "Account",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Support Center",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white60),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                             InkWell(
+                                        onTap: ()async {
+                                            final String url = Uri.base.toString() + '/policies';      
+                                          js.context.callMethod('open',[url,'_blank']);
+                                        },
+                                        child: Text(
+                                          "Privacy Policy",
+                                          style:
+                                              TextStyle(color: Colors.white60),
+                                        ),
+                                      ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Contact Us",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const FittedBox(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Company",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Text(
-                                          "About Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Why Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Partnership",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
+                                  Icon(Icons.phone,
+                                      size: 16,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                                  const SizedBox(
+                                    width: 10,
                                   ),
-                                  const FittedBox(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Services",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Text(
-                                          "BMI",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Steam Bath",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Massage Chair",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Help",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Text(
-                                          "Account",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Support Center",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        InkWell(
-                                          onTap: (){
-                                                  final String url = '/Policies';      
-                                            js.context.callMethod('open',[url,'_blank']);
-                                          },
-                                          child: Text(
-                                            "Privacy Policy",
-                                            style:
-                                                TextStyle(color: Colors.white60),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Contact Us",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.phone,
-                                                size: 16,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Text(
-                                              "+91 12345467890",
-                                              style: TextStyle(
-                                                  color: Colors.white60),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.email,
-                                                size: 16,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Text(
-                                              "noreply@support.xtreme.com",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white60),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.location_on,
-                                                size: 16,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Text(
-                                              "Mantripukhri, 795002",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white60),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
+                                  const Text(
+                                    "+91 12345467890",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white60),
                                   ),
                                 ],
                               ),
                               const SizedBox(
-                                height: 18,
+                                height: 10,
                               ),
-                              const Divider(height: 1, color: Colors.white60),
-                              SizedBox(
-                                child: MediaQuery.sizeOf(context).width <=
-                                        mobilescreen
-                                    ? Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                    height: 50,
-                                                    child: Image.asset(
-                                                        "assets/logo1.png")),
-                                                // const SizedBox(width: 10,),
-                                                // const HeadingText("Xtreme",size: 18)
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 30,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 32),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                                const SizedBox(
-                                                  width: 30,
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                                const SizedBox(
-                                                  width: 30,
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(vertical:16.0),
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                    height: 50,
-                                                    child: Image.asset(
-                                                        "assets/logo1.png")),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                const HeadingText("Xtreme",
-                                                    size: 18)
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 30,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 32),
-                                            child: Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                                const SizedBox(
-                                                  width: 30,
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                                const SizedBox(
-                                                  width: 30,
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.facebook)),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                              Row(
+                                children: [
+                                  Icon(Icons.email,
+                                      size: 16,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    "noreply@support.xtreme.com",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white60),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on,
+                                      size: 16,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    "Mantripukhri, 795002",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white60),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                             ],
                           ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        ],
+                      )
+                    : Container(
+                      
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                const FittedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Company",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        "About Us",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Why Us",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Partnership",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const FittedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Services",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        "BMI",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Steam Bath",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Massage Chair",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                FittedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Help",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        "Account",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Support Center",
+                                        style:
+                                            TextStyle(color: Colors.white60),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                                final String url = '/Policies';      
+                                          js.context.callMethod('open',[url,'_blank']);
+                                        },
+                                        child: Text(
+                                          "Privacy Policy",
+                                          style:
+                                              TextStyle(color: Colors.white60),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                FittedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Contact Us",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.phone,
+                                              size: 16,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            "+91 12345467890",
+                                            style: TextStyle(
+                                                color: Colors.white60),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.email,
+                                              size: 16,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            "noreply@support.xtreme.com",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white60),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.location_on,
+                                              size: 16,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            "Mantripukhri, 795002",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white60),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 18,
+                            ),
+                            const Divider(height: 1, color: Colors.white60),
+                            SizedBox(
+                              child: MediaQuery.sizeOf(context).width <=
+                                      mobilescreen
+                                  ? Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                  height: 50,
+                                                  child: Image.asset(
+                                                      "assets/logo1.png")),
+                                              // const SizedBox(width: 10,),
+                                              // const HeadingText("Xtreme",size: 18)
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 30,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 32),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                              const SizedBox(
+                                                width: 30,
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                              const SizedBox(
+                                                width: 30,
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical:16.0),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                  height: 50,
+                                                  child: Image.asset(
+                                                      "assets/logo1.png")),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              const HeadingText("Xtreme",
+                                                  size: 18)
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 30,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 32),
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                              const SizedBox(
+                                                width: 30,
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                              const SizedBox(
+                                                width: 30,
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.facebook)),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ],
                         ),
-                ),
+                      ),
               ),
             ],
           ),

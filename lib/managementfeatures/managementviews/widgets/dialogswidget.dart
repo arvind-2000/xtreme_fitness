@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../config/const.dart';
+
 class PageDialog extends StatelessWidget {
   const PageDialog(
       {super.key,
@@ -33,6 +35,8 @@ class PageDialog extends StatelessWidget {
                         onpress: no,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
+                            padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4):null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -56,6 +60,8 @@ class PageDialog extends StatelessWidget {
                         onpress: yes,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
+                              padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4):null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

@@ -416,7 +416,7 @@ bool isactive = true;
                                                       : 4,
                                           mainAxisSpacing: 10,
                                           childAspectRatio:
-                                              size < 500 ? 1 : 3 / 3.5,
+                                              size < 500 ? 1 : 3 / 4,
                                         ),
                                       
                                     children: managectrl.getalltrainer.where((e)=>e.isActive==isactive).map((e) => 

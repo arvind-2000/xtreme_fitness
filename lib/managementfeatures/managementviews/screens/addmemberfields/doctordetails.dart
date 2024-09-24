@@ -4,6 +4,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
+import '../../../../config/const.dart';
 import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/cardswithshadow.dart';
 import '../../../../widgets/titletext.dart';
@@ -69,73 +70,71 @@ void dispose() {
   Widget build(BuildContext context) {
     return  GetBuilder<AddMemberController>(
       builder: (addmemberctrl) {
-        return Cardonly(
-          color: Colors.transparent,
-          child: Column(
-            children: [
-              Center(
-                child: ConstrainedBox(
-                   constraints: const BoxConstraints(maxWidth: 600),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TitleText("Doctor's Details"),
-                          CardBorder(
+        return Column(
+          children: [
+            Center(
+              child: ConstrainedBox(
+                 constraints: const BoxConstraints(maxWidth: 600),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TitleText("Doctor's Details",size: MediaQuery.sizeOf(context).width<mobilescreen?16:null,),
+                        CardBorder(
+                          onpress: (){
+                                widget.pagectrl.changeaddMemberPage(4);
+                          },
+                          child: Text("Skip"))
+                      ],
+                    ),
+                    const SizedBox(height: 16,),
+                    Form(
+                      key: _formkey,
+                      child: Column(
+                      children: [
+                        TextFieldWidget(hint: "Doctor Name", controller:_doctorname,focusnode: _doctornameFocusNode,nextfocusnode: _surgerynameFocusNode,),
+                        const SizedBox(height: 16,),
+                        TextFieldWidget(hint: "Surgery Name", controller:_surgeryname,focusnode: _surgerynameFocusNode,nextfocusnode: _surgerynumberFocusNode,),
+                           const SizedBox(height: 16,),
+                        TextFieldWidget(hint: "Surgery Number", controller:_surgerynumber,focusnode: _surgerynumberFocusNode,nextfocusnode: _surgeryaddressFocusNode, ),
+                           const SizedBox(height: 16,),
+                        TextFieldWidget(hint: "Surgery Address", controller: _surgeryaddress,focusnode: _surgeryaddressFocusNode,fieldsubmitted: (){
+                              if(_formkey.currentState!.validate()){
+                                  
+                              addmemberctrl.addDoctor(_doctorname.text, _surgerynumber.text, _surgeryname.text, _surgeryaddress.text);
+                                widget.pagectrl.changeaddMemberPage(4);
+                              }
+                        },),
+                           const SizedBox(height: 16,),
+                           CardwithShadow(
                             onpress: (){
-                                  widget.pagectrl.changeaddMemberPage(4);
+                                      if(_formkey.currentState!.validate()){
+                                  
+                              addmemberctrl.addDoctor(_doctorname.text, _surgerynumber.text, _surgeryname.text, _surgeryaddress.text);
+                                widget.pagectrl.changeaddMemberPage(4);
+                              }
+                              
+              
                             },
-                            child: Text("Skip"))
-                        ],
-                      ),
-                      const SizedBox(height: 16,),
-                      Form(
-                        key: _formkey,
-                        child: Column(
-                        children: [
-                          TextFieldWidget(hint: "Doctor Name", controller:_doctorname,focusnode: _doctornameFocusNode,nextfocusnode: _surgerynameFocusNode,),
-                          const SizedBox(height: 16,),
-                          TextFieldWidget(hint: "Surgery Name", controller:_surgeryname,focusnode: _surgerynameFocusNode,nextfocusnode: _surgerynumberFocusNode,),
-                             const SizedBox(height: 16,),
-                          TextFieldWidget(hint: "Surgery Number", controller:_surgerynumber,focusnode: _surgerynumberFocusNode,nextfocusnode: _surgeryaddressFocusNode, ),
-                             const SizedBox(height: 16,),
-                          TextFieldWidget(hint: "Surgery Address", controller: _surgeryaddress,focusnode: _surgeryaddressFocusNode,fieldsubmitted: (){
-                                if(_formkey.currentState!.validate()){
-                                    
-                                addmemberctrl.addDoctor(_doctorname.text, _surgerynumber.text, _surgeryname.text, _surgeryaddress.text);
-                                  widget.pagectrl.changeaddMemberPage(4);
-                                }
-                          },),
-                             const SizedBox(height: 16,),
-                             CardwithShadow(
-                              onpress: (){
-                                        if(_formkey.currentState!.validate()){
-                                    
-                                addmemberctrl.addDoctor(_doctorname.text, _surgerynumber.text, _surgeryname.text, _surgeryaddress.text);
-                                  widget.pagectrl.changeaddMemberPage(4);
-                                }
-                                
-                
-                              },
-                              color: Colors.green[300],
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.person),
-                                  SizedBox(width: 16,),
-                                  Text("Add Doctor"),
-                                ],
-                              ))
-                        ],
-                      ))
-                    ],
-                  ),
+                            color: Colors.green[300],
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person),
+                                SizedBox(width: 16,),
+                                Text("Add Doctor"),
+                              ],
+                            ))
+                      ],
+                    ))
+                  ],
                 ),
               ),
-            ],
-          ));
+            ),
+          ],
+        );
       }
     );
   }

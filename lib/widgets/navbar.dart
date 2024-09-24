@@ -327,45 +327,45 @@ class NavBar extends StatelessWidget {
                 if (MediaQuery.sizeOf(context).width < mobilescreen) {
                   drawers(context);
                 }
-                Get.dialog(Dialog(
-                  child: PageDialog(
-                      heights: 300,
-                      no: () {
-                        Navigator.pop(context);
-                      },
-                      yes: () {
-                        authctrl.logout();
-                        Get.offAllNamed('/home');
-                      },
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.logout),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              HeadingText(
-                                "Log Out",
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Center(
-                              child: Text(
-                            "Are you sure you want to logout?\nPress yes to confirm",
-                            style: TextStyle(
-                              fontSize: 16,
+                 showDialog(
+                    context: context,
+                    builder: (c) => PageDialog(
+                        heights: 300,
+                        no: () {
+                          Navigator.pop(context);
+                        },
+                        yes: () {
+                          authctrl.logout();
+                          Get.offAllNamed('/home');
+                        },
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.logout),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                HeadingText(
+                                  "Log Out",
+                                  size: 20,
+                                ),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
-                          ))
-                        ],
-                      )),
-                ));
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Center(
+                                child: Text(
+                              "Are you sure you want to logout?\nPress yes to confirm",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ))
+                          ],
+                        )));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(
