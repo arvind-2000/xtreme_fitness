@@ -40,32 +40,33 @@ class PaymentStatusCard extends StatelessWidget {
                   //   ),
                   // ),
                   Container(
-                      height: 200,
-                      width: 200,
-                      padding: const EdgeInsets.all(10),
-                      child: Image.asset('assets/images/paymentprocessing4.gif')
-                      // decoration: BoxDecoration(
-                      //   shape: BoxShape.circle,
-                      //     color: addmemberctrl.paymentstatus==3?Colors.blue[200]:addmemberctrl.paymentstatus==1?Colors.green[200]:Colors.red[200],
-                      // ),
-
-                      // child: addmemberctrl.paymentstatus == 3
-                      //     ? CircularProgressIndicator(
-                      //         color: Theme.of(context).colorScheme.onPrimary,
-                      //         strokeWidth: 3,
-                      //       )
-                      //     : addmemberctrl.paymentstatus == 1
-                      //         ? const Icon(
-                      //             Icons.check,
-                      //             color: Colors.white,
-                      //             size:80,
-                      //           )
-                      //         : const Icon(
-                      //             Icons.dangerous,
-                      //             color: Colors.white,
-                      //               size:80,
-                      //           ),
-                      ),
+                    height: 200,
+                    width: 200,
+                    padding: const EdgeInsets.all(10),
+                    decoration: addmemberctrl.paymentstatus == 3
+                        ? null
+                        : BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: addmemberctrl.paymentstatus == 3
+                                ? Colors.blue[200]
+                                : addmemberctrl.paymentstatus == 1
+                                    ? Colors.green[200]
+                                    : Colors.red[200],
+                          ),
+                    child: addmemberctrl.paymentstatus == 3
+                        ? Image.asset('assets/images/paymentprocessing4.gif')
+                        : addmemberctrl.paymentstatus == 1
+                            ? const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 80,
+                              )
+                            : const Icon(
+                                Icons.dangerous,
+                                color: Colors.white,
+                                size: 80,
+                              ),
+                  ),
                   addmemberctrl.paymentstatus == 3
                       ? const HeadingText("Processing Payment", size: 30)
                       : addmemberctrl.paymentstatus == 1
