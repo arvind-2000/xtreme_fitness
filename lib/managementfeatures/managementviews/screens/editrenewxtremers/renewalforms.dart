@@ -47,24 +47,26 @@ class _RenewalFormsState extends State<RenewalForms> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const HeadingText("Plan Renewal"),
-                      IconButton(
-                        onPressed: () {
-                          addmemberctrl.onClose();
-                          pagectrl.disposes();
-                          pagectrl.changerenewal(false);
-                          if (widget.callback != null) {
-                            widget.callback!();
-                          }
-                        },
-                        icon: const Icon(Icons.close),
-                        tooltip: "Close",
-                      )
-                    ],
-                  ),
+                  addmemberctrl.paymentstatus != 0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const HeadingText("Plan Renewal"),
+                            IconButton(
+                              onPressed: () {
+                                addmemberctrl.onClose();
+                                pagectrl.disposes();
+                                pagectrl.changerenewal(false);
+                                if (widget.callback != null) {
+                                  widget.callback!();
+                                }
+                              },
+                              icon: const Icon(Icons.close),
+                              tooltip: "Close",
+                            )
+                          ],
+                        )
+                      : const SizedBox(),
                   const SizedBox(
                     height: 40,
                   ),

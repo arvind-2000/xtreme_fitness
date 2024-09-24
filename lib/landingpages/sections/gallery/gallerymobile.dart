@@ -17,9 +17,6 @@ class _GalleryMobileState extends State<GalleryMobile> {
   int startIndex = 0; // Controls the visible starting index
   final int itemsPerPage = 3; // Number of images to show at once
 
-  final onHoverActive = Matrix4.identity()..translate(0, -10, 0);
-  final onHoverRemove = Matrix4.identity()..translate(0, 0, 0);
-
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());

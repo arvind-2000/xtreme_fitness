@@ -588,27 +588,39 @@ class AddMemberController extends GetxController {
       paymentsdetails = await repo.getpayment(trans);
       if (paymentsdetails != null) {
         if (paymentsdetails!.paymentStatus.toLowerCase() == "success") {
-          paymentstatus = 1;
-          update();
+          Future.delayed(const Duration(seconds: 3), () {
+            // Code to be executed after a 3-second delay
+            paymentstatus = 1;
+            update();
 
-          prefs.remove('tranid');
+            prefs.remove('tranid');
+          });
         } else if (paymentsdetails!.paymentStatus.toLowerCase() == "failed") {
-          paymentstatus = 2;
-          update();
-          prefs.remove('tranid');
+          Future.delayed(const Duration(seconds: 3), () {
+            // Code to be executed after a 3-second delay
+            paymentstatus = 2;
+            update();
+            prefs.remove('tranid');
+          });
         } else if (paymentsdetails!.paymentStatus.toLowerCase() ==
             "initiated") {
-          paymentstatus = 3;
-          update();
-          prefs.remove('tranid');
-        } else {
-          if (paymentsdetails!.paymentStatus.toLowerCase() == "canceled") {
-            paymentstatus = 4;
+          Future.delayed(const Duration(seconds: 3), () {
+            // Code to be executed after a 3-second delay
+            paymentstatus = 3;
+            update();
             prefs.remove('tranid');
-          }
-          paymentstatus = 4;
-          update();
-          prefs.remove('tranid');
+          });
+        } else {
+          Future.delayed(const Duration(seconds: 3), () {
+            if (paymentsdetails!.paymentStatus.toLowerCase() == "canceled") {
+              paymentstatus = 4;
+              update();
+              prefs.remove('tranid');
+            }
+            paymentstatus = 4;
+            update();
+            prefs.remove('tranid');
+          });
         }
       }
     } else {

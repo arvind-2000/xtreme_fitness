@@ -161,8 +161,8 @@ class GetxLandingcontroller extends GetxController {
   }
 
   void getServices() async {
-    _services = await managementrepoImpl.getServices();
-    // _services = dummyservices;
+    //_services = await managementrepoImpl.getServices();
+    _services = dummyservices;
     update();
   }
 

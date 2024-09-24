@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/dialogswidget.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
@@ -27,6 +28,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetxPageController pagecontrl = Get.put(GetxPageController());
+    ContactController contrl = Get.put(ContactController());
     return Container(
       // color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
       color: Theme.of(context).colorScheme.primary,
@@ -264,6 +266,54 @@ class NavBar extends StatelessWidget {
                         icon: Icons.payment,
                         title: 'Payments',
                       )),
+                  Container(
+                    height: 0.5,
+                    width: double.maxFinite,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onPrimary
+                        .withOpacity(0.5),
+                  ),
+                  Cardonly(
+                      color: pagectrl.navpage == 8
+                          ? Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.3)
+                          : Colors.transparent,
+                      onpress: () {
+                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                          drawers(context);
+                        }
+
+                        pagectrl.changeNavPage(8);
+                      },
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      child: const NavTiles(
+                        icon: Icons.settings,
+                        title: 'Setting',
+                      )),
+                  Cardonly(
+                      color: pagectrl.navpage == 9
+                          ? Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.3)
+                          : Colors.transparent,
+                      onpress: () {
+                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                          drawers(context);
+                        }
+                        contrl.onBadgeTap();
+                        pagectrl.changeNavPage(9);
+                      },
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      child: const NavTiles(
+                        icon: Icons.message,
+                        title: 'Message',
+                      )),
                 ],
               ),
             ),
@@ -277,46 +327,45 @@ class NavBar extends StatelessWidget {
                 if (MediaQuery.sizeOf(context).width < mobilescreen) {
                   drawers(context);
                 }
-                Get.dialog(
-                  Dialog(
-                    child:PageDialog(
-                              heights: 300,
-                              no: () {
-                                Navigator.pop(context);
-                              },
-                              yes: () {
-                                authctrl.logout();
-                                Get.offAllNamed('/home');
-                              },
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.logout),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      HeadingText(
-                                        "Log Out",
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Center(
-                                      child: Text(
-                                    "Are you sure you want to logout?\nPress yes to confirm",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ))
-                                ],
-                              )),
-                  ));
+                Get.dialog(Dialog(
+                  child: PageDialog(
+                      heights: 300,
+                      no: () {
+                        Navigator.pop(context);
+                      },
+                      yes: () {
+                        authctrl.logout();
+                        Get.offAllNamed('/home');
+                      },
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.logout),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              HeadingText(
+                                "Log Out",
+                                size: 20,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Center(
+                              child: Text(
+                            "Are you sure you want to logout?\nPress yes to confirm",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ))
+                        ],
+                      )),
+                ));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(

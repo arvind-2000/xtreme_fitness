@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/termandcondition.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -36,10 +37,12 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
-         textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white, // Cursor color
-          selectionColor: Colors.blue.withOpacity(0.3), // Selection highlight color
-          selectionHandleColor: Colors.grey.withOpacity(0.3), // Selection handle color
+          selectionColor:
+              Colors.blue.withOpacity(0.3), // Selection highlight color
+          selectionHandleColor:
+              Colors.grey.withOpacity(0.3), // Selection handle color
         ),
         // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
         scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
@@ -55,7 +58,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-            name: '/dashboard',
+            name: '/',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 
@@ -76,7 +79,7 @@ class MyApp extends StatelessWidget {
             name: '/createmember',
             page: () => const PaymentRedirectPage(),
             transition: Transition.noTransition),
-                GetPage(
+        GetPage(
             name: '/Policies',
             page: () => const Policies(),
             transition: Transition.noTransition),
