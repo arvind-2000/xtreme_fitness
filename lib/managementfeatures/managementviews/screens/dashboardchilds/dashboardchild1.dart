@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/logics.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
@@ -51,9 +52,7 @@ class DashboardChild1 extends StatelessWidget {
                   ),
                   FittedBox(
                       child: Text(
-                    Logics.totalamounts(
-                            managectrl.getallpayments, DateTime.now())
-                        .toStringAsFixed(0),
+                    "$rupee ${Logics.totalamounts(managectrl.getallpayments, DateTime.now())}",
                     style: const TextStyle(fontSize: 40),
                   )),
                 ],

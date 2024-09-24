@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-            name: '/',
+            name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 

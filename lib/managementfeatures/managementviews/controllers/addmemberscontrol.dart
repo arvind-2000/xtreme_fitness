@@ -372,6 +372,10 @@ class AddMemberController extends GetxController {
     }
   }
 
+  void removeServiceusage() {
+    serviceusagepage = false;
+  }
+
   void addpersonaldetails({
     required String name,
     required String surname,
@@ -607,6 +611,9 @@ class AddMemberController extends GetxController {
           prefs.remove('tranid');
         }
       }
+    } else {
+      paymentstatus = 0;
+      update();
     }
   }
 

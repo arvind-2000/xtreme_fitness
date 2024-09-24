@@ -57,9 +57,6 @@ class GetxAuthController extends GetxController {
           _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
-            print('Saving user and password to local');
-            pref.setString('userid', email);
-            pref.setString('password', pass);
             print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
@@ -69,6 +66,11 @@ class GetxAuthController extends GetxController {
             if (_user != null) {
               print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
+
+              print('Saving user and password to local');
+              pref.setString('userid', email);
+              pref.setString('password', pass);
+
               loginloading = false;
               update();
               Get.toNamed('/dashboard');
@@ -109,6 +111,7 @@ class GetxAuthController extends GetxController {
   }
 
   void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
         print(value);
@@ -121,6 +124,8 @@ class GetxAuthController extends GetxController {
       loginloading = false;
       _user = null;
       ismember = true;
+      prefs.remove('userid');
+      prefs.remove('password');
       signupclose();
       disposelogin();
       disposeforgotpass();
@@ -131,7 +136,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      // Get.offAllNamed("/home");
+      Get.offAllNamed("/home");
     }
   }
 
@@ -306,6 +311,6 @@ class GetxAuthController extends GetxController {
     loginerrortext = null;
     loginloading = false;
 
-    update();
+    // update();
   }
 }

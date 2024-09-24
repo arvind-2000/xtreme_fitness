@@ -47,7 +47,7 @@ final List<String> galleryimages = [
   'assets/images/10.jpeg',
   'assets/images/11.jpeg',
 ];
-
+const String rupee = "₹";
 List<Widget> landingwidgets = [
   const HomePage(),
   const Prices(),
@@ -56,5 +56,17 @@ List<Widget> landingwidgets = [
   const Contact()
 ];
 
-
-List<String> months = ["Jan","Feb","March","April","May","June","July","August","Sept","Oct","Nov","Dec"];
+List<String> months = [
+  "Jan",
+  "Feb",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
+];
