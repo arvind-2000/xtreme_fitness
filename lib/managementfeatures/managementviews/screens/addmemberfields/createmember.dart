@@ -56,21 +56,7 @@ class _CreateMemberState extends State<CreateMember> {
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
-                child: addmemberctrl.isloading ||
-                        addmemberctrl.paymentstatus != 0
-                    ? PaymentStatusCard(
-                        callback: () {
-                          addmemberctrl.changepaymentstatus(0);
-
-                          if (addmemberctrl.ismember) {
-                            Get.offAllNamed('/home');
-                            Get.dialog(const LoginDialog());
-                          } else {
-                            pagectrl.changeaddMemberPage(0);
-                          }
-                        },
-                      )
-                    : Column(
+                child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //upload image

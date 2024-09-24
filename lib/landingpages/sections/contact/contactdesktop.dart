@@ -1,3 +1,5 @@
+import 'dart:js' as js;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -142,8 +144,9 @@ class ContactDesktop extends StatelessWidget {
                                   height: 10,
                                 ),
                                InkWell(
-                                          onTap: (){
-                                                Get.to(()=>Policies());
+                                          onTap: ()async {
+                                              final String url = Uri.base.toString() + '/policies';      
+                                            js.context.callMethod('open',[url,'_blank']);
                                           },
                                           child: Text(
                                             "Privacy Policy",
@@ -359,7 +362,8 @@ class ContactDesktop extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: (){
-                                                Get.to(()=>Policies());
+                                                  final String url = '/Policies';      
+                                            js.context.callMethod('open',[url,'_blank']);
                                           },
                                           child: Text(
                                             "Privacy Policy",

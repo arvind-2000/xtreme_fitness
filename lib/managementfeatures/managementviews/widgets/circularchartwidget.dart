@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 
+import '../../../widgets/cardswithshadow.dart';
+
 class PieChartWidget extends StatelessWidget {
   const PieChartWidget({super.key});
 
@@ -17,9 +19,25 @@ class PieChartWidget extends StatelessWidget {
           position: LegendPosition.right, // Position of the legend
           overflowMode: LegendItemOverflowMode.scroll, // Handle overflow
         ),
+  tooltipBehavior: TooltipBehavior(
+          enable: true,
+          builder:(data, point, series, pointIndex, seriesIndex) =>
+              SizedBox(
+                // height: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("${data.value} Members"),
+                  ],
+                ),
+              ),
+          color: Theme.of(context).colorScheme.primary,
+          textStyle: TextStyle(color: Theme.of(context).colorScheme.surface)),
+     
         series: <CircularSeries>[
           PieSeries<ChartData, String>(
             enableTooltip: true,
+
             dataSource: <ChartData>[
               ChartData('Personal Trainee',
                   controller.allpersonalxtremerforoverall.length.toDouble()),
@@ -27,6 +45,11 @@ class PieChartWidget extends StatelessWidget {
                   (controller.allgenerallxtremerforoverall.length).toDouble()),
               ChartData('Inactive Trainee',
                   controller.allinactivextremerforoverall.length.toDouble()),
+                   ChartData('Other',
+                  (controller.getallXtremer.length -
+                              (controller.allinactivextremer.length +
+                                  controller.allgeneralxtremer.length +
+                                  controller.allpersonalxtremer.length)).toDouble()),
             ],
             xValueMapper: (ChartData data, _) => data.category,
             yValueMapper: (ChartData data, _) => data.value,
@@ -34,16 +57,18 @@ class PieChartWidget extends StatelessWidget {
             pointColorMapper: (ChartData data, _) {
               switch (data.category) {
                 case 'Personal Trainee':
-                  return Colors.green;
+                  return Color.fromARGB(255, 16, 209, 235);
                 case 'General Trainee':
-                  return Colors.blue;
+                  return Color.fromARGB(255, 45, 156, 219);
                 case 'Inactive Trainee':
-                  return Colors.red;
+                  return Color.fromARGB(255,161, 85, 185);
+                   case 'Other':
+                  return Color.fromARGB(255, 22, 91, 170);
               }
               return null;
             },
             dataLabelSettings: const DataLabelSettings(
-                textStyle: TextStyle(fontSize: 20),
+                // textStyle: TextStyle(fontSize: 16),
                 isVisible: true,
                 showZeroValue: false), // Show data labels
           ),

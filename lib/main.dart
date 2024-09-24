@@ -3,6 +3,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
+import 'package:xtreme_fitness/landingpages/sections/policies.dart';
+import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/termandcondition.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
@@ -34,6 +36,11 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
+         textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white, // Cursor color
+          selectionColor: Colors.blue.withOpacity(0.3), // Selection highlight color
+          selectionHandleColor: Colors.grey.withOpacity(0.3), // Selection handle color
+        ),
         // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
         scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
       ),
@@ -68,6 +75,10 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/createmember',
             page: () => const PaymentRedirectPage(),
+            transition: Transition.noTransition),
+                GetPage(
+            name: '/Policies',
+            page: () => const Policies(),
             transition: Transition.noTransition),
         // GetPage(
         //     name: '/pricing',

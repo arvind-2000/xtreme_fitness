@@ -11,8 +11,10 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 
 
+import '../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import '../../../widgets/headingtext.dart';
 
+import '../widgets/paymentstatuscard.dart';
 import 'addmemberfields/addplan.dart';
 import 'addmemberfields/doctordetails.dart';
 import 'addmemberfields/personaldetails.dart';
@@ -35,6 +37,10 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
 
     super.initState();
     Get.put(AddMemberController());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          Get.find<AddMemberController>().changepaymentstatus(0);
+    },);
+
   }
 @override
   void dispose() {
@@ -50,7 +56,21 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
             return SingleChildScrollView(
-              child: Column(
+              child: addmemberctrl.isloading ||
+                        addmemberctrl.paymentstatus != 0
+                    ? PaymentStatusCard(
+                        callback: () {
+                          addmemberctrl.changepaymentstatus(0);
+
+                          if (addmemberctrl.ismember) {
+                            Get.offAllNamed('/home');
+                            Get.dialog(const LoginDialog());
+                          } else {
+                            pagectrl.changeaddMemberPage(0);
+                          }
+                        },
+                      )
+                    : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                
                 children: [

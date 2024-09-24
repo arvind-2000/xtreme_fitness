@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import 'package:xtreme_fitness/config/encrypt.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
@@ -59,8 +60,9 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
 
                         if (prefs.containsKey('userid') &&
                             prefs.containsKey('password')) {
-                          authctrl.authenticate(prefs.getString('userid')!,
-                              prefs.getString('password')!);
+                              print("in returnss admin");
+                          authctrl.authenticate(decryptData(prefs.getString('userid')!),
+                            decryptData(  prefs.getString('password')!));
                         } else {
                           Get.offAllNamed('/home');
                           Get.dialog(const LoginDialog());

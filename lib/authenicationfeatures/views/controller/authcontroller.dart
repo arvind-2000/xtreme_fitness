@@ -9,6 +9,7 @@ import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
+import '../../../config/encrypt.dart';
 
 class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
@@ -26,7 +27,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember = true;
 
   int? otp;
   bool otploading = false;
@@ -68,8 +69,10 @@ class GetxAuthController extends GetxController {
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
 
               print('Saving user and password to local');
-              pref.setString('userid', email);
-              pref.setString('password', pass);
+              final encryptedemail = encryptData(email);
+              final encryptedpas = encryptData(pass);
+              pref.setString('userid', encryptedemail);
+              pref.setString('password', encryptedpas);
 
               loginloading = false;
               update();
@@ -194,11 +197,7 @@ class GetxAuthController extends GetxController {
     //   update();
     // }
 
-    //testing
-    numberexists = false;
-    otploading = false;
-    sendotp(phone);
-    //testing
+
     otploading = false;
     update();
   }
