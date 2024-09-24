@@ -136,7 +136,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      Get.offAllNamed("/home");
+      // Get.offAllNamed("/home");
     }
   }
 
