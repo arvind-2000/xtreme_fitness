@@ -225,7 +225,7 @@ class ManagementController extends GetxController {
     // _allxtremer = dummyxtremer;
     if(authctrl.ismember){
         print("In get xtremer");
-        xtremer = _allxtremer.firstWhereOrNull((element) => element.XtremerId.toString()==authctrl.userid,)??dummyxtremer[0];
+        xtremer = _allxtremer.firstWhereOrNull((element) => element.XtremerId.toString()==authctrl.userid,);
         update();
     }
     //for getting search xtremer list

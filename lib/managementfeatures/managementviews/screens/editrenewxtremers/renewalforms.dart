@@ -84,7 +84,7 @@ class _RenewalFormsState extends State<RenewalForms> {
                               if(addmemberctrl.selectedplan!=null){
                                 if(addmemberctrl.selectedplan!.category.toLowerCase()=="personal"){
                                       if(addmemberctrl.gettrainer!=null){
-                                            Navigator.pop(context);
+                                            // Navigator.pop(context);
                                             Get.dialog(PaymentDialogs(callback:(){ addmemberctrl.renewalsubmission();  } ));
 
 
@@ -95,7 +95,7 @@ class _RenewalFormsState extends State<RenewalForms> {
                                 }else{
                                             
                                            Get.dialog(PaymentDialogs(callback:(){
-                                               Navigator.pop(context);
+                                              //  Navigator.pop(context);
                                              addmemberctrl.renewalsubmission();
                                          
                                            } ));

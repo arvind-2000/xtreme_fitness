@@ -10,7 +10,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashbo
 import 'config/const.dart';
 import 'widgets/navbar.dart';
 import 'widgets/navbarmember.dart';
-import 'widgets/titletext.dart';
+
 
 class HandlerPage extends StatefulWidget {
   const HandlerPage({super.key});
