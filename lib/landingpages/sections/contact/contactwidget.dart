@@ -27,10 +27,15 @@ Widget buildContactInfo(
   );
 }
 
-Widget buildTextField(String hint, {int maxLines = 1}) {
+Widget buildTextField(
+  String hint,
+  int? maxline, {
+  required TextEditingController? con,
+}) {
   return TextFormField(
+    controller: con,
     cursorColor: Colors.white,
-    maxLines: maxLines,
+    maxLines: maxline ?? 1,
     decoration: InputDecoration(
       hintStyle: const TextStyle(color: Color.fromARGB(255, 80, 80, 80)),
       border: const OutlineInputBorder(),

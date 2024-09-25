@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/landingpages/pages/contactuspage.dart';
-import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
+import 'package:get/get.dart';
+import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
@@ -12,6 +11,7 @@ class ContactMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       color: const Color.fromARGB(255, 29, 28, 28),
@@ -80,13 +80,17 @@ class ContactMobile extends StatelessWidget {
               //   ),
               // ),
               const SizedBox(height: 30),
-              buildTextField('Name'),
+              buildTextField('Name', null,
+                  con: landingcontroller.namecontroller),
               const SizedBox(height: 10),
-              buildTextField('Email Address'),
+              buildTextField('Phone Number', null,
+                  con: landingcontroller.phonecontroller),
               const SizedBox(height: 10),
-              buildTextField('Subject'),
+              buildTextField('Subject', null,
+                  con: landingcontroller.subjectcontroller),
               const SizedBox(height: 10),
-              buildTextField('Your Message', maxLines: 3),
+              buildTextField('Your Message', 3,
+                  con: landingcontroller.messagecontroller),
               const SizedBox(height: 10),
               Center(
                 child: ElevatedButton(

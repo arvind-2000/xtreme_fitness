@@ -4,7 +4,6 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
-import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/termandcondition.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
@@ -24,7 +23,7 @@ void main() async {
   setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
-
+  Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
 }
 

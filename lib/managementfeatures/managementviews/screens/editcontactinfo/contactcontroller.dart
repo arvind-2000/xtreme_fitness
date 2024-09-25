@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/model.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
 
 class ContactController extends GetxController {
   final String _name = '';
@@ -19,8 +19,8 @@ class ContactController extends GetxController {
   final String _address = '';
   String get address => _address;
   // Here we use Rx to create reactive variables
-  ContactModel? _contact;
-  ContactModel get contact => _contact!;
+  GetContactModal? _contact;
+  GetContactModal get contact => _contact!;
 
   final List<String> _allmessage = [];
   List<String> get allmessage => _allmessage;
@@ -46,11 +46,8 @@ class ContactController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    _contact = ContactModel(
-        email: 'noreply@support.xtreme.com',
-        phone: '+91 12345467890',
-        addres: 'MANTRIPUKHRI IMPHAL EAST, MANIPUR, 795002');
-    setContact();
+    getcontactdetails();
+
     getstoredcount();
   }
 
@@ -62,6 +59,26 @@ class ContactController extends GetxController {
     super.dispose();
   }
 
+  void getcontactdetails() async {
+    var request =
+        http.Request('GET', Uri.parse('http://10.10.1.96/api/Contacts'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var allcontact =
+          getContactModalFromJson(await response.stream.bytesToString());
+      _contact = allcontact;
+      update();
+      addresscon.text = _contact!.address;
+      mailcon.text = _contact!.email;
+      phonecon.text = _contact!.phoneNumber;
+      update();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   void getstoredcount() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -71,13 +88,6 @@ class ContactController extends GetxController {
       log('Get Count :$getcount');
     }
     checkForNewMessages();
-  }
-
-  void setContact() {
-    addresscon.text = _contact!.addres;
-    mailcon.text = _contact!.email;
-    phonecon.text = _contact!.phone;
-    update();
   }
 
   // Save contact logic (can add API calls or database logic here)
