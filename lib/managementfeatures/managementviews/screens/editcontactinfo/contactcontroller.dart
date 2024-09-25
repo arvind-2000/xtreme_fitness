@@ -20,7 +20,7 @@ class ContactController extends GetxController {
   String get address => _address;
   // Here we use Rx to create reactive variables
   GetContactModal? _contact;
-  GetContactModal get contact => _contact!;
+  GetContactModal? get contact => _contact;
 
   final List<String> _allmessage = [];
   List<String> get allmessage => _allmessage;

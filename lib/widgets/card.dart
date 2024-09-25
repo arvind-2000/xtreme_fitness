@@ -7,7 +7,8 @@ class Cardonly extends StatefulWidget {
       this.margin,
       required this.child,
       this.onpress,
-      this.color, this.hovercolor});
+      this.color,
+      this.hovercolor});
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Widget child;
@@ -25,21 +26,24 @@ class _CardonlyState extends State<Cardonly> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: widget.margin ??
+          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color:hover?widget.hovercolor??Theme.of(context).colorScheme.secondary.withOpacity(0.4) :widget.color ?? Theme.of(context).colorScheme.primary,
-
+        color: hover
+            ? widget.hovercolor ??
+                Theme.of(context).colorScheme.secondary.withOpacity(0.4)
+            : widget.color ?? Theme.of(context).colorScheme.primary,
       ),
       duration: const Duration(milliseconds: 700),
       child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: widget.onpress,
-          onHover: (v){
-              setState(() {
-                hover = v;
-              });
+          onHover: (v) {
+            setState(() {
+              hover = v;
+            });
           },
           child: Padding(
             padding: widget.padding ??

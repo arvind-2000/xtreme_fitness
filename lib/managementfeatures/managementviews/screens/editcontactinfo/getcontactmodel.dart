@@ -36,8 +36,8 @@ class GetContactModal {
         email: json["Email"],
         address: json["Address"],
         pinCode: json["PinCode"],
-        createdAt: DateTime.parse(json["CreatedAt"]),
-        updatedAt: DateTime.parse(json["UpdatedAt"]),
+        createdAt: DateTime.parse(json["CreatedAt"]) ?? DateTime.now(),
+        updatedAt: DateTime.parse(json["UpdatedAt"]) ?? DateTime.now(),
       );
 
   Map<String, dynamic> toJson() => {
