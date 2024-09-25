@@ -59,7 +59,7 @@ class _AddPlanFieldsState extends State<AddServiceField> {
           child: ConstrainedBox(
             constraints:const BoxConstraints(maxWidth: 500),
             child: Padding(
-              padding: const EdgeInsets.all(32.0),
+              padding: EdgeInsets.all(MediaQuery.sizeOf(context).width<=mobilescreen?16:32.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                         

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/AuthHandlerPage.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
+
+import '../../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
 
 class NavBarMobile extends StatelessWidget {
   const NavBarMobile({super.key});
@@ -32,11 +35,16 @@ class NavBarMobile extends StatelessWidget {
               children: [
                 CardBorder(
                   onpress: () {
-                    Get.to(
-                        () => const LoginDialogMobile(
-                              signupdialog: false,
-                            ),
-                        transition: Transition.fadeIn);
+                    // Get.to(
+                    //     () => const AuthHandlerPage(
+                    //           // signupdialog: false,
+                    //         ),
+                    //     transition: Transition.fadeIn);
+                  Get.dialog(
+                                          barrierDismissible: false,
+                                          const LoginDialog(
+                                            signupdialog: false,
+                                          ));
                   },
                   margin: const EdgeInsets.all(4),
                   color: Colors.red[800],

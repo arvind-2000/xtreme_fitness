@@ -96,9 +96,11 @@ class _GalleryTabletState extends State<GalleryTablet> {
                               highlightColor: Colors.transparent,
                               onTap: () {
                                 Get.dialog(
+                                  
                                   useSafeArea: true,
                                   barrierDismissible: true,
                                   Dialog(
+                                       insetPadding: const EdgeInsets.all(16),
                                     elevation: 2,
                                     child: Stack(
                                       children: [

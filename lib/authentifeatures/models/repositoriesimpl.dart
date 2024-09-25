@@ -89,9 +89,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         method: 'POST',
         sendData: jsonEncode(query),
         requestHeaders: {
+          
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
+        withCredentials: true,
         // Ensuring session cookies are handled
       );
       print("Status Code :${response.status}");

@@ -68,10 +68,15 @@ class _PlansScreenState extends State<PlansScreen> {
                                 ? const SizedBox()
                                 : CardBorder(
                                     onpress: () {
-                                      Get.dialog(Dialog(
-                                        child: SizedBox(
-                                          height: 600,
-                                          width: 500,
+                                      Get.dialog(
+                                        
+                                        Dialog(
+                                          backgroundColor: Colors.grey[800],
+                                          insetPadding: const EdgeInsets.all(16),
+                                        child: ConstrainedBox(
+                                          constraints: const BoxConstraints(maxWidth: 500),
+                                          // height: 600,
+                                          // width: 500,
                                           child: AddPlanFields(onpress: () {
                                             Navigator.pop(context);
                                           }),

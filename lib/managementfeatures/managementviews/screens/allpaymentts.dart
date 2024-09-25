@@ -364,6 +364,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                   },
                                   userss: () {
                                     Get.dialog(Dialog(
+                                         insetPadding: const EdgeInsets.all(16),
                                       child: SizedBox(
                                         width: 500,
                                         height: 600,

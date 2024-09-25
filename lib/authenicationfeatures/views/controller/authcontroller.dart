@@ -71,10 +71,10 @@ class GetxAuthController extends GetxController {
               print("in authentication :${ismember} ");
 
               print('Saving user and password to local');
-              // final encryptedemail = encryptData(email);
-              // final encryptedpas = encryptData(pass);
-              pref.setString('userid', email);
-              pref.setString('password', pass);
+              final encryptedemail = encryptData(email);
+              final encryptedpas = encryptData(pass);
+              pref.setString('userid', encryptedemail);
+              pref.setString('password', encryptedpas);
 
               loginloading = false;
               update();

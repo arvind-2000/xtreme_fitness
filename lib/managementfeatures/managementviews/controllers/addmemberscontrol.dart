@@ -529,6 +529,7 @@ class AddMemberController extends GetxController {
     disability = false;
     relationship = 4;
     _trainer = null;
+    dob = null;
     _imageData = null;
     usererrormessage = null;
     xtremer = null;

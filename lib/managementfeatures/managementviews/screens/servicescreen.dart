@@ -83,6 +83,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                     Get.dialog(
                                         barrierDismissible: false,
                                         Dialog(
+                                            backgroundColor: Colors.grey[900],
+                                          insetPadding: const EdgeInsets.all(16),
                                           child: SizedBox(
                                             height: 600,
                                             width: 500,

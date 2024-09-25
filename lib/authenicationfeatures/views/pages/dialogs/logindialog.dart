@@ -29,21 +29,21 @@ class _LoginDialogState extends State<LoginDialog> {
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, state) {
       return Dialog(
-        insetPadding: EdgeInsets.all(8),
-        backgroundColor: Colors.grey[900],
+        insetPadding: EdgeInsets.all(16),
+        backgroundColor: Colors.transparent,
         child: SingleChildScrollView(
           child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 500),
               
               child: SizedBox(
                      
-              height:  MediaQuery.sizeOf(context).width<=mobilescreen?500:isSignup || isforgot ? 600 : 650,
+              // height:  MediaQuery.sizeOf(context).width<=mobilescreen?500:isSignup || isforgot ? 600 : 650,
               child: Cardonly(
                   margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  color: Colors.grey[800]!.withOpacity(0.6),
+                  padding: EdgeInsets.all(16),
+                  color: Colors.grey[900],
                   child: isforgot
-                      ? ForgotPassWordScreen(
+                      ? ForgotPassWordScreen(formkey: _formkey,
                           changelogin: (v) {
                             state(() {
                               isforgot = v;
@@ -52,6 +52,7 @@ class _LoginDialogState extends State<LoginDialog> {
                         )
                       : isSignup
                           ? SignUpPage(
+                            formkey: _formkey,
                               changelogin: (v) {
                                 state(() {
                                   isSignup = false;

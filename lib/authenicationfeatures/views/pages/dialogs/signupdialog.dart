@@ -4,8 +4,16 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/signup.dart';
 
 import '../../../../widgets/card.dart';
 
-class SignupDialog extends StatelessWidget {
+class SignupDialog extends StatefulWidget {
   const SignupDialog({super.key});
+
+  @override
+  State<SignupDialog> createState() => _SignupDialogState();
+}
+
+class _SignupDialogState extends State<SignupDialog> {
+  
+  final GlobalKey<FormState> _formkey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +24,7 @@ class SignupDialog extends StatelessWidget {
         width: 500,
         child: Cardonly(
           color: Colors.grey[800]!.withOpacity(0.6),
-          child: const SignUpPage()),
+          child: SignUpPage(formkey: _formkey)),
       ),
     );
   }

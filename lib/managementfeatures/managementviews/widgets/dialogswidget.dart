@@ -17,6 +17,7 @@ class PageDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+         insetPadding: const EdgeInsets.all(16),
       alignment: const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),

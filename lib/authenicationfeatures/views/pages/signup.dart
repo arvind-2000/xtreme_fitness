@@ -14,15 +14,16 @@ import '../../../widgets/textformwidget.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({
     super.key,
-    this.changelogin,
+    this.changelogin, required this.formkey,
   });
   final Function(bool)? changelogin;
+  final GlobalKey<FormState> formkey;
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _formkey = GlobalKey<FormState>();
+
 
   final TextEditingController _confirmotp = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
@@ -44,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Future<bool> validateform(
       String email, String pass, String phone, String name) async {
     // Validate returns true if the form is valid, or false otherwise.
-    if (_formkey.currentState!.validate()) {
+    if (widget.formkey.currentState!.validate()) {
       // If the form is valid, display a snackbar. In the real world
       return false;
     } else {
@@ -128,7 +129,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                 ),
                 Form(
-                    key: _formkey,
+                    key: widget.formkey,
                     child: Center(
                       child: ListView(
                         shrinkWrap: true,
@@ -237,7 +238,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               onpress: authctrl.otploading
                                   ? null
                                   : () async {
-                                      if (_formkey.currentState!.validate()) {
+                                      if (widget.formkey.currentState!.validate()) {
                                         if (authctrl.otp != null) {
                                           if (authctrl
                                               .confirmotp(_confirmotp.text)) {

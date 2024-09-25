@@ -31,7 +31,48 @@ class PlanSelectionField extends StatelessWidget {
                     desc: "No plans to show.",
                     onpress: null,
                   )
-                : GridView(
+                 :MediaQuery.sizeOf(context).width<=mobilescreen? ListView(
+                   shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                     children: managectrl.getallactiveplans.asMap().entries.map((e) => CardwithShadow(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                         HeadingText(e.value.category,size: 24,),
+                         const SizedBox(height: 20,),
+                        
+                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             const Text("Price"),
+                             Text(e.value.price.toString(),style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                             const SizedBox(height: 10,),
+                                             const Text("Discount"),
+                             Text("${e.value.discountPercentage}%",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                             const SizedBox(height: 10,),
+                                         const Text("Actual Price"),
+                                            HeadingText("${e.value.price - (e.value.price * (e.value.discountPercentage/100))}"  ,size: 24,),
+                           ],
+                         ),
+                        
+                            CardBorder(
+                              onpress: (){
+                                addmemberctrl.addplan(e.value);
+                              },
+                              color: Colors.green[300],
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                              Icon(addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?Icons.check:Icons.add,color: Colors.white,),
+                              const SizedBox(width: 10,),
+                        
+                            addmemberctrl.selectedplan!=null&&addmemberctrl.selectedplan!.id==e.value.id?const Text("Plan Added",style: TextStyle(color: Colors.white)):const Text("Add Plan",style: TextStyle(color: Colors.white),)
+                            ],))
+                        ],
+                      )),).toList()
+                 
+                 ) :GridView(
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: size < 500

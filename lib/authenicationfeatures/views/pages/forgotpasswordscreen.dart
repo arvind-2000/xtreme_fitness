@@ -10,14 +10,15 @@ import '../../../widgets/textformwidget.dart';
 import 'createmembers.dart';
 
 class ForgotPassWordScreen extends StatefulWidget {
-  const ForgotPassWordScreen({super.key, this.changelogin});
+  const ForgotPassWordScreen({super.key, this.changelogin, required this.formkey});
   final Function(bool)? changelogin;
+  final GlobalKey<FormState> formkey;
   @override
   State<ForgotPassWordScreen> createState() => _ForgotPassWordScreenState();
 }
 
 class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
-  final _formkey = GlobalKey<FormState>();
+
   final _formkeyrenewpass = GlobalKey<FormState>();
   bool? _otpcorrect;
 
@@ -235,7 +236,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                 ),
                               ))
                           : Form(
-                              key: _formkey,
+                              key: widget.formkey,
                               child: Center(
                                 child: ListView(
                                   shrinkWrap: true,
@@ -356,7 +357,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         onpress: authctrl.otploading
                                             ? null
                                             : () async {
-                                                if (_formkey.currentState!
+                                                if (widget.formkey.currentState!
                                                     .validate()) {
                                                   if (authctrl.otp != null) {
                                                     if (authctrl.confirmotp(

@@ -6,6 +6,9 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../../widgets/cardswithshadow.dart';
+import 'forgotpasswordscreen.dart';
+import 'loginscreen.dart';
+import 'signup.dart';
 
 class AuthHandlerPage extends StatefulWidget {
   const AuthHandlerPage({super.key, this.index});
@@ -27,7 +30,7 @@ class _AuthHandlerPageState extends State<AuthHandlerPage> {
       },
     );
   }
-
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {

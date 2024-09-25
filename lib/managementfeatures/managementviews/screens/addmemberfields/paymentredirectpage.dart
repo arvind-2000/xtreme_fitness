@@ -61,8 +61,8 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                         if (prefs.containsKey('userid') &&
                             prefs.containsKey('password')) {
                               print("in returnss admin");
-                          authctrl.authenticate(prefs.getString('userid')!,
-                            prefs.getString('password')!);
+                          authctrl.authenticate(decryptData(prefs.getString('userid')!),
+                            decryptData(prefs.getString('password')!));
                         } else {
                           Get.offAllNamed('/home');
                           Get.dialog(const LoginDialog());
