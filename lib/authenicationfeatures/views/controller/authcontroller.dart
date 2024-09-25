@@ -27,7 +27,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
 
   int? otp;
   bool otploading = false;
@@ -58,29 +58,29 @@ class GetxAuthController extends GetxController {
           _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
-            print("In authentication check");
+            //print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
             _user = v.entries.first.key;
 
             update();
             if (_user != null) {
-              print("In authentication check member or not ${_user!.roleName}");
+              //print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
 
-              print("in authentication :${ismember} ");
+              //print("in authentication :${ismember} ");
 
-              print('Saving user and password to local');
+              //print('Saving user and password to local');
               final encryptedemail = encryptData(email);
               final encryptedpas = encryptData(pass);
-              pref.setString('userid', encryptedemail);
-              pref.setString('password', encryptedpas);
+              pref.setString('key1', encryptedemail);
+              pref.setString('key2', encryptedpas);
 
               loginloading = false;
               update();
               Get.toNamed('/dashboard');
             } else {
-              print("user null");
+              //print("user null");
               _authentication = false;
               ismember = true;
               loginloading = false;
@@ -118,7 +118,17 @@ class GetxAuthController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
-        print(value);
+          _authentication = false;
+      loginloading = false;
+      _user = null;
+      ismember = true;
+      prefs.remove('key1');
+      prefs.remove('key2');
+      signupclose();
+      disposelogin();
+      disposeforgotpass();
+      authentications();
+        //print(value);
       },
     ).then(
       (value) {},
@@ -128,19 +138,20 @@ class GetxAuthController extends GetxController {
       loginloading = false;
       _user = null;
       ismember = true;
-      prefs.remove('userid');
-      prefs.remove('password');
+      prefs.remove('key1');
+      prefs.remove('key2');
       signupclose();
       disposelogin();
       disposeforgotpass();
       authentications();
       update();
     });
+      update();
   }
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      Get.offAllNamed("/home");
+      // Get.offAllNamed("/home");
     }
   }
 
@@ -278,7 +289,7 @@ class GetxAuthController extends GetxController {
     // change pass
     //add api call here
     if (foruserId != null) {
-      print("In password change");
+      //print("In password change");
       // Map<UserEntity?,String> d = await authrepo.getUserbyId(foruserId!);
       // if(d.entries.first.key!=null){
 

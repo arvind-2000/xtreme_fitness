@@ -60,23 +60,28 @@ class ContactController extends GetxController {
   }
 
   void getcontactdetails() async {
-    var request =
-        http.Request('GET', Uri.parse('http://10.10.1.96/api/Contacts'));
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      var allcontact =
-          getContactModalFromJson(await response.stream.bytesToString());
-      _contact = allcontact;
-      update();
-      addresscon.text = _contact!.address;
-      mailcon.text = _contact!.email;
-      phonecon.text = _contact!.phoneNumber;
-      update();
-    } else {
-      print(response.reasonPhrase);
-    }
+    try {
+  var request =
+      http.Request('GET', Uri.parse('http://10.10.1.96/api/Contacts'));
+  
+  http.StreamedResponse response = await request.send();
+  
+  if (response.statusCode == 200) {
+    var allcontact =
+        getContactModalFromJson(await response.stream.bytesToString());
+    _contact = allcontact;
+    update();
+    addresscon.text = _contact!.address;
+    mailcon.text = _contact!.email;
+    phonecon.text = _contact!.phoneNumber;
+    update();
+  } else {
+    print(response.reasonPhrase);
+  }
+} on Exception catch (e) {
+  // TODO
+  
+}
   }
 
   void getstoredcount() async {

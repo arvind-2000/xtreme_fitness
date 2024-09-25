@@ -20,66 +20,80 @@ class DashboardChild4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return CardwithShadow(
+        padding: const EdgeInsets.symmetric(vertical:16),
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TitleText("Payments"),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TitleText("Payments"),
+          ),
           const SizedBox(
             height: 16,
           ),
-          const Text("Recent Transactions"),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text("Recent Transactions"),
+          ),
           const SizedBox(
             height: 5,
           ),
           //header for table
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white.withOpacity(0.8),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Center(
+          Container(
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.circular(10),
+              color: Colors.white.withOpacity(0.2),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Center(
+                          child: FittedBox(
                             child: Text(
-                      "Name",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ))),
-                    Expanded(
-                        child: Center(
+                                                "Name",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                              ),
+                          ))),
+                  Expanded(
+                      child: Center(
+                          child: FittedBox(
                             child: Text(
-                      "Type",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ))),
-                    Expanded(
-                        child: Center(
+                                                "Type",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                              ),
+                          ))),
+                  Expanded(
+                      child: Center(
+                          child: FittedBox(
                             child: Text(
-                      "Amount",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ))),
-                    Expanded(
-                        child: Center(
+                                                "Amount",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                          ))),
+                  Expanded(
+                      child: Center(
+                          child: FittedBox(
                             child: Text(
-                      "Date",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ))),
-                    Expanded(
-                        child: Center(
+                                                "Date",
+                                                style: TextStyle(
+                                                 fontWeight: FontWeight.bold),
+                                              ),
+                          ))),
+                  Expanded(
+                      child: Center(
+                          child: FittedBox(
                             child: Text(
-                      "Status",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ))),
-                  ],
-                ),
+                                                "Status",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                              ),
+                          ))),
+                ],
               ),
             ),
           ),
@@ -91,6 +105,7 @@ class DashboardChild4 extends StatelessWidget {
                 onTap: () {
                   Get.dialog(Dialog(
                     child: SizedBox(
+                   
                       width: 500,
                       height: 600,
                       child: Padding(
@@ -98,32 +113,32 @@ class DashboardChild4 extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             SizedBox(height: 16,),
+                             const SizedBox(height: 16,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                HeadingText("Payment Details"),
+                                const HeadingText("Payment Details"),
                                 IconButton(onPressed: (){
                                   Navigator.pop(context);
-                                }, icon: Icon(Icons.close,size:16,))
+                                }, icon: const Icon(Icons.close,size:16,))
                               ],
                             ),
-                             SizedBox(height: 16,),
+                             const SizedBox(height: 16,),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Name",style: TextStyle(fontSize: 14),),
-                                  Text("${managectrl.latestpayment10[i].name}",style: TextStyle(fontSize: 16),),
-                                   SizedBox(height: 16,),
-                                  Text("Payment Method",style: TextStyle(fontSize: 14),),
+                                  const Text("Name",style: TextStyle(fontSize: 14),),
+                                  Text("${managectrl.latestpayment10[i].name}",style: const TextStyle(fontSize: 16),),
+                                   const SizedBox(height: 16,),
+                                  const Text("Payment Method",style: TextStyle(fontSize: 14),),
                                   Text(
                                       "${managectrl.latestpayment10[i].paymentMethod}"),
-                                       SizedBox(height: 16,),
+                                       const SizedBox(height: 16,),
                                   Row(
                                     children: [
-                                      Text("Transaction Id",style: TextStyle(fontSize: 14),),
-                                      SizedBox(width: 10,),
+                                      const Text("Transaction Id",style: TextStyle(fontSize: 14),),
+                                      const SizedBox(width: 10,),
                                       IconButton(onPressed: (){
                                        Clipboard.setData(ClipboardData(text: "${managectrl.latestpayment10[i].transactionId}"));
                                           CustomSnackbar(context, "Text copied to Clipboard");
@@ -132,17 +147,17 @@ class DashboardChild4 extends StatelessWidget {
                                   ),
                                   Text(
                                       "${managectrl.latestpayment10[i].transactionId}"),
-                                       SizedBox(height: 16,),
-                                  Text("Amount",style: TextStyle(fontSize: 14),),
+                                       const SizedBox(height: 16,),
+                                  const Text("Amount",style: TextStyle(fontSize: 14),),
                                   Text(
-                                      "${managectrl.latestpayment10[i].receivedAmount}",style: TextStyle(fontSize: 16),),
-                                       SizedBox(height: 16,),
-                                  Text("Date",style: TextStyle(fontSize: 14),),
+                                      "${managectrl.latestpayment10[i].receivedAmount}",style: const TextStyle(fontSize: 16),),
+                                       const SizedBox(height: 16,),
+                                  const Text("Date",style: TextStyle(fontSize: 14),),
                                   Text(
-                                      "${managectrl.latestpayment10[i].paymentDate.day}/${managectrl.latestpayment10[i].paymentDate.month}/${managectrl.latestpayment10[i].paymentDate.year}",style: TextStyle(fontSize: 16),),
-                                  SizedBox(height: 16,),
-                                  Text("Status",style: TextStyle(fontSize: 14),),
-                                  Text("Paid",style: TextStyle(fontSize: 16),),
+                                      "${managectrl.latestpayment10[i].paymentDate.day}/${managectrl.latestpayment10[i].paymentDate.month}/${managectrl.latestpayment10[i].paymentDate.year}",style: const TextStyle(fontSize: 16),),
+                                  const SizedBox(height: 16,),
+                                  const Text("Status",style: TextStyle(fontSize: 14),),
+                                  const Text("Paid",style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                             ),
@@ -153,38 +168,53 @@ class DashboardChild4 extends StatelessWidget {
                               onpress: (){
                                 createAndPrintPdf(Paymententity(id: managectrl.latestpayment10[i].id, userId: managectrl.latestpayment10[i].userId!, amount: managectrl.latestpayment10[i].amount!, discountPercentage: managectrl.latestpayment10[i].discountPercentage!.toDouble(), receivedAmount: managectrl.latestpayment10[i].receivedAmount, paymentDate: managectrl.latestpayment10[i].paymentDate, transactionId:managectrl.latestpayment10[i].transactionId!, paymentStatus: managectrl.latestpayment10[i].paymentStatus!, paymentMethod:managectrl.latestpayment10[i].paymentMethod!, paymentType: managectrl.latestpayment10[i].paymentType!, subscriptionId: managectrl.latestpayment10[i].subscriptionId, serviceUsageId: managectrl.latestpayment10[i].serviceUsageId, termsAndConditions: true));
                               },
-                              child: Center(child: Text("Print Receipt",style: TextStyle(fontSize: 16),))),)
+                              child: const Center(child: Text("Print Receipt",style: TextStyle(fontSize: 16),))),)
                           ],
                         ),
                       ),
                     ),
                   ));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Center(
-                        child: Text("${managectrl.latestpayment10[i].name}"),
-                      )),
-                      Expanded(
-                          child: Center(
-                        child: Text(
-                            "${managectrl.latestpayment10[i].paymentMethod}"),
-                      )),
-                      Expanded(
-                          child: Center(
-                        child: Text(
-                            "${managectrl.latestpayment10[i].receivedAmount}"),
-                      )),
-                      Expanded(
-                          child: Center(
-                        child: Text(
-                            "${managectrl.latestpayment10[i].paymentDate.day}/${managectrl.latestpayment10[i].paymentDate.month}/${managectrl.latestpayment10[i].paymentDate.year}"),
-                      )),
-                      const Expanded(child: Center(child: Text("Paid"))),
-                    ],
+                child: Container(
+                     color: i%2==0?Colors.blueGrey[200]!.withOpacity(0.3):Colors.blueGrey[200]!.withOpacity(0.5),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Center(
+                          child:FittedBox(child: Text("${managectrl.latestpayment10[i].name}")),
+                        )),
+                        const SizedBox(width: 5,),
+                        Expanded(
+                            child: Center(
+                          child: FittedBox(
+                            child: Text(
+                                "${managectrl.latestpayment10[i].paymentMethod}"),
+                          ),
+                        )),
+                              const SizedBox(width: 5,),
+                        Expanded(
+                            child: Center(
+                          child: FittedBox(
+                            child: Text(
+                                "${managectrl.latestpayment10[i].receivedAmount}"),
+                          ),
+                        )),
+                              const SizedBox(width: 5,),
+                        Expanded(
+                            child: Center(
+                          child: FittedBox(
+                            child: Text(
+                                "${managectrl.latestpayment10[i].paymentDate.day}/${managectrl.latestpayment10[i].paymentDate.month}/${managectrl.latestpayment10[i].paymentDate.year}"),
+                          ),
+                        )),
+                              const SizedBox(width: 5,),
+                        Expanded(child: Center(child: FittedBox(child: Text(managectrl.latestpayment10[i].paymentStatus.toString())))),
+                              const SizedBox(width: 5,),
+                      ],
+                    ),
                   ),
                 ),
               );

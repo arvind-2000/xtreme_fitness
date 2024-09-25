@@ -257,43 +257,54 @@ class _CreateMemberState extends State<CreateMember> {
                                   const SizedBox(
                                     height: 16,
                                   ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value:
-                                            addmemberctrl.checkdeclaration,
-                                        onChanged: (value) {
-                                          addmemberctrl
-                                              .changedeclaration(value!);
-                                        },
-                                      ),
-                                      const NormalText(
-                                          text:
-                                              "By accepting you agree to our terms and policies."),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: addmemberctrl
-                                            .paymentdeclaration,
-                                        onChanged: (value) {
-                                          addmemberctrl
-                                              .changepaymentdeclaration(
-                                                  value!);
-                                        },
-                                      ),
-                                      const InkWell(
-                                        child: NormalText(
-                                          text:
-                                              "By accepting you agree to the payments Terms and Conditions",
-                                          color: Colors.blue,
+                                  FittedBox(
+                                    child: Wrap(
+                                      
+                                      direction: Axis.vertical,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value:
+                                                  addmemberctrl.checkdeclaration,
+                                              onChanged: (value) {
+                                                addmemberctrl
+                                                    .changedeclaration(value!);
+                                              },
+                                            ),
+                                            const NormalText(
+                                                text:
+                                                    "By accepting you agree to our terms and policies."),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: addmemberctrl
+                                                  .paymentdeclaration,
+                                              onChanged: (value) {
+                                                addmemberctrl
+                                                    .changepaymentdeclaration(
+                                                        value!);
+                                              },
+                                            ),
+                                            InkWell(
+                                              onTap: (){  
+                                                
+                                              },
+                                              child: const NormalText(
+                                                text:
+                                                    "By accepting you agree to the payments Terms and Conditions",
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: 16,

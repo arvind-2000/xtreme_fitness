@@ -55,6 +55,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
        widget.showhint?Text(widget.hint,style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),fontSize: 12),):const SizedBox(),
         SizedBox(height:  widget.showhint?6:0,),
         TextFormField(
+          
           textAlign: widget.textalign??TextAlign.start,
           cursorColor: Colors.white,
           cursorHeight: 20,
@@ -92,6 +93,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           obscureText: toggless,
           onChanged:widget.onchanged ,
           decoration: InputDecoration(
+         
              counter: const Offstage(),
               suffixIcon: widget.obscure
                   ? IconButton(
@@ -114,7 +116,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               hintStyle: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
               border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)))),
+                  borderRadius: BorderRadius.all(Radius.circular(8)))
+                  ),
         ),
       ],
     );

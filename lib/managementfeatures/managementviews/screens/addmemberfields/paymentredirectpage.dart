@@ -58,11 +58,10 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
 
-                        if (prefs.containsKey('userid') &&
-                            prefs.containsKey('password')) {
-                              print("in returnss admin");
-                          authctrl.authenticate(decryptData(prefs.getString('userid')!),
-                            decryptData(prefs.getString('password')!));
+                        if (prefs.containsKey('key1') &&
+                            prefs.containsKey('key2')) {
+                          authctrl.authenticate(decryptData(prefs.getString('key1')!),
+                            decryptData(prefs.getString('key2')!));
                         } else {
                           Get.offAllNamed('/home');
                           Get.dialog(const LoginDialog());
