@@ -37,6 +37,13 @@ class GetxLandingcontroller extends GetxController {
   ServiceEntity? services;
   int page = 0;
   int plandurations = 1;
+
+  //Text controller for contact us form
+
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
+  TextEditingController subjectcontroller = TextEditingController();
+  TextEditingController messagecontroller = TextEditingController();
   @override
   void onInit() {
     super.onInit();
@@ -175,5 +182,47 @@ class GetxLandingcontroller extends GetxController {
   void changelandingpage(int pageindex) {
     page = pageindex;
     update();
+  }
+
+  void showThankYouDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 60,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Thank you for contacting us.',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'We appreciate that you\'ve taken the time to write us. '
+                  'We\'ll get back to you very soon.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

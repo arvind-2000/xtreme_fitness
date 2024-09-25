@@ -4,9 +4,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
-import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/termandcondition.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-            name: '/',
+            name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 

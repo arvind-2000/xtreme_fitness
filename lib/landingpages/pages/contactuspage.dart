@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
@@ -10,28 +12,35 @@ class ContactUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal:MediaQuery.sizeOf(context).width<=mobilescreen?16: 100, vertical: 30),
-      child:MediaQuery.sizeOf(context).width<=mobilescreen?Column(
-        children: [
-          ContactWdget(),
-          SizedBox(height: 40,),
-          SendMessageWidget()
-        ],
-      ) :Row(
-        children: [
-          // Left Section
-          Expanded(
-            flex: 1,
-            child: ContactWdget(),
-          ),
-          const SizedBox(width: 40),
-          // Right Section
-          Expanded(
-            flex: 2,
-            child: SendMessageWidget(),
-          ),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(
+          horizontal:
+              MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 100,
+          vertical: 30),
+      child: MediaQuery.sizeOf(context).width <= mobilescreen
+          ? const Column(
+              children: [
+                ContactWdget(),
+                SizedBox(
+                  height: 40,
+                ),
+                SendMessageWidget()
+              ],
+            )
+          : const Row(
+              children: [
+                // Left Section
+                Expanded(
+                  flex: 1,
+                  child: ContactWdget(),
+                ),
+                SizedBox(width: 40),
+                // Right Section
+                Expanded(
+                  flex: 2,
+                  child: SendMessageWidget(),
+                ),
+              ],
+            ),
     );
   }
 }
@@ -43,6 +52,7 @@ class SendMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetxLandingcontroller landingcontroler = Get.put(GetxLandingcontroller());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,13 +72,16 @@ class SendMessageWidget extends StatelessWidget {
         //   ),
         // ),
         const SizedBox(height: 30),
-        buildTextField('Name'),
+        buildTextField('Name', null, con: landingcontroler.namecontroller),
         const SizedBox(height: 10),
-        buildTextField('Email Address'),
+        buildTextField('Phone Number', null,
+            con: landingcontroler.phonecontroller),
         const SizedBox(height: 10),
-        buildTextField('Subject'),
+        buildTextField('Subject', null,
+            con: landingcontroler.subjectcontroller),
         const SizedBox(height: 10),
-        buildTextField('Your Message', maxLines: 3),
+        buildTextField('Your Message', 3,
+            con: landingcontroler.messagecontroller),
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {

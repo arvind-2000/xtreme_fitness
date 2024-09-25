@@ -587,6 +587,7 @@ class AddMemberController extends GetxController {
       var trans = prefs.getString('tranid')!;
       paymentsdetails = await repo.getpayment(trans);
       if (paymentsdetails != null) {
+        print("Payment Status : ${paymentsdetails!.paymentStatus}");
         if (paymentsdetails!.paymentStatus.toLowerCase() == "success") {
           Future.delayed(const Duration(seconds: 3), () {
             // Code to be executed after a 3-second delay
