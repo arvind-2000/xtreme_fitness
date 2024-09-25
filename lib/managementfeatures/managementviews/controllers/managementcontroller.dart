@@ -110,7 +110,7 @@ class ManagementController extends GetxController {
     getMemberships();
     // dashboardTimer();
 
-    _allpayments = dummypayments;
+    // _allpayments = dummypayments;
 
     // changeservicefilter(servicefilter);
 
