@@ -9,28 +9,32 @@ class ContactUsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:  EdgeInsets.symmetric(horizontal:MediaQuery.sizeOf(context).width<=mobilescreen?16: 100, vertical: 30),
-      child:MediaQuery.sizeOf(context).width<=mobilescreen?Column(
-        children: [
-          ContactWdget(),
-          SizedBox(height: 40,),
-          SendMessageWidget()
-        ],
-      ) :Row(
-        children: [
-          // Left Section
-          Expanded(
-            flex: 1,
-            child: ContactWdget(),
-          ),
-          const SizedBox(width: 40),
-          // Right Section
-          Expanded(
-            flex: 2,
-            child: SendMessageWidget(),
-          ),
-        ],
+    return Container(
+      color: const Color.fromARGB(255, 36, 34, 34),
+      child: Padding(
+        padding:  EdgeInsets.symmetric(horizontal:MediaQuery.sizeOf(context).width<=mobilescreen?16: 100, vertical: 30),
+        child:MediaQuery.sizeOf(context).width<=mobilescreen?const Column(
+          children: [
+            ContactWdget(),
+            SizedBox(height: 40,),
+            SendMessageWidget()
+          ],
+        ) :const Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left Section
+            Expanded(
+              flex: 1,
+              child: ContactWdget(),
+            ),
+            SizedBox(width: 40),
+            // Right Section
+            Expanded(
+              flex: 2,
+              child: SendMessageWidget(),
+            ),
+          ],
+        ),
       ),
     );
   }

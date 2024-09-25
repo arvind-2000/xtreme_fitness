@@ -40,10 +40,10 @@ class PageDialog extends StatelessWidget {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.cancel,
-                              color: Colors.white,
-                            ),
+                            // Icon(
+                            //   Icons.cancel,
+                            //   color: Colors.white,
+                            // ),
                             Text(
                               "Cancel",
                               style: TextStyle(color: Colors.white),
@@ -65,10 +65,10 @@ class PageDialog extends StatelessWidget {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.check,
-                              color: Colors.white,
-                            ),
+                            // Icon(
+                            //   Icons.check,
+                            //   color: Colors.white,
+                            // ),
                             Text("OK", style: TextStyle(color: Colors.white)),
                           ],
                         )),

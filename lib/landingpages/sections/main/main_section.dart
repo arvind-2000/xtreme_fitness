@@ -8,8 +8,7 @@ import 'package:xtreme_fitness/landingpages/sections/main/widgets/_mobile_drawer
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_desktop.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_mobile.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
-import 'package:xtreme_fitness/widgets/cardborder.dart';
-import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

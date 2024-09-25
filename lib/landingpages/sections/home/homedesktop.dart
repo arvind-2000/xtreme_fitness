@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindi
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
+import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_desktop.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/gradientbutton.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -66,6 +67,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                 
                     const SizedBox(
                       height: 100,
                     ),

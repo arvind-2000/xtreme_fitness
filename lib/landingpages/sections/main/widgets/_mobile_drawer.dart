@@ -37,7 +37,8 @@ class MobileDrawer extends StatelessWidget {
                           : Colors.transparent,
                       onTap: () {
                         landingcontroller.setnavindex(e.key);
-                        landingcontroller.scroll(e.key, isMobile: true);
+                         landingcontroller.changeScrolltoScreen(e.key);
+                        // landingcontroller.scroll(e.key, isMobile: true);
                         Navigator.pop(context);
                       },
                       // leading: Icon(
