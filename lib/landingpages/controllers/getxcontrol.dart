@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
-import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
@@ -13,7 +13,7 @@ class GetxLandingcontroller extends GetxController {
   final ManagementrepoImpl managementrepoImpl = ManagementrepoImpl();
   final scrollController = PageController();
   final scafoldKey = GlobalKey<ScaffoldState>();
-
+  ItemScrollController? scrollControllers;
   GlobalKey<ScaffoldState> get key => scafoldKey;
   int _navindex = 0;
   int get navindex => _navindex;
@@ -51,10 +51,24 @@ class GetxLandingcontroller extends GetxController {
     update();
     getPlans();
     getServices();
+    scrollControllers = ItemScrollController();
   }
 
   GetxLandingcontroller() {
     scrollController.addListener(_onScroll);
+  }
+
+  void setscrollcontroller(ItemScrollController controller) {
+    scrollControllers = controller;
+    update();
+  }
+
+  void changeScrolltoScreen(int index) {
+    debugPrint("in scroll control");
+    scrollControllers!.scrollTo(
+        index: index % 5,
+        duration: const Duration(seconds: 2),
+        curve: Curves.easeInOutCubic);
   }
 
   PageController get controller => scrollController;
@@ -162,8 +176,8 @@ class GetxLandingcontroller extends GetxController {
   }
 
   void getPlans() async {
-    // _plan = await managementrepoImpl.getPlans();
-    _plan = dummyplan;
+    _plan = await managementrepoImpl.getPlans();
+    // _plan = dummyplan;
     print(_plan.length);
     update();
   }

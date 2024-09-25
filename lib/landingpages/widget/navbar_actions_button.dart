@@ -52,7 +52,8 @@ class NavBarActionButton extends StatelessWidget {
               onPressed: () {
                 landctrl.setnavindex(index);
                 log(index.toString());
-                landctrl.scroll(index);
+                 landctrl.changeScrolltoScreen(index);
+                // landctrl.scroll(index);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

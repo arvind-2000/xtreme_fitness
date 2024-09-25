@@ -229,8 +229,7 @@ class ManagementController extends GetxController {
       print("In get xtremer");
       xtremer = _allxtremer.firstWhereOrNull(
             (element) => element.XtremerId.toString() == authctrl.userid,
-          ) ??
-          dummyxtremer[0];
+          );
       update();
     }
     //for getting search xtremer list
@@ -400,8 +399,8 @@ class ManagementController extends GetxController {
   }
 
   void getTrainer() async {
-    _alltrainer = dummytrainers;
-    // _alltrainer = await managementRepo.viewTrainer();
+    // _alltrainer = dummytrainers;
+    _alltrainer = await managementRepo.viewTrainer();
 
     update();
   }

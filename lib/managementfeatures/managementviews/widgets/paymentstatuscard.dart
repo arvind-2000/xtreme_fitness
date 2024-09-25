@@ -31,17 +31,17 @@ class PaymentStatusCard extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.end,
-                    //     children: [
-                    //       IconButton(
-                    //           onPressed: callback,
-                    //           icon: const Icon(Icons.close)),
-                    //     ],
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: callback,
+                              icon: const Icon(Icons.close)),
+                        ],
+                      ),
+                    ),
                     Container(
                       height: 200,
                       width: 200,
@@ -56,7 +56,7 @@ class PaymentStatusCard extends StatelessWidget {
                                       ? Colors.green[200]
                                       : Colors.red[200],
                             ),
-                      child: addmemberctrl.paymentstatus == 3
+                      child: addmemberctrl.paymentstatus == 3||addmemberctrl.paymentstatus==0
                           ? Lottie.asset('assets/images/payloading.json')
                           : addmemberctrl.paymentstatus == 1
                               ? const Icon(
@@ -64,8 +64,8 @@ class PaymentStatusCard extends StatelessWidget {
                                   color: Colors.white,
                                   size: 80,
                                 )
-                              : const Icon(
-                                  Icons.dangerous,
+                              : Icon(
+                                addmemberctrl.paymentstatus == 4?Icons.cancel:Icons.dangerous,
                                   color: Colors.white,
                                   size: 80,
                                 ),
@@ -78,14 +78,14 @@ class PaymentStatusCard extends StatelessWidget {
                                 size: 30,
                                 color: Colors.green,
                               )
-                            : addmemberctrl.paymentstatus == 2
+                            : addmemberctrl.paymentstatus == 4?const HeadingText("Cancelled", size: 30) : addmemberctrl.paymentstatus == 2
                                 ? const HeadingText("Failed", size: 30)
                                 : const HeadingText("Error processing Payment",
                                     size: 30),
                     const SizedBox(
                       height: 10,
                     ),
-                    addmemberctrl.paymentstatus == 3
+                    addmemberctrl.paymentstatus == 3 ||addmemberctrl.paymentstatus==0
                         ? const Center(
                             child: Text(
                                 textAlign: TextAlign.center,
@@ -94,7 +94,8 @@ class PaymentStatusCard extends StatelessWidget {
                         : addmemberctrl.paymentstatus == 1
                             ? const Text(
                                 "The Payment has been successfully processed")
-                            : const Text(
+                            :addmemberctrl.paymentstatus == 4? const Text(
+                                "Unfortunately the payment has been cancelled by the user.") : const Text(
                                 "Unfortunately the payment has been declined"),
                     const SizedBox(
                       height: 40,

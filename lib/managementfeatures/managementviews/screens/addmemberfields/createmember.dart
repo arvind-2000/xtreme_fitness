@@ -382,6 +382,7 @@ class PaymentDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
       return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
+        print(addmemberctrl.ismember);
         return StatefulBuilder(builder: (context, s) {
           return PageDialog(
               no: () {
@@ -506,18 +507,18 @@ class PaymentDialog extends StatelessWidget {
                     //   ],
                     // )
 
-                    addmemberctrl.ismember
+                    addmemberctrl.authctrl.ismember
                         ? const SizedBox()
                         : const Text("Choose Payment Method"),
                     SizedBox(
                       height: phone != null ? 0 : 16,
                     ),
-                    addmemberctrl.ismember
+                    addmemberctrl.authctrl.ismember
                         ? const SizedBox()
                         : Row(
                             children: [
                               Radio(
-                                  activeColor: Colors.blue,
+                                  activeColor: const Color.fromARGB(255, 6, 6, 7),
                                   value: true,
                                   groupValue: addmemberctrl.ispaymentcash,
                                   onChanged: (v) {

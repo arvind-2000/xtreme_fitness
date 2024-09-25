@@ -23,11 +23,11 @@ class GetxAuthController extends GetxController {
   String? loginerrortext;
   UserEntity? _user;
   UserEntity? get getuser => _user;
-  String? userid = "12";
+  String? userid;
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember = true;
 
   int? otp;
   bool otploading = false;
@@ -68,11 +68,13 @@ class GetxAuthController extends GetxController {
               print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
 
+              print("in authentication :${ismember} ");
+
               print('Saving user and password to local');
-              final encryptedemail = encryptData(email);
-              final encryptedpas = encryptData(pass);
-              pref.setString('userid', encryptedemail);
-              pref.setString('password', encryptedpas);
+              // final encryptedemail = encryptData(email);
+              // final encryptedpas = encryptData(pass);
+              pref.setString('userid', email);
+              pref.setString('password', pass);
 
               loginloading = false;
               update();
@@ -107,7 +109,6 @@ class GetxAuthController extends GetxController {
       return {_authentication: responseCode(0)};
     }
     loginloading = false;
-    ismember = true;
     _authentication = false;
     update();
     return {_authentication: responseCode(1)};
@@ -139,7 +140,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      // Get.offAllNamed("/home");
+      Get.offAllNamed("/home");
     }
   }
 

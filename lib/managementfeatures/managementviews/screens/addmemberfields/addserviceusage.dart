@@ -56,7 +56,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                   const BoxConstraints(maxWidth: 1000, maxHeight: 1000),
               child: addmemberctrl.paymentstatus != 0
                   ? PaymentStatusCard(
-                      callback: () {
+                      callback: (){
                         addmemberctrl.changepaymentstatus(0);
                       },
                     )

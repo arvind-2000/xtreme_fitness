@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../config/const.dart';
@@ -11,36 +12,40 @@ class ContactUsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal:
-              MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 100,
-          vertical: 30),
-      child: MediaQuery.sizeOf(context).width <= mobilescreen
-          ? const Column(
-              children: [
-                ContactWdget(),
-                SizedBox(
-                  height: 40,
-                ),
-                SendMessageWidget()
-              ],
-            )
-          : const Row(
-              children: [
-                // Left Section
-                Expanded(
-                  flex: 1,
-                  child: ContactWdget(),
-                ),
-                SizedBox(width: 40),
-                // Right Section
-                Expanded(
-                  flex: 2,
-                  child: SendMessageWidget(),
-                ),
-              ],
-            ),
+    return Container(
+      color: const Color.fromARGB(255, 36, 34, 34),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal:
+                MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 100,
+            vertical: 30),
+        child: MediaQuery.sizeOf(context).width <= mobilescreen
+            ? const Column(
+                children: [
+                  ContactWdget(),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  SendMessageWidget()
+                ],
+              )
+            : const Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left Section
+                  Expanded(
+                    flex: 1,
+                    child: ContactWdget(),
+                  ),
+                  SizedBox(width: 40),
+                  // Right Section
+                  Expanded(
+                    flex: 2,
+                    child: SendMessageWidget(),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }
@@ -52,7 +57,7 @@ class SendMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxLandingcontroller landingcontroler = Get.put(GetxLandingcontroller());
+    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,16 +77,16 @@ class SendMessageWidget extends StatelessWidget {
         //   ),
         // ),
         const SizedBox(height: 30),
-        buildTextField('Name', null, con: landingcontroler.namecontroller),
+        buildTextField('Name', null, con: landingcontroller.namecontroller),
         const SizedBox(height: 10),
         buildTextField('Phone Number', null,
-            con: landingcontroler.phonecontroller),
+            con: landingcontroller.phonecontroller),
         const SizedBox(height: 10),
         buildTextField('Subject', null,
-            con: landingcontroler.subjectcontroller),
+            con: landingcontroller.subjectcontroller),
         const SizedBox(height: 10),
-        buildTextField('Your Message', 3,
-            con: landingcontroler.messagecontroller),
+        buildTextField('Your Message', null,
+            con: landingcontroller.messagecontroller),
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
@@ -107,6 +112,7 @@ class ContactWdget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ContactController conctrl = Get.put(ContactController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -121,19 +127,19 @@ class ContactWdget extends StatelessWidget {
         buildContactInfo(
           icon: Icons.location_on,
           title: 'POSTAL ADDRESS:',
-          content: 'MANTRIPUKHRI,\nIMPHAL EAST, MANIPUR\n795002.',
+          content: '${conctrl.contact.address}\n${conctrl.contact.pinCode}',
         ),
         const SizedBox(height: 20),
         buildContactInfo(
           icon: Icons.phone,
           title: 'PHONE:',
-          content: '+91 12345467890',
+          content: conctrl.contact.phoneNumber,
         ),
         const SizedBox(height: 20),
         buildContactInfo(
           icon: Icons.email,
           title: 'EMAIL:',
-          content: 'noreply@support.xtreme.com',
+          content: conctrl.contact.email,
         ),
       ],
     );

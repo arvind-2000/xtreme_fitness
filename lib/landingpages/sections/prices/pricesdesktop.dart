@@ -60,54 +60,57 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                     height: 40,
                   ),
 
-                  CardBorder(
-                    margin: EdgeInsets.zero,
-                    padding: EdgeInsets.zero,
-                    child: Row(
-                    mainAxisAlignment:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisAlignment.spaceBetween: MainAxisAlignment.center,
-                    mainAxisSize:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisSize.max : MainAxisSize.min,
-                      children:[
-                        Cardonly(
-                          margin: EdgeInsets.zero,
-                          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                          onpress: (){
-                              managectrl.changeplanduration(1);
-                          },
-                                        color: managectrl.plandurations == 1
-                                  ? Theme.of(context).colorScheme.secondary
-                                  :Colors.transparent,
-                          child: Text("1 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "month"}")),
-                                Cardonly(
-                                      margin: EdgeInsets.zero,
-                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                          onpress: (){
-                               managectrl.changeplanduration(3);
-                          },
-                                        color: managectrl.plandurations == 3
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.transparent,
-                          child: Text("3 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
-                                Cardonly(
-                                      margin: EdgeInsets.zero,
-                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                          onpress: (){
-                              managectrl.changeplanduration(6);
-                          },
-                                        color: managectrl.plandurations == 6
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.transparent,
-                          child: Text("6 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
-                                Cardonly(
-                                      margin: EdgeInsets.zero,
-                                         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                          onpress: (){
-                              managectrl.changeplanduration(12);
-                          },
-                                        color: managectrl.plandurations == 12
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.transparent,
-                          child: Text("12 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
-                      ]
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: CardBorder(
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                      mainAxisAlignment:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisAlignment.spaceBetween: MainAxisAlignment.center,
+                      mainAxisSize:MediaQuery.sizeOf(context).width<=mobilescreen?MainAxisSize.max : MainAxisSize.min,
+                        children:[
+                          Cardonly(
+                            margin: EdgeInsets.zero,
+                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                            onpress: (){
+                                managectrl.changeplanduration(1);
+                            },
+                                          color: managectrl.plandurations == 1
+                                    ? Theme.of(context).colorScheme.secondary
+                                    :Colors.transparent,
+                            child: Text("1 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "month"}")),
+                                  Cardonly(
+                                        margin: EdgeInsets.zero,
+                                           padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                            onpress: (){
+                                 managectrl.changeplanduration(3);
+                            },
+                                          color: managectrl.plandurations == 3
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : Colors.transparent,
+                            child: Text("3 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                                  Cardonly(
+                                        margin: EdgeInsets.zero,
+                                           padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                            onpress: (){
+                                managectrl.changeplanduration(6);
+                            },
+                                          color: managectrl.plandurations == 6
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : Colors.transparent,
+                            child: Text("6 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                                  Cardonly(
+                                        margin: EdgeInsets.zero,
+                                           padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                            onpress: (){
+                                managectrl.changeplanduration(12);
+                            },
+                                          color: managectrl.plandurations == 12
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : Colors.transparent,
+                            child: Text("12 ${MediaQuery.sizeOf(context).width<=mobilescreen?"M": "months"}")),
+                        ]
+                      ),
                     ),
                   ),
                   // Row(
@@ -442,7 +445,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50,)
+                  const SizedBox(height: 50,)
                 ],
               ),
             ),

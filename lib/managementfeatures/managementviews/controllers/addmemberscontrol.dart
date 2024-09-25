@@ -279,7 +279,7 @@ class AddMemberController extends GetxController {
 
   Future<String> generateUniqueRandomNumber(int length) async {
     final prefs = await SharedPreferences.getInstance();
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
     final random = Random();
     var trn = List.generate(
             length, (index) => characters[random.nextInt(characters.length)])
@@ -531,7 +531,7 @@ class AddMemberController extends GetxController {
     _trainer = null;
     _imageData = null;
     usererrormessage = null;
-    // xtremer = null;
+    xtremer = null;
     imagesizeerrors = null;
     selectedplan = null;
     selectedservice = null;
@@ -580,9 +580,10 @@ class AddMemberController extends GetxController {
 
   void checkpaymentafterpaid() async {
     final prefs = await SharedPreferences.getInstance();
-
+    
     print("payments checking");
-
+    paymentstatus = 3;
+    update();
     if (prefs.containsKey('tranid')) {
       var trans = prefs.getString('tranid')!;
       paymentsdetails = await repo.getpayment(trans);
