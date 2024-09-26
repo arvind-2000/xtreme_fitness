@@ -33,9 +33,8 @@ class NavbarDesktop extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  landingctrl.setnavindex(0);
-
-                                  landingctrl.scroll(0);
+                                   landingctrl.setnavindex(0);
+                                   landingctrl.changeScrolltoScreen(0);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(

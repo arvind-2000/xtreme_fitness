@@ -397,7 +397,7 @@ class PaymentDialog extends StatelessWidget {
                   if (v) {
                     addmemberctrl.addXtremer();
                   } else {
-                    addmemberctrl.changepaymentstatus(4);
+                    addmemberctrl.changepaymentstatus(5);
                   }
                 });
               },

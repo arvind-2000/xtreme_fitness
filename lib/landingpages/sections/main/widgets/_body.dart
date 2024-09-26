@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/pricingpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactdesktop.dart';
+import 'package:xtreme_fitness/landingpages/sections/gallery/gallerydesktop%20copy.dart';
 import 'package:xtreme_fitness/landingpages/sections/gallery/gallerydesktop.dart';
 import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
 import 'package:xtreme_fitness/landingpages/sections/home/homedesktop.dart';
@@ -69,24 +70,26 @@ class _BodyState extends State<Body> {
     //   itemBuilder: (context, index) => landingwidgets[index],
     // );
 
-      return  ScrollablePositionedList.builder(
-            // itemPositionsListener: itemPositionsListener,
-            itemScrollController: landctrl.scrollControllers,
-                    initialScrollIndex: 0,
-                      itemCount: 5,
-                      itemBuilder: (context, index) =>index == 0? HomeDesktop():index==1? Pricesdesktop():index==2?const ServicesDesktop():index==3?const GalleryDesktop():const ContactDesktop(),
-        // children: [
-        // // HomePage(),
-        // HomeDesktop(),
-        // // Prices(),
-        // Pricesdesktop(),
-        // // // Services(),
-        // ServicesDesktop(),
-        // // // Gallery(),
-        // GalleryDesktop(),
-        // // // Contact()
-        // ContactDesktop()
-        // ],
+      return  Scrollbar(
+        child: ScrollablePositionedList.builder(
+              // itemPositionsListener: itemPositionsListener,
+              itemScrollController: landctrl.scrollControllers,
+                      initialScrollIndex: 0,
+                        itemCount: 5,
+                        itemBuilder: (context, index) =>index == 0? HomeDesktop():index==1? Pricesdesktop():index==2?const ServicesDesktop():index==3?const GalleryDesktopCopy():const ContactDesktop(),
+          // children: [
+          // // HomePage(),
+          // HomeDesktop(),
+          // // Prices(),
+          // Pricesdesktop(),
+          // // // Services(),
+          // ServicesDesktop(),
+          // // // Gallery(),
+          // GalleryDesktop(),
+          // // // Contact()
+          // ContactDesktop()
+          // ],
+        ),
       );
 
 

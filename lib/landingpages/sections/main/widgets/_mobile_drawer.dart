@@ -19,8 +19,14 @@ class MobileDrawer extends StatelessWidget {
             children: [
               Center(
                 child: SizedBox(
-                  height: 70,
-                  child: Image.asset(height: 50, "assets/logo2.png"),
+                  height: 40,
+                  child: InkWell(
+                    onTap: (){
+                        landingcontroller.setnavindex(0);
+                         landingcontroller.changeScrolltoScreen(0);
+                      
+                    },
+                    child: Image.asset(height: 50, "assets/logo2.png")),
                 ),
               ),
               const Divider(),
@@ -41,10 +47,7 @@ class MobileDrawer extends StatelessWidget {
                         // landingcontroller.scroll(e.key, isMobile: true);
                         Navigator.pop(context);
                       },
-                      // leading: Icon(
-                      //   NavBarUtils.icons[e.key],
-                      //   color: AppTheme.c!.primary,
-                      // ),
+                  
                       title: Text(
                         e.value,
                         style: TextStyle(
@@ -55,87 +58,6 @@ class MobileDrawer extends StatelessWidget {
                     ),
                   )),
 
-              // Expanded(
-              //   child: ListView.builder(
-              //       itemCount: navItems.length,
-              //       shrinkWrap: true,
-              //       itemBuilder: (context, i) {
-              //         return
-              //       }),
-              // )
-
-              // Cardonly(
-              //     margin: const EdgeInsets.symmetric(vertical: 8),
-              //     color: landingcontroller.navindex == 0
-              //         ? Theme.of(context).colorScheme.secondary
-              //         : Colors.transparent,
-              //     onpress: () {
-              //       landingcontroller.setnavindex(0);
-
-              //       landingcontroller.scroll(0, isMobile: true);
-              //       Navigator.of(context).pop();
-              //     },
-              //     child: Text(
-              //       "Home",
-              //       style: TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.bold,
-              //           color: Theme.of(context).colorScheme.onSecondary),
-              //     )),
-              // Cardonly(
-              //     margin: const EdgeInsets.symmetric(vertical: 8),
-              //     color: landingcontroller.navindex == 1
-              //         ? Theme.of(context).colorScheme.secondary
-              //         : Colors.transparent,
-              //     onpress: () {
-              //       landingcontroller.setnavindex(1);
-
-              //       landingcontroller.scroll(1, isMobile: true);
-              //       Navigator.of(context).pop();
-              //     },
-              //     child: Text(
-              //       "Pricing",
-              //       style: TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.bold,
-              //           color: Theme.of(context).colorScheme.onSecondary),
-              //     )),
-              // Cardonly(
-              //     margin: const EdgeInsets.symmetric(vertical: 8),
-              //     color: landingcontroller.navindex == 2
-              //         ? Theme.of(context).colorScheme.secondary
-              //         : Colors.transparent,
-              //     onpress: () {
-              //       landingcontroller.setnavindex(2);
-
-              //       landingcontroller.scroll(2, isMobile: true);
-              //       Navigator.of(context).pop();
-              //     },
-              //     child: Text(
-              //       "Services",
-              //       style: TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.bold,
-              //           color: Theme.of(context).colorScheme.onSecondary),
-              //     )),
-              // Cardonly(
-              //     margin: const EdgeInsets.symmetric(vertical: 8),
-              //     color: landingcontroller.navindex == 3
-              //         ? Theme.of(context).colorScheme.secondary
-              //         : Colors.transparent,
-              //     onpress: () {
-              //       landingcontroller.setnavindex(3);
-
-              //       landingcontroller.scroll(3, isMobile: true);
-              //       Navigator.of(context).pop();
-              //     },
-              //     child: Text(
-              //       "Contact",
-              //       style: TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.bold,
-              //           color: Theme.of(context).colorScheme.onSecondary),
-              //     )),
             ],
           ),
         ),

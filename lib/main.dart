@@ -36,6 +36,15 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
+            scrollbarTheme: ScrollbarThemeData(
+              
+            trackBorderColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
+              trackColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
+          thumbColor: WidgetStateProperty.all(Colors.red.withOpacity(0.6)), // Scrollbar color
+          radius: Radius.circular(4), // Rounded corners
+          thickness:  WidgetStateProperty.all(3), // Thickness
+          // Add more customization options if needed
+        ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white, // Cursor color
           selectionColor:
