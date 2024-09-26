@@ -80,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return GetBuilder<GetxLandingcontroller>(builder: (landingcontroller) {
       return GetBuilder<GetxAuthController>(builder: (authctrl) {
         return Container(
-          padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
           alignment: Alignment.center,
           // color: Theme.of(context).colorScheme.primary,
           child: SizedBox(
@@ -121,11 +121,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           authctrl.numberexists == false
                       ? HeadingText(
                           'OTP Verification',
-                          size: MediaQuery.sizeOf(context).width<=mobilescreen?20: 30,
+                          size: 20
                         )
                       : HeadingText(
                           'Membership Registration',
-                          size:  MediaQuery.sizeOf(context).width<=mobilescreen?20: 30,
+                          size:  20
                         ),
                 ),
                 Form(

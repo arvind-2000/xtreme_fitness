@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
+import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
 
@@ -65,8 +66,8 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       unknownRoute: GetPage(
-        name: '/',
-        page: () => const MainPage(),
+        name: '/NotFoundPage',
+        page: () => const NotfoundPage(),
       ),
       getPages: [
         GetPage(

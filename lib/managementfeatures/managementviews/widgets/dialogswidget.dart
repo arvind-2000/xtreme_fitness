@@ -18,6 +18,7 @@ class PageDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
          insetPadding: const EdgeInsets.all(16),
+         backgroundColor: Colors.grey[800],
       alignment: const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),

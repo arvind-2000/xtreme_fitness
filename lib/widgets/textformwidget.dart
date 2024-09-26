@@ -128,7 +128,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
               border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)))),
+                  borderRadius: BorderRadius.all(Radius.circular(8)))
+                  ),
         ),
       ],
     );

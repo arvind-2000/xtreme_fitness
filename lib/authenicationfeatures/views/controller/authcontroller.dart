@@ -29,7 +29,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember =true;
 
   int? otp;
   bool otploading = false;
@@ -67,17 +67,15 @@ class GetxAuthController extends GetxController {
           _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
-            print("In authentication check");
+            //print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
             _user = v.entries.first.key;
-
-            update();
             if (_user != null) {
-              print("In authentication check member or not ${_user!.roleName}");
+              //print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
 
-              print("in authentication :$ismember ");
+              //print("in authentication :${ismember} ");
 
               print('Saving user and password to local');
               final encrypteduser = encryptData(userid!);
@@ -89,7 +87,7 @@ class GetxAuthController extends GetxController {
               update();
               Get.toNamed('/dashboard');
             } else {
-              print("user null");
+              //print("user null");
               _authentication = false;
               ismember = true;
               loginloading = false;
@@ -302,7 +300,7 @@ class GetxAuthController extends GetxController {
     // change pass
     //add api call here
     if (foruserId != null) {
-      print("In password change");
+      //print("In password change");
       // Map<UserEntity?,String> d = await authrepo.getUserbyId(foruserId!);
       // if(d.entries.first.key!=null){
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../../widgets/titletext.dart';
@@ -18,7 +19,7 @@ class NodataScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-          TitleText(title),
+          TitleText(title,size: MediaQuery.sizeOf(context).width<=mobilescreen?20:null,),
           const SizedBox(height: 16,),
           Text(desc),
           const SizedBox(height: 20,),

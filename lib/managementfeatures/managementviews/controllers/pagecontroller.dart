@@ -18,6 +18,16 @@ class GetxPageController extends GetxController {
     update();
   }
 
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    navpage = 0;
+    update();
+  }
+
+
   void changeaddMemberPage(int addpage) {
     print('in change page $addpage');
     addmemberpages = addpage;
@@ -57,6 +67,6 @@ class GetxPageController extends GetxController {
     viewprofile = false;
     isrenewalforms = false;
     iseditforms = false;
-    // navpage=0;
+    navpage=0;
   }
 }

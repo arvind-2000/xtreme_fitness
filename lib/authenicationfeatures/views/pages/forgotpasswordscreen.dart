@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 
 import '../../../authentifeatures/models/usecasesimpl.dart';
+import '../../../config/const.dart';
 import '../../../widgets/card.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
@@ -58,7 +59,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return Container(
-        padding: const EdgeInsets.all(16),
+             padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
         // color: Theme.of(context).colorScheme.primary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,8 +71,24 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                          const Row(
+                    
+                    children: [
+                      Icon(
+                        Icons.lock,
+                        size: 16,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      HeadingText(
+                        'Forgot Password',
+                        size: 20,
+                      ),
+                    ],
+                  ),
                       IconButton(
                           onPressed: authctrl.otploading
                               ? null
@@ -93,22 +110,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.lock,
-                        size: 16,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      HeadingText(
-                        'Forgot Password',
-                        size: 20,
-                      ),
-                    ],
-                  ),
+              
                   const SizedBox(
                     height: 10,
                   ),
