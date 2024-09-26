@@ -112,7 +112,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       } else if (response.status! >= 400 && response.status! < 500) {
         // Client-side errors
         print(response.responseText);
-        return {uid: response.responseText ?? "Client-side error"};
+        return {uid: response.responseText ?? "Failed to log in. Check your credentials"};
       } else if (response.status! >= 500) {
         // Server-side errors
         return {uid: "There is an internal Error\n We will get back soon."};
@@ -122,7 +122,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       log(e.toString());
       return {
         uid:
-            "Error logging in. Check your internet connection or with the browser.\nTry again"
+            "Failed to log in. Check your credentials."
       };
     }
 

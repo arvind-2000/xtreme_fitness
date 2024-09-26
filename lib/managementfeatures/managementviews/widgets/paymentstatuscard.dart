@@ -80,7 +80,9 @@ class PaymentStatusCard extends StatelessWidget {
                               )
                             : addmemberctrl.paymentstatus == 4?const HeadingText("Cancelled", size: 30) : addmemberctrl.paymentstatus == 2
                                 ? const HeadingText("Failed", size: 30)
-                                : const HeadingText("Error processing Payment",
+                                : addmemberctrl.paymentstatus == 3?const HeadingText("Processing Payment",
+                                    size: 30):addmemberctrl.paymentstatus == 5?const HeadingText("Failed to Create User",
+                                    size: 30):const HeadingText("Error processing Payment",
                                     size: 30),
                     const SizedBox(
                       height: 10,
@@ -95,7 +97,8 @@ class PaymentStatusCard extends StatelessWidget {
                             ? const Text(
                                 "The Payment has been successfully processed")
                             :addmemberctrl.paymentstatus == 4? const Text(
-                                "Unfortunately the payment has been cancelled by the user.") : const Text(
+                                "Unfortunately the payment has been cancelled by the user.") :addmemberctrl.paymentstatus == 5? const Text(
+                                "Error creating Xtremer.\nTry Again"): const Text(
                                 "Unfortunately the payment has been declined"),
                     const SizedBox(
                       height: 40,

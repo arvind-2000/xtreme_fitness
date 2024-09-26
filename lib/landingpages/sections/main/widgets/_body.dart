@@ -57,32 +57,34 @@ class _BodyState extends State<Body> {
     //   itemBuilder: (context, index) => landingwidgets[index],
     // );
 
-    return ScrollablePositionedList.builder(
-      // itemPositionsListener: itemPositionsListener,
-      itemScrollController: landctrl.scrollControllers,
-      initialScrollIndex: 0,
-      itemCount: 5,
-      itemBuilder: (context, index) => index == 0
-          ? const HomeDesktop()
-          : index == 1
-              ? const Pricesdesktop()
-              : index == 2
-                  ? const ServicesDesktop()
-                  : index == 3
-                      ? const GalleryDesktopCopy()
-                      : const ContactDesktop(),
-      // children: [
-      // // HomePage(),
-      // HomeDesktop(),
-      // // Prices(),
-      // Pricesdesktop(),
-      // // // Services(),
-      // ServicesDesktop(),
-      // // // Gallery(),
-      // GalleryDesktop(),
-      // // // Contact()
-      // ContactDesktop()
-      // ],
+    return Scrollbar(
+      child: ScrollablePositionedList.builder(
+        // itemPositionsListener: itemPositionsListener,
+        itemScrollController: landctrl.scrollControllers,
+        initialScrollIndex: 0,
+        itemCount: 5,
+        itemBuilder: (context, index) => index == 0
+            ? const HomeDesktop()
+            : index == 1
+                ? const Pricesdesktop()
+                : index == 2
+                    ? const ServicesDesktop()
+                    : index == 3
+                        ? const GalleryDesktopCopy()
+                        : const ContactDesktop(),
+        // children: [
+        // // HomePage(),
+        // HomeDesktop(),
+        // // Prices(),
+        // Pricesdesktop(),
+        // // // Services(),
+        // ServicesDesktop(),
+        // // // Gallery(),
+        // GalleryDesktop(),
+        // // // Contact()
+        // ContactDesktop()
+        // ],
+      ),
     );
   }
 }

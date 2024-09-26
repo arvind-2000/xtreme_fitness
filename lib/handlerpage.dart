@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-
+import 'dart:html' as html;
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -23,6 +24,7 @@ class _HandlerPageState extends State<HandlerPage> {
   @override
   void initState() {
     super.initState();
+    print("cookiees:: ${html.document.cookie}");
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         Get.find<GetxAuthController>().authentications();

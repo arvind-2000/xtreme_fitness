@@ -199,7 +199,7 @@ class AddMemberController extends GetxController {
           planId: selectedplan!.id,
           startDate: DateTime.now(),
           endDate: DateTime.now()
-              .add(Duration(days: selectedplan!.durationInMonths * 3)),
+              .add(Duration(days: selectedplan!.durationInMonths * 30)),
           isActive: true,
           trainerId: _trainer?.id);
 
@@ -532,16 +532,37 @@ class AddMemberController extends GetxController {
     dob = null;
     _imageData = null;
     usererrormessage = null;
-    xtremer = null;
+    // xtremer = null;
     imagesizeerrors = null;
     selectedplan = null;
     selectedservice = null;
-    // xtremer = null;
+    
     paymentstatus = 0;
     isloading = false;
 
     super.onClose();
   }
+
+
+  void closeaddmembers(){
+    xtremer= null;
+    selectedplan = null;
+    _trainer = null;
+    selectedservice = null;
+    paymentstatus = 0;
+    dob = null;
+    usererrormessage = null;
+        paymentdetails = null;
+    disability = false;
+    relationship = 4;
+    _trainer = null;
+    dob = null;
+    _imageData = null;
+    paymentstatus = 0;
+    isloading = false;
+  }
+
+
 
   Future<void> pickImage() async {
     isImageloading = true;
