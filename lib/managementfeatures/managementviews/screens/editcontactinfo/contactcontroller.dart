@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
+import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class ContactController extends GetxController {
   final String _name = '';
@@ -22,12 +26,20 @@ class ContactController extends GetxController {
   GetContactModal? _contact;
   GetContactModal? get contact => _contact;
 
-  final List<String> _allmessage = [];
-  List<String> get allmessage => _allmessage;
+  List<GetMessageModal> _allmesage = [];
+  List<GetMessageModal> get allmessage => _allmesage;
+//unread list
+  final List<GetMessageModal> _unreadmessagelist = [];
+  List<GetMessageModal> get unreadmessagelist => _unreadmessagelist;
+//read list
+  final List<GetMessageModal> _readmessagelist = [];
+  List<GetMessageModal> get readmessagelist => _readmessagelist;
 
   int getcount = 0;
-
+  bool _isloading = false;
+  bool get isloading => true;
   int _unreadCount = 0;
+
   int get unreadcount => _unreadCount;
   List<String> allincomingmessage = [
     'Message 1',
@@ -39,6 +51,7 @@ class ContactController extends GetxController {
 //textxontroller
 
   TextEditingController addresscon = TextEditingController();
+  TextEditingController pincodecon = TextEditingController();
   TextEditingController phonecon = TextEditingController();
   TextEditingController mailcon = TextEditingController();
   // Initialize with a Contact object
@@ -47,8 +60,8 @@ class ContactController extends GetxController {
   void onInit() async {
     super.onInit();
     getcontactdetails();
-
-    getstoredcount();
+    getallmessage();
+    // getstoredcount();
   }
 
   @override
@@ -60,28 +73,147 @@ class ContactController extends GetxController {
   }
 
   void getcontactdetails() async {
-    try {
-  var request =
-      http.Request('GET', Uri.parse('http://10.10.1.96/api/Contacts'));
-  
-  http.StreamedResponse response = await request.send();
-  
-  if (response.statusCode == 200) {
-    var allcontact =
-        getContactModalFromJson(await response.stream.bytesToString());
-    _contact = allcontact;
-    update();
-    addresscon.text = _contact!.address;
-    mailcon.text = _contact!.email;
-    phonecon.text = _contact!.phoneNumber;
-    update();
-  } else {
-    print(response.reasonPhrase);
+    var request = http.Request('GET', Uri.parse('$api/api/Contacts'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var allcontact =
+          getContactModalFromJson(await response.stream.bytesToString());
+      _contact = allcontact;
+      update();
+      addresscon.text = _contact!.address!;
+      pincodecon.text = _contact!.pinCode!;
+      mailcon.text = _contact!.email!;
+      phonecon.text = _contact!.phoneNumber!;
+      update();
+    } else {
+      print(response.reasonPhrase);
+    }
   }
-} on Exception catch (e) {
-  // TODO
-  
-}
+
+  void updatecontactinfo() async {
+    log("Phone Controller :${phonecon.text}");
+    _isloading = true;
+    update();
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('PUT', Uri.parse('$api/api/Contacts/1'));
+    request.body = json.encode({
+      "id": 1,
+      "address": addresscon.text,
+      "email": mailcon.text,
+      "PhoneNumber": phonecon.text,
+      "pincode": pincodecon.text,
+      "UpdatedAt": DateTime.now().toIso8601String()
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      _isloading = false;
+      update();
+      print(await response.stream.bytesToString());
+      getcontactdetails();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  void showDialogforupdate(BuildContext context) {
+    Get.dialog(AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 10),
+          CircleAvatar(
+            radius: _isloading ? 25 : 35,
+            backgroundColor: _isloading ? Colors.orange : Colors.green,
+            child: _isloading
+                ? const CircularProgressIndicator()
+                : const Icon(
+                    Icons.check,
+                    weight: 20,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+          ),
+          // const Icon(
+          //   Icons.check_circle,
+          //   color: Colors.white,
+          //   size: 70,
+          // ),
+          const SizedBox(height: 16),
+          _isloading
+              ? const HeadingText(
+                  'Please Wait..',
+                  size: 18,
+                )
+              : const HeadingText(
+                  'Details Updated Successfully',
+                  size: 25,
+                ),
+          // const Text(
+          //   'Thank you for contacting us.',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          //   textAlign: TextAlign.center,
+          // ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0)),
+              backgroundColor: Colors.red,
+            ),
+            child: const Text(
+              'OK',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  void getallmessage() async {
+    _unreadmessagelist.clear();
+    _readmessagelist.clear();
+    var request = http.Request('GET', Uri.parse('$api/api/Messages'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var allsms =
+          getMessageModalFromJson(await response.stream.bytesToString());
+      _allmesage = allsms;
+      update();
+      for (var element in _allmesage) {
+        if (element.isRead) {
+          if (_readmessagelist.contains(element)) {
+            log('already contains element');
+          } else {
+            _readmessagelist.add(element);
+          }
+        } else {
+          if (_unreadmessagelist.contains(element)) {
+            log('already contains element');
+          } else {
+            _unreadmessagelist.add(element);
+          }
+        }
+      }
+
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   void getstoredcount() async {

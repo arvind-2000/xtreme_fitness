@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -39,7 +42,7 @@ class GetxLandingcontroller extends GetxController {
   int page = 0;
   int plandurations = 1;
 
-  final bool _isloading = true;
+  bool _isloading = false;
   bool get isloading => _isloading;
 
   //Text controller for contact us form
@@ -202,85 +205,111 @@ class GetxLandingcontroller extends GetxController {
     update();
   }
 
+  void sendmessage() async {
+    _isloading = true;
+    update();
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('POST', Uri.parse('$api/api/Messages'));
+    request.body = json.encode({
+      "name": namecontroller.text,
+      "phoneNumber": phonecontroller.text,
+      "subject": subjectcontroller.text,
+      "messageContent": messagecontroller.text,
+      "isRead": false,
+      "isReplied": false
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _isloading = false;
+      update();
+      log('Successfuly send message');
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   void showThankYouDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 10),
-                CircleAvatar(
-                  radius: _isloading ? 25 : 35,
-                  backgroundColor: _isloading ? Colors.orange : Colors.green,
-                  child: _isloading
-                      ? const CircularProgressIndicator()
-                      : const Icon(
-                          Icons.check,
-                          weight: 20,
-                          color: Colors.white,
-                          size: 30,
-                        ),
+    Get.dialog(AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 10),
+          CircleAvatar(
+            radius: _isloading ? 25 : 35,
+            backgroundColor: _isloading ? Colors.orange : Colors.green,
+            child: _isloading
+                ? const CircularProgressIndicator()
+                : const Icon(
+                    Icons.check,
+                    weight: 20,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+          ),
+          // const Icon(
+          //   Icons.check_circle,
+          //   color: Colors.white,
+          //   size: 70,
+          // ),
+          const SizedBox(height: 16),
+          _isloading
+              ? const HeadingText(
+                  'Please Wait..',
+                  size: 18,
+                )
+              : const HeadingText(
+                  'Thank you for contacting us',
+                  size: 25,
                 ),
-                // const Icon(
-                //   Icons.check_circle,
-                //   color: Colors.white,
-                //   size: 70,
-                // ),
-                const SizedBox(height: 16),
-                _isloading
-                    ? const HeadingText(
-                        'Please Wait..',
-                        size: 18,
-                      )
-                    : const HeadingText(
-                        'Thank you for contacting us',
-                        size: 25,
+          // const Text(
+          //   'Thank you for contacting us.',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          //   textAlign: TextAlign.center,
+          // ),
+          const SizedBox(height: 10),
+          _isloading
+              ? const SizedBox()
+              : Column(
+                  children: [
+                    const Text(
+                      'We appreciate that you\'ve taken the time to write us. '
+                      'We\'ll get back to you very soon.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 139, 138, 138)),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        namecontroller.clear();
+                        phonecontroller.clear();
+                        subjectcontroller.clear();
+                        messagecontroller.clear();
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                        backgroundColor: Colors.red,
                       ),
-                // const Text(
-                //   'Thank you for contacting us.',
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
-                const SizedBox(height: 10),
-                _isloading
-                    ? const SizedBox()
-                    : Column(
-                        children: [
-                          const Text(
-                            'We appreciate that you\'ve taken the time to write us. '
-                            'We\'ll get back to you very soon.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 139, 138, 138)),
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0)),
-                              backgroundColor: Colors.red,
-                            ),
-                            child: const Text(
-                              'OK',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-              ],
-            ),
-          );
-        });
+                    ),
+                  ],
+                ),
+        ],
+      ),
+    ));
   }
 }

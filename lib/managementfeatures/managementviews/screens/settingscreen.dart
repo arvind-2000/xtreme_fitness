@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
@@ -36,16 +34,32 @@ class SettingPage extends StatelessWidget {
                         height: 16,
                       ),
                       TextFieldWidget(
-                          hint: "Address", controller: cntrl.addresscon),
+                        hint: "Address",
+                        controller: cntrl.addresscon,
+                        counter: 100,
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       TextFieldWidget(
-                          hint: "Phone Number", controller: cntrl.phonecon),
+                        hint: "Pin Code",
+                        controller: cntrl.pincodecon,
+                        counter: 50,
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
-                      TextFieldWidget(hint: "Email", controller: cntrl.mailcon),
+                      TextFieldWidget(
+                          hint: "Phone Number",
+                          controller: cntrl.phonecon,
+                          counter: 50),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFieldWidget(
+                          hint: "Email",
+                          controller: cntrl.mailcon,
+                          counter: 50),
                     ],
                   ),
                 ),
@@ -118,7 +132,10 @@ class SettingPage extends StatelessWidget {
                         'Save',
                       ),
                     ),
-                    onpress: () {},
+                    onpress: () {
+                      cntrl.showDialogforupdate(context);
+                      cntrl.updatecontactinfo();
+                    },
                   )
                 ],
               )

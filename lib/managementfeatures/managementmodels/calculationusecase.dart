@@ -12,6 +12,7 @@ import '../../config/const.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
+import '../managementdomain/entities.dart/xtremer.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -401,7 +402,7 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
 }
 
 
-Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
+Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
   var excel = Excel.createExcel();
   Sheet sheet = excel[payments];
 
@@ -420,8 +421,9 @@ Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
   ];
   
   // Append headers
+  try {
   sheet.appendRow(headers.map((e) => TextCellValue(e),).toList());
-
+  
   // Append data rows
   for (var payment in paymentList) {
     sheet.appendRow([
@@ -435,19 +437,89 @@ Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
      
     ]);
   }
+  
+  // Save the file
+  var bytes = excel.save(fileName:  'Payments_${DateTime.now()}.xlsx');
+  return true;
+} on Exception catch (e) {
+  // TODO
+  return false;
+}
 
-// Save the file
-  var bytes = excel.save();
+  // // Create a Blob from the bytes
+  // final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
 
+  // // Create a download link and click it programmatically
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute('download', 'Payments_${DateTime.now()}.xlsx')
+  //   ..click();
+
+  // // Clean up
+  // html.Url.revokeObjectUrl(url);
+}
+
+
+Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,String payments) async {
+  var excel = Excel.createExcel();
+  Sheet sheet = excel["Sheet1"];
+
+  // Define headers
+  List<String> headers = [ 
+   'Xtremer Id',
+    'First Name',
+    'Last Name',
+    'Phone',
+    'Address',
+    'Pin Code',
+    'Status',
+    'Membership Id',
+    'Start Date',
+    'End Date'
+  ];
+  
+  // Append headers
+  try {
+  sheet.appendRow(headers.map((e) => TextCellValue(e),).toList());
+  
+  // Append data rows
+  for (var xtremer in xtremerlist) {
+    sheet.appendRow([
+      TextCellValue( xtremer.XtremerId.toString()),
+      TextCellValue( xtremer.firstName.toString()),
+      TextCellValue( xtremer.surname.toString()),
+      TextCellValue( xtremer.mobileNumber.toString()),
+      TextCellValue( xtremer.address.toString()),
+      TextCellValue( xtremer.postcode.toString()),
+      TextCellValue( xtremer.isActive.toString()),
+      TextCellValue( xtremer.XtremerId.toString()),
+      // IntCellValue(  payment.discountPercentage??0,),
+      // DoubleCellValue(  payment.receivedAmount,),
+      DateCellValue.fromDateTime(DateTime.now()),
+      DateCellValue.fromDateTime(DateTime.now()),
+      // TextCellValue(payment.paymentStatus.toString()),
+      // TextCellValue(payment.paymentMethod.toString()),
+     
+    ]);
+  }
+  
+  // Save the file
+  var bytes = excel.save(fileName: 'XtremerReports_${DateTime.now()}.xlsx');
+  
   // Create a Blob from the bytes
-  final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  final url = html.Url.createObjectUrlFromBlob(blob);
-
-  // Create a download link and click it programmatically
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute('download', 'Payments_${DateTime.now()}.xlsx')
-    ..click();
-
-  // Clean up
-  html.Url.revokeObjectUrl(url);
+  // final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+  
+  // // Create a download link and click it programmatically
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute('download', 'XtremerReports_${DateTime.now()}.xlsx')
+  //   ..click();
+  
+  // // Clean up
+  // html.Url.revokeObjectUrl(url);
+  return true;
+} on Exception catch (e) {
+  // TODO
+  return false;
+}
 }

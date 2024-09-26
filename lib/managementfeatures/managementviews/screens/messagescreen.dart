@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:badges/badges.dart' as badges;
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -15,8 +13,7 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
-    ContactController contrl = Get.put(ContactController());
-    return GetBuilder<ContactController>(builder: (_) {
+    return GetBuilder<ContactController>(builder: (contrl) {
       return Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -28,10 +25,10 @@ class _MessagePageState extends State<MessagePage> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: contrl.allincomingmessage.length,
+              itemCount: contrl.allmessage.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(contrl.allincomingmessage[index]),
+                  title: Text(contrl.allmessage[index].messageContent),
                 );
               },
             ),

@@ -11,6 +11,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../config/const.dart';
+import '../../../widgets/card.dart';
 import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
@@ -29,6 +30,9 @@ class AllPaymentScreen extends StatefulWidget {
 class _AllPaymentScreenState extends State<AllPaymentScreen> {
   String? paymentStatus;
   List<String> paymetstatusList = ["Success", "Failed", "Cancel", "Initiated"];
+  List<String> d = ["All","Success", "Failed"];
+  DateTime startdatexl = DateTime.now();
+  DateTime enddatexl = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -42,7 +46,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
     // TODO: implement dispose
     super.dispose();
   }
-
+  int paymentallpos = 0;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
@@ -94,16 +98,377 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                             Text(managectrl.searchmessage!),
                           ],
                         ),
-                        IconButton(onPressed: (){
-                            exportPaymentDataToExcel(managectrl.getsearchpayments,"Payments");
 
-                        }, icon: Icon(Icons.table_chart),
-                        tooltip: "Export excel",
-                        
-                        ),
                         const SizedBox(
                           width: 10,
                         ),
+
+                          SizedBox(
+                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
+                                     
+                                        child: CardBorder(
+                                          onpress: () {
+                                            Get.dialog(
+                                              StatefulBuilder(
+                                                builder: (context,s) {
+                                                  return Dialog(
+                                                                                              
+                                                                                               child: SizedBox(
+                                                   
+                                                                                          width: 500,
+                                                                                          height: 600,
+                                                                                          child: Cardonly(
+                                                                                            
+                                                                                            child: Padding(
+                                                                                              padding: const EdgeInsets.all(32),
+                                                                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const HeadingText(
+                                                            "Payment Reports",size: 20,),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                             Get.back();
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.close,
+                                                              size: 16,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                           Text(
+                                                                                      "Choose Xtremer",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                            
+                                                                            
+                                                                                         SizedBox(
+                                                                                            height:50,
+                                                                                   
+                                                                                            child: CardBorder(
+                                                                                              color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary
+                                                    .withOpacity(0.4),
+                                                                                              margin: EdgeInsets.zero,
+                                                                                              padding: const EdgeInsets.only(
+                                                    left: 16, right: 8),
+                                                                                              child: DropdownButton(
+                                                  underline: const SizedBox(),
+                                                  value: paymentallpos,
+                                                  hint: Text(d[paymentallpos],style: const TextStyle(overflow: TextOverflow.ellipsis)),
+                                                  items: d
+                                                      .asMap()
+                                                      .entries
+                                                      .map((e) => DropdownMenuItem(
+                                                            value: e.key,
+                                                            child: Text(e.value,style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 12),),
+                                                          ))
+                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    s(() {
+                                                       paymentallpos =value!;
+                                                    });
+                                                  },
+                                                                                              ),
+                                                                                            )),
+                                                  
+                                                                                              SizedBox(height: 16,),                
+                                                                                            
+                                                          Row(
+                                                            children: [
+                                                              Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose Start Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                startdatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${startdatexl.day}/${startdatexl.month}/${startdatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                  SizedBox(width:10),                
+                                                                                MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose End Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                enddatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                            ],
+                                                          ),
+
+                                                           MediaQuery.sizeOf(context).width>mobilescreen?SizedBox():Row(
+                                                             children: [
+                                                               Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          "Choose End Date",
+                                                                                          style: TextStyle(
+                                                                                              color: Theme.of(context)
+                                                                                                  .colorScheme
+                                                                                                  .onPrimary
+                                                                                                  .withOpacity(0.5),
+                                                                                              fontSize: 12),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 6,
+                                                                                        ),
+                                                                                        CardBorder(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.6),
+                                                                                          onpress: () {
+                                                                                            showDatePicker(
+                                                                                                    builder: (context, child) {
+                                                                                                      return Theme(
+                                                                                                          data: ThemeData(
+                                                                                                              colorScheme: ColorScheme.dark(
+                                                                                                                  primary: Colors.blue[200]!),
+                                                                                                              buttonTheme: const ButtonThemeData(
+                                                                                                                  buttonColor: Colors.white)),
+                                                                                                          child: child!);
+                                                                                                    },
+                                                                                                    context: context,
+                                                                                                    firstDate: DateTime(1950),
+                                                                                                    lastDate: DateTime(DateTime.now().year + 1))
+                                                                                                .then(
+                                                                                              (value) {
+                                                                                               
+                                                                                                  s(() {
+                                                                                                    enddatexl = value!;
+                                                                                                  });
+                                                                                              },
+                                                                                            );
+                                                                                          },
+                                                                                          padding: const EdgeInsets.symmetric(
+                                                                                              horizontal: 16, vertical: 12),
+                                                                                          margin: EdgeInsets.zero,
+                                                                                          child: Row(
+                                                                                            children: [
+                                                                                              const Text(
+                                                                                                "Date:",
+                                                                                                style: TextStyle(fontSize: 14),
+                                                                                              ),
+                                                                                              const SizedBox(
+                                                                                                width: 5,
+                                                                                              ),
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  const Icon(
+                                                                                                    Icons.date_range,
+                                                                                                    size: 14,
+                                                                                                  ),
+                                                                                                 Text(
+                                                                                                          "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                          style: const TextStyle(fontSize: 14),
+                                                                                                        )
+                                                                                                ],
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                             ],
+                                                           ),
+                          
+                                                        ],
+                                                      )
+                                                    ),
+                                                    SizedBox(
+                                                      width: double.maxFinite,
+                                                      child: CardBorder(
+                                                          margin: EdgeInsets.zero,
+                                                          color: Colors.blue,
+                                                          onpress: () async {
+                                                           bool v =  await exportPaymentDataToExcel(managectrl.getallpayments,"Payment list");
+                                                                  CustomSnackbar(context,v?"Payment Reports exported.":"Failed to export");
+
+                                                            },
+                                                          child: const Center(
+                                                              child: Text(
+                                                            "Export Excels",
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ))),
+                                                    ),
+                                                  ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                  ));
+                                                }
+                                              )
+                                            );
+                                          },
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary
+                                              .withOpacity(0.4),
+                                          margin: EdgeInsets.zero,
+                                          padding: const EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: Image.asset('assets/file.png',)),
+                                              Text("Export"),
+                                            ],
+                                          )
+                                        )),
 
                         // const Expanded(
                         //     child: Row(

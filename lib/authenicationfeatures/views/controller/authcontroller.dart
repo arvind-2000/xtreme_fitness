@@ -27,7 +27,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember =true;
 
   int? otp;
   bool otploading = false;
@@ -62,8 +62,6 @@ class GetxAuthController extends GetxController {
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
             _user = v.entries.first.key;
-
-            update();
             if (_user != null) {
               //print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
@@ -151,7 +149,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() {
     if (_authentication == false || _user == null) {
-      // Get.offAllNamed("/home");
+      Get.offAllNamed("/home");
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -9,12 +10,15 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../../managementmodels/dummies.dart';
 import '../widgets/dialogswidget.dart';
 import 'nodatascreen.dart/nodatascreen.dart';
 
@@ -41,6 +45,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
   List<String> d = ["All Members", "Personal", "General","InActive"];
   List<String> renewlist = ["Renewal", "Edit", "View"];
   int pos = 0;
+  DateTime startdatexl = DateTime.now();
+  DateTime enddatexl = DateTime.now();
+  int chooseXtremerxl = 0;
   int renewalpos = 0;
   Xtremer? _user;
   void changeuser(Xtremer us) {
@@ -75,18 +82,17 @@ class _RenewalScreenState extends State<RenewalScreen> {
                 :pagectrl.iseditforms?EditmemberForm():pagectrl.viewprofile && _user != null?MemberProfilescreen(user: _user,pagectrl: pagectrl,):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //     const Padding(
-                      //   padding: EdgeInsets.all(16.0),
-                      //   child: Row(
-                      //     children: [
-                      //       HeadingText("Renewal",size: 30,),
-                      //     ],
-                      //   ),
-                      // ),
+                          const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            HeadingText("Xtremers",size: 30,),
+                          ],
+                        ),
+                      ),
                       Expanded(
-                        child: CardwithShadow(
-                          margin: const EdgeInsets.all(16),
-                          padding: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: [
                               Padding(
@@ -95,9 +101,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // const Text("All Members",style: TextStyle(fontSize: 20,),),
-
+                          
                                     SizedBox(
-                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :60,
+                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
                                      
                                         child: CardBorder(
                                           color: Theme.of(context)
@@ -165,7 +171,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                 
                                                   Icons.search)),
                                           ),
-        
+                                  
                                               const SizedBox(height: 10,),
                                     Text(managectrl.searchmessage!),
                                         ],
@@ -175,7 +181,372 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                
+                                     SizedBox(
+                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
+                                     
+                                        child: CardBorder(
+                                          onpress: () {
+                                            Get.dialog(
+                                              StatefulBuilder(
+                                                builder: (context,s) {
+                                                  return Dialog(
+                                                                                              
+                                                                                               child: SizedBox(
+                                                   
+                                                                                          width: 500,
+                                                                                          height: 600,
+                                                                                          child: Cardonly(
+                                                                                            
+                                                                                            child: Padding(
+                                                                                              padding: const EdgeInsets.all(32),
+                                                                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const HeadingText(
+                                                            "Export Xtremers",size: 20,),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                             Get.back();
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.close,
+                                                              size: 16,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                           Text(
+                                                                                      "Choose Xtremer",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                            
+                                                                            
+                                                                                         SizedBox(
+                                                                                            height:50,
+                                                                                   
+                                                                                            child: CardBorder(
+                                                                                              color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary
+                                                    .withOpacity(0.4),
+                                                                                              margin: EdgeInsets.zero,
+                                                                                              padding: const EdgeInsets.only(
+                                                    left: 16, right: 8),
+                                                                                              child: DropdownButton(
+                                                  underline: const SizedBox(),
+                                                  value: chooseXtremerxl,
+                                                  hint: Text(d[pos],style: const TextStyle(overflow: TextOverflow.ellipsis)),
+                                                  items: d
+                                                      .asMap()
+                                                      .entries
+                                                      .map((e) => DropdownMenuItem(
+                                                            value: e.key,
+                                                            child: Text(e.value,style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 12),),
+                                                          ))
+                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    s(() {
+                                                        chooseXtremerxl =value!;
+                                                    });
+                                                  },
+                                                                                              ),
+                                                                                            )),
+                                                  
+                                                                                              SizedBox(height: 16,),                
+                                                                                            
+                                                          Row(
+                                                            children: [
+                                                              Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose Start Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                startdatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${startdatexl.day}/${startdatexl.month}/${startdatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                  SizedBox(width:10),                
+                                                                                MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose End Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                enddatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                            ],
+                                                          ),
+
+                                                           MediaQuery.sizeOf(context).width>mobilescreen?SizedBox():Row(
+                                                             children: [
+                                                               Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          "Choose End Date",
+                                                                                          style: TextStyle(
+                                                                                              color: Theme.of(context)
+                                                                                                  .colorScheme
+                                                                                                  .onPrimary
+                                                                                                  .withOpacity(0.5),
+                                                                                              fontSize: 12),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 6,
+                                                                                        ),
+                                                                                        CardBorder(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.6),
+                                                                                          onpress: () {
+                                                                                            showDatePicker(
+                                                                                                    builder: (context, child) {
+                                                                                                      return Theme(
+                                                                                                          data: ThemeData(
+                                                                                                              colorScheme: ColorScheme.dark(
+                                                                                                                  primary: Colors.blue[200]!),
+                                                                                                              buttonTheme: const ButtonThemeData(
+                                                                                                                  buttonColor: Colors.white)),
+                                                                                                          child: child!);
+                                                                                                    },
+                                                                                                    context: context,
+                                                                                                    firstDate: DateTime(1950),
+                                                                                                    lastDate: DateTime(DateTime.now().year + 1))
+                                                                                                .then(
+                                                                                              (value) {
+                                                                                               
+                                                                                                  s(() {
+                                                                                                    enddatexl = value!;
+                                                                                                  });
+                                                                                              },
+                                                                                            );
+                                                                                          },
+                                                                                          padding: const EdgeInsets.symmetric(
+                                                                                              horizontal: 16, vertical: 12),
+                                                                                          margin: EdgeInsets.zero,
+                                                                                          child: Row(
+                                                                                            children: [
+                                                                                              const Text(
+                                                                                                "Date:",
+                                                                                                style: TextStyle(fontSize: 14),
+                                                                                              ),
+                                                                                              const SizedBox(
+                                                                                                width: 5,
+                                                                                              ),
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  const Icon(
+                                                                                                    Icons.date_range,
+                                                                                                    size: 14,
+                                                                                                  ),
+                                                                                                 Text(
+                                                                                                          "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                          style: const TextStyle(fontSize: 14),
+                                                                                                        )
+                                                                                                ],
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                             ],
+                                                           ),
+                          
+                                                        ],
+                                                      )
+                                                    ),
+                                                    SizedBox(
+                                                      width: double.maxFinite,
+                                                      child: CardBorder(
+                                                          margin: EdgeInsets.zero,
+                                                          color: Colors.blue,
+                                                          onpress: () async {
+                                                           bool v =  await exportXtremerDataToExcel(dummyxtremer,"Xtremer list");
+                                                                  CustomSnackbar(context,v?"Xtremer Reports exported.":"failed to export");
+
+                                                            },
+                                                          child: const Center(
+                                                              child: Text(
+                                                            "Export Excels",
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ))),
+                                                    ),
+                                                  ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                  ));
+                                                }
+                                              )
+                                            );
+                                          },
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary
+                                              .withOpacity(0.4),
+                                          margin: EdgeInsets.zero,
+                                          padding: const EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: Image.asset('assets/file.png',)),
+                                              Text("Export"),
+                                            ],
+                                          )
+                                        )),
                                     // const Expanded(
                                     //     child: Row(
                                     //   children: [],
@@ -267,8 +638,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   ],
                                 ),
                               ),
-                         
-                      
+                                                   
+                                                
                              managectrl.getsearchXtremer.isEmpty
                                 ? const Expanded(
                                   child: NodataScreen(
