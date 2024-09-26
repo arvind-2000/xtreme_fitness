@@ -310,9 +310,20 @@ class NavBar extends StatelessWidget {
                       },
                       margin: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 16),
-                      child: const NavTiles(
-                        icon: Icons.message,
-                        title: 'Message',
+                      child: const Row(
+                        children: [
+                          NavTiles(
+                            icon: Icons.message,
+                            title: 'Message',
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '( 1 )',
+                            style: TextStyle(color: Colors.red),
+                          )
+                        ],
                       )),
                 ],
               ),
@@ -327,7 +338,7 @@ class NavBar extends StatelessWidget {
                 if (MediaQuery.sizeOf(context).width < mobilescreen) {
                   drawers(context);
                 }
-                 showDialog(
+                showDialog(
                     context: context,
                     builder: (c) => PageDialog(
                         heights: 300,

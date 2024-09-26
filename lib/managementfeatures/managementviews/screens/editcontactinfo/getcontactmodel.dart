@@ -12,11 +12,11 @@ String getContactModalToJson(GetContactModal data) =>
 
 class GetContactModal {
   final int id;
-  final String phoneNumber;
-  final String email;
-  final String address;
-  final String pinCode;
-  final DateTime? createdAt;
+  final String? phoneNumber;
+  final String? email;
+  final String? address;
+  final String? pinCode;
+  final DateTime createdAt;
   final DateTime? updatedAt;
 
   GetContactModal({
@@ -31,22 +31,21 @@ class GetContactModal {
 
   factory GetContactModal.fromJson(Map<String, dynamic> json) =>
       GetContactModal(
-        id: json["Id"],
-        phoneNumber: json["PhoneNumber"],
-        email: json["Email"],
-        address: json["Address"],
-        pinCode: json["PinCode"],
-        createdAt: DateTime.parse(json["CreatedAt"]) ?? DateTime.now(),
-        updatedAt: DateTime.parse(json["UpdatedAt"]) ?? DateTime.now(),
-      );
+          id: json["Id"],
+          phoneNumber: json["PhoneNumber"] ?? '',
+          email: json["Email"] ?? '',
+          address: json["Address"] ?? '',
+          pinCode: json["PinCode"] ?? '',
+          createdAt: DateTime.parse(json["CreatedAt"]),
+          updatedAt: DateTime.parse(json["UpdatedAt"] ?? json["CreatedAt"]));
 
   Map<String, dynamic> toJson() => {
         "Id": id,
-        "PhoneNumber": phoneNumber,
-        "Email": email,
-        "Address": address,
-        "PinCode": pinCode,
-        "CreatedAt": createdAt!.toIso8601String(),
+        "PhoneNumber": phoneNumber!,
+        "Email": email!,
+        "Address": address!,
+        "PinCode": pinCode!,
+        "CreatedAt": createdAt.toIso8601String(),
         "UpdatedAt": updatedAt!.toIso8601String(),
       };
 }

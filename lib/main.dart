@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -23,7 +22,7 @@ void main() async {
   setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
-  Get.put(ContactController());
+  // Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
    html.window.document.cookie = 'name=psfkfjd; path=/;';
 
@@ -64,14 +63,14 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/home',
+      initialRoute: '/',
       unknownRoute: GetPage(
         name: '/',
         page: () => const MainPage(),
       ),
       getPages: [
         GetPage(
-            name: '/dashboard',
+            name: '/',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
 

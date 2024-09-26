@@ -29,7 +29,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
 
   int? otp;
   bool otploading = false;
@@ -77,7 +77,7 @@ class GetxAuthController extends GetxController {
               print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
 
-              print("in authentication :${ismember} ");
+              print("in authentication :$ismember ");
 
               print('Saving user and password to local');
               final encrypteduser = encryptData(userid!);
