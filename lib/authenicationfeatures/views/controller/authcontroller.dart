@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:html' as html;
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
 import '../../../config/encrypt.dart';
+import '../pages/dialogs/logindialog.dart';
 
 class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
@@ -38,6 +40,13 @@ class GetxAuthController extends GetxController {
     // changeAuthindex = index;
     // update();
   }
+
+  void setdataforsession(String userid,bool ismem){
+      ismember = ismem;
+      userid = userid;
+  }
+
+
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -71,10 +80,10 @@ class GetxAuthController extends GetxController {
               print("in authentication :${ismember} ");
 
               print('Saving user and password to local');
-              final encryptedemail = encryptData(email);
-              final encryptedpas = encryptData(pass);
-              pref.setString('userid', encryptedemail);
-              pref.setString('password', encryptedpas);
+              final encrypteduser = encryptData(userid!);
+              
+              pref.setString('key1', encrypteduser);
+              pref.setBool('key2', ismember);
 
               loginloading = false;
               update();
@@ -115,33 +124,48 @@ class GetxAuthController extends GetxController {
   }
 
   void logout() async {
+    loginloading = true;
+    update();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
-        print(value);
-      },
-    ).then(
-      (value) {},
-    );
-    Future.delayed(const Duration(seconds: 2)).then((v) {
       _authentication = false;
       loginloading = false;
       _user = null;
       ismember = true;
-      prefs.remove('userid');
-      prefs.remove('password');
+      prefs.remove('key1');
+      prefs.remove('key2');
       signupclose();
       disposelogin();
       disposeforgotpass();
       authentications();
       update();
-    });
+      },
+    );
+    loginloading = false;
+    update();
   }
 
-  void authentications() {
-    if (_authentication == false || _user == null) {
-      Get.offAllNamed("/home");
-    }
+  void authentications() async{
+
+                        if(html.document.cookie!=null){
+                          final SharedPreferences prefs =
+                             await SharedPreferences.getInstance();
+                               if (prefs.containsKey('key1') &&
+                            prefs.containsKey('key2')) {
+                              print("in returnss admin");
+                         setdataforsession(decryptData(prefs.getString('key1')!),
+                            prefs.getBool('key2')!);  
+                            Get.toNamed('/dashboard');
+
+                        } else {
+                          Get.offAllNamed('/home');
+                          Get.dialog(const LoginDialog());
+                        }
+                        }else{ 
+
+                          Get.offAllNamed('/home');
+                        }
   }
 
   void signup(String phone) async {

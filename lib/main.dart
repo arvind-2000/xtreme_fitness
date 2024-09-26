@@ -14,7 +14,7 @@ import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/sections/main/main_section.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
-
+import 'dart:html' as html;
 void main() async {
   runApp(const MyApp());
 //  workerManager.log = true;
@@ -25,6 +25,11 @@ void main() async {
   Get.put(GetxAuthController());
   Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
+   html.window.document.cookie = 'name=psfkfjd; path=/;';
+
+ String _cookies = html.window.localStorage['cookies']??"";
+  print(_cookies);
+
 }
 
 class MyApp extends StatelessWidget {

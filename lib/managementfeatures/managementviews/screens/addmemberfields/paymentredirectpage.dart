@@ -8,7 +8,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
-
+import 'dart:html' as html;
 class PaymentRedirectPage extends StatefulWidget {
   const PaymentRedirectPage(
       {super.key,
@@ -54,20 +54,10 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                     constraints: const BoxConstraints(maxWidth: 600),
                     child: PaymentStatusCard(
                       callback: () async {
-                        // addmemberctrl.changepaymentstatus(0);
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                          authctrl.authentications();
+              
 
-                        if (prefs.containsKey('userid') &&
-                            prefs.containsKey('password')) {
-                              print("in returnss admin");
-                          authctrl.authenticate(decryptData(prefs.getString('userid')!),
-                            decryptData(prefs.getString('password')!));
-                        } else {
-                          print("Not in sharedpreferences");
-                          Get.offAllNamed('/home');
-                          Get.dialog(const LoginDialog());
-                        }
+                   
                       },
                     )),
               ));

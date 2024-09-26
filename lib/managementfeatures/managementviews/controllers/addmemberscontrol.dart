@@ -810,4 +810,8 @@ class AddMemberController extends GetxController {
     paymentstatus = i;
     update();
   }
+    void changepaymentstatuscall(int i) {
+    paymentstatus = i;
+    
+  }
 }

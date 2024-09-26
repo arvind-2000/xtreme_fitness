@@ -43,7 +43,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Get.find<AddMemberController>().changepaymentstatus(0);
+        Get.find<AddMemberController>().changepaymentstatuscall(0);
       },
     );
   }
