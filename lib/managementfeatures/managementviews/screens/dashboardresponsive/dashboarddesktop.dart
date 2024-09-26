@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -13,7 +14,6 @@ import '../dashboardchilds/dashboardchild2.dart';
 import '../dashboardchilds/dashboardchild3.dart';
 import '../dashboardchilds/dashboardchild4.dart';
 import '../dashboardchilds/dashboardchild5.dart';
-import 'package:badges/badges.dart' as badges;
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({
@@ -52,14 +52,16 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 badges.Badge(
                                   position:
                                       badges.BadgePosition.topEnd(end: -13),
-                                  showBadge:
-                                      cntrl.unreadcount > 0 ? true : false,
+                                  showBadge: cntrl.unreadmessagelist.isNotEmpty
+                                      ? true
+                                      : false,
                                   onTap: () {
                                     cntrl.onBadgeTap();
                                     pagecontrl.changeNavPage(9);
                                   },
-                                  badgeContent:
-                                      Text(cntrl.unreadcount.toString()),
+                                  badgeContent: Text(cntrl
+                                      .unreadmessagelist.length
+                                      .toString()),
                                   child: MaterialButton(
                                       minWidth: 0,
                                       padding: EdgeInsets.zero,
