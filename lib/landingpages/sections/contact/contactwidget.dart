@@ -37,8 +37,9 @@ Widget buildTextField(
     cursorColor: Colors.white,
     maxLines: maxline ?? 1,
     decoration: InputDecoration(
+      focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color.fromARGB(255, 91, 90, 90))),
       hintStyle: const TextStyle(color: Color.fromARGB(255, 80, 80, 80)),
-      border: const OutlineInputBorder(),
       hintText: hint,
     ),
   );

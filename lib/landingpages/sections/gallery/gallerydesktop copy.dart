@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -6,14 +7,14 @@ import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-class GalleryDesktop extends StatefulWidget {
-  const GalleryDesktop({super.key});
+class GalleryDesktopCopy extends StatefulWidget {
+  const GalleryDesktopCopy({super.key});
 
   @override
-  _GalleryDesktopState createState() => _GalleryDesktopState();
+  _GalleryDesktopCopyState createState() => _GalleryDesktopCopyState();
 }
 
-class _GalleryDesktopState extends State<GalleryDesktop> {
+class _GalleryDesktopCopyState extends State<GalleryDesktopCopy> {
   final PageController _controller =
       PageController(viewportFraction: 0.8, initialPage: 1);
   int startIndex = 0; // Controls the visible starting index
@@ -43,6 +44,8 @@ class _GalleryDesktopState extends State<GalleryDesktop> {
     });
   }
 
+  final CarouselSliderController carouselcontroller =
+      CarouselSliderController();
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
@@ -77,58 +80,167 @@ class _GalleryDesktopState extends State<GalleryDesktop> {
                 height: 20,
               ),
               SizedBox(
-                  height: MediaQuery.sizeOf(context).width <= mobilescreen
-                      ? 400
-                      : 700,
-                  child: PageView.builder(
-                    controller: _controller,
-                    itemBuilder: (context, index) => Cardonly(
-                        onpress: () {
-                          Get.dialog(
-                            useSafeArea: true,
-                            barrierDismissible: true,
-                            Dialog(
-                              elevation: 2,
-                              child: Stack(
-                                children: [
-                                  Cardonly(
-                                    margin: EdgeInsets.zero,
-                                    padding: EdgeInsets.zero,
-                                    child: SizedBox(
-                                      child: ImageWidget(
-                                        index: index, // Correct index
-                                      ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.sizeOf(context).width <= mobilescreen
+                    ? 400
+                    : 550,
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        carouselcontroller.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.chevron_left_sharp,
+                        size: 25,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    Expanded(
+                      child: CarouselSlider.builder(
+                        carouselController: carouselcontroller,
+                        itemCount: galleryimages.length,
+                        itemBuilder:
+                            (BuildContext context, int index, int realIndex) {
+                          return Cardonly(
+                              onpress: () {
+                                Get.dialog(
+                                  useSafeArea: true,
+                                  barrierDismissible: true,
+                                  Dialog(
+                                    elevation: 2,
+                                    child: Stack(
+                                      children: [
+                                        Cardonly(
+                                          margin: EdgeInsets.zero,
+                                          padding: EdgeInsets.zero,
+                                          child: SizedBox(
+                                            child: ImageWidget(
+                                              index: index, // Correct index
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          top: 0,
+                                          child: Cardonly(
+                                            padding: const EdgeInsets.all(8),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary
+                                                .withOpacity(0.6),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.close,
+                                                size: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: Cardonly(
-                                      padding: const EdgeInsets.all(8),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.6),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(
-                                          Icons.close,
-                                          size: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
+                                );
+                              },
+                              padding: EdgeInsets.zero,
+                              child: ImageWidget(index: index));
                         },
-                        padding: EdgeInsets.zero,
-                        child: ImageWidget(index: index)),
-                    itemCount: galleryimages.length,
-                  )),
+                        options: CarouselOptions(
+                          height: 400,
+                          autoPlay: true, // Enable auto-scrolling
+                          autoPlayInterval: const Duration(
+                              seconds:
+                                  3), // Set the interval for auto-scrolling
+                          enlargeCenterPage:
+                              false, // Optional: Enlarge the center image
+                          viewportFraction: 0.35, // Show one image at a time
+                          aspectRatio: 5 / 9, // Adjust aspect ratio
+                          initialPage: 0, // Start at the first page
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        carouselcontroller.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.chevron_right_sharp,
+                        size: 25,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                  ],
+                ),
+
+                //  PageView.builder(
+                //   controller: _controller,
+                //   itemBuilder: (context, index) => Cardonly(
+                //       onpress: () {
+                //         Get.dialog(
+                //           useSafeArea: true,
+                //           barrierDismissible: true,
+                //           Dialog(
+                //             elevation: 2,
+                //             child: Stack(
+                //               children: [
+                //                 Cardonly(
+                //                   margin: EdgeInsets.zero,
+                //                   padding: EdgeInsets.zero,
+                //                   child: SizedBox(
+                //                     child: ImageWidget(
+                //                       index: index, // Correct index
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 Positioned(
+                //                   right: 0,
+                //                   top: 0,
+                //                   child: Cardonly(
+                //                     padding: const EdgeInsets.all(8),
+                //                     color: Theme.of(context)
+                //                         .colorScheme
+                //                         .primary
+                //                         .withOpacity(0.6),
+                //                     child: IconButton(
+                //                       onPressed: () {
+                //                         Navigator.pop(context);
+                //                       },
+                //                       icon: const Icon(
+                //                         Icons.close,
+                //                         size: 14,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 )
+                //               ],
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //       padding: EdgeInsets.zero,
+                //       child: ImageWidget(index: index)),
+                //   itemCount: galleryimages.length,
+                // )
+              ),
               const SizedBox(
                 height: 50,
               ),

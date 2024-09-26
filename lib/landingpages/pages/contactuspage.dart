@@ -20,29 +20,26 @@ class ContactUsPage extends StatelessWidget {
                 MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 100,
             vertical: 30),
         child: MediaQuery.sizeOf(context).width <= mobilescreen
-            ? const Column(
+            ? Column(
                 children: [
-                  ContactWdget(),
-                  SizedBox(
+                  const ContactWdget(),
+                  const SizedBox(
                     height: 40,
                   ),
                   SendMessageWidget()
                 ],
               )
-            : const Row(
+            : Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Left Section
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: ContactWdget(),
                   ),
-                  SizedBox(width: 40),
+                  const SizedBox(width: 40),
                   // Right Section
-                  Expanded(
-                    flex: 2,
-                    child: SendMessageWidget(),
-                  ),
+                  Expanded(flex: 2, child: SendMessageWidget()),
                 ],
               ),
       ),
@@ -51,56 +48,142 @@ class ContactUsPage extends StatelessWidget {
 }
 
 class SendMessageWidget extends StatelessWidget {
-  const SendMessageWidget({
-    super.key,
-  });
+  // Add a GlobalKey to access the Form
 
+  final _formKey = GlobalKey<FormState>();
+
+  SendMessageWidget({super.key});
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const HeadingText(
-          "Send Us A Message",
-          size: 25,
-        ),
-        // Container(
-        //   color: Colors.black,
-        //   padding: const EdgeInsets.all(10),
-        //   child: const Text(
-        //     'Send Us A Message',
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
-        const SizedBox(height: 30),
-        buildTextField('Name', null, con: landingcontroller.namecontroller),
-        const SizedBox(height: 10),
-        buildTextField('Phone Number', null,
-            con: landingcontroller.phonecontroller),
-        const SizedBox(height: 10),
-        buildTextField('Subject', null,
-            con: landingcontroller.subjectcontroller),
-        const SizedBox(height: 10),
-        buildTextField('Your Message', null,
-            con: landingcontroller.messagecontroller),
-        const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: () {
-            // Add form submission logic here
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
+
+    return Form(
+      // Wrap in Form to enable validation
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const HeadingText(
+            "Send Us A Message",
+            size: 25,
           ),
-          child: const Text(
-            'SUBMIT',
-            style: TextStyle(color: Colors.white),
+
+          const SizedBox(height: 30),
+
+          // Name Field with Validation
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: landingcontroller.namecontroller,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 91, 90, 90)),
+              ),
+              labelText: 'Name',
+              labelStyle: TextStyle(color: Color.fromARGB(255, 152, 151, 151)),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your name';
+              }
+              return null; // Return null if validation passes
+            },
           ),
-        ),
-      ],
+          const SizedBox(height: 15),
+
+          // Phone Number Field with Validation
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: landingcontroller.phonecontroller,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 91, 90, 90)),
+              ),
+              labelText: 'Phone Number',
+              labelStyle: TextStyle(color: Color.fromARGB(255, 152, 151, 151)),
+            ),
+            keyboardType: TextInputType
+                .phone, // To make it more user-friendly for phone numbers
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                // Simple 10-digit phone number validation
+                return 'Please enter a valid 10-digit phone number';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 15),
+
+          // Subject Field with Validation
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: landingcontroller.subjectcontroller,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 91, 90, 90)),
+              ),
+              labelText: 'Subject',
+              labelStyle: TextStyle(color: Color.fromARGB(255, 152, 151, 151)),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a subject';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 15),
+
+          // Message Field with Validation
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: landingcontroller.messagecontroller,
+            cursorColor: Colors.white,
+            maxLines: 5, // Allow more lines for the message
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 91, 90, 90)),
+              ),
+              labelText: 'Message',
+              labelStyle: TextStyle(color: Color.fromARGB(255, 152, 151, 151)),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a message';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 15),
+
+          // Submit Button
+          ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                // If all fields are valid, show the Thank You dialog
+                landingcontroller.showThankYouDialog(context);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0)),
+              backgroundColor: Colors.red,
+            ),
+            child: const Text(
+              'SUBMIT',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -113,35 +196,45 @@ class ContactWdget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ContactController conctrl = Get.put(ContactController());
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const HeadingText(
-          "Contact Us",
-          size: 40,
-          isbold: true,
-        ),
-        const SizedBox(height: 10),
-        const Divider(color: Colors.red, thickness: 2),
-        const SizedBox(height: 20),
-        buildContactInfo(
-          icon: Icons.location_on,
-          title: 'POSTAL ADDRESS:',
-          content: '${conctrl.contact.address}\n${conctrl.contact.pinCode}',
-        ),
-        const SizedBox(height: 20),
-        buildContactInfo(
-          icon: Icons.phone,
-          title: 'PHONE:',
-          content: conctrl.contact.phoneNumber,
-        ),
-        const SizedBox(height: 20),
-        buildContactInfo(
-          icon: Icons.email,
-          title: 'EMAIL:',
-          content: conctrl.contact.email,
-        ),
-      ],
-    );
+    return conctrl.contact == null
+        ? const Column(
+            children: [
+              Center(
+                  child: SizedBox(
+                child: HeadingText('Server Error...'),
+              )),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadingText(
+                "Contact Us",
+                size: 40,
+                isbold: true,
+              ),
+              const SizedBox(height: 10),
+              const Divider(color: Colors.red, thickness: 2),
+              const SizedBox(height: 20),
+              buildContactInfo(
+                icon: Icons.location_on,
+                title: 'POSTAL ADDRESS:',
+                content:
+                    '${conctrl.contact!.address}\n${conctrl.contact!.pinCode}',
+              ),
+              const SizedBox(height: 20),
+              buildContactInfo(
+                icon: Icons.phone,
+                title: 'PHONE:',
+                content: conctrl.contact!.phoneNumber,
+              ),
+              const SizedBox(height: 20),
+              buildContactInfo(
+                icon: Icons.email,
+                title: 'EMAIL:',
+                content: conctrl.contact!.email,
+              ),
+            ],
+          );
   }
 }
