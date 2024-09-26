@@ -24,7 +24,7 @@ dependencies:
 
   url_launcher: ^6.3.0
   dio: ^5.6.0
-
+  photo_view: ^0.15.0
   pdf: ^3.11.1
   printing: ^5.13.2
   pdf_image_renderer: ^0.7.0
@@ -42,10 +42,12 @@ dependencies:
   intl_phone_field: ^3.2.0
   shared_preferences: ^2.3.2
   scrollable_positioned_list: ^0.3.8
+  smooth_page_indicator: ^1.2.0+3
   js: ^0.7.1
   encrypt: ^5.0.3
   badges: ^3.1.2
   lottie: ^3.1.2
+  excel: ^4.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

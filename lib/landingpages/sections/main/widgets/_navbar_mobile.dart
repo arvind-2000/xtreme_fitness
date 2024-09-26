@@ -35,11 +35,7 @@ class NavBarMobile extends StatelessWidget {
               children: [
                 CardBorder(
                   onpress: () {
-                    // Get.to(
-                    //     () => const AuthHandlerPage(
-                    //           // signupdialog: false,
-                    //         ),
-                    //     transition: Transition.fadeIn);
+                   
                   Get.dialog(
                                           barrierDismissible: false,
                                           const LoginDialog(

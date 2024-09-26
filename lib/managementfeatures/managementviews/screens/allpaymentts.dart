@@ -94,7 +94,13 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                             Text(managectrl.searchmessage!),
                           ],
                         ),
+                        IconButton(onPressed: (){
+                            exportPaymentDataToExcel(managectrl.getsearchpayments,"Payments");
 
+                        }, icon: Icon(Icons.table_chart),
+                        tooltip: "Export excel",
+                        
+                        ),
                         const SizedBox(
                           width: 10,
                         ),

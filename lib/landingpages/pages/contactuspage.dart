@@ -116,7 +116,7 @@ class ContactWdget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeadingText(
+        const  HeadingText(
           "Contact Us",
           size: 40,
           isbold: true,
@@ -127,19 +127,19 @@ class ContactWdget extends StatelessWidget {
         buildContactInfo(
           icon: Icons.location_on,
           title: 'POSTAL ADDRESS:',
-          content: '${conctrl.contact.address}\n${conctrl.contact.pinCode}',
+          content: '${conctrl.contact?.address}\n${conctrl.contact?.pinCode}',
         ),
         const SizedBox(height: 20),
         buildContactInfo(
           icon: Icons.phone,
           title: 'PHONE:',
-          content: conctrl.contact.phoneNumber,
+          content: '${conctrl.contact?.phoneNumber}',
         ),
         const SizedBox(height: 20),
         buildContactInfo(
           icon: Icons.email,
           title: 'EMAIL:',
-          content: conctrl.contact.email,
+          content: '${conctrl.contact?.email}',
         ),
       ],
     );

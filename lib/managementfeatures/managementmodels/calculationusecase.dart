@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
 import 'dart:html' as html;
+import 'package:excel/excel.dart';
 
 import '../../config/const.dart';
 import '../managementdomain/entities.dart/paymentdetails.dart';
@@ -23,134 +26,241 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndPrintPdf(Paymententity paymentDetails) async {
+  Future<void> createAndPrintPdf(Paymententity paymentDetails,{bool isprint = true}) async {
     final pdf = pw.Document();
     print("in print pdf");
     final logoData = await _loadImageData('assets/logo2.png');
 
 
       pdf.addPage(
-    pw.Page(
+      pw.Page(
+        
       pageFormat: PdfPageFormat.a4,
-      margin: const pw.EdgeInsets.all(20),
+      margin: const pw.EdgeInsets.all(16),
       build: (pw.Context context) {
-        return pw.Padding(
-          padding: const pw.EdgeInsets.all(20),
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
+        return pw.Container(
+          height: 400,
+          child:  pw.Padding(
+          padding: const pw.EdgeInsets.all(16),
+          child: pw.Container(
+                 padding: const pw.EdgeInsets.all(20),
+                  decoration: pw.BoxDecoration(
+                      border: pw.Border.all(
+                        color: PdfColors.red800,
+                        width: 2,
+                      )),
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(20),
+                  decoration: pw.BoxDecoration(
+                      border: pw.Border.all(
+                        color: PdfColors.black,
+                        width: 1,
+                      )
+                  ),
+            child: pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.center,
             children: [
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
-                  pw.Image(pw.MemoryImage(logoData), width: 100, height: 100),
+                  pw.Image(pw.MemoryImage(logoData), width: 50, height: 50),
                 ],
               ),
-              pw.SizedBox(height: 20),
+              pw.SizedBox(height: 10),
               pw.Text(
                 'Xtreme Fitness',
-                style: pw.TextStyle(
-                  fontSize: 24,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                'MantriPukhri, Imphal West\n795001',
-                style: pw.TextStyle(fontSize: 18),
-              ),
-              // pw.Text(
-              //   'Email: info@company.com',
-              //   style: pw.TextStyle(fontSize: 18),
-              // ),
-              pw.SizedBox(height: 20),
-              pw.Divider(),
-              pw.SizedBox(height: 10),
-              pw.Text(
-                'Transaction ID: ${paymentDetails.transactionId}',
-                style: pw.TextStyle(fontSize: 16),
-              ),
-              pw.Text(
-                'Date: ${paymentDetails.paymentDate.day}/${paymentDetails.paymentDate.month}/${paymentDetails.paymentDate.year}',
-                style: pw.TextStyle(fontSize: 12
-                
-                ),
-              ),
-              pw.SizedBox(height: 20),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text(
-                    'Amount:',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                  pw.Text(
-                    'Rs. ${paymentDetails.amount.toStringAsFixed(2)}',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 10),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text(
-                    'Discount:',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                  pw.Text(
-                    '${paymentDetails.discountPercentage.toStringAsFixed(0)}%',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 10),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text(
-                    'Received Amount:',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                  pw.Text(
-                    'Rs. ${paymentDetails.receivedAmount.toStringAsFixed(2)}',
-                    style: pw.TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text(
-                'Payment Details',
                 style: pw.TextStyle(
                   fontSize: 20,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
+              pw.Text(
+                'MantriPukhri, Imphal West',
+                style: pw.TextStyle(fontSize: 10),
+              ),
+                 pw.Text(
+                '795001',
+                style: pw.TextStyle(fontSize: 10),
+              ),
+              // pw.Text(
+              //   'Email: info@company.com',
+              //   style: pw.TextStyle(fontSize: 18),
+              // ),
               pw.SizedBox(height: 10),
-              pw.Text(
-                'Payment Status: ${paymentDetails.paymentStatus}',
-                style: pw.TextStyle(fontSize: 14),
-              ),
-              pw.Text(
-                'Payment Method: ${paymentDetails.paymentMethod}',
-                style: pw.TextStyle(fontSize: 14),
-              ),
-              pw.Text(
-                'Payment Type: ${paymentDetails.paymentType}',
-                style: pw.TextStyle(fontSize: 14),
+                pw.Text(
+                'Payment Receipt',
+                style: pw.TextStyle(fontSize: 14,
+                  fontWeight: pw.FontWeight.bold,
+                ),
               ),
               pw.SizedBox(height: 20),
-              pw.Text(
-                'Thank you for your purchase!',
-                style: pw.TextStyle(fontSize: 16),
+           
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                pw.Text(
+                'Receipt# ${paymentDetails.transactionId}',
+                style: pw.TextStyle(fontSize: 10),
               ),
-              pw.Divider(
+              pw.Text(
+                'Date: ${paymentDetails.paymentDate.day}/${paymentDetails.paymentDate.month}/${paymentDetails.paymentDate.year}',
+                style: pw.TextStyle(fontSize: 8),
+              ),
+
+                ]
+              ),
+       
+              pw.SizedBox(height: 20),
+                       pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    'Payment Receipt from: ',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.Text(
+                    '${"Tomba Khuraijam"}',
+                    style: pw.TextStyle(fontSize: 12),
+                  ),
+                ]
                 
               ),
-                      pw.Text(
-                'This Receipt is computer generated',
-                style: pw.TextStyle(fontSize: 14),
+ pw.SizedBox(height: 10),
+                   pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    'For:',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.Text(
+                    paymentDetails.paymentType.replaceAll('+', ' & ').toString(),
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ]
+                
+              ),
+           pw.SizedBox(height: 20),
+              pw.Row(children: [
+                pw.Expanded(flex: 1,
+                child: pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                              pw.Text(
+                    'Payment Received in:',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.Text(
+                      paymentDetails.paymentMethod,
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  ]
+                )
+                ),
+                
+                pw.Expanded(
+                  flex: 1,
+                  child: pw.Container(
+                      
+                  decoration: pw.BoxDecoration(
+                      border: pw.Border.all(
+                        color: PdfColors.black,
+                        width: 1,
+                      )
+                  ),
+                  child:  pw.Column(
+                children: [
+                        pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                   pw.Expanded(child:   pw.Text(
+                    'Amount: ',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),),
+                  
+          
+                     pw.Expanded(child:     pw.Text(
+                    'Rs. ${paymentDetails.amount.toStringAsFixed(2)}',
+                    style: pw.TextStyle(fontSize: 10),
+                  ), ),
+             
+                ],
+
+                
+              ),
+                  pw.Container(
+                  height:0.5,
+                    color: PdfColors.black,
+                  ),
+                          pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                   pw.Expanded(child:    pw.Text(
+                    'Discount: ',
+                    style: pw.TextStyle(fontSize: 10),
+                  ), ),
+                  // pw.Container(
+                  //   margin: pw.EdgeInsets.symmetric(horizontal: 4),
+                  //    height: 20,
+                  //   color: PdfColors.black
+                  //   ),
+                    pw.Expanded(child:     pw.Text(
+                    '${paymentDetails.discountPercentage.toStringAsFixed(0)}%',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),),
+              
+                ],
+              ),
+                    pw.Container(
+                  height:0.5,
+                    color: PdfColors.black,
+                  ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                   pw.Expanded(child:     pw.Text(
+                    'Received: ',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),),
+             
+                    // pw.Container(
+                    // margin: pw.EdgeInsets.symmetric(horizontal: 4),
+                    //  height: 20,
+                    // color: PdfColors.black
+                    // ),
+                     pw.Expanded(child:       pw.Text(
+                    'Rs. ${paymentDetails.receivedAmount.toStringAsFixed(2)}',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),),
+            
+                ],
+              ),
+
+                ]
+              ),
+                ))
+               
+
+              ]),
+                     pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.end,
+                children: [
+                  pw.Text(
+                    'Signed By: ',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+
+                  pw.Text(
+                    'Staff',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+                ],
               ),
             ],
           ),
+          )
+          )
+        )
         );
       },
     ),
@@ -161,7 +271,13 @@ double percentprice(double? actualprice,double? dis){
     final pdfData = await pdf.save();
   
     // Create a blob from the PDF bytes
-  final blob = html.Blob([pdfData], 'application/pdf');
+    if(isprint){
+await Printing.layoutPdf(
+      format: PdfPageFormat.a5,
+      onLayout: (PdfPageFormat format) async => pdfData,
+    );
+    }else{
+ final blob = html.Blob([pdfData], 'application/pdf');
 
   // Create a download link
   final url = html.Url.createObjectUrlFromBlob(blob);
@@ -171,16 +287,10 @@ double percentprice(double? actualprice,double? dis){
 
   // Cleanup
   html.Url.revokeObjectUrl(url);
+    }
+ 
   
-    // await Printing.layoutPdf(
-    //   onLayout: (PdfPageFormat format) async => pdfData,
-    // );
-
-    // final outputFile = await _getOutputFile();
-    // final file = File(outputFile.path);
-    // await file.writeAsBytes(pdfData);
-
-    // print('PDF saved and sent to printer: ${outputFile.path}');
+    
   }
 
   Future<Uint8List> _loadImageData(String path) async {
@@ -288,4 +398,56 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
   
   return paymentsByYear;
 
+}
+
+
+Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
+  var excel = Excel.createExcel();
+  Sheet sheet = excel[payments];
+
+  // Define headers
+  List<String> headers = [ 
+   'Transaction ID',
+    'Amount',
+    'Discount Percentage',
+    'Received Amount',
+    'Payment Date',
+    'Payment Status',
+    'Payment Method',
+    'Payment Type',
+    'Subscription ID',
+    'Service Usage ID'
+  ];
+  
+  // Append headers
+  sheet.appendRow(headers.map((e) => TextCellValue(e),).toList());
+
+  // Append data rows
+  for (var payment in paymentList) {
+    sheet.appendRow([
+      TextCellValue( payment.transactionId.toString()),
+      DoubleCellValue(   payment.amount??0,),
+      IntCellValue(  payment.discountPercentage??0,),
+      DoubleCellValue(  payment.receivedAmount,),
+      DateCellValue.fromDateTime(payment.paymentDate),
+      TextCellValue(payment.paymentStatus.toString()),
+      TextCellValue(payment.paymentMethod.toString()),
+     
+    ]);
+  }
+
+// Save the file
+  var bytes = excel.save();
+
+  // Create a Blob from the bytes
+  final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  final url = html.Url.createObjectUrlFromBlob(blob);
+
+  // Create a download link and click it programmatically
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute('download', 'Payments_${DateTime.now()}.xlsx')
+    ..click();
+
+  // Clean up
+  html.Url.revokeObjectUrl(url);
 }

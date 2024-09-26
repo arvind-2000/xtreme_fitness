@@ -63,6 +63,7 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                           authctrl.authenticate(decryptData(prefs.getString('key1')!),
                             decryptData(prefs.getString('key2')!));
                         } else {
+                          print("Not in sharedpreferences");
                           Get.offAllNamed('/home');
                           Get.dialog(const LoginDialog());
                         }
