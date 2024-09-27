@@ -41,12 +41,10 @@ class GetxAuthController extends GetxController {
     // update();
   }
 
-  void setdataforsession(String userid,bool ismem){
-      ismember = ismem;
-      userid = userid;
+  void setdataforsession(String userid, bool ismem) {
+    ismember = ismem;
+    userid = userid;
   }
-
-
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -81,7 +79,7 @@ class GetxAuthController extends GetxController {
 
               print('Saving user and password to local');
               final encrypteduser = encryptData(userid!);
-              
+
               pref.setString('key1', encrypteduser);
               pref.setBool('key2', ismember);
 
@@ -129,43 +127,42 @@ class GetxAuthController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
-      _authentication = false;
-      loginloading = false;
-      _user = null;
-      ismember = true;
-      prefs.remove('key1');
-      prefs.remove('key2');
-      signupclose();
-      disposelogin();
-      disposeforgotpass();
-      authentications();
-      update();
+        _authentication = false;
+        loginloading = false;
+        _user = null;
+        ismember = true;
+        prefs.remove('key1');
+        prefs.remove('key2');
+        signupclose();
+        disposelogin();
+        disposeforgotpass();
+        authentications();
+        update();
       },
     );
     loginloading = false;
     update();
   }
 
-  void authentications() async{
+  void authentications() async {
+    // if(html.document.cookie!=null){
+    //   final SharedPreferences prefs =
+    //      await SharedPreferences.getInstance();
+    //        if (prefs.containsKey('key1') &&
+    //     prefs.containsKey('key2')) {
+    //       print("in returnss admin");
+    //  setdataforsession(decryptData(prefs.getString('key1')!),
+    //     prefs.getBool('key2')!);
+    //     Get.toNamed('/dashboard');
 
-                        if(html.document.cookie!=null){
-                          final SharedPreferences prefs =
-                             await SharedPreferences.getInstance();
-                               if (prefs.containsKey('key1') &&
-                            prefs.containsKey('key2')) {
-                              print("in returnss admin");
-                         setdataforsession(decryptData(prefs.getString('key1')!),
-                            prefs.getBool('key2')!);  
-                            Get.toNamed('/dashboard');
+    // } else {
+    //   Get.offAllNamed('/home');
+    //   Get.dialog(const LoginDialog());
+    // }
+    // }else{
 
-                        } else {
-                          Get.offAllNamed('/home');
-                          Get.dialog(const LoginDialog());
-                        }
-                        }else{ 
-
-                          Get.offAllNamed('/home');
-                        }
+    //   Get.offAllNamed('/home');
+    // }
   }
 
   void signup(String phone) async {

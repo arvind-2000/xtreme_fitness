@@ -17,7 +17,7 @@ class GetMessageModal {
   final String phoneNumber;
   final String subject;
   final String messageContent;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final bool isRead;
   final bool isReplied;
   final String? replyContent;
@@ -43,11 +43,13 @@ class GetMessageModal {
         phoneNumber: json["PhoneNumber"],
         subject: json["Subject"],
         messageContent: json["MessageContent"],
-        createdAt: DateTime.parse(json["CreatedAt"]),
+        createdAt:
+            DateTime.parse(json["CreatedAt"] ?? DateTime.now().toString()),
         isRead: json["IsRead"],
         isReplied: json["IsReplied"],
         replyContent: json["ReplyContent"] ?? '',
-        repliedAt: DateTime.parse(json["RepliedAt"] ?? json["CreatedAt"]),
+        repliedAt:
+            DateTime.parse(json["RepliedAt"] ?? DateTime.now().toString()),
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,7 +58,7 @@ class GetMessageModal {
         "PhoneNumber": phoneNumber,
         "Subject": subject,
         "MessageContent": messageContent,
-        "CreatedAt": createdAt.toIso8601String(),
+        "CreatedAt": createdAt!.toIso8601String(),
         "IsRead": isRead,
         "IsReplied": isReplied,
         "ReplyContent": replyContent!,
