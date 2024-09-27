@@ -80,7 +80,7 @@ class ManagementController extends GetxController {
   int servicefilter = 1;
   Map<int, List<Alluserpaymentmodel>> filterpayments = {};
   Map<int, List<Alluserpaymentmodel>> weeklypayments = {};
-  bool managementloading = true;
+  bool managementloading = false;
   int planloadingstatus = 0;
   int serviceloadingstatus = 0;
   int trainerloadingstatus = 0;
@@ -228,8 +228,8 @@ class ManagementController extends GetxController {
     if (authctrl.ismember) {
       print("In get xtremer");
       xtremer = _allxtremer.firstWhereOrNull(
-            (element) => element.XtremerId.toString() == authctrl.userid,
-          );
+        (element) => element.XtremerId.toString() == authctrl.userid,
+      );
       update();
     }
     //for getting search xtremer list
@@ -417,8 +417,8 @@ class ManagementController extends GetxController {
   }
 
   void getpaymentlastest10() async {
-    managementloading = true;
-    update();
+    // managementloading = true;
+    // update();
     _latestpayment10 = await managementRepo.viewlatest10payment();
     managementloading = false;
 
