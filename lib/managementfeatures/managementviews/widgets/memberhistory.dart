@@ -88,7 +88,7 @@ class MemberServiceHistory extends StatelessWidget {
                                                               margin: EdgeInsets.zero,
                                                               color: Colors.green,
                                                               onpress: (){
-                                                                createAndPrintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true));
+                                                                createAndPrintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true),name: managectrl.xtremer!.firstName!+managectrl.xtremer!.surname!);
                                                               },
                                                               child: const Text("Download PDF")),
                                                               const SizedBox(height: 16,),

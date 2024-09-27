@@ -57,19 +57,7 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                           authctrl.authentications();
               
 
-<<<<<<< HEAD
                    
-=======
-                        if (prefs.containsKey('key1') &&
-                            prefs.containsKey('key2')) {
-                          authctrl.authenticate(decryptData(prefs.getString('key1')!),
-                            decryptData(prefs.getString('key2')!));
-                        } else {
-                          print("Not in sharedpreferences");
-                          Get.offAllNamed('/home');
-                          Get.dialog(const LoginDialog());
-                        }
->>>>>>> 02e1933f5556c563044b197bfa37fdd0e844a76e
                       },
                     )),
               ));

@@ -880,6 +880,7 @@ class ManagementrepoImpl implements ManagementRepo {
     try {
       final response = await http.get(
         url,
+      
       );
 
       if (response.statusCode == 200) {
@@ -1060,7 +1061,7 @@ class ManagementrepoImpl implements ManagementRepo {
       final response = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"userName": username, "passwordHash": pass}));
-      print(response.body);
+      // print(response.body);
       var d = jsonDecode(response.body);
       // message = d["Message"]??d;
       uid = d["Data"]["UserId"].toString();

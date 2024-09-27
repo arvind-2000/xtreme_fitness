@@ -63,47 +63,11 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                       children: [
                         // const Text("All Members",style: TextStyle(fontSize: 20,),),
 
-                        const HeadingText("All Payments"),
-
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: 60,
-                              width: MediaQuery.sizeOf(context).width <
-                                      mobilescreen
-                                  ? double.maxFinite
-                                  : 400,
-                              child: TextFieldWidget(
-                                  showhint: false,
-                                  hint: "Search by transaction id",
-                                  controller: _searchcontroller,
-                                  validator: () {},
-                                  onchanged: (text) {
-                                    managectrl.searchpayments(text);
-                                  },
-                                  fieldsubmitted: () {
-                                    managectrl
-                                        .searchpayments(_searchcontroller.text);
-                                    _searchcontroller.clear();
-                                  },
-                                  icon: const Icon(Icons.search)),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(managectrl.searchmessage!),
-                          ],
-                        ),
-
-                        const SizedBox(
-                          width: 10,
-                        ),
-
-                          SizedBox(
+                            const HeadingText("All Payments"),
+                             SizedBox(
                                         height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
                                      
                                         child: CardBorder(
@@ -432,7 +396,18 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                           margin: EdgeInsets.zero,
                                                           color: Colors.blue,
                                                           onpress: () async {
-                                                           bool v =  await exportPaymentDataToExcel(managectrl.getallpayments,"Payment list");
+                                                           bool v =  await exportPaymentDataToExcel(returnexcelpayments(paymentallpos==0?managectrl.getallpayments:managectrl.getallpayments.where((element){
+                                                            if(paymentallpos==1){
+                                                              return element.paymentStatus!.toLowerCase()=='success';                                                          
+                                                            }else{
+                                                                return element.paymentStatus!.toLowerCase()!='success';  
+                                                            }
+                                                           
+              
+
+                                                            }
+                                                            
+                                                            ,).toList(), startdatexl, enddatexl),"Payment list");
                                                                   CustomSnackbar(context,v?"Payment Reports exported.":"Failed to export");
 
                                                             },
@@ -469,6 +444,48 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                             ],
                                           )
                                         )),
+                          ],
+                        ),
+
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 60,
+                              width: MediaQuery.sizeOf(context).width <
+                                      mobilescreen
+                                  ? double.maxFinite
+                                  : 400,
+                              child: TextFieldWidget(
+                                  showhint: false,
+                                  hint: "Search by transaction id",
+                                  controller: _searchcontroller,
+                                  validator: () {},
+                                  onchanged: (text) {
+                                    managectrl.searchpayments(text);
+                                  },
+                                  fieldsubmitted: () {
+                                    managectrl
+                                        .searchpayments(_searchcontroller.text);
+                                    _searchcontroller.clear();
+                                  },
+                                  icon: const Icon(Icons.search)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(managectrl.searchmessage!),
+                          ],
+                        ),
+
+                        const SizedBox(
+                          width: 10,
+                        ),
+
+                         
 
                         // const Expanded(
                         //     child: Row(
@@ -957,7 +974,10 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                               .paymentType!,
                                                           subscriptionId: managectrl.getsearchpayments[i].subscriptionId,
                                                           serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId,
-                                                          termsAndConditions: true));
+                                                          termsAndConditions: true),
+                                                          name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
+                                                          
+                                                          );
                                                     },
                                                     child: const Center(
                                                         child: Text(

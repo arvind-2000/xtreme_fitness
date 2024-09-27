@@ -220,8 +220,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    _allxtremer = dummyxtremer;
-    // _allxtremer = await managementRepo.viewMember();
+    // _allxtremer = dummyxtremer;
+    _allxtremer = await managementRepo.viewMember();
     if (authctrl.ismember) {
       print("In get xtremer");
       xtremer = _allxtremer.firstWhereOrNull(

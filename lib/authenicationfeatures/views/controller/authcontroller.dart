@@ -5,6 +5,7 @@ import 'dart:html' as html;
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -59,7 +60,7 @@ class GetxAuthController extends GetxController {
       debugPrint('in email authenticate');
 
       d = await authrepo.emailAuthentication(email: email, pass: pass);
-
+        //  html.window.document.cookie = 'value=pjfhdjfh; path=/;SameSite=lax;domain=10.10.1.96;';
       debugPrint(d.toString());
       loginerrortext = d.entries.first.value;
       if (d.isNotEmpty) {
@@ -67,6 +68,8 @@ class GetxAuthController extends GetxController {
           _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
+         
+            
             //print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
@@ -77,11 +80,11 @@ class GetxAuthController extends GetxController {
 
               //print("in authentication :${ismember} ");
 
-              print('Saving user and password to local');
-              final encrypteduser = encryptData(userid!);
+              // print('Saving user and password to local');
+              // final encrypteduser = encryptData(userid!);
               
-              pref.setString('key1', encrypteduser);
-              pref.setBool('key2', ismember);
+              // pref.setString('key1', encrypteduser);
+              // pref.setBool('key2', ismember);
 
               loginloading = false;
               update();
@@ -124,6 +127,7 @@ class GetxAuthController extends GetxController {
   void logout() async {
     loginloading = true;
     update();
+        // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
@@ -146,24 +150,27 @@ class GetxAuthController extends GetxController {
 
   void authentications() async{
 
-                        if(html.document.cookie!=null){
-                          final SharedPreferences prefs =
-                             await SharedPreferences.getInstance();
-                               if (prefs.containsKey('key1') &&
-                            prefs.containsKey('key2')) {
-                              print("in returnss admin");
-                         setdataforsession(decryptData(prefs.getString('key1')!),
-                            prefs.getBool('key2')!);  
-                            Get.toNamed('/dashboard');
+          
+      
 
-                        } else {
-                          Get.offAllNamed('/home');
-                          Get.dialog(const LoginDialog());
-                        }
-                        }else{ 
+                        // if(html.document.cookie!=null){
+                        //   final SharedPreferences prefs =
+                        //      await SharedPreferences.getInstance();
+                        //        if (prefs.containsKey('key1') &&
+                        //     prefs.containsKey('key2')) {
+                        //       print("in returnss admin");
+                        //  setdataforsession(decryptData(prefs.getString('key1')!),
+                        //     prefs.getBool('key2')!);  
+                        //     Get.toNamed('/dashboard');
 
-                          Get.offAllNamed('/home');
-                        }
+                        // } else {
+                        //   Get.offAllNamed('/home');
+                        //   Get.dialog(const LoginDialog());
+                        // }
+                        // }else{ 
+
+                        //   Get.offAllNamed('/home');
+                        // }
   }
 
   void signup(String phone) async {

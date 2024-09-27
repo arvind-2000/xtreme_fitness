@@ -25,10 +25,7 @@ void main() async {
   Get.put(GetxAuthController());
   // Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
-   html.window.document.cookie = 'name=psfkfjd; path=/;';
-
- String _cookies = html.window.localStorage['cookies']??"";
-  print(_cookies);
+   
 
 }
 

@@ -27,7 +27,7 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndPrintPdf(Paymententity paymentDetails,{bool isprint = true}) async {
+  Future<void> createAndPrintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
     final pdf = pw.Document();
     print("in print pdf");
     final logoData = await _loadImageData('assets/logo2.png');
@@ -90,7 +90,7 @@ double percentprice(double? actualprice,double? dis){
               pw.SizedBox(height: 10),
                 pw.Text(
                 'Payment Receipt',
-                style: pw.TextStyle(fontSize: 14,
+                style: pw.TextStyle(fontSize: 18,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
@@ -101,11 +101,11 @@ double percentprice(double? actualprice,double? dis){
                 children: [
                 pw.Text(
                 'Receipt# ${paymentDetails.transactionId}',
-                style: pw.TextStyle(fontSize: 10),
+                style: pw.TextStyle(fontSize: 12),
               ),
               pw.Text(
                 'Date: ${paymentDetails.paymentDate.day}/${paymentDetails.paymentDate.month}/${paymentDetails.paymentDate.year}',
-                style: pw.TextStyle(fontSize: 8),
+                style: pw.TextStyle(fontSize: 10),
               ),
 
                 ]
@@ -116,8 +116,8 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
                   pw.Text(
-                    'Payment Receipt from: ',
-                    style: pw.TextStyle(fontSize: 10),
+                    'Payment received from: ',
+                    style: pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
                     '${"Tomba Khuraijam"}',
@@ -149,11 +149,11 @@ double percentprice(double? actualprice,double? dis){
                   children: [
                               pw.Text(
                     'Payment Received in:',
-                    style: const pw.TextStyle(fontSize: 10),
+                    style: const pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
                       paymentDetails.paymentMethod,
-                    style: const pw.TextStyle(fontSize: 10),
+                    style: const pw.TextStyle(fontSize: 12),
                   ),
                   ]
                 )
@@ -175,7 +175,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:   pw.Text(
-                    'Amount: ',
+                    '  Amount: ',
                     style: pw.TextStyle(fontSize: 10),
                   ),),
                   
@@ -197,7 +197,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:    pw.Text(
-                    'Discount: ',
+                    '  Discount: ',
                     style: pw.TextStyle(fontSize: 10),
                   ), ),
                   // pw.Container(
@@ -220,7 +220,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:     pw.Text(
-                    'Received: ',
+                    '  Received: ',
                     style: pw.TextStyle(fontSize: 10),
                   ),),
              
@@ -243,6 +243,7 @@ double percentprice(double? actualprice,double? dis){
                
 
               ]),
+              pw.SizedBox(height: 10),
                      pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.end,
                 children: [
@@ -255,6 +256,17 @@ double percentprice(double? actualprice,double? dis){
                     'Staff',
                     style: pw.TextStyle(fontSize: 10),
                   ),
+                ],
+              ),
+
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    'This receipt is computer generated.',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+
                 ],
               ),
             ],
@@ -319,18 +331,18 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
 
   for (var payment in payments) {
     // Format the date to 'Month Year' (e.g., "July 2023")
-    print("in payments serarches ${date.year}");
+   // print("in payments serarches ${date.year}");
     if(payment.paymentDate.year == date.year){
     
     int monthYear = payment.paymentDate.month;
-    print("in fliterpayment function ${months[monthYear-1]} ");
+   // print("in fliterpayment function ${months[monthYear-1]} ");
     if (paymentsByMonth.containsKey(monthYear)) {
-       print("in fliterpayment functionds");
+       //print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByMonth[monthYear]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+     //print("in fliterpayment functionree");
       paymentsByMonth[monthYear] = [payment];
     }
     }
@@ -356,14 +368,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
     if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
       
     int days = payment.paymentDate.day;
-    print("in fliterpayment function");
+    //print("in fliterpayment function");
     if (paymentsByday.containsKey(days)) {
-       print("in fliterpayment functionds");
+       //print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByday[days]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+    //print("in fliterpayment functionree");
       paymentsByday[days] = [payment];
     }
     }
@@ -384,14 +396,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
     // Format the date to 'Month Year' (e.g., "July 2023")
 
     int year = payment.paymentDate.year;
-    print("in fliterpayment function");
+    //print("in fliterpayment function");
     if (paymentsByYear.containsKey(year)) {
-       print("in fliterpayment functionds");
+       //print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByYear[year]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+     //print("in fliterpayment functionree");
       paymentsByYear[year] = [payment];
     }
 
@@ -522,4 +534,59 @@ Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,String payments)
   // TODO
   return false;
 }
+
+
+
+}
+
+
+List<Alluserpaymentmodel> returnexcelpayments(List<Alluserpaymentmodel> paymentlist,DateTime startdate,DateTime enddate){
+  List<Alluserpaymentmodel> listss = [];
+
+  for(Alluserpaymentmodel payment in paymentlist){
+
+    if(payment.paymentDate.compareTo(startdate)>=0&& payment.paymentDate.compareTo(enddate)<=0){
+      
+      listss.add(payment);
+
+  }
+  
+  }
+  
+  return listss;
+}
+
+
+
+
+
+void updateCookieSameSiteToNone() {
+  // Read the current cookie
+  String cookieValue = html.window.document.cookie??"";
+  print("$cookieValue");
+  // Check if the cookie exists
+  if (cookieValue.contains('sessionId')) {
+    // Split the cookie string to find the specific cookie value
+    List<String> cookies = cookieValue.split('; ');
+    String updatedCookie = '';
+
+    for (String cookie in cookies) {
+      if (cookie.startsWith('sessionId=')) {
+        // Get the existing cookie value
+        String existingValue = cookie.split('=')[1];
+        // Update the cookie with SameSite=None
+        updatedCookie = 'sessionId=$existingValue; path=/; SameSite=None; Secure';
+      } else {
+        // Keep other cookies unchanged
+        updatedCookie = cookie; // this may overwrite if there's only one cookie
+      }
+    }
+
+    // Set the updated cookie
+    if (updatedCookie.isNotEmpty) {
+      html.window.document.cookie = updatedCookie;
+    }
+  } else {
+    print('Cookie does not exist.');
+  }
 }

@@ -510,7 +510,10 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                           margin: EdgeInsets.zero,
                                                           color: Colors.blue,
                                                           onpress: () async {
-                                                           bool v =  await exportXtremerDataToExcel(dummyxtremer,"Xtremer list");
+
+                                                            
+
+                                                           bool v =  await exportXtremerDataToExcel(pos==0?managectrl.getallXtremer:pos==1?managectrl.allpersonalxtremer:pos==2?managectrl.allgeneralxtremer:managectrl.allinactivextremer,"Xtremer list");
                                                                   CustomSnackbar(context,v?"Xtremer Reports exported.":"failed to export");
 
                                                             },
