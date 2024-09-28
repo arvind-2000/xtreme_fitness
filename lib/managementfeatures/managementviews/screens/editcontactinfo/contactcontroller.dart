@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
@@ -61,7 +62,7 @@ class ContactController extends GetxController {
   void onInit() async {
     super.onInit();
     log(DateTime.now().toString());
-    getcontactdetails();
+    getContactDetails();
     getallmessageduplic();
     // getallmessage();
     // getstoredcount();
@@ -75,23 +76,31 @@ class ContactController extends GetxController {
     super.dispose();
   }
 
-  void getcontactdetails() async {
-    var request = http.Request('GET', Uri.parse('$api/api/Contacts'));
+  void getContactDetails() async {
+    try {
+      // Make the request using universal_html's HttpRequest with withCredentials set to true
+      var response = await html.HttpRequest.request(
+        '$api/api/Contacts',
+        method: 'GET',
+        withCredentials: true, // Enable credentials
+      );
 
-    http.StreamedResponse response = await request.send();
+      if (response.status == 200) {
+        var allContact = getContactModalFromJson(response.responseText!);
+        _contact = allContact;
+        update();
 
-    if (response.statusCode == 200) {
-      var allcontact =
-          getContactModalFromJson(await response.stream.bytesToString());
-      _contact = allcontact;
-      update();
-      addresscon.text = _contact!.address!;
-      pincodecon.text = _contact!.pinCode!;
-      mailcon.text = _contact!.email!;
-      phonecon.text = _contact!.phoneNumber!;
-      update();
-    } else {
-      print(response.reasonPhrase);
+        // Update your controllers with the fetched contact details
+        addresscon.text = _contact!.address!;
+        pincodecon.text = _contact!.pinCode!;
+        mailcon.text = _contact!.email!;
+        phonecon.text = _contact!.phoneNumber!;
+        update();
+      } else {
+        print(response.statusText);
+      }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
@@ -117,7 +126,7 @@ class ContactController extends GetxController {
       _isloading = false;
       update();
       print(await response.stream.bytesToString());
-      getcontactdetails();
+      getContactDetails();
     } else {
       print(response.reasonPhrase);
     }
