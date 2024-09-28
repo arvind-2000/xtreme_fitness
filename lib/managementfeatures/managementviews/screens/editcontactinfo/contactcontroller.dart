@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/messagedatademo.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class ContactController extends GetxController {
@@ -59,8 +60,10 @@ class ContactController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    log(DateTime.now().toString());
     getcontactdetails();
-    getallmessage();
+    getallmessageduplic();
+    // getallmessage();
     // getstoredcount();
   }
 
@@ -182,6 +185,63 @@ class ContactController extends GetxController {
     ));
   }
 
+  void getallmessageduplic() {
+    _unreadmessagelist.clear();
+    _readmessagelist.clear();
+    // Convert messageDataDemo to a JSON string using json.encode()
+    var jsonString = json.encode(messageDataDemo);
+    var allsms = getMessageModalFromJson(jsonString);
+    _allmesage = allsms;
+    update();
+    for (var element in _allmesage) {
+      if (element.isRead) {
+        if (_readmessagelist.contains(element)) {
+          log('already contains element');
+        } else {
+          _readmessagelist.add(element);
+        }
+      } else {
+        if (_unreadmessagelist.contains(element)) {
+          log('already contains element');
+        } else {
+          _unreadmessagelist.add(element);
+        }
+      }
+    }
+  }
+
+  void updatemessageisread({required int id}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('PUT', Uri.parse('$api/api/Message/$id'));
+    request.body = json.encode({"isRead": true});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      getallmessage();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  void deletemessage({required int id}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('DELETE', Uri.parse('$api/api/Message/$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      getallmessage();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   void getallmessage() async {
     _unreadmessagelist.clear();
     _readmessagelist.clear();
@@ -279,16 +339,102 @@ class ContactController extends GetxController {
   }
 
   // Function to handle user tapping the badge
-  void onBadgeTap() async {
-    getcount += _unreadCount;
-    update();
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setInt(
-      "messagecount",
-      getcount,
+  // void onBadgeTap() async {
+  //   getcount += _unreadCount;
+  //   update();
+  //   final SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.setInt(
+  //     "messagecount",
+  //     getcount,
+  //   );
+  //   _unreadCount = 0;
+  //   update();
+  //   log("Unread Count :$_unreadCount");
+  // }
+
+  void viewMessage(GetMessageModal message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Color.fromARGB(255, 67, 67, 67)),
+              borderRadius: BorderRadius.circular(5)),
+          alignment: const Alignment(0.22, -0.5),
+          title: const Column(
+            children: [
+              HeadingText(
+                'Message Details',
+                size: 20,
+              ),
+              Divider(),
+            ],
+          ),
+          content: SizedBox(
+            width: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      'Sender Name : ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      message.name!,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Contact number : ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      message.phoneNumber,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const HeadingText(
+                  'Message Content',
+                  size: 16,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  textAlign: TextAlign.justify,
+                  message.messageContent,
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                  softWrap: true,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
-    _unreadCount = 0;
-    update();
-    log("Unread Count :$_unreadCount");
   }
 }

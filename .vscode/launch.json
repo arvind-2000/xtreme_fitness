@@ -8,7 +8,7 @@
             "name": "xtreme_fitness",
             "request": "launch",
             "type": "dart",
-            "args":["--web-port=58570"]
+            "args":["--web-port=24679"]
         },
         {
             "name": "xtreme_fitness (profile mode)",

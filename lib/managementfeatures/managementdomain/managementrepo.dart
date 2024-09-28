@@ -91,7 +91,7 @@ abstract class ManagementRepo {
   Future<ServiceSchedule?> getServiceUsage(int id);
 
   //admission
-  Future<Admission?> viewadmission();
+  Future<Map<Admission?,int>> viewadmission();
 
   Future<List<Trainee>> viewTrainee(int id);
 

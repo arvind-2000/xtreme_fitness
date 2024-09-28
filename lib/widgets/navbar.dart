@@ -305,23 +305,23 @@ class NavBar extends StatelessWidget {
                         if (MediaQuery.sizeOf(context).width < mobilescreen) {
                           drawers(context);
                         }
-                        contrl.onBadgeTap();
+                        // contrl.onBadgeTap();
                         pagectrl.changeNavPage(9);
                       },
                       margin: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 16),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          NavTiles(
+                          const NavTiles(
                             icon: Icons.message,
                             title: 'Message',
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            '( 1 )',
-                            style: TextStyle(color: Colors.red),
+                            '( ${contrl.unreadmessagelist.length.toString()} )',
+                            style: const TextStyle(color: Colors.red),
                           )
                         ],
                       )),

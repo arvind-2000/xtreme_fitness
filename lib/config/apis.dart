@@ -1,1 +1,1 @@
-String api = "http://10.10.1.96";
+String api = "https://api.xtremefitnessimphal.com";

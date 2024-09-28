@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/',
+      initialRoute: '/home',
       unknownRoute: GetPage(
         name: '/NotFoundPage',
         page: () => const NotfoundPage(),

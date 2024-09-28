@@ -118,7 +118,7 @@ class PaymentStatusCard extends StatelessWidget {
                             onpress: () {
                               // Navigator.pop(context);
 
-                              createAndPrintPdf(addmemberctrl.paymentsdetails!,name:addmemberctrl.xtremer!=null?addmemberctrl.xtremer!.firstName!+ addmemberctrl.xtremer!.surname!:"" );
+                             createAndprintPdf(addmemberctrl.paymentsdetails!,name:addmemberctrl.xtremer!=null?addmemberctrl.xtremer!.firstName!+ addmemberctrl.xtremer!.surname!:"" );
                             },
                             color: Colors.blue,
                             child:

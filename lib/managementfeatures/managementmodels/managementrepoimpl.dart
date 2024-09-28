@@ -1252,28 +1252,32 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Admission?> viewadmission() async {
+  Future<Map<Admission?,int>> viewadmission() async {
     final url =
         Uri.parse('$api/api/Admissions'); // Replace with your API endpoint
 
     try {
       final response = await http.get(url);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode<300) {
         // Parse the response body
         final List<dynamic> jsonList = json.decode(response.body);
 
         // Convert the JSON data to an Admission object
-        return jsonList.map((json) => Admission.fromJson(json)).toList().first;
+
+        return {jsonList.map((json) => Admission.fromJson(json)).toList().first:response.statusCode};
+      
+      
+      
       } else {
         // Handle error response
         print('Failed to load admission. Status code: ${response.statusCode}');
-        return null;
+        return {null:response.statusCode};
       }
     } catch (e) {
       // Handle exceptions like network errors
       print('Error fetching admission: $e');
-      return null;
+      return {null:0};
     }
   }
 

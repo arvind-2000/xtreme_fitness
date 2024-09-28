@@ -16,7 +16,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   // @override
   // Future<Map<String?, String>> emailAuthentication(
   //     {required String email, required String pass}) async {
-  //   print("in login auth");
+  //   //print("in login auth");
   //   String? uid = "";
   //   String message = "";
   //   Uri url = Uri.parse("$api/api/Users/login");
@@ -37,11 +37,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   //       withCredentials: true,
   //       // Ensuring session cookies are handled
   //     );
-  //     print("Status Code :${response.status}");
+  //     //print("Status Code :${response.status}");
   //     // Get cookies from the response
 
   //     if (response.status! >= 200 && response.status! < 300) {
-  //       print(response);
+  //       //print(response);
   //       // Parsing the successful response
   //       var d = jsonDecode(response.responseText!);
   //       var cookies = html.document.cookie;
@@ -52,7 +52,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   //       return {uid: message}; // Return the uid and message on success
   //     } else if (response.status! >= 400 && response.status! < 500) {
   //       // Client-side errors
-  //       print(response.responseText);
+  //       //print(response.responseText);
   //       return {
   //         uid: response.responseText ??
   //             "Failed to log in. Check your credentials"
@@ -75,7 +75,7 @@ Future<Map<String?, String>> emailAuthentication({
   required String email,
   required String pass,
 }) async {
-  print("in login auth");
+  //print("in login auth");
   String? uid = "";
   String message = "";
   Uri url = Uri.parse("$api/api/Users/login");
@@ -92,25 +92,25 @@ Future<Map<String?, String>> emailAuthentication({
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-      // withCredentials: true, // This allows cookies to be sent
+      withCredentials: true, // This allows cookies to be sent
     );
 
-    print("Status Code : ${response.status}");
+    //print("Status Code : ${response.status}");
 
     // Handle the response
     if (response.status! >= 200 && response.status! < 300) {
-      print(response);
+      //print(response);
       // Parsing the successful response
       var d = jsonDecode(response.responseText!);
       var cookies = html.document.cookie; // Get cookies from the document
-      print("cookies in the login api $cookies");
+      //print("cookies in the login api $cookies");
       message = d["Message"] ?? d.toString();
       uid = d["Data"]["UserId"].toString(); // Extract the userId
 
       return {uid: message}; // Return the uid and message on success
     } else if (response.status! >= 400 && response.status! < 500) {
       // Client-side errors
-      print(response.responseText);
+      //print(response.responseText);
       return {
         uid: response.responseText ?? "Failed to log in. Check your credentials"
       };
@@ -120,7 +120,7 @@ Future<Map<String?, String>> emailAuthentication({
     }
   } catch (e) {
     // Handle exceptions like network errors
-    print(e.toString());
+    //print(e.toString());
     return {uid: "Failed to log in. Check your credentials."};
   }
 
@@ -186,15 +186,15 @@ Future<Map<String?, String>> emailAuthentication({
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
-        print('Data posted successfully');
+        //print(response.body);
+        //print('Data posted successfully');
       } else {
-        print('Failed to post data. Status code: ${response.statusCode}');
+        //print('Failed to post data. Status code: ${response.statusCode}');
       }
 
       return {"Data success": 1000};
     } catch (e) {
-      print('Error occurred while posting data: $e');
+      //print('Error occurred while posting data: $e');
       return {"Data error": 500};
     }
   }
@@ -219,28 +219,28 @@ Future<Map<String?, String>> emailAuthentication({
 
   @override
   Future<Map<UserEntity?, String>> getUserbyId(int id) async {
-    print("In get by id $id");
+    //print("In get by id $id");
     Uri url = Uri.parse("$api/api/Users/$id");
       final response = await html.HttpRequest.request(
         url.toString(),
         method: 'GET',
         requestHeaders: {"Content-Type": "application/json"},
-          // withCredentials: true, 
+          withCredentials: true, 
       );
-            print(" in ok ${response.toString()}");
+            //print(" in ok ${response.toString()}");
     try {
     
 
 
       // Check if the request was successful
       if (response.status! >= 200 && response.status! < 300) {
-        print(response.statusText);
+        //print(response.statusText);
         return {UserEntity.fromJson(jsonDecode(response.responseText!)): "found"};
       } else {
         return {null: "User not found"};
       }
     } on Exception catch (e) {
-      print(e);
+      //print(e);
       return {null: "Error in data parsing"};
     }
   }
@@ -260,30 +260,30 @@ Future<Map<String?, String>> emailAuthentication({
           "Accept": "application/json",
 
         },
-        // withCredentials: true, // Ensuring session cookies are handled
+        withCredentials: true, // Ensuring session cookies are handled
       );
-      print("Logout :${response.statusText}");
+      //print("Logout :${response.statusText}");
       return response.statusText!;
     } on Exception catch (e) {
-      print(e);
+      //print(e);
     }
     return "Error in logging out";
   }
 
   @override
   Future<Map<int?, String>> getUserbyNumber(String number) async {
-    print("In get user by number $number");
+    //print("In get user by number $number");
     Uri url = Uri.parse("$api/api/Users/GetByNumber?mobileNumber=$number");
     try {
       final response = await http.get(
         url,
         headers: {"Content-Type": "application/json"},
       );
-      print(response.body);
+      //print(response.body);
 
       // Check if the request was successful
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        print(response.body);
+        //print(response.body);
         return {
           int.tryParse(response.body)! > 0 ? int.tryParse(response.body) : null:
               "User Found"
@@ -296,7 +296,7 @@ Future<Map<String?, String>> emailAuthentication({
         }
       }
     } on Exception catch (e) {
-      print(e);
+      //print(e);
       return {-3: "Error in data parsing"};
     }
   }
@@ -304,7 +304,7 @@ Future<Map<String?, String>> emailAuthentication({
   @override
   Future<Map<int?, String?>> changePass(int id, String password) async {
     Uri url = Uri.parse("$api/api/Users/$id");
-    print("password  change status code user id $id    $password");
+    //print("password  change status code user id $id    $password");
     try {
       var res = await http.put(url,
           body: jsonEncode({
@@ -312,7 +312,7 @@ Future<Map<String?, String>> emailAuthentication({
             "PasswordHash": password,
           }),
           headers: {'Content-Type': 'application/json'});
-      print("password  change status code ${res.statusCode}");
+      //print("password  change status code ${res.statusCode}");
       if (res.statusCode >= 200 && res.statusCode < 300) {
         return {res.statusCode: "The password is successfully changed."};
       } else if (res.statusCode >= 500) {

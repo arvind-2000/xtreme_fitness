@@ -297,7 +297,9 @@ class ManagementController extends GetxController {
   // }
 
   Future<Admission?> getadmission() async {
-    return await managementRepo.viewadmission();
+    Map<Admission?,int> d =  await managementRepo.viewadmission();
+    return d.entries.first.key;
+    
   }
 
   void getMembershipbyid(int id) async {

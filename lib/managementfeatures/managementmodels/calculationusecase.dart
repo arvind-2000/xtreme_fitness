@@ -1,15 +1,10 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
 import 'dart:html' as html;
 import 'package:excel/excel.dart';
+import 'package:printing/printing.dart';
 
-import '../../config/const.dart';
-import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
@@ -27,9 +22,9 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndPrintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
+  Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
     final pdf = pw.Document();
-    print("in print pdf");
+    //print("in //print pdf");
     final logoData = await _loadImageData('assets/logo2.png');
 
 
@@ -331,25 +326,25 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
 
   for (var payment in payments) {
     // Format the date to 'Month Year' (e.g., "July 2023")
-   // print("in payments serarches ${date.year}");
+   // //print("in payments serarches ${date.year}");
     if(payment.paymentDate.year == date.year){
     
     int monthYear = payment.paymentDate.month;
-   // print("in fliterpayment function ${months[monthYear-1]} ");
+   // //print("in fliterpayment function ${months[monthYear-1]} ");
     if (paymentsByMonth.containsKey(monthYear)) {
-       //print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByMonth[monthYear]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     //print("in fliterpayment functionree");
+     ////print("in fliterpayment functionree");
       paymentsByMonth[monthYear] = [payment];
     }
     }
 
   }
   for(var i in paymentsByMonth.entries){
-      print(" ${months[i.key]}  ${i.value.length}");
+      //print(" ${months[i.key]}  ${i.value.length}");
 
   }
   return paymentsByMonth;
@@ -368,14 +363,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
     if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
       
     int days = payment.paymentDate.day;
-    //print("in fliterpayment function");
+    ////print("in fliterpayment function");
     if (paymentsByday.containsKey(days)) {
-       //print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByday[days]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-    //print("in fliterpayment functionree");
+    ////print("in fliterpayment functionree");
       paymentsByday[days] = [payment];
     }
     }
@@ -396,14 +391,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
     // Format the date to 'Month Year' (e.g., "July 2023")
 
     int year = payment.paymentDate.year;
-    //print("in fliterpayment function");
+    ////print("in fliterpayment function");
     if (paymentsByYear.containsKey(year)) {
-       //print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByYear[year]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     //print("in fliterpayment functionree");
+     ////print("in fliterpayment functionree");
       paymentsByYear[year] = [payment];
     }
 
@@ -556,37 +551,3 @@ List<Alluserpaymentmodel> returnexcelpayments(List<Alluserpaymentmodel> paymentl
   return listss;
 }
 
-
-
-
-
-void updateCookieSameSiteToNone() {
-  // Read the current cookie
-  String cookieValue = html.window.document.cookie??"";
-  print("$cookieValue");
-  // Check if the cookie exists
-  if (cookieValue.contains('sessionId')) {
-    // Split the cookie string to find the specific cookie value
-    List<String> cookies = cookieValue.split('; ');
-    String updatedCookie = '';
-
-    for (String cookie in cookies) {
-      if (cookie.startsWith('sessionId=')) {
-        // Get the existing cookie value
-        String existingValue = cookie.split('=')[1];
-        // Update the cookie with SameSite=None
-        updatedCookie = 'sessionId=$existingValue; path=/; SameSite=None; Secure';
-      } else {
-        // Keep other cookies unchanged
-        updatedCookie = cookie; // this may overwrite if there's only one cookie
-      }
-    }
-
-    // Set the updated cookie
-    if (updatedCookie.isNotEmpty) {
-      html.window.document.cookie = updatedCookie;
-    }
-  } else {
-    print('Cookie does not exist.');
-  }
-}

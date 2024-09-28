@@ -56,7 +56,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                       ? true
                                       : false,
                                   onTap: () {
-                                    cntrl.onBadgeTap();
+                                    // cntrl.onBadgeTap();
                                     pagecontrl.changeNavPage(9);
                                   },
                                   badgeContent: Text(cntrl
@@ -68,7 +68,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                       hoverColor: Colors.transparent,
                                       focusColor: Colors.transparent,
                                       onPressed: () {
-                                        cntrl.onBadgeTap();
+                                        // cntrl.onBadgeTap();
                                         pagecontrl.changeNavPage(9);
                                       },
                                       child: const Icon(Icons.message)),

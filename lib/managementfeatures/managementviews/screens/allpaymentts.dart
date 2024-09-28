@@ -6,7 +6,6 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
@@ -16,7 +15,6 @@ import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/paymententity.dart';
-import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementmodels/calculationusecase.dart';
 import '../widgets/scaffolds.dart';
 
@@ -931,7 +929,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                     margin: EdgeInsets.zero,
                                                     color: Colors.blue,
                                                     onpress: () {
-                                                      createAndPrintPdf(Paymententity(
+                                                     createAndprintPdf(Paymententity(
                                                           id: managectrl
                                                               .getsearchpayments[
                                                                   i]
