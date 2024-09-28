@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart'; // F
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
@@ -62,12 +61,12 @@ class MessageListScreen extends StatelessWidget {
                   // Message List
                   Expanded(
                     child: ListView.builder(
+                      shrinkWrap: true,
                       itemCount: contactController.allmessage.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            MessageTile(
-                                message: contactController.allmessage[index]),
+                            MessageTile(ind: index),
                             Divider(
                               color: Colors.grey[900],
                             )
@@ -130,13 +129,13 @@ class MessageListScreen extends StatelessWidget {
 
 // Widget for each message tile
 class MessageTile extends StatelessWidget {
-  final GetMessageModal message;
+  final int ind;
 
-  const MessageTile({super.key, required this.message});
+  const MessageTile({super.key, required this.ind});
   String getFirstTwoLetters(String name) {
     // Split the name by spaces into a list of words
     List<String> words = name.split(' ');
-
+    print("Word Length :${words.length}");
     // Ensure there are at least two words
     if (words.length >= 2) {
       // Take the first two letters of the first word and the first two letters of the second word
@@ -155,39 +154,43 @@ class MessageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     ContactController conctrl = Get.put(ContactController());
     return Container(
-      color: !message.isRead
+      color: !conctrl.allmessage[ind].isRead
           ? const Color.fromARGB(255, 61, 61, 61).withOpacity(0.4)
           : null,
       child: ListTile(
         hoverColor: Colors.blueGrey[900]!.withOpacity(0.5),
         leading: CircleAvatar(
-          child: Text(getFirstTwoLetters(message.name!)),
+          child: Text(getFirstTwoLetters(conctrl.allmessage[ind].name!)),
         ),
-        title: Text(message.subject),
+        title: Text(conctrl.allmessage[ind].subject),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(message.messageContent,
+            Text(conctrl.allmessage[ind].messageContent,
                 style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 5),
-            Text(DateFormat('yyyy-MM-dd').format(message.createdAt!),
+            Text(
+                DateFormat('yyyy-MM-dd')
+                    .format(conctrl.allmessage[ind].createdAt!),
                 style: const TextStyle(color: Colors.grey)),
           ],
         ),
         trailing: IconButton(
           onPressed: () {
-            conctrl.deletemessage(id: message.id);
+            conctrl.deletemessage(id: conctrl.allmessage[ind].id);
             log('Delete Tap');
           },
           icon: const Icon(Icons.delete_outline),
         ),
         onTap: () {
           log('Tile Tap');
-          if (!message.isRead) {
-            conctrl.updatemessageisread(id: message.id);
+          if (!conctrl.allmessage[ind].isRead) {
+            conctrl.updatemessageisread(
+                id: conctrl.allmessage[ind].id,
+                messagecontent: conctrl.allmessage[ind].messageContent);
           }
 
-          conctrl.viewMessage(message, context);
+          conctrl.viewMessage(conctrl.allmessage[ind], context);
           // Handle tap on message
         },
       ),

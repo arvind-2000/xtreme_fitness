@@ -4,11 +4,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/messagedatademo.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class ContactController extends GetxController {
@@ -39,7 +38,7 @@ class ContactController extends GetxController {
   int getcount = 0;
   bool _isloading = false;
   bool get isloading => true;
-  int _unreadCount = 0;
+  final int _unreadCount = 0;
 
   int get unreadcount => _unreadCount;
   List<String> allincomingmessage = [
@@ -61,9 +60,9 @@ class ContactController extends GetxController {
   void onInit() async {
     super.onInit();
     log(DateTime.now().toString());
-    getcontactdetails();
-    getallmessageduplic();
-    // getallmessage();
+    getContactDetails();
+    // getallmessageduplic();
+    getallmessage();
     // getstoredcount();
   }
 
@@ -75,23 +74,31 @@ class ContactController extends GetxController {
     super.dispose();
   }
 
-  void getcontactdetails() async {
-    var request = http.Request('GET', Uri.parse('$api/api/Contacts'));
+  void getContactDetails() async {
+    try {
+      // Make the request using universal_html's HttpRequest with withCredentials set to true
+      var response = await html.HttpRequest.request(
+        '$api/api/Contacts',
+        method: 'GET',
+        withCredentials: true, // Enable credentials
+      );
 
-    http.StreamedResponse response = await request.send();
+      if (response.status == 200) {
+        var allContact = getContactModalFromJson(response.responseText!);
+        _contact = allContact;
+        update();
 
-    if (response.statusCode == 200) {
-      var allcontact =
-          getContactModalFromJson(await response.stream.bytesToString());
-      _contact = allcontact;
-      update();
-      addresscon.text = _contact!.address!;
-      pincodecon.text = _contact!.pinCode!;
-      mailcon.text = _contact!.email!;
-      phonecon.text = _contact!.phoneNumber!;
-      update();
-    } else {
-      print(response.reasonPhrase);
+        // Update your controllers with the fetched contact details
+        addresscon.text = _contact!.address!;
+        pincodecon.text = _contact!.pinCode!;
+        mailcon.text = _contact!.email!;
+        phonecon.text = _contact!.phoneNumber!;
+        update();
+      } else {
+        print(response.statusText);
+      }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
@@ -117,7 +124,7 @@ class ContactController extends GetxController {
       _isloading = false;
       update();
       print(await response.stream.bytesToString());
-      getcontactdetails();
+      getContactDetails();
     } else {
       print(response.reasonPhrase);
     }
@@ -185,112 +192,132 @@ class ContactController extends GetxController {
     ));
   }
 
-  void getallmessageduplic() {
-    _unreadmessagelist.clear();
-    _readmessagelist.clear();
-    // Convert messageDataDemo to a JSON string using json.encode()
-    var jsonString = json.encode(messageDataDemo);
-    var allsms = getMessageModalFromJson(jsonString);
-    _allmesage = allsms;
-    update();
-    for (var element in _allmesage) {
-      if (element.isRead) {
-        if (_readmessagelist.contains(element)) {
-          log('already contains element');
-        } else {
-          _readmessagelist.add(element);
-        }
-      } else {
-        if (_unreadmessagelist.contains(element)) {
-          log('already contains element');
-        } else {
-          _unreadmessagelist.add(element);
-        }
-      }
-    }
-  }
+  // void getallmessageduplic() {
+  //   _unreadmessagelist.clear();
+  //   _readmessagelist.clear();
+  //   // Convert messageDataDemo to a JSON string using json.encode()
+  //   var jsonString = json.encode(messageDataDemo);
+  //   var allsms = getMessageModalFromJson(jsonString);
+  //   _allmesage = allsms;
+  //   update();
+  //   for (var element in _allmesage) {
+  //     if (element.isRead) {
+  //       if (_readmessagelist.contains(element)) {
+  //         log('already contains element');
+  //       } else {
+  //         _readmessagelist.add(element);
+  //       }
+  //     } else {
+  //       if (_unreadmessagelist.contains(element)) {
+  //         log('already contains element');
+  //       } else {
+  //         _unreadmessagelist.add(element);
+  //       }
+  //     }
+  //   }
+  // }
 
-  void updatemessageisread({required int id}) async {
+  void updatemessageisread(
+      {required int id, required String messagecontent}) async {
+    var url =
+        '$api/api/Messages/$id'; // API endpoint to update message read status
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request('PUT', Uri.parse('$api/api/Message/$id'));
-    request.body = json.encode({"isRead": true});
-    request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+    try {
+      // Make the PUT request using universal_html's HttpRequest with withCredentials set to true
+      var response = await html.HttpRequest.request(
+        url,
+        method: 'PUT',
+        sendData: json.encode({
+          "Id": id,
+          "isRead": true,
+          "MessageContent": messagecontent
+        }), // JSON body with the updated field
+        requestHeaders: headers,
+        withCredentials: true, // Enable credentials for cross-origin requests
+      );
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      getallmessage();
-    } else {
-      print(response.reasonPhrase);
+      if (response.status == 200 || response.status == 204) {
+        print('Message updated successfully: ${response.responseText}');
+        getallmessage(); // Refresh the message list after successful update
+      } else {
+        print('Failed to update message. Status code: ${response.status}');
+      }
+    } catch (error) {
+      // Handle any errors during the request
+      print('Error updating message: $error');
     }
   }
 
   void deletemessage({required int id}) async {
+    var url = '$api/api/Messages/$id'; // API endpoint for deleting a message
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request('DELETE', Uri.parse('$api/api/Message/$id'));
 
-    request.headers.addAll(headers);
+    try {
+      // Make the DELETE request using universal_html's HttpRequest with withCredentials set to true
+      var response = await html.HttpRequest.request(
+        url,
+        method: 'DELETE',
+        requestHeaders: headers,
+        withCredentials: true, // Enable credentials for cross-origin requests
+      );
 
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      getallmessage();
-    } else {
-      print(response.reasonPhrase);
+      if (response.status == 200 || response.status == 204) {
+        print('Message deleted successfully: ${response.responseText}');
+        getallmessage(); // Refresh the message list after successful deletion
+      } else {
+        print('Failed to delete message. Status code: ${response.status}');
+      }
+    } catch (error) {
+      // Handle any errors during the request
+      print('Error deleting message: $error');
     }
   }
 
   void getallmessage() async {
     _unreadmessagelist.clear();
     _readmessagelist.clear();
-    var request = http.Request('GET', Uri.parse('$api/api/Messages'));
 
-    http.StreamedResponse response = await request.send();
+    try {
+      // Make the request using universal_html's HttpRequest
+      var response = await html.HttpRequest.request(
+        '$api/api/Messages',
+        method: 'GET',
+        withCredentials: true, // Enable credentials for cross-origin requests
+      );
 
-    if (response.statusCode == 200) {
-      var allsms =
-          getMessageModalFromJson(await response.stream.bytesToString());
-      _allmesage = allsms;
-      update();
-      for (var element in _allmesage) {
-        if (element.isRead) {
-          if (_readmessagelist.contains(element)) {
-            log('already contains element');
+      if (response.status == 200) {
+        // Parse the response text to get message objects
+        var allMessages = getMessageModalFromJson(response.responseText!);
+        _allmesage = allMessages.reversed.toList();
+        update();
+        log("Message Length : ${_allmesage.length}");
+
+        // Categorize messages into read and unread lists
+        for (var element in _allmesage) {
+          if (element.isRead) {
+            if (_readmessagelist.contains(element)) {
+              log('already contains element');
+            } else {
+              _readmessagelist.add(element);
+            }
           } else {
-            _readmessagelist.add(element);
-          }
-        } else {
-          if (_unreadmessagelist.contains(element)) {
-            log('already contains element');
-          } else {
-            _unreadmessagelist.add(element);
+            if (_unreadmessagelist.contains(element)) {
+              log('already contains element');
+            } else {
+              _unreadmessagelist.add(element);
+            }
           }
         }
+
+        print(response.responseText);
+      } else {
+        print('Failed to fetch messages. Status code: ${response.status}');
       }
-
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
+    } catch (error) {
+      // Handle any errors that occur during the request
+      print('Error fetching messages: $error');
     }
-  }
-
-  void getstoredcount() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
-    if (pref.containsKey('messagecount')) {
-      getcount = pref.getInt('messagecount')!;
-      update();
-      log('Get Count :$getcount');
-    }
-    checkForNewMessages();
-  }
-
-  // Save contact logic (can add API calls or database logic here)
-  void saveContact() {
-    // Save logic here (e.g., API call)
-    Get.snackbar("Success", "Contact information updated!");
   }
 
   // Example function for polling new messages periodically
@@ -319,24 +346,6 @@ class ContactController extends GetxController {
   // }
 
   // Dummy API call to check for new messages
-  void checkForNewMessages() async {
-    // int mg = 0;
-    // for (var element in allincomingmessage) {
-    //   if (_allmessage.contains(element)) {
-    //     log('already contains');
-    //   } else {
-    //     _allmessage.add(element);
-    //     mg += 1;
-    //     update();
-    //   }
-    // }
-    _unreadCount = allincomingmessage.length - getcount;
-    update();
-
-    // Replace with logic to check for new messages from API
-
-    // Example new message
-  }
 
   // Function to handle user tapping the badge
   // void onBadgeTap() async {

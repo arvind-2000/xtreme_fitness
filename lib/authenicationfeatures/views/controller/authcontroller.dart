@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:html' as html;
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
@@ -29,7 +29,7 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = true;
+  bool ismember = false;
 
   int? otp;
   bool otploading = false;
@@ -73,10 +73,8 @@ class GetxAuthController extends GetxController {
 
       d = await authrepo.emailAuthentication(email: email, pass: pass);
 
-
       if (d.isNotEmpty) {
         if (d.entries.first.key != null) {
-        
           userid = d.entries.first.key;
            loginerrortext = d.entries.first.value;
           if (userid != null) {
@@ -85,7 +83,6 @@ class GetxAuthController extends GetxController {
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
             _user = v.entries.first.key;
             if (_user != null) {
-
               _authentication = true;
              
               ////print("In authentication check member or not ${_user!.roleName}");
@@ -178,13 +175,11 @@ class GetxAuthController extends GetxController {
 
       }
     } else {
-      if(res.entries.first.value==401){
+      if (res.entries.first.value == 401) {
         Get.offAllNamed('/home');
         // Get.dialog(const LoginDialog());
       }
     }
-
-
   }
 
   void signup(String phone) async {
