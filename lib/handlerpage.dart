@@ -26,14 +26,14 @@ class _HandlerPageState extends State<HandlerPage> {
   @override
   void initState() {
     super.initState();
-    print("cookiees:${html.document.cookie}");
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Get.find<GetxAuthController>().authentications();
+        Future.delayed(Durations.extralong1,() =>  Get.find<GetxAuthController>().authentications(),);
+       
         Get.put(AddMemberController());
         Get.put(GetxPageController());
         
-    Get.put(ManagementController());
+        Get.put(ManagementController());
       },
     );
 

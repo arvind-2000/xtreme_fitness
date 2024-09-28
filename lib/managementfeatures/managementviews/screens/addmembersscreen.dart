@@ -61,13 +61,13 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                     ? PaymentStatusCard(
                         callback: () {
                           addmemberctrl.changepaymentstatus(0);
-
-                          if (addmemberctrl.ismember) {
-                            Get.offAllNamed('/home');
-                            Get.dialog(const LoginDialog());
-                          } else {
-                            pagectrl.changeaddMemberPage(0);
-                          }
+                          addmemberctrl.authctrl.authentications();
+                          // if (addmemberctrl.ismember) {
+                          //   Get.offAllNamed('/home');
+                          //   Get.dialog(const LoginDialog());
+                          // } else {
+                          //   pagectrl.changeaddMemberPage(0);
+                          // }
                         },
                       )
                     : Column(

@@ -200,7 +200,7 @@ class AddMemberController extends GetxController {
           startDate: DateTime.now(),
           endDate: DateTime.now()
               .add(Duration(days: selectedplan!.durationInMonths * 30)),
-          isActive: true,
+          isActive: false,
           trainerId: _trainer?.id);
 
       if (checkdeclaration) {
@@ -241,11 +241,17 @@ class AddMemberController extends GetxController {
           }
           //wait with dialog options
         } else {
-          Subscription? subss = await addsubscription(subs);
+          Subscription su = subs;
+          su.isActive = false;
+          Subscription? subss = await addsubscription(su);
           creatextremer();
+           changepaymentstatus(1);
           var d = await repo.addPayments(payments,
               userid: xtremer!.XtremerId.toString(), isonline: false);
-          if (d["response"] == 200) {}
+          if (d["response"] == 200) {
+
+          }
+
         }
 
         //cash
@@ -261,9 +267,11 @@ class AddMemberController extends GetxController {
 
   void creatextremer() async {
     try {
+
       print(xtremer!.category);
+      xtremer!.isActive = ispaymentcash;
       Map<String, dynamic> res = await repo.addMember(
-          xtremer!, _imageData, xtremer!.XtremerId.toString());
+          xtremer!, _imageData, xtremer!.XtremerId.toString(),);
       xtremer = Xtremer.fromJson(jsonDecode(res["response"]));
       usercreated = true;
       // createAndPrintPdf(paymentsdetails!);
@@ -330,7 +338,8 @@ class AddMemberController extends GetxController {
               price: authctrl.userid != null && isMember
                   ? selectedservice!.memberPrice
                   : selectedservice!.nonMemberPrice,
-              status: "Active");
+              
+              status: "InActive");
           ServiceSchedule? serv = await repo.addServiceUsage(s);
           //  creatextremer();
           // createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
@@ -721,7 +730,7 @@ class AddMemberController extends GetxController {
         startDate: DateTime.now(),
         endDate: DateTime.now()
             .add(Duration(days: selectedplan!.durationInMonths * 3)),
-        isActive: true,
+        isActive: ispaymentcash,
         trainerId: _trainer?.id);
 
     print("adding payments");
@@ -760,8 +769,7 @@ class AddMemberController extends GetxController {
         checkpayment(() async {
           try {
             Subscription? subss = await repo.addSubscription(subs);
-            xtremer!.isActive = true;
-            String s = await repo.updateMember(xtremer!);
+          
           } on Exception catch (e) {
             print(" In check payment $e");
           }
@@ -774,6 +782,8 @@ class AddMemberController extends GetxController {
           isonline: false);
       if (d["response"] == 200) {
         Subscription? subss = await repo.addSubscription(subs);
+            xtremer!.isActive = true;
+            String s = await repo.updateMember(xtremer!);
         changepaymentstatus(1);
         paymentsdetails = await repo.getpayment(paymentdetails!.transactionId);
         // Xtremer? x = await repo.addSubscription(subs);

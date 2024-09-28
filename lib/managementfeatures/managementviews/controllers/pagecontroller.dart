@@ -38,13 +38,13 @@ class GetxPageController extends GetxController {
     addmemberpages = 0;
   }
 
-  void overalldropdown(String? val) {
-    ManagementController mgctrl = Get.put(ManagementController());
-    _overalldropdownname = val!;
-    overalldropdownindex = dayslist2.indexOf(_overalldropdownname).obs;
-    update();
-    mgctrl.getxtremerforoverall();
-  }
+  // void overalldropdown(String? val) {
+  //   ManagementController mgctrl = Get.put(ManagementController());
+  //   _overalldropdownname = val!;
+  //   overalldropdownindex = dayslist2.indexOf(_overalldropdownname).obs;
+  //   update();
+  //   mgctrl.getxtremerforoverall();
+  // }
 
   void changerenewal(bool v) {
     isrenewalforms = v;

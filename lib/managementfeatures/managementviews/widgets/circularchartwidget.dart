@@ -40,11 +40,11 @@ class PieChartWidget extends StatelessWidget {
 
             dataSource: <ChartData>[
               ChartData('Personal Trainee',
-                  controller.allpersonalxtremerforoverall.length.toDouble()),
+                  controller.allpersonalxtremer.length.toDouble()),
               ChartData('General Trainee',
-                  (controller.allgenerallxtremerforoverall.length).toDouble()),
+                  (controller.allgeneralxtremer.length).toDouble()),
               ChartData('Inactive Trainee',
-                  controller.allinactivextremerforoverall.length.toDouble()),
+                  controller.allinactivextremer.length.toDouble()),
                    ChartData('Other',
                   (controller.getallXtremer.length -
                               (controller.allinactivextremer.length +

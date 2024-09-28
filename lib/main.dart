@@ -17,9 +17,6 @@ import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'dart:html' as html;
 void main() async {
   runApp(const MyApp());
-//  workerManager.log = true;
-//   await workerManager.init();
-
   setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController());
@@ -43,9 +40,9 @@ class MyApp extends StatelessWidget {
             trackBorderColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
               trackColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
           thumbColor: WidgetStateProperty.all(Colors.red.withOpacity(0.6)), // Scrollbar color
-          radius: Radius.circular(4), // Rounded corners
-          thickness:  WidgetStateProperty.all(3), // Thickness
-          // Add more customization options if needed
+          radius: const Radius.circular(4),
+          thickness:  WidgetStateProperty.all(3), 
+          
         ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white, // Cursor color
@@ -54,7 +51,7 @@ class MyApp extends StatelessWidget {
           selectionHandleColor:
               Colors.grey.withOpacity(0.3), // Selection handle color
         ),
-        // scaffoldBackgroundColor: const Color.fromARGB(255, 24, 23, 23),
+  
         scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
       ),
       // theme:lightThemes,

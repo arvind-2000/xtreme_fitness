@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
-import 'package:xtreme_fitness/landingpages/sections/main/main_section.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_body.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_mobile_drawer.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_desktop.dart';

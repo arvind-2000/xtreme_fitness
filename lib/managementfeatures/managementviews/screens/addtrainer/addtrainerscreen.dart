@@ -58,7 +58,7 @@ bool isactive = true;
     double size = MediaQuery.sizeOf(context).width;
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
       return GetBuilder<ManagementController>(builder: (managectrl) {
-        print("manage control is member: ${managectrl.ismember}");
+     
         return pagectrl.viewprofile && _user != null
             ? TraineeProfile(
                 user: _user,
@@ -382,7 +382,7 @@ bool isactive = true;
                               height: 16,
                             ),
                         
-                        managectrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
+                        managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,

@@ -35,16 +35,31 @@ class GetxAuthController extends GetxController {
   bool otploading = false;
   bool? forgotpass;
 
+
+@override
+  void onInit() {
+ 
+    super.onInit();
+    authentications();
+  }
+
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     // changeAuthindex = index;
     // update();
   }
 
-  void setdataforsession(String userid, bool ismem) {
+  void setdataforsession(String userid, bool ismem) async{
     ismember = ismem;
     userid = userid;
+     Map<UserEntity?, String> v = await authrepo.getUserbyId(int.tryParse(userid) ?? 0);
+            _user = v.entries.first.key;
+    _authentication = true;
+    print('${ismem} ${userid}');
+    update();
   }
+
+
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -63,6 +78,7 @@ class GetxAuthController extends GetxController {
         if (d.entries.first.key != null) {
         
           userid = d.entries.first.key;
+           loginerrortext = d.entries.first.value;
           if (userid != null) {
             ////print("In authentication check");
             Map<UserEntity?, String> v =
@@ -71,13 +87,13 @@ class GetxAuthController extends GetxController {
             if (_user != null) {
 
               _authentication = true;
-              loginerrortext = d.entries.first.value;
+             
               ////print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
-              ////print("in authentication :${ismember} ");
+              print("in authentication :${ismember} ");
               print('userid');
-              final encrypteduser = encryptData(userid!);
-              pref.setString('key1', encrypteduser);
+              // final encrypteduser = encryptData(userid!);
+              pref.setString('key1', userid!);
               pref.setBool('key2', ismember);
               loginloading = false;
               update();
@@ -145,24 +161,26 @@ class GetxAuthController extends GetxController {
 
   void authentications() async {
     print("in authentications");
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<Admission?,int> res = await ManagementrepoImpl().viewadmission();
-    print("addmission status code : ${res.entries.first.value}");
+    print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (res.entries.first.value>=200 && res.entries.first.value<300) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
-        ////print("in returnss admin");
-        setdataforsession(
-            decryptData(prefs.getString('key1')!), prefs.getBool('key2')!);
-        Get.toNamed('/dashboard');
-      } else {
+      print("in authentication sharedpreferences");
 
+      if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
+        
+        setdataforsession(
+       prefs.getString('key1')!, prefs.getBool('key2')!);
+        update();
+        // Get.offAllNamed('/dashboard');
+      } else {
         Get.offAllNamed('/home');
- 
+
       }
     } else {
       if(res.entries.first.value==401){
         Get.offAllNamed('/home');
-        Get.dialog(const LoginDialog());
+        // Get.dialog(const LoginDialog());
       }
     }
 

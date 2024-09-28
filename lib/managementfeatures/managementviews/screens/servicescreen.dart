@@ -111,7 +111,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         ],
                       ),
                     ),
-                    managementcontroller.ismember ||
+                    managementcontroller.authctrl.ismember ||
                             managementcontroller.getallservices.isEmpty
                         ? const SizedBox()
                         : Row(

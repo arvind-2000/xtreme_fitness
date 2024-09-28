@@ -231,7 +231,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         ],
                       ),
                       const SizedBox(height: 16,),
-                                         managectrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
+                                         managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,

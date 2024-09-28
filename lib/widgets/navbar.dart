@@ -346,7 +346,6 @@ class NavBar extends StatelessWidget {
                         },
                         yes: () {
                           authctrl.logout();
-                          Get.offAllNamed('/home');
                         },
                         child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -96,17 +96,17 @@ class ManagementController extends GetxController {
 
     checkmember();
     getxtremer();
-    getinactivextremer();
-    getallpersonalextremer();
+    // getinactivextremer();
+    // getallpersonalextremer();
     getStaff();
     getallServices();
     getTrainer();
     viewpayment();
     getpaymentlastest10();
     getAllTraineess(10);
-    getallgeneralextremer();
+    // getallgeneralextremer();
 
-    getxtremerforoverall();
+    // getxtremerforoverall();
     getMemberships();
 
 
@@ -121,11 +121,11 @@ class ManagementController extends GetxController {
       (timer) {
         print("In periodic timer");
         getxtremer();
-        getinactivextremer();
-        getallpersonalextremer();
+        // getinactivextremer();
+        // getallpersonalextremer();
         getpaymentlastest10();
         getAllTraineess(10);
-        getxtremerforoverall();
+        // getxtremerforoverall();
       },
     );
   }
@@ -172,52 +172,52 @@ class ManagementController extends GetxController {
     update();
   }
 
-  void getxtremerforoverall() async {
-    _allinactivextremerforoverall.clear();
-    _allpersonalxtremerforoverall.clear();
-    _allgeneralxtremerforoverall.clear();
-    var alldata = await managementRepo.viewMemberforoverall();
+  // void getxtremerforoverall() async {
+  //   _allinactivextremerforoverall.clear();
+  //   _allpersonalxtremerforoverall.clear();
+  //   _allgeneralxtremerforoverall.clear();
+  //   // var alldata = await managementRepo.viewMemberforoverall();
 
-    for (var element in alldata) {
-      if (_allinactivextremerforoverall.contains(element)) {
-        print('already added to today list');
-      } else {
-        if (element.isActive == false) {
-          // Add all elements whose createddate is today
-          _allinactivextremerforoverall.add(element);
-        }
-      }
-    }
+  //   for (var element in alldata) {
+  //     if (_allinactivextremerforoverall.contains(element)) {
+  //       print('already added to today list');
+  //     } else {
+  //       if (element.isActive == false) {
+  //         // Add all elements whose createddate is today
+  //         _allinactivextremerforoverall.add(element);
+  //       }
+  //     }
+  //   }
 
-    for (var element in alldata) {
-      if (_allpersonalxtremerforoverall.contains(element)) {
-        print('already added to today list');
-      } else {
-        if (element.category == 'Personal') {
-          if (element.isActive == true) {
-            _allpersonalxtremerforoverall.add(element);
-          }
-          // Add all elements whose createddate is today
-        }
-      }
-    }
+  //   for (var element in alldata) {
+  //     if (_allpersonalxtremerforoverall.contains(element)) {
+  //       print('already added to today list');
+  //     } else {
+  //       if (element.category == 'Personal') {
+  //         if (element.isActive == true) {
+  //           _allpersonalxtremerforoverall.add(element);
+  //         }
+  //         // Add all elements whose createddate is today
+  //       }
+  //     }
+  //   }
 
-    for (var element in alldata) {
-      if (_allgeneralxtremerforoverall.contains(element)) {
-        print('already added to today list');
-      } else {
-        if (element.category == 'General') {
-          if (element.isActive == true) {
-            _allgeneralxtremerforoverall.add(element);
-          }
-          // Add all elements whose createddate is today
-        }
-      }
-    }
-    _allxtremerforoverall = alldata;
-    update();
-    log(_allxtremerforoverall.length.toString());
-  }
+  //   for (var element in alldata) {
+  //     if (_allgeneralxtremerforoverall.contains(element)) {
+  //       print('already added to today list');
+  //     } else {
+  //       if (element.category == 'General') {
+  //         if (element.isActive == true) {
+  //           _allgeneralxtremerforoverall.add(element);
+  //         }
+  //         // Add all elements whose createddate is today
+  //       }
+  //     }
+  //   }
+  //   _allxtremerforoverall = alldata;
+  //   update();
+  //   log(_allxtremerforoverall.length.toString());
+  // }
 
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
@@ -228,8 +228,13 @@ class ManagementController extends GetxController {
         (element) => element.XtremerId.toString() == authctrl.userid,
       );
       update();
+    }else{
+      _searchxtremerlist = _allxtremer;
+      _allgeneralxtremer = _allxtremer.where((element) => element.category == 'General'&& element.isActive == true,).toList();
+      _allpersonalxtremer = _allxtremer.where((element) => element.category == 'Personal'&& element.isActive == true,).toList();
+      _allinactivextremer = _allxtremer.where((element) =>element.isActive == false,).toList();
     }
-    _searchxtremerlist = _allxtremer;
+    
     update();
   }
 
@@ -299,7 +304,7 @@ class ManagementController extends GetxController {
   Future<Admission?> getadmission() async {
     Map<Admission?,int> d =  await managementRepo.viewadmission();
     return d.entries.first.key;
-    
+
   }
 
   void getMembershipbyid(int id) async {

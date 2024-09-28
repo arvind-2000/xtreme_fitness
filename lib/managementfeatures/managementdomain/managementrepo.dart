@@ -30,7 +30,7 @@ abstract class ManagementRepo {
   Future<String> updateMember(Xtremer xtremer);
   Future<String> deleteMember(Xtremer xtremer);
   Future<List<Xtremer>> viewMember();
-  Future<List<Xtremer>> viewMemberforoverall();
+  // Future<List<Xtremer>> viewMemberforoverall();
   Future<List<Xtremer>> viewinactivemembers();
   Future<List<Xtremer>> viewpersonalmembers();
   Future<List<Xtremer>> viewgeneralmembers();

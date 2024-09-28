@@ -270,36 +270,41 @@ Future<Map<String?, String>> emailAuthentication({
     return "Error in logging out";
   }
 
-  @override
-  Future<Map<int?, String>> getUserbyNumber(String number) async {
-    //print("In get user by number $number");
-    Uri url = Uri.parse("$api/api/Users/GetByNumber?mobileNumber=$number");
-    try {
-      final response = await http.get(
-        url,
-        headers: {"Content-Type": "application/json"},
-      );
-      //print(response.body);
 
-      // Check if the request was successful
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        //print(response.body);
-        return {
-          int.tryParse(response.body)! > 0 ? int.tryParse(response.body) : null:
-              "User Found"
-        };
+
+@override
+Future<Map<int?, String>> getUserbyNumber(String number) async {
+  // print("In get user by number $number");
+  Uri url = Uri.parse("$api/api/Users/GetByNumber?mobileNumber=$number");
+  try {
+    final request = await html.HttpRequest.request(
+      url.toString(),
+      method: 'GET',
+      requestHeaders: {"Content-Type": "application/json"},
+      withCredentials: true, // Include credentials
+    );
+    // print(request.responseText);
+
+    // Check if the request was successful
+    if (request.status! >= 200 && request.status! < 300) {
+      // print(request.responseText);
+      return {
+        int.tryParse(request.responseText!)! > 0 ? int.tryParse(request.responseText!) : null:
+            "User Found"
+      };
+    } else {
+      if (request.status! >= 500) {
+        return {-1: "User not found or error with the connection"};
       } else {
-        if (response.statusCode >= 500) {
-          return {-1: "User not found or error with the connection"};
-        } else {
-          return {-3: "User not found or error with the connection"};
-        }
+        return {-3: "User not found or error with the connection"};
       }
-    } on Exception catch (e) {
-      //print(e);
-      return {-3: "Error in data parsing"};
     }
+  } catch (e) {
+    // print(e);
+    return {-3: "Error in data parsing"};
   }
+}
+
 
   @override
   Future<Map<int?, String?>> changePass(int id, String password) async {

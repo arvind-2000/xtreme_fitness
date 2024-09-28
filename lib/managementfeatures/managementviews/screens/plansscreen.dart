@@ -46,7 +46,7 @@ class _PlansScreenState extends State<PlansScreen> {
       return GetBuilder<AddMemberController>(builder: (_) {
         return GetBuilder<GetxPageController>(builder: (_) {
           return GetBuilder<ManagementController>(builder: (_) {
-            return addmemberctrl.ismember && pagecotrl.isrenewalforms
+            return authctrl.ismember && pagecotrl.isrenewalforms
                 ? RenewalForms(
                     callback: () {
                       pagecotrl.changerenewal(false);
@@ -69,6 +69,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                 : CardBorder(
                                     onpress: () {
                                       Get.dialog(
+                                        
                                         
                                         Dialog(
                                           backgroundColor: Colors.grey[800],
@@ -94,7 +95,7 @@ class _PlansScreenState extends State<PlansScreen> {
                           ],
                         ),
                       ),
-                      managementcontroller.ismember ||
+                     authctrl.ismember ||
                               managementcontroller.getallplans.isEmpty
                           ? const SizedBox()
                           : Row(
