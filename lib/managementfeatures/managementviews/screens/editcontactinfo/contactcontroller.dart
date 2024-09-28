@@ -210,6 +210,38 @@ class ContactController extends GetxController {
     }
   }
 
+  void updatemessageisread({required int id}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('PUT', Uri.parse('$api/api/Message/$id'));
+    request.body = json.encode({"isRead": true});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      getallmessage();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  void deletemessage({required int id}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('DELETE', Uri.parse('$api/api/Message/$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      getallmessage();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   void getallmessage() async {
     _unreadmessagelist.clear();
     _readmessagelist.clear();

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart'; // F
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getmessagemodel.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 class MessageListScreen extends StatelessWidget {
@@ -13,69 +14,72 @@ class MessageListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ContactController contactController = Get.put(ContactController());
-    return GetBuilder<ContactController>(builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
+    return contactController.allmessage.isEmpty
+        ? const NodataScreen(title: "Messages", desc: "No Message Found")
+        : GetBuilder<ContactController>(builder: (_) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const HeadingText('All Message'),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // Top Filters
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const FilterChipWidget(
-                                label: 'All', isSelected: true),
-                            const SizedBox(width: 8),
-                            FilterChipWidget(
-                                label: 'Unread',
-                                isSelected: false,
-                                badgeCount:
-                                    contactController.unreadmessagelist.length),
-                          ],
+                        const SizedBox(
+                          height: 10,
                         ),
+                        const HeadingText('All Message'),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        // Top Filters
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const FilterChipWidget(
+                                      label: 'All', isSelected: true),
+                                  const SizedBox(width: 8),
+                                  FilterChipWidget(
+                                      label: 'Unread',
+                                      isSelected: false,
+                                      badgeCount: contactController
+                                          .unreadmessagelist.length),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 1),
                       ],
                     ),
                   ),
-                  const Divider(height: 1),
+
+                  // Message List
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: contactController.allmessage.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            MessageTile(
+                                message: contactController.allmessage[index]),
+                            Divider(
+                              color: Colors.grey[900],
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
-            ),
-
-            // Message List
-            Expanded(
-              child: ListView.builder(
-                itemCount: contactController.allmessage.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      MessageTile(message: contactController.allmessage[index]),
-                      Divider(
-                        color: Colors.grey[900],
-                      )
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      );
-    });
+            );
+          });
   }
 }
 
@@ -172,12 +176,17 @@ class MessageTile extends StatelessWidget {
         ),
         trailing: IconButton(
           onPressed: () {
+            conctrl.deletemessage(id: message.id);
             log('Delete Tap');
           },
           icon: const Icon(Icons.delete_outline),
         ),
         onTap: () {
           log('Tile Tap');
+          if (!message.isRead) {
+            conctrl.updatemessageisread(id: message.id);
+          }
+
           conctrl.viewMessage(message, context);
           // Handle tap on message
         },
