@@ -108,15 +108,13 @@ class ManagementController extends GetxController {
 
     getxtremerforoverall();
     getMemberships();
-    // dashboardTimer();
 
-    // _allpayments = dummypayments;
-
-    // changeservicefilter(servicefilter);
 
     update();
   }
 
+
+  ///for realtime data calls
   void dashboardTimer() {
     Timer.periodic(
       const Duration(seconds: 5),
@@ -139,7 +137,6 @@ class ManagementController extends GetxController {
   }
 
   void getplans() async {
-    // _allplans = dummyplan;
     _allplans = await managementRepo.getPlans();
     _allactiveplans = _allplans
         .where(
@@ -223,8 +220,8 @@ class ManagementController extends GetxController {
   }
 
   void getxtremer() async {
-    _allxtremer = await managementRepo.viewMember();
     // _allxtremer = dummyxtremer;
+    _allxtremer = await managementRepo.viewMember();
     if (authctrl.ismember) {
       print("In get xtremer");
       xtremer = _allxtremer.firstWhereOrNull(
@@ -232,24 +229,7 @@ class ManagementController extends GetxController {
       );
       update();
     }
-    //for getting search xtremer list
     _searchxtremerlist = _allxtremer;
-    for (var element in _allxtremer) {
-      // if (element.trainerName == null || element.trainerName!.isEmpty) {
-      //   if (_allgeneralxtremer.contains(element)) {
-      //     log('Already Added general');
-      //   } else {
-      //     _allgeneralxtremer.add(element);
-      //   }
-      // } else {
-      //   if (_allpersonalxtremer.contains(element)) {
-      //     log('Already Added');
-      //   } else {
-      //     log(element.trainerName.toString());
-      //     _allpersonalxtremer.add(element);
-      //   }
-      // }
-    }
     update();
   }
 
@@ -288,7 +268,6 @@ class ManagementController extends GetxController {
 
   void getallServices() async {
     _allservices = await managementRepo.getServices();
-    // _allservices = dummyservices;
     _allactiveservices =
         _allservices.where((element) => element.isactive).toList();
     update();
@@ -311,14 +290,16 @@ class ManagementController extends GetxController {
     return v;
   }
 
-  void deletservices(ServiceEntity service) async {
-    await managementRepo.deleteServices(service: service).then((value) async {
-      getallServices();
-    });
-  }
+  // void deletservices(ServiceEntity service) async {
+  //   await managementRepo.deleteServices(service: service).then((value) async {
+  //     getallServices();
+  //   });
+  // }
 
   Future<Admission?> getadmission() async {
-    return await managementRepo.viewadmission();
+    Map<Admission?,int> d =  await managementRepo.viewadmission();
+    return d.entries.first.key;
+    
   }
 
   void getMembershipbyid(int id) async {
@@ -370,7 +351,6 @@ class ManagementController extends GetxController {
   }
 
   void getMemberships() async {
-    // _allstaff = dummystaff;
     _allmembership = await managementRepo.viewMembership();
     if (authctrl.ismember) {
       print("In current meber");
@@ -420,14 +400,13 @@ class ManagementController extends GetxController {
     // managementloading = true;
     // update();
     _latestpayment10 = await managementRepo.viewlatest10payment();
+
     managementloading = false;
 
     update();
   }
 
   void viewpayment() async {
-    // _allpayments = dummypayments;
-    _allpayments = await managementRepo.viewpayment();
     // _allpayments = dummypayments;
     _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
@@ -553,28 +532,4 @@ class ManagementController extends GetxController {
     update();
   }
 
-  // void changeservicefilter(int i){
-  //     // servicefilter = i;
-  //     // update();
-
-  //     // if(servicefilter == 0){
-  //     //   filterpayments = groupPaymentsBydate(_allpayments, DateTime.now());
-  //     // }
-  //     // else if(servicefilter == 2){
-
-  //     //     filterpayments = groupPaymentsByyear(_allpayments);
-  //     // }else{
-  //     //   print(_allpayments.length);
-  //     //     filterpayments = groupPaymentsByMonth(_allpayments, DateTime.now());
-  //     // }
-  //     // update();
-  // }
-
-//   void exXtremer(){
-
-//       _searchxtremerlist = _allxtremer.where((element) {
-
-//       },).toList();
-//       update();
-// }
 }

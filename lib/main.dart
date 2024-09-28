@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
+import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
 
@@ -24,10 +25,7 @@ void main() async {
   Get.put(GetxAuthController());
   // Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
-   html.window.document.cookie = 'name=psfkfjd; path=/;';
-
- String _cookies = html.window.localStorage['cookies']??"";
-  print(_cookies);
+   
 
 }
 
@@ -63,10 +61,10 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/',
+      initialRoute: '/home',
       unknownRoute: GetPage(
-        name: '/',
-        page: () => const MainPage(),
+        name: '/NotFoundPage',
+        page: () => const NotfoundPage(),
       ),
       getPages: [
         GetPage(

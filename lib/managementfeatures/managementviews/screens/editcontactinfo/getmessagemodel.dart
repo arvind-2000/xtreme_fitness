@@ -39,7 +39,7 @@ class GetMessageModal {
   factory GetMessageModal.fromJson(Map<String, dynamic> json) =>
       GetMessageModal(
         id: json["Id"],
-        name: json["Name"] ?? '',
+        name: json["Name"] ?? 'Amarjit',
         phoneNumber: json["PhoneNumber"],
         subject: json["Subject"],
         messageContent: json["MessageContent"],

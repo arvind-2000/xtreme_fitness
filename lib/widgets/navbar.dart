@@ -338,12 +338,11 @@ class NavBar extends StatelessWidget {
                 if (MediaQuery.sizeOf(context).width < mobilescreen) {
                   drawers(context);
                 }
-                showDialog(
-                    context: context,
-                    builder: (c) => PageDialog(
+                 Get.dialog(
+                    PageDialog(
                         heights: 300,
                         no: () {
-                          Navigator.pop(context);
+                         Get.back();
                         },
                         yes: () {
                           authctrl.logout();

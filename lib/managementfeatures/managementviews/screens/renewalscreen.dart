@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -9,12 +10,15 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/editmemberform.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../../managementmodels/dummies.dart';
 import '../widgets/dialogswidget.dart';
 import 'nodatascreen.dart/nodatascreen.dart';
 
@@ -41,6 +45,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
   List<String> d = ["All Members", "Personal", "General","InActive"];
   List<String> renewlist = ["Renewal", "Edit", "View"];
   int pos = 0;
+  DateTime startdatexl = DateTime.now();
+  DateTime enddatexl = DateTime.now();
+  int chooseXtremerxl = 0;
   int renewalpos = 0;
   Xtremer? _user;
   void changeuser(Xtremer us) {
@@ -75,18 +82,17 @@ class _RenewalScreenState extends State<RenewalScreen> {
                 :pagectrl.iseditforms?EditmemberForm():pagectrl.viewprofile && _user != null?MemberProfilescreen(user: _user,pagectrl: pagectrl,):Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //     const Padding(
-                      //   padding: EdgeInsets.all(16.0),
-                      //   child: Row(
-                      //     children: [
-                      //       HeadingText("Renewal",size: 30,),
-                      //     ],
-                      //   ),
-                      // ),
+                          const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            HeadingText("Xtremers",size: 30,),
+                          ],
+                        ),
+                      ),
                       Expanded(
-                        child: CardwithShadow(
-                          margin: const EdgeInsets.all(16),
-                          padding: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: [
                               Padding(
@@ -95,9 +101,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // const Text("All Members",style: TextStyle(fontSize: 20,),),
-
+                          
                                     SizedBox(
-                                        height: 40,
+                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
                                      
                                         child: CardBorder(
                                           color: Theme.of(context)
@@ -116,7 +122,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                 .entries
                                                 .map((e) => DropdownMenuItem(
                                                       value: e.key,
-                                                      child: Text(e.value,style: const TextStyle(overflow: TextOverflow.ellipsis),),
+                                                      child: Text(e.value,style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 12),),
                                                     ))
                                                 .toList(),
                                             onChanged: (value) {
@@ -138,7 +144,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    Expanded(
+                                   MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -161,9 +167,11 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   _searchcontroller.clear();
                                                 },
                                               
-                                                icon: const Icon(Icons.search)),
+                                                icon: const Icon(
+                                                
+                                                  Icons.search)),
                                           ),
-        
+                                  
                                               const SizedBox(height: 10,),
                                     Text(managectrl.searchmessage!),
                                         ],
@@ -173,7 +181,375 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                
+                                     SizedBox(
+                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
+                                     
+                                        child: CardBorder(
+                                          onpress: () {
+                                            Get.dialog(
+                                              StatefulBuilder(
+                                                builder: (context,s) {
+                                                  return Dialog(
+                                                                                              
+                                                                                               child: SizedBox(
+                                                   
+                                                                                          width: 500,
+                                                                                          height: 600,
+                                                                                          child: Cardonly(
+                                                                                            
+                                                                                            child: Padding(
+                                                                                              padding: const EdgeInsets.all(32),
+                                                                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const HeadingText(
+                                                            "Export Xtremers",size: 20,),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                             Get.back();
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.close,
+                                                              size: 16,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                           Text(
+                                                                                      "Choose Xtremer",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                            
+                                                                            
+                                                                                         SizedBox(
+                                                                                            height:50,
+                                                                                   
+                                                                                            child: CardBorder(
+                                                                                              color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary
+                                                    .withOpacity(0.4),
+                                                                                              margin: EdgeInsets.zero,
+                                                                                              padding: const EdgeInsets.only(
+                                                    left: 16, right: 8),
+                                                                                              child: DropdownButton(
+                                                  underline: const SizedBox(),
+                                                  value: chooseXtremerxl,
+                                                  hint: Text(d[pos],style: const TextStyle(overflow: TextOverflow.ellipsis)),
+                                                  items: d
+                                                      .asMap()
+                                                      .entries
+                                                      .map((e) => DropdownMenuItem(
+                                                            value: e.key,
+                                                            child: Text(e.value,style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 12),),
+                                                          ))
+                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    s(() {
+                                                        chooseXtremerxl =value!;
+                                                    });
+                                                  },
+                                                                                              ),
+                                                                                            )),
+                                                  
+                                                                                              SizedBox(height: 16,),                
+                                                                                            
+                                                          Row(
+                                                            children: [
+                                                              Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose Start Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                startdatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${startdatexl.day}/${startdatexl.month}/${startdatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                  SizedBox(width:10),                
+                                                                                MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Choose End Date",
+                                                                                      style: TextStyle(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.5),
+                                                                                          fontSize: 12),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      height: 6,
+                                                                                    ),
+                                                                                    CardBorder(
+                                                                                      color: Theme.of(context)
+                                                                                          .colorScheme
+                                                                                          .onPrimary
+                                                                                          .withOpacity(0.6),
+                                                                                      onpress: () {
+                                                                                        showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(
+                                                                                                      data: ThemeData(
+                                                                                                          colorScheme: ColorScheme.dark(
+                                                                                                              primary: Colors.blue[200]!),
+                                                                                                          buttonTheme: const ButtonThemeData(
+                                                                                                              buttonColor: Colors.white)),
+                                                                                                      child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                firstDate: DateTime(1950),
+                                                                                                lastDate: DateTime(DateTime.now().year + 1))
+                                                                                            .then(
+                                                                                          (value) {
+                                                                                           
+                                                                                              s(() {
+                                                                                                enddatexl = value!;
+                                                                                              });
+                                                                                          },
+                                                                                        );
+                                                                                      },
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                          horizontal: 16, vertical: 12),
+                                                                                      margin: EdgeInsets.zero,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          const Text(
+                                                                                            "Date:",
+                                                                                            style: TextStyle(fontSize: 14),
+                                                                                          ),
+                                                                                          const SizedBox(
+                                                                                            width: 5,
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              const Icon(
+                                                                                                Icons.date_range,
+                                                                                                size: 14,
+                                                                                              ),
+                                                                                             Text(
+                                                                                                      "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                      style: const TextStyle(fontSize: 14),
+                                                                                                    )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                            ],
+                                                          ),
+
+                                                           MediaQuery.sizeOf(context).width>mobilescreen?SizedBox():Row(
+                                                             children: [
+                                                               Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          "Choose End Date",
+                                                                                          style: TextStyle(
+                                                                                              color: Theme.of(context)
+                                                                                                  .colorScheme
+                                                                                                  .onPrimary
+                                                                                                  .withOpacity(0.5),
+                                                                                              fontSize: 12),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 6,
+                                                                                        ),
+                                                                                        CardBorder(
+                                                                                          color: Theme.of(context)
+                                                                                              .colorScheme
+                                                                                              .onPrimary
+                                                                                              .withOpacity(0.6),
+                                                                                          onpress: () {
+                                                                                            showDatePicker(
+                                                                                                    builder: (context, child) {
+                                                                                                      return Theme(
+                                                                                                          data: ThemeData(
+                                                                                                              colorScheme: ColorScheme.dark(
+                                                                                                                  primary: Colors.blue[200]!),
+                                                                                                              buttonTheme: const ButtonThemeData(
+                                                                                                                  buttonColor: Colors.white)),
+                                                                                                          child: child!);
+                                                                                                    },
+                                                                                                    context: context,
+                                                                                                    firstDate: DateTime(1950),
+                                                                                                    lastDate: DateTime(DateTime.now().year + 1))
+                                                                                                .then(
+                                                                                              (value) {
+                                                                                               
+                                                                                                  s(() {
+                                                                                                    enddatexl = value!;
+                                                                                                  });
+                                                                                              },
+                                                                                            );
+                                                                                          },
+                                                                                          padding: const EdgeInsets.symmetric(
+                                                                                              horizontal: 16, vertical: 12),
+                                                                                          margin: EdgeInsets.zero,
+                                                                                          child: Row(
+                                                                                            children: [
+                                                                                              const Text(
+                                                                                                "Date:",
+                                                                                                style: TextStyle(fontSize: 14),
+                                                                                              ),
+                                                                                              const SizedBox(
+                                                                                                width: 5,
+                                                                                              ),
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  const Icon(
+                                                                                                    Icons.date_range,
+                                                                                                    size: 14,
+                                                                                                  ),
+                                                                                                 Text(
+                                                                                                          "${enddatexl.day}/${enddatexl.month}/${enddatexl.year}",
+                                                                                                          style: const TextStyle(fontSize: 14),
+                                                                                                        )
+                                                                                                ],
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                             ],
+                                                           ),
+                          
+                                                        ],
+                                                      )
+                                                    ),
+                                                    SizedBox(
+                                                      width: double.maxFinite,
+                                                      child: CardBorder(
+                                                          margin: EdgeInsets.zero,
+                                                          color: Colors.blue,
+                                                          onpress: () async {
+
+                                                            
+
+                                                           bool v =  await exportXtremerDataToExcel(pos==0?managectrl.getallXtremer:pos==1?managectrl.allpersonalxtremer:pos==2?managectrl.allgeneralxtremer:managectrl.allinactivextremer,"Xtremer list");
+                                                                  CustomSnackbar(context,v?"Xtremer Reports exported.":"failed to export");
+
+                                                            },
+                                                          child: const Center(
+                                                              child: Text(
+                                                            "Export Excels",
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ))),
+                                                    ),
+                                                  ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                  ));
+                                                }
+                                              )
+                                            );
+                                          },
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary
+                                              .withOpacity(0.4),
+                                          margin: EdgeInsets.zero,
+                                          padding: const EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: Image.asset('assets/file.png',)),
+                                              Text("Export"),
+                                            ],
+                                          )
+                                        )),
                                     // const Expanded(
                                     //     child: Row(
                                     //   children: [],
@@ -184,7 +560,40 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   ],
                                 ),
                               ),
-                       
+                            MediaQuery.sizeOf(context).width<=mobilescreen?    Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height:60,
+                                              width:MediaQuery.sizeOf(context).width<mobilescreen?double.maxFinite: 400,
+                                              child: TextFieldWidget(
+                                                  showhint:false,
+                                                  hint: "Search by id, name or phone",
+                                                  controller: _searchcontroller,
+                                                  validator: () {
+                                                                              
+                                                                              
+                                                  },
+                                                  onchanged: (text) {
+                                                          managectrl.searchusers(text);
+                                                  },
+                                                  fieldsubmitted: (){
+                                                    managectrl.searchusers(_searchcontroller.text);
+                                                    _searchcontroller.clear();
+                                                  },
+                                                
+                                                  icon: const Icon(
+                                                  
+                                                    Icons.search)),
+                                            ),
+                                      
+                                                const SizedBox(height: 10,),
+                                      Text(managectrl.searchmessage!),
+                                          ],
+                                        ),
+                            ):SizedBox(),                       
                                 managectrl.getsearchXtremer.isEmpty
                                 ? SizedBox():  Padding(
                                 padding: const EdgeInsets.all(16.0),
@@ -198,12 +607,13 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                    const Expanded(
+                                    MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox(): const Expanded(
                                         child: Text("phone",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold))),
-                                    const Expanded(
+                                    const SizedBox(height: 5,),
+                                              MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():const Expanded(
                                         child: Text("Start",
                                             style: TextStyle(
                                                 fontSize: 14,
@@ -231,8 +641,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   ],
                                 ),
                               ),
-                         
-                      
+                                                   
+                                                
                              managectrl.getsearchXtremer.isEmpty
                                 ? const Expanded(
                                   child: NodataScreen(
@@ -243,7 +653,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => Container(
-                                    color: Colors.grey[900],
+                                    color: index%2==0?Colors.grey[850]:Colors.grey[900],
                                     child: Column(
                                       children: [
                                         Padding(
@@ -256,18 +666,24 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           Expanded(child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              const SizedBox(height: 10,),
+                                              // const SizedBox(height: 10,),
                                               Text(managectrl.getsearchXtremer[index].firstName!,style:const TextStyle(fontSize: 14),),
+                                              SizedBox(height: 5,),
+                                            MediaQuery.sizeOf(context).width <= mobilescreen
+                                        ?   Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14)):SizedBox(),
+                                                SizedBox(height: 5,),
                                               MediaQuery.sizeOf(context).width <= mobilescreen
-                                        ?  Cardonly(
+                                         &&managectrl.getsearchXtremer[index].category!=null? Cardonly(
                                                     margin: const EdgeInsets.only(top: 4),
                                                     padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
                                                     color: Colors.green[200],
-                                                    child: const Text('Personal',style: TextStyle(fontSize: 10),)):const SizedBox()
+                                                    child: Text(managectrl.getsearchXtremer[index].category!=null?managectrl.getsearchXtremer[index].category!:"",style: TextStyle(fontSize: 10),)):const SizedBox()
                                             ],
                                           )),
-                                          Expanded(child: Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14))),
-                                          Expanded(child: Column(
+                                          SizedBox(width: 5,),
+                                            MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Expanded(child: Text(managectrl.getsearchXtremer[index].mobileNumber!,style:const TextStyle(fontSize: 14))),
+                                          const SizedBox(height: 5,),
+                                              MediaQuery.sizeOf(context).width<=mobilescreen?SizedBox():Expanded(child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               const Text("4/5/2024",style:TextStyle(fontSize: 14)),
@@ -288,60 +704,60 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           //  managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",
                                            child: Text(managectrl.getsearchXtremer[index].category!=null?managectrl.getsearchXtremer[index].category!:"",style:const TextStyle(fontSize: 14)))),
                                           Expanded(
-                                            flex:MediaQuery.sizeOf(context).width<=mobilescreen?1:2 ,
+                                            flex:MediaQuery.sizeOf(context).width<=mobilescreen?2:2 ,
                                        
-                                            child:MediaQuery.sizeOf(context).width<=mobilescreen?       Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CardBorder(
-                                                margin: EdgeInsets.zero,
-                                                onpress: (){
-                                                  pagectrl.changerenewal(true);
-                                                        addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
+                                          //   child:MediaQuery.sizeOf(context).width<=mobilescreen?       Column(
+                                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                                          //   children: [
+                                          //     CardBorder(
+                                          //       margin: EdgeInsets.zero,
+                                          //       onpress: (){
+                                          //         pagectrl.changerenewal(true);
+                                          //               addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
                                                        
-                                                },
-                                                child: const Row(
-                                                  children: [
-                                                    Icon(Icons.upload,size: 12,),
-                                                      SizedBox(width: 5,),
-                                                    Text("Renewal",style:TextStyle(fontSize: 14)),
-                                                  ],
-                                                )),
-                                                const SizedBox(height: 5,),
-                                                CardBorder(
-                                                  onpress: (){
-                                                        pagectrl.changeeditform(true);
-                                                             addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
-                                                  },
-                                                      color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                  margin: EdgeInsets.zero,
-                                                  child: const Row(
-                                                    children: [
-                                           Icon(Icons.edit,size: 12,),
-                                                      SizedBox(width: 5,),
-                                                      Text("Edit",style:TextStyle(fontSize: 14))
-                                                    ],
-                                                  ),
-                                                ),
-                                                   const SizedBox(height: 5,),
-                                                CardBorder(
-                                                  onpress: (){
-                                                                 changeuser(managectrl.getsearchXtremer[index]);
-                                                            pagectrl.changeviewprofile();
-                                                  },
-                                                  margin: EdgeInsets.zero,
-                                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                  child: const Row(
-                                                    children: [
-                                                 Icon(Icons.person,size: 12,),
-                                                       SizedBox(width: 5,),
-                                                      Text("View",style:TextStyle(fontSize: 14))
-                                                    ],
-                                                  ),
-                                                ),
-                                            ],
-                                          ):
-                                          Row(
+                                          //       },
+                                          //       child: const Row(
+                                          //         children: [
+                                          //           Icon(Icons.upload,size: 12,),
+                                          //             SizedBox(width: 5,),
+                                          //           Text("Renewal",style:TextStyle(fontSize: 14)),
+                                          //         ],
+                                          //       )),
+                                          //       const SizedBox(height: 5,),
+                                          //       CardBorder(
+                                          //         onpress: (){
+                                          //               pagectrl.changeeditform(true);
+                                          //                    addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
+                                          //         },
+                                          //             color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                                          //         margin: EdgeInsets.zero,
+                                          //         child: const Row(
+                                          //           children: [
+                                          //  Icon(Icons.edit,size: 12,),
+                                          //             SizedBox(width: 5,),
+                                          //             Text("Edit",style:TextStyle(fontSize: 14))
+                                          //           ],
+                                          //         ),
+                                          //       ),
+                                          //          const SizedBox(height: 5,),
+                                          //       CardBorder(
+                                          //         onpress: (){
+                                          //                        changeuser(managectrl.getsearchXtremer[index]);
+                                          //                   pagectrl.changeviewprofile();
+                                          //         },
+                                          //         margin: EdgeInsets.zero,
+                                          //       color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                                          //         child: const Row(
+                                          //           children: [
+                                          //        Icon(Icons.person,size: 12,),
+                                          //              SizedBox(width: 5,),
+                                          //             Text("View",style:TextStyle(fontSize: 14))
+                                          //           ],
+                                          //         ),
+                                          //       ),
+                                          //   ],
+                                          // ):
+                                        child: Row(
                                             children: [
                                               CardBorder(
                                                 margin: EdgeInsets.zero,

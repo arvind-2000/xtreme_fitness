@@ -73,7 +73,7 @@ class PhoneInputScreen extends StatelessWidget {
                           ),
                           initialCountryCode: 'IN',
                           onChanged: (phone) {
-                            print(phone.completeNumber);
+                            // print(phone.completeNumber);
                           },
                         ),
                         const SizedBox(height: 20),

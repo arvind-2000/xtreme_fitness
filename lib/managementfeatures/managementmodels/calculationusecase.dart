@@ -1,17 +1,13 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
 import 'dart:html' as html;
 import 'package:excel/excel.dart';
+import 'package:printing/printing.dart';
 
-import '../../config/const.dart';
-import '../managementdomain/entities.dart/paymentdetails.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
+import '../managementdomain/entities.dart/xtremer.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -26,9 +22,9 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndPrintPdf(Paymententity paymentDetails,{bool isprint = true}) async {
+  Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
     final pdf = pw.Document();
-    print("in print pdf");
+    //print("in //print pdf");
     final logoData = await _loadImageData('assets/logo2.png');
 
 
@@ -89,7 +85,7 @@ double percentprice(double? actualprice,double? dis){
               pw.SizedBox(height: 10),
                 pw.Text(
                 'Payment Receipt',
-                style: pw.TextStyle(fontSize: 14,
+                style: pw.TextStyle(fontSize: 18,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
@@ -100,11 +96,11 @@ double percentprice(double? actualprice,double? dis){
                 children: [
                 pw.Text(
                 'Receipt# ${paymentDetails.transactionId}',
-                style: pw.TextStyle(fontSize: 10),
+                style: pw.TextStyle(fontSize: 12),
               ),
               pw.Text(
                 'Date: ${paymentDetails.paymentDate.day}/${paymentDetails.paymentDate.month}/${paymentDetails.paymentDate.year}',
-                style: pw.TextStyle(fontSize: 8),
+                style: pw.TextStyle(fontSize: 10),
               ),
 
                 ]
@@ -115,8 +111,8 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
                   pw.Text(
-                    'Payment Receipt from: ',
-                    style: pw.TextStyle(fontSize: 10),
+                    'Payment received from: ',
+                    style: pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
                     '${"Tomba Khuraijam"}',
@@ -148,11 +144,11 @@ double percentprice(double? actualprice,double? dis){
                   children: [
                               pw.Text(
                     'Payment Received in:',
-                    style: const pw.TextStyle(fontSize: 10),
+                    style: const pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
                       paymentDetails.paymentMethod,
-                    style: const pw.TextStyle(fontSize: 10),
+                    style: const pw.TextStyle(fontSize: 12),
                   ),
                   ]
                 )
@@ -174,7 +170,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:   pw.Text(
-                    'Amount: ',
+                    '  Amount: ',
                     style: pw.TextStyle(fontSize: 10),
                   ),),
                   
@@ -196,7 +192,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:    pw.Text(
-                    'Discount: ',
+                    '  Discount: ',
                     style: pw.TextStyle(fontSize: 10),
                   ), ),
                   // pw.Container(
@@ -219,7 +215,7 @@ double percentprice(double? actualprice,double? dis){
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                    pw.Expanded(child:     pw.Text(
-                    'Received: ',
+                    '  Received: ',
                     style: pw.TextStyle(fontSize: 10),
                   ),),
              
@@ -242,6 +238,7 @@ double percentprice(double? actualprice,double? dis){
                
 
               ]),
+              pw.SizedBox(height: 10),
                      pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.end,
                 children: [
@@ -254,6 +251,17 @@ double percentprice(double? actualprice,double? dis){
                     'Staff',
                     style: pw.TextStyle(fontSize: 10),
                   ),
+                ],
+              ),
+
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    'This receipt is computer generated.',
+                    style: pw.TextStyle(fontSize: 10),
+                  ),
+
                 ],
               ),
             ],
@@ -318,25 +326,25 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
 
   for (var payment in payments) {
     // Format the date to 'Month Year' (e.g., "July 2023")
-    print("in payments serarches ${date.year}");
+   // //print("in payments serarches ${date.year}");
     if(payment.paymentDate.year == date.year){
     
     int monthYear = payment.paymentDate.month;
-    print("in fliterpayment function ${months[monthYear-1]} ");
+   // //print("in fliterpayment function ${months[monthYear-1]} ");
     if (paymentsByMonth.containsKey(monthYear)) {
-       print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByMonth[monthYear]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+     ////print("in fliterpayment functionree");
       paymentsByMonth[monthYear] = [payment];
     }
     }
 
   }
   for(var i in paymentsByMonth.entries){
-      print(" ${months[i.key]}  ${i.value.length}");
+      //print(" ${months[i.key]}  ${i.value.length}");
 
   }
   return paymentsByMonth;
@@ -355,14 +363,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
     if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
       
     int days = payment.paymentDate.day;
-    print("in fliterpayment function");
+    ////print("in fliterpayment function");
     if (paymentsByday.containsKey(days)) {
-       print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByday[days]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+    ////print("in fliterpayment functionree");
       paymentsByday[days] = [payment];
     }
     }
@@ -383,14 +391,14 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
     // Format the date to 'Month Year' (e.g., "July 2023")
 
     int year = payment.paymentDate.year;
-    print("in fliterpayment function");
+    ////print("in fliterpayment function");
     if (paymentsByYear.containsKey(year)) {
-       print("in fliterpayment functionds");
+       ////print("in fliterpayment functionds");
       // If the month-year key exists, add the payment to the list
       paymentsByYear[year]!.add(payment);
     } else {
       // If the month-year key does not exist, create a new list
-     print("in fliterpayment functionree");
+     ////print("in fliterpayment functionree");
       paymentsByYear[year] = [payment];
     }
 
@@ -401,7 +409,7 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
 }
 
 
-Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
+Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
   var excel = Excel.createExcel();
   Sheet sheet = excel[payments];
 
@@ -420,8 +428,9 @@ Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
   ];
   
   // Append headers
+  try {
   sheet.appendRow(headers.map((e) => TextCellValue(e),).toList());
-
+  
   // Append data rows
   for (var payment in paymentList) {
     sheet.appendRow([
@@ -435,19 +444,110 @@ Future<void> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
      
     ]);
   }
-
-// Save the file
-  var bytes = excel.save();
-
-  // Create a Blob from the bytes
-  final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  final url = html.Url.createObjectUrlFromBlob(blob);
-
-  // Create a download link and click it programmatically
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute('download', 'Payments_${DateTime.now()}.xlsx')
-    ..click();
-
-  // Clean up
-  html.Url.revokeObjectUrl(url);
+  
+  // Save the file
+  var bytes = excel.save(fileName:  'Payments_${DateTime.now()}.xlsx');
+  return true;
+} on Exception catch (e) {
+  // TODO
+  return false;
 }
+
+  // // Create a Blob from the bytes
+  // final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+
+  // // Create a download link and click it programmatically
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute('download', 'Payments_${DateTime.now()}.xlsx')
+  //   ..click();
+
+  // // Clean up
+  // html.Url.revokeObjectUrl(url);
+}
+
+
+Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,String payments) async {
+  var excel = Excel.createExcel();
+  Sheet sheet = excel["Sheet1"];
+
+  // Define headers
+  List<String> headers = [ 
+   'Xtremer Id',
+    'First Name',
+    'Last Name',
+    'Phone',
+    'Address',
+    'Pin Code',
+    'Status',
+    'Membership Id',
+    'Start Date',
+    'End Date'
+  ];
+  
+  // Append headers
+  try {
+  sheet.appendRow(headers.map((e) => TextCellValue(e),).toList());
+  
+  // Append data rows
+  for (var xtremer in xtremerlist) {
+    sheet.appendRow([
+      TextCellValue( xtremer.XtremerId.toString()),
+      TextCellValue( xtremer.firstName.toString()),
+      TextCellValue( xtremer.surname.toString()),
+      TextCellValue( xtremer.mobileNumber.toString()),
+      TextCellValue( xtremer.address.toString()),
+      TextCellValue( xtremer.postcode.toString()),
+      TextCellValue( xtremer.isActive.toString()),
+      TextCellValue( xtremer.XtremerId.toString()),
+      // IntCellValue(  payment.discountPercentage??0,),
+      // DoubleCellValue(  payment.receivedAmount,),
+      DateCellValue.fromDateTime(DateTime.now()),
+      DateCellValue.fromDateTime(DateTime.now()),
+      // TextCellValue(payment.paymentStatus.toString()),
+      // TextCellValue(payment.paymentMethod.toString()),
+     
+    ]);
+  }
+  
+  // Save the file
+  var bytes = excel.save(fileName: 'XtremerReports_${DateTime.now()}.xlsx');
+  
+  // Create a Blob from the bytes
+  // final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+  
+  // // Create a download link and click it programmatically
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute('download', 'XtremerReports_${DateTime.now()}.xlsx')
+  //   ..click();
+  
+  // // Clean up
+  // html.Url.revokeObjectUrl(url);
+  return true;
+} on Exception catch (e) {
+  // TODO
+  return false;
+}
+
+
+
+}
+
+
+List<Alluserpaymentmodel> returnexcelpayments(List<Alluserpaymentmodel> paymentlist,DateTime startdate,DateTime enddate){
+  List<Alluserpaymentmodel> listss = [];
+
+  for(Alluserpaymentmodel payment in paymentlist){
+
+    if(payment.paymentDate.compareTo(startdate)>=0&& payment.paymentDate.compareTo(enddate)<=0){
+      
+      listss.add(payment);
+
+  }
+  
+  }
+  
+  return listss;
+}
+

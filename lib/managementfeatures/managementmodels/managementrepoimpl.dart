@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
@@ -821,9 +822,8 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updatePayment(Alluserpaymentmodel payment) async{
-        
-        double amount = payment.amount!;
+  Future<String> updatePayment(Alluserpaymentmodel payment) async {
+    double amount = payment.amount!;
     double discount = payment.discountPercentage!.toDouble();
     double receivedAmount = payment.receivedAmount;
     String transid = payment.transactionId!;
@@ -1060,7 +1060,7 @@ class ManagementrepoImpl implements ManagementRepo {
       final response = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"userName": username, "passwordHash": pass}));
-      print(response.body);
+      // print(response.body);
       var d = jsonDecode(response.body);
       // message = d["Message"]??d;
       uid = d["Data"]["UserId"].toString();
@@ -1251,28 +1251,39 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Admission?> viewadmission() async {
-    final url =
-        Uri.parse('$api/api/Admissions'); // Replace with your API endpoint
+  Future<Map<Admission?, int>> viewadmission() async {
+    final url = '$api/api/Admissions'; // Replace with your API endpoint
 
     try {
-      final response = await http.get(url);
+      // Make the request using universal_html's HttpRequest with withCredentials set to true
+      var response = await html.HttpRequest.request(
+        url,
+        method: 'GET',
+        withCredentials: true, // Enable credentials for cross-origin requests
+      );
 
-      if (response.statusCode == 200) {
+      if (response.status! >= 200 && response.status! < 300) {
         // Parse the response body
-        final List<dynamic> jsonList = json.decode(response.body);
+        final List<dynamic> jsonList = json.decode(response.responseText!);
 
-        // Convert the JSON data to an Admission object
-        return jsonList.map((json) => Admission.fromJson(json)).toList().first;
+        // Convert the JSON data to Admission objects
+        var admission =
+            jsonList.map((json) => Admission.fromJson(json)).toList().first;
+
+        return {
+          admission: response.status!
+        }; // Return the admission object and status code
       } else {
         // Handle error response
-        print('Failed to load admission. Status code: ${response.statusCode}');
-        return null;
+        print('Failed to load admission. Status code: ${response.status}');
+        return {null: response.status!};
       }
     } catch (e) {
       // Handle exceptions like network errors
       print('Error fetching admission: $e');
-      return null;
+      return {
+        null: 0
+      }; // Return a default error status of 0 in case of exception
     }
   }
 

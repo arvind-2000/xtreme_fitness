@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:html' as html;
 
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
+import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -54,40 +54,34 @@ class GetxAuthController extends GetxController {
     _user = UserEntity(id: 0, userName: "", passwordHash: "");
     final SharedPreferences pref = await SharedPreferences.getInstance();
     try {
-      debugPrint('in email authenticate');
+      //print('in email authenticate');
 
       d = await authrepo.emailAuthentication(email: email, pass: pass);
 
-      debugPrint(d.toString());
-      loginerrortext = d.entries.first.value;
       if (d.isNotEmpty) {
         if (d.entries.first.key != null) {
-          _authentication = true;
           userid = d.entries.first.key;
           if (userid != null) {
-            print("In authentication check");
+            ////print("In authentication check");
             Map<UserEntity?, String> v =
                 await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
             _user = v.entries.first.key;
-
-            update();
             if (_user != null) {
-              print("In authentication check member or not ${_user!.roleName}");
+              _authentication = true;
+              loginerrortext = d.entries.first.value;
+              ////print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
-
-              print("in authentication :$ismember ");
-
-              print('Saving user and password to local');
+              ////print("in authentication :${ismember} ");
+              print('userid');
               final encrypteduser = encryptData(userid!);
-
               pref.setString('key1', encrypteduser);
               pref.setBool('key2', ismember);
-
               loginloading = false;
               update();
               Get.toNamed('/dashboard');
             } else {
-              print("user null");
+              loginerrortext = "Unauthorized login";
+              ////print("user null");
               _authentication = false;
               ismember = true;
               loginloading = false;
@@ -100,7 +94,7 @@ class GetxAuthController extends GetxController {
           update();
         }
 
-        debugPrint(_authentication.toString());
+        //print(_authentication.toString());
 
         loginloading = false;
         update();
@@ -108,7 +102,7 @@ class GetxAuthController extends GetxController {
         return {_authentication: d.entries.first.value};
       }
     } catch (e) {
-      debugPrint('in sign up catch');
+      //print('in sign up catch');
       _authentication = false;
       ismember = true;
       loginloading = false;
@@ -123,7 +117,9 @@ class GetxAuthController extends GetxController {
 
   void logout() async {
     loginloading = true;
+    loginerrortext = null;
     update();
+    // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout().then(
       (value) {
@@ -145,24 +141,25 @@ class GetxAuthController extends GetxController {
   }
 
   void authentications() async {
-    // if(html.document.cookie!=null){
-    //   final SharedPreferences prefs =
-    //      await SharedPreferences.getInstance();
-    //        if (prefs.containsKey('key1') &&
-    //     prefs.containsKey('key2')) {
-    //       print("in returnss admin");
-    //  setdataforsession(decryptData(prefs.getString('key1')!),
-    //     prefs.getBool('key2')!);
-    //     Get.toNamed('/dashboard');
-
-    // } else {
-    //   Get.offAllNamed('/home');
-    //   Get.dialog(const LoginDialog());
-    // }
-    // }else{
-
-    //   Get.offAllNamed('/home');
-    // }
+    print("in authentications");
+    Map<Admission?, int> res = await ManagementrepoImpl().viewadmission();
+    print("addmission status code : ${res.entries.first.value}");
+    if (res.entries.first.value >= 200 && res.entries.first.value < 300) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
+        ////print("in returnss admin");
+        setdataforsession(
+            decryptData(prefs.getString('key1')!), prefs.getBool('key2')!);
+        Get.toNamed('/dashboard');
+      } else {
+        Get.offAllNamed('/home');
+      }
+    } else {
+      if (res.entries.first.value == 401) {
+        Get.offAllNamed('/home');
+        Get.dialog(const LoginDialog());
+      }
+    }
   }
 
   void signup(String phone) async {
@@ -194,30 +191,6 @@ class GetxAuthController extends GetxController {
       otp = null;
       update();
     }
-
-    // //testing
-    //   numberexists = false;
-    //   otploading = false;
-    //   sendotp(phone);
-    // } else {
-    //   if (d.entries.first.key! > 0) {
-    //     signuperror =
-    //         "A user with the number already exists.\nTry another number";
-    //   } else {
-    //     if (d.entries.first.key == -1) {
-    //       signuperror =
-    //           "There is an issue at our end.\nWe will get back to you as soon as possible.";
-    //     } else {
-    //       signuperror =
-    //           "There  may be an issue with the connection or with the browser.\nTry again.";
-    //     }
-    //   }
-    //   otploading = false;
-
-    //   numberexists = true;
-    //   otp = null;
-    //   update();
-    // }
 
     otploading = false;
     update();
@@ -262,7 +235,7 @@ class GetxAuthController extends GetxController {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    debugPrint(otp.toString());
+    //print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
@@ -299,7 +272,7 @@ class GetxAuthController extends GetxController {
     // change pass
     //add api call here
     if (foruserId != null) {
-      print("In password change");
+      ////print("In password change");
       // Map<UserEntity?,String> d = await authrepo.getUserbyId(foruserId!);
       // if(d.entries.first.key!=null){
 
