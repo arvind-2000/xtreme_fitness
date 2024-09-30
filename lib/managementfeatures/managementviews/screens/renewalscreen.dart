@@ -698,7 +698,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                heights: 300,
                                                child: const Text("Are you sure you want to change?"), no: () => Navigator.pop(context), yes: () async{
                                               String s = await managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
-                                              print(s);
+                                              //print(s);
                                              },)));
                                            },
                                           //  managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",

@@ -115,7 +115,7 @@ class _AddPlanFieldsState extends State<AddServiceField> {
                             yes: () async{
                               String d = "";
                               if(widget.edit){
-                                print("in service edit");
+                                //print("in service edit");
                                  String v =  await managementctrl.editservice(service);
                                     d= v;
                               }else{

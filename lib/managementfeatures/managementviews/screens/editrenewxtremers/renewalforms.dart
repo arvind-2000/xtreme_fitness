@@ -47,7 +47,7 @@ class _RenewalFormsState extends State<RenewalForms> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  addmemberctrl.paymentstatus != 0
+                  addmemberctrl.paymentstatus == 0
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -73,6 +73,7 @@ class _RenewalFormsState extends State<RenewalForms> {
                   addmemberctrl.paymentstatus != 0
                       ? PaymentStatusCard(callback: () {
                           addmemberctrl.changepaymentstatus(0);
+                          pagectrl.changerenewal(false);
                         })
                       : PlanSelectionField(
                           pagectrl: pagectrl,

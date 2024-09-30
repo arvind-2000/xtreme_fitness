@@ -156,7 +156,7 @@ class GetxLandingcontroller extends GetxController {
       )
           .then((_) {
         setscroll(
-            true); // Re-enable scroll listener after the animation completes
+            true); 
       });
     }
   }
@@ -176,27 +176,26 @@ class GetxLandingcontroller extends GetxController {
 
     try {
       await FlutterEmailSender.send(email);
-      print('Email sent successfully!');
+      ////print('Email sent successfully!');
     } catch (error) {
-      print('Failed to send email: $error');
+      //print('Failed to send email: $error');
     }
   }
 
   void getPlans() async {
     _plan = await managementrepoImpl.getPlans();
-    // _plan = dummyplan;
-    print(_plan.length);
+    //print(_plan.length);
     update();
   }
 
   void getServices() async {
     _services = await managementrepoImpl.getServices();
-    // _services = dummyservices;
+ 
     update();
   }
 
   void addServices(ServiceEntity servic) async {
-    // _services = await managementrepoImpl.getServices();
+
     services = servic;
   }
 
@@ -226,9 +225,9 @@ class GetxLandingcontroller extends GetxController {
       _isloading = false;
       update();
       log('Successfuly send message');
-      print(await response.stream.bytesToString());
+      //print(await response.stream.bytesToString());
     } else {
-      print(response.reasonPhrase);
+      //print(response.reasonPhrase);
     }
   }
 
@@ -250,11 +249,6 @@ class GetxLandingcontroller extends GetxController {
                     size: 30,
                   ),
           ),
-          // const Icon(
-          //   Icons.check_circle,
-          //   color: Colors.white,
-          //   size: 70,
-          // ),
           const SizedBox(height: 16),
           _isloading
               ? const HeadingText(
@@ -265,14 +259,7 @@ class GetxLandingcontroller extends GetxController {
                   'Thank you for contacting us',
                   size: 25,
                 ),
-          // const Text(
-          //   'Thank you for contacting us.',
-          //   style: TextStyle(
-          //     fontSize: 18,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          //   textAlign: TextAlign.center,
-          // ),
+
           const SizedBox(height: 10),
           _isloading
               ? const SizedBox()

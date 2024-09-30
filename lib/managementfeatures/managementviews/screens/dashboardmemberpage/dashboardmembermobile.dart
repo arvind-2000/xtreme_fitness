@@ -146,7 +146,7 @@ class _DashBoardMemberScreenmobileState extends State<DashBoardMemberScreenmobil
                   ),
                 )
                 :SizedBox(),
-                MemberServiceHistory(),
+               managectrl.xtremer!=null?MemberServiceHistory(xtremers: managectrl.xtremer!):SizedBox(),
 
                 Center(
                   child: SizedBox(height: 200,

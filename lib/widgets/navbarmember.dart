@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-
-import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
 import '../managementfeatures/managementviews/screens/dashboard.dart';
 import '../managementfeatures/managementviews/widgets/dialogswidget.dart';
+import '../responsive/responsive.dart';
 import 'card.dart';
 import 'headingtext.dart';
 
@@ -93,7 +92,7 @@ class NavBarMember extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -114,7 +113,7 @@ class NavBarMember extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -161,7 +160,7 @@ class NavBarMember extends StatelessWidget {
           Cardonly(
               color: Colors.transparent,
               onpress: () {
-                if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                   drawers(context);
                 }
                 Get.dialog(
@@ -176,7 +175,7 @@ class NavBarMember extends StatelessWidget {
                           authctrl.logout();
                          
                         },
-                        child: const Column(
+                        child:authctrl.loginloading?Center(child: CircularProgressIndicator(color: Colors.white,),) : const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(

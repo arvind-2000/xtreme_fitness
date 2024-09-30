@@ -7,6 +7,8 @@ import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_deskto
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_mobile.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 
+import '../../../authenicationfeatures/views/controller/authcontroller.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,6 +18,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   
+  }
+
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());

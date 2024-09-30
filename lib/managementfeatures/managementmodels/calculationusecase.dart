@@ -115,7 +115,7 @@ double percentprice(double? actualprice,double? dis){
                     style: pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
-                    '${"Tomba Khuraijam"}',
+                    '$name',
                     style: pw.TextStyle(fontSize: 12),
                   ),
                 ]

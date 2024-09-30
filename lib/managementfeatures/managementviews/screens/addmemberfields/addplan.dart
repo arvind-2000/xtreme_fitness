@@ -169,7 +169,7 @@ class PlanSelectionField extends StatelessWidget {
                                 Text(addmemberctrl.gettrainer!.phone,style: const TextStyle(fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 6,),
                                    const Text("Designation"),
-                                Text(addmemberctrl.gettrainer!.roleid.rolename,style: const TextStyle(fontWeight: FontWeight.bold),),
+                                Text(addmemberctrl.gettrainer!.roleid.roleName,style: const TextStyle(fontWeight: FontWeight.bold),),
                               ],
                                                     ),
                             ),

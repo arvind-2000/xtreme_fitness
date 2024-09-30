@@ -31,12 +31,12 @@ class ServiceSchedule {
   // Method to convert a ServiceSchedule instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      
-      'userId': userId,
-      'serviceId': serviceId,
-      'scheduleDate': scheduleDate.toIso8601String(),
-      'price': price,
-      'status': status,
+      'Id':id,
+      'UserId': userId,
+      'ServiceId': serviceId,
+      'ScheduleDate': scheduleDate.toIso8601String(),
+      'Price': price,
+      'Status': status,
     };
   }
 }

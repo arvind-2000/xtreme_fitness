@@ -1,3 +1,5 @@
+import 'roles.dart';
+
 class User{
  String uid;
  String name;
@@ -5,14 +7,6 @@ class User{
 String username;
  Role roleid;
   User( {required this.uid, required this.name, required this.phone, required this.username,required this.roleid,});
-}
-
-class Role {
-final String roleid;
-final String rolename;
-
-  Role({required this.roleid, required this.rolename});
-
 }
 
 

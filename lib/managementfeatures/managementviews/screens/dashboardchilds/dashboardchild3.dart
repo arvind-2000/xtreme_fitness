@@ -87,7 +87,7 @@ class DashboardChild3 extends StatelessWidget {
 
                     }
 
-                       print("in filter payment $d");
+                       //print("in filter payment $d");
                     return d;
                     }).toList()
                      ,

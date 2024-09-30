@@ -19,7 +19,7 @@ void main() async {
   runApp(const MyApp());
   setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
-  Get.put(GetxAuthController());
+  Get.put(GetxAuthController()).authentications();
   // Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
    
@@ -27,6 +27,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
@@ -58,27 +59,22 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData(colorScheme: darkColorSchemes),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/home',
+      initialRoute: '/',
       unknownRoute: GetPage(
         name: '/NotFoundPage',
         page: () => const NotfoundPage(),
       ),
       getPages: [
         GetPage(
-            name: '/',
+            name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
-
-        GetPage(
-            name: '/loginmobile',
-            page: () => const LoginDialogMobile(),
-            transition: Transition.noTransition),
-        // GetPage(
-        //     name: '/',
-        //     page: () => const LandingHomePage(index: 4,),
-        //     transition: Transition.noTransition),
         GetPage(
             name: '/home',
+            page: () => const MainPage(),
+            transition: Transition.noTransition),
+              GetPage(
+            name: '/',
             page: () => const MainPage(),
             transition: Transition.noTransition),
 
@@ -90,39 +86,6 @@ class MyApp extends StatelessWidget {
             name: '/Policies',
             page: () => const Policies(),
             transition: Transition.noTransition),
-        // GetPage(
-        //     name: '/pricing',
-        //     page: () => const LandingHomePage(
-        //           index: 1,
-        //         ),
-        //     transition: Transition.noTransition),
-        // GetPage(
-        //     name: '/services',
-        //     page: () => const LandingHomePage(
-        //           index: 2,
-        //         ),
-        //     transition: Transition.noTransition),
-        // GetPage(
-        //     name: '/gallery',
-        //     page: () => const LandingHomePage(
-        //           index: 3,
-        //         ),
-        //     transition: Transition.noTransition),
-        // GetPage(
-        //     name: '/login',
-        //     page: () => const AuthHandlerPage(
-        //           index: 0,
-        //         )),
-        // GetPage(
-        //     name: '/signup',
-        //     page: () => const AuthHandlerPage(
-        //           index: 1,
-        //         )),
-        // GetPage(
-        //     name: '/forgotpassword',
-        //     page: () => const AuthHandlerPage(
-        //           index: 2,
-        //         )),
       ],
     ).animate().fadeIn();
   }

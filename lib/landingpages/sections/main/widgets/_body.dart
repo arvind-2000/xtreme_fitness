@@ -34,32 +34,12 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // log("Width :${MediaQuery.sizeOf(context).width}");
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
 
-    // itemPositionsListener.itemPositions.addListener(() {
-    //          print(
-    //       '====current first ${itemPositionsListener.itemPositions.value.first.index}====');
-    //       landctrl.setnavindex(itemPositionsListener.itemPositions.value.first.index);
-    // },);
-    // landctrl.controller.addListener(() {
-    //   // log('fdfdfd');
-    //   landctrl.setNavIndex(context);
-    // });
-    // return PageView.builder(
-    //   // physics: Responsive.isMobile(context) || Responsive.isTablet(context)
-    //   //     ? const NeverScrollableScrollPhysics()
-    //   //     : null,
-    //   pageSnapping: false,
-    //   scrollDirection: Axis.vertical,
-    //   controller: landctrl.controller,
-    //   itemCount: landingwidgets.length,
-    //   itemBuilder: (context, index) => landingwidgets[index],
-    // );
 
     return Scrollbar(
+      
       child: ScrollablePositionedList.builder(
-        // itemPositionsListener: itemPositionsListener,
         itemScrollController: landctrl.scrollControllers,
         initialScrollIndex: 0,
         itemCount: 5,

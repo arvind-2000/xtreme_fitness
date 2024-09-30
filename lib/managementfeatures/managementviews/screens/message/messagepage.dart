@@ -135,7 +135,7 @@ class MessageTile extends StatelessWidget {
   String getFirstTwoLetters(String name) {
     // Split the name by spaces into a list of words
     List<String> words = name.split(' ');
-    print("Word Length :${words.length}");
+    //print("Word Length :${words.length}");
     // Ensure there are at least two words
     if (words.length >= 2) {
       // Take the first two letters of the first word and the first two letters of the second word

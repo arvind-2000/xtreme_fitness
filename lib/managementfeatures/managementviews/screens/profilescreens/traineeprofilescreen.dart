@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../../../authentifeatures/domain/userentity.dart';
+
 
 class TraineeProfile extends StatelessWidget {
   const TraineeProfile({super.key, this.user});
@@ -53,281 +52,18 @@ class TraineeProfile extends StatelessWidget {
                     ? const Center(
                         child: Text("No User"),
                       )
-                    : Expanded(
+                    :size<=mobilescreen?Expanded(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TrainerProfile(user: user),
+                        SizedBox(height: 10,),
+                            TrainerList(),
+                      ],
+                    )) :Expanded(
                         child: Row(
                           children: [
-                            SizedBox(
-                                width: 300,
-                                child: CardwithShadow(
-                                    margin: const EdgeInsets.only(right: 16),
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CircleAvatar(
-                                              backgroundColor: Colors.grey[200],
-                                              child: const SizedBox(
-                                                  height: 100,
-                                                  width: 100,
-                                                  child: Center(
-                                                      child: Icon(
-                                                    Icons.person,
-                                                    color: Colors.black,
-                                                    size: 35,
-                                                  ))),
-                                            ),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                  Icons.edit,
-                                                  size: 16,
-                                                ))
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        //name details
-        
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              "Name : ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              user!.name,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-        
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              "Phone : ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              'fssf',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-        
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              "Designation : ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              user!.designation,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-        
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              "Address : ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              "Shfjhfjfh",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-        
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              "Email : ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              "adudada@gmail.com",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-        
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        CardwithShadow(
-                                            padding: const EdgeInsets.all(10),
-                                            color: Colors.blue[300],
-                                            child: const Center(
-                                              child: Text("Change Password"),
-                                            ))
-                                      ],
-                                    ))),
-                            Expanded(
-                                child: CardwithShadow(
-                                    color: Colors.transparent,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const HeadingText("No. of Trainees ()"),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Expanded(
-                                          child: GridView.builder(
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: size < 500
-                                                    ? 1
-                                                    : size < mobilescreen
-                                                        ? 2
-                                                        : size > mobilescreen &&
-                                                                size < 1200
-                                                            ? 3
-                                                            : 4,
-                                                mainAxisSpacing: 10,
-                                                childAspectRatio:
-                                                    size < 500 ? 1 : 4.5 / 5.2,
-                                              ),
-                                              shrinkWrap: true,
-                                              itemCount: managectrl.getallTrainee.length,
-                                              itemBuilder: (c, i) {
-                                                return CardwithShadow(
-                                                    margin:
-                                                        const EdgeInsets.symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
-                                                      children: [
-                                                        //name
-                                                        Row(
-                                                          children: [
-                                                            Text("Name : "),
-                                                            Text(
-                                                              managectrl.getallTrainee[i].firstName??"",
-                                                              style: TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-        
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-        
-                                                        //phone
-                                                        Row(
-                                                          children: [
-                                                            Text("Phone : "),
-                                                            Text(managectrl.getallTrainee[i].mobileNumber??""),
-                                                          ],
-                                                        ),
-        
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        //time schedule
-                                                        Expanded(
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              CardwithShadow(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                                  child:
-                                                                       FittedBox(
-                                                                    child: Column(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Row(
-                                                                          children: [
-                                                                            Icon(
-                                                                              Icons
-                                                                                  .alarm,
-                                                                              size:
-                                                                                  14,
-                                                                              color:
-                                                                                  Colors.grey,
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width:
-                                                                                  6,
-                                                                            ),
-                                                                            Text(
-                                                                              "Schedule Time",
-                                                                              style:
-                                                                                  TextStyle(color: Colors.white),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height:
-                                                                              10,
-                                                                        ),
-                                                                        Text(
-                                                                          managectrl.getallTrainee[i].preferTiming??"morning",
-                                                                          style: TextStyle(
-                                                                              fontWeight: FontWeight
-                                                                                  .bold,
-                                                                              color:
-                                                                                  Colors.white),
-                                                                        )
-                                                                      ],
-                                                                    ),
-                                                                  )),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ));
-                                              }),
-                                        )
-                                      ],
-                                    ))),
+                            TrainerProfile(user: user),
+                            TrainerList(),
                           ],
                         ),
                       ),
@@ -340,5 +76,244 @@ class TraineeProfile extends StatelessWidget {
         });
       }
     );
+  }
+}
+
+class TrainerList extends StatelessWidget {
+  const TrainerList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ManagementController>(
+      builder: (managectrl) {
+        return Expanded(
+            child: CardwithShadow(
+                color: Colors.transparent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const HeadingText("Trainees List"),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                     
+                            mainAxisSpacing: 10,
+                            childAspectRatio:MediaQuery.sizeOf(context).width<=mobilescreen?4/3:4/4, maxCrossAxisExtent:MediaQuery.sizeOf(context).width<=mobilescreen?500:300,
+                          ),
+                          shrinkWrap: true,
+                          itemCount: managectrl.getallTrainee.length,
+                          itemBuilder: (c, i) {
+                            return CardwithShadow(
+                                margin:
+                                    const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 8),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    //name
+                                    Row(
+                                      children: [
+                                        const Text("Name : "),
+                                        Text(
+                                          managectrl.getallTrainee[i].firstName??"",
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight:
+                                                  FontWeight
+                                                      .bold),
+                                        ),
+                                      ],
+                                    ),
+                
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                
+                                    //phone
+                                    Row(
+                                      children: [
+                                        const Text("Phone : "),
+                                        Text(managectrl.getallTrainee[i].mobileNumber??""),
+                                      ],
+                                    ),
+                
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    //time schedule
+                                    Expanded(
+                                      child: SizedBox(
+                                        width: double.maxFinite,
+                                        child: CardwithShadow(
+                                          
+                                            color: Theme.of(
+                                                    context)
+                                                .colorScheme
+                                                .secondary,
+                                            child:
+                                                 Column(
+                                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                                   mainAxisAlignment:
+                                                       MainAxisAlignment
+                                                           .start,
+                                                   children: [
+                                                     const Row(
+                                                       children: [
+                                                         Icon(
+                                                           Icons
+                                                               .alarm,
+                                                           size:
+                                                               14,
+                                                           color:
+                                                               Colors.grey,
+                                                         ),
+                                                         SizedBox(
+                                                           width:
+                                                               6,
+                                                         ),
+                                                         Text(
+                                                           "Schedule Time",
+                                                           style:
+                                                               TextStyle(color: Colors.white),
+                                                         ),
+                                                       ],
+                                                     ),
+                                                     const SizedBox(
+                                                       height:
+                                                           10,
+                                                     ),
+                                                     Text(
+                                                       managectrl.getallTrainee[i].preferTiming??"morning",
+                                                       style: const TextStyle(
+                                                           fontWeight: FontWeight
+                                                               .bold,
+                                                           color:
+                                                               Colors.white),
+                                                     )
+                                                   ],
+                                                 )),
+                                      ),
+                                    )
+                                  ],
+                                ));
+                          }),
+                    )
+                  ],
+                )));
+      }
+    );
+  }
+}
+
+class TrainerProfile extends StatelessWidget {
+  const TrainerProfile({
+    super.key,
+    required this.user,
+  });
+
+  final TrainerEntity? user;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 300,
+        child: CardwithShadow(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      child: const SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Center(
+                              child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: 35,
+                          ))),
+                    ),
+               
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                //name details
+            
+                Row(
+                  children: [
+                    const Text(
+                      "Name : ",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      user!.name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+    
+           
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "Designation : ",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      user!.designation,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+            
+                const SizedBox(
+                  height: 20,
+                ),
+                 Row(
+                  children: [
+                    const Text(
+                      "Timing : ",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      user!.timing,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+            
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
+            )));
   }
 }

@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
-import 'package:xtreme_fitness/managementfeatures/managementmodels/dummies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
@@ -16,6 +14,7 @@ import '../../../authentifeatures/domain/userentity.dart';
 import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/membership.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
+import '../../managementdomain/entities.dart/roles.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -70,11 +69,18 @@ class ManagementController extends GetxController {
   List<ServiceEntity> get getallactiveservices => _allactiveservices;
   List<Trainee> get getallTrainee => _alltrainee;
   List<Membership> get getallMembership => _allmembership;
+  List<Role> get getallRoles => _allroles;
+  List<Role> _allroles  = [];
+
+    List<ServiceSchedule> get getallServicesSchedule => _allserviceschedule;
+  List<ServiceSchedule> _allserviceschedule  = [];
   String? searchmessage = "";
   int searchposition = 0;
   Membership? currentmember;
   GetxAuthController authctrl = Get.find<GetxAuthController>();
   Xtremer? xtremer;
+  Admission? _admission;
+  Admission? get getAdmission=>_admission;
 
   /// 0 [week] 1[month]
   int servicefilter = 1;
@@ -93,21 +99,18 @@ class ManagementController extends GetxController {
   void onInit() {
     super.onInit();
     getplans();
-
+    getadmission();
     checkmember();
     getxtremer();
-    // getinactivextremer();
-    // getallpersonalextremer();
     getStaff();
     getallServices();
     getTrainer();
     viewpayment();
     getpaymentlastest10();
     getAllTraineess(10);
-    // getallgeneralextremer();
-
-    // getxtremerforoverall();
+    getAllRoles();
     getMemberships();
+    getAllServiceSchedules();
 
 
     update();
@@ -119,7 +122,7 @@ class ManagementController extends GetxController {
     Timer.periodic(
       const Duration(seconds: 5),
       (timer) {
-        print("In periodic timer");
+        //print("In periodic timer");
         getxtremer();
         // getinactivextremer();
         // getallpersonalextremer();
@@ -151,7 +154,7 @@ class ManagementController extends GetxController {
     List<Trainee> d = [];
     // _alltrainee = dummytrainees;
     d = await managementRepo.viewTrainee(id);
-    print("In trainer list ${_alltrainee.length}");
+    //print("In trainer list ${_alltrainee.length}");
     _alltrainee = d;
     update();
     return d;
@@ -172,58 +175,11 @@ class ManagementController extends GetxController {
     update();
   }
 
-  // void getxtremerforoverall() async {
-  //   _allinactivextremerforoverall.clear();
-  //   _allpersonalxtremerforoverall.clear();
-  //   _allgeneralxtremerforoverall.clear();
-  //   // var alldata = await managementRepo.viewMemberforoverall();
-
-  //   for (var element in alldata) {
-  //     if (_allinactivextremerforoverall.contains(element)) {
-  //       print('already added to today list');
-  //     } else {
-  //       if (element.isActive == false) {
-  //         // Add all elements whose createddate is today
-  //         _allinactivextremerforoverall.add(element);
-  //       }
-  //     }
-  //   }
-
-  //   for (var element in alldata) {
-  //     if (_allpersonalxtremerforoverall.contains(element)) {
-  //       print('already added to today list');
-  //     } else {
-  //       if (element.category == 'Personal') {
-  //         if (element.isActive == true) {
-  //           _allpersonalxtremerforoverall.add(element);
-  //         }
-  //         // Add all elements whose createddate is today
-  //       }
-  //     }
-  //   }
-
-  //   for (var element in alldata) {
-  //     if (_allgeneralxtremerforoverall.contains(element)) {
-  //       print('already added to today list');
-  //     } else {
-  //       if (element.category == 'General') {
-  //         if (element.isActive == true) {
-  //           _allgeneralxtremerforoverall.add(element);
-  //         }
-  //         // Add all elements whose createddate is today
-  //       }
-  //     }
-  //   }
-  //   _allxtremerforoverall = alldata;
-  //   update();
-  //   log(_allxtremerforoverall.length.toString());
-  // }
-
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
     _allxtremer = await managementRepo.viewMember();
     if (authctrl.ismember) {
-      print("In get xtremer");
+      //print("In get xtremer");
       xtremer = _allxtremer.firstWhereOrNull(
         (element) => element.XtremerId.toString() == authctrl.userid,
       );
@@ -301,35 +257,37 @@ class ManagementController extends GetxController {
   //   });
   // }
 
-  Future<Admission?> getadmission() async {
+  void getadmission() async {
     Map<Admission?,int> d =  await managementRepo.viewadmission();
-    return d.entries.first.key;
+    _admission = d.entries.first.key;
+    update();
 
   }
 
   void getMembershipbyid(int id) async {
-    print('$id');
+    //print('$id');
     if (_allmembership.isNotEmpty) {
       try {
         for (Membership i in _allmembership) {
-          print(i.userId);
+          //print(i.userId);
           if (i.userId == id) {
             currentmember = i;
-            print("membership found");
+            
+            //print("membership found");
             update();
             return;
           }
         }
       } on Exception catch (e) {
         // TODO
-        print(e);
+        //print(e);
       }
     }
     update();
   }
 
   Future<String> activateXtremer(Xtremer? xtremer) async {
-    print("In update xtremer");
+    //print("In update xtremer");
     if (xtremer != null) {
       try {
         Xtremer y = xtremer;
@@ -358,7 +316,7 @@ class ManagementController extends GetxController {
   void getMemberships() async {
     _allmembership = await managementRepo.viewMembership();
     if (authctrl.ismember) {
-      print("In current meber");
+      // //print("In current meber");
       currentmember = _allmembership.firstWhereOrNull(
         (element) =>
             element.userId.toString() == authctrl.userid && element.isActive!,
@@ -429,7 +387,7 @@ class ManagementController extends GetxController {
             )
             .toList(),
         DateTime.now());
-    print("In view payment : ${_allpayments.length}");
+    //print("In view payment : ${_allpayments.length}");
     update();
   }
 
@@ -515,6 +473,39 @@ class ManagementController extends GetxController {
     update();
   }
 
+
+  void searchservice(String keyword) {
+    searchmessage = "";
+    if (keyword.isEmpty) {
+      _searchpayments = _allpayments;
+
+      _searchxtremerlist = _allpersonalxtremer;
+
+      _searchxtremerlist = _allgeneralxtremer;
+    } else {
+      _searchpayments = _allpayments.where(
+        (element) {
+          return element.transactionId
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) ||
+              element.userId
+                  .toString()
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase());
+        },
+      ).toList();
+    }
+
+    searchmessage = keyword.isEmpty
+        ? ""
+        : "Found ${_searchpayments.length} records with keyoword: $keyword";
+    update();
+  }
+
+
+
+
   ///call in search to make personal only
   void personalxtremer() {
     _searchxtremerlist = _allpersonalxtremer;
@@ -536,5 +527,64 @@ class ManagementController extends GetxController {
     _searchxtremerlist = _allxtremer;
     update();
   }
+
+
+
+  ///roles get all role list
+  void getAllRoles()async{
+    _allroles = await managementRepo.getRoles();
+    update();
+  }
+
+
+  ///add roles to api
+  Future<String> addroles(Role role)async{
+
+    String v = await managementRepo.addRoles(role: role);
+    getAllRoles();
+    return v;
+
+  }
+
+    Future<String> updateAdmission(Admission admissionfees)async{
+
+    String v = await managementRepo.updateadmission(admissionfees);
+    getadmission();
+    return v;
+
+  }
+
+  Future<String> updateroles(Role role)async{
+
+    String v = await managementRepo.updateRole(role: role);
+     getAllRoles();
+    return v;
+  
+  }
+
+
+  Future<String> deleteRole(Role role)async{
+
+    String v = await managementRepo.deleteRole(role: role);
+     getAllRoles();
+    return v;
+  
+  }
+
+
+  ///allservice schedules
+  void getAllServiceSchedules()async{
+    _allserviceschedule = await managementRepo.getAllServiceUsage();
+    update();
+  }
+
+ Future<String> updateserviceschedule(ServiceSchedule serviceschedule)async{
+
+    String v = await managementRepo.updateServiceUsage(serviceschedule);
+     getAllServiceSchedules();
+    return v;
+  
+  }
+
 
 }

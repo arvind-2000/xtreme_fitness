@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 
 class GetxPageController extends GetxController {
   int navpage = 0;
@@ -29,7 +28,7 @@ class GetxPageController extends GetxController {
 
 
   void changeaddMemberPage(int addpage) {
-    print('in change page $addpage');
+    //print('in change page $addpage');
     addmemberpages = addpage;
     update();
   }
@@ -37,14 +36,6 @@ class GetxPageController extends GetxController {
   void changeaddmemberclose() {
     addmemberpages = 0;
   }
-
-  // void overalldropdown(String? val) {
-  //   ManagementController mgctrl = Get.put(ManagementController());
-  //   _overalldropdownname = val!;
-  //   overalldropdownindex = dayslist2.indexOf(_overalldropdownname).obs;
-  //   update();
-  //   mgctrl.getxtremerforoverall();
-  // }
 
   void changerenewal(bool v) {
     isrenewalforms = v;
@@ -57,9 +48,12 @@ class GetxPageController extends GetxController {
   }
 
   void changeviewprofile() {
-    viewprofile = viewprofile ? false : true;
+   if(viewprofile){
+     viewprofile = false;
+   }else
+   {viewprofile = true;}
     update();
-    print("In page control $viewprofile");
+    //print("In page control $viewprofile");
   }
 
   void disposes() {

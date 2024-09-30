@@ -16,8 +16,10 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/servic
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/settingscreen.dart';
 import 'package:xtreme_fitness/widgets/navbarmember.dart';
 
+import '../../../responsive/responsive.dart';
 import '../../../widgets/navbar.dart';
 import '../controllers/pagecontroller.dart';
+import 'serviceusagescreen.dart';
 
 class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({super.key});
@@ -29,16 +31,13 @@ class DashBoardScreen extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //  SizedBox(height:    MediaQuery.sizeOf(context).width < 800?0:100,),
             Expanded(
               child: Row(
                 children: [
-                  MediaQuery.sizeOf(context).width < 800
+                 Responsive.isMobile(context)||Responsive.isTablet(context)
                       ? const SizedBox()
                       : SizedBox(
-                          width: MediaQuery.sizeOf(context).width < navbarsize
-                              ? 100
-                              : 250,
+                          width:  250,
                           child: Row(
                             children: [
                               Expanded(
@@ -51,11 +50,6 @@ class DashBoardScreen extends StatelessWidget {
                                       ),
                               ),
 
-                              //   Container(
-                              //     width: 1,
-                              //     height:double.maxFinite,
-                              //         color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
-                              // ),
                             ],
                           ),
                         ),
@@ -94,7 +88,8 @@ class DashBoardScreen extends StatelessWidget {
                                                                 : pagectrl.navpage ==
                                                                         8
                                                                     ? SettingPage()
-                                                                    : pagectrl.navpage ==
+                                                                    :pagectrl.navpage ==
+                                                                            15?ServiceUsageScreen(): pagectrl.navpage ==
                                                                             10
                                                                         ? const AddTrainerScreen()
                                                                         : const MessageListScreen(),
@@ -132,10 +127,7 @@ class NavTiles extends StatelessWidget {
         const SizedBox(
           width: 20,
         ),
-        MediaQuery.sizeOf(context).width < navbarsize &&
-                MediaQuery.sizeOf(context).width > mobilescreen
-            ? const SizedBox()
-            : Text(
+    Text(
                 title,
                 // size: 16,
               ),

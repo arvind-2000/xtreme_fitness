@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:http_parser/http_parser.dart';
@@ -21,20 +20,18 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 
 import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
+import '../managementdomain/entities.dart/roles.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
-  // GetxPageController pgctrl = Get.put(GetxPageController());
 
 @override
 Future<Map<String, dynamic>> addMember(
     Xtremer xtremer, Uint8List? filepath, String userid) async {
-  print(
-      "In add member: userid $userid  xtremer submitted: ${xtremer.submittedBy}  ${xtremer.category}  ${xtremer.isActive}");
+  //print("In add member: userid $userid  xtremer submitted: ${xtremer.submittedBy}  ${xtremer.category}  ${xtremer.isActive}");
 
   // Create a new FormData object
   final formData = html.FormData();
@@ -97,19 +94,19 @@ Future<Map<String, dynamic>> addMember(
     // Check the status code
     if (xhr.status! >= 200 && xhr.status! < 300) {
       String responseBody = xhr.responseText!;
-      print('Upload successful: $responseBody');
+      //print('Upload successful: $responseBody');
       return {"response": responseBody};
     } else if (xhr.status == 409) {
       String responseBody = xhr.responseText!;
-      print('Conflict Error: $responseBody');
+      //print('Conflict Error: $responseBody');
       return {"response": xhr.statusText};
     } else {
-      print('Request failed with status: ${xhr.status}');
-      print('Reason: ${xhr.statusText}');
+      //print('Request failed with status: ${xhr.status}');
+      //print('Reason: ${xhr.statusText}');
       return {"response": xhr.statusText};
     }
   } catch (e) {
-    print('Error occurred: $e');
+    //print('Error occurred: $e');
     return {"response": e.toString()};
   }
 }
@@ -174,7 +171,7 @@ Future<String> updateMember(Xtremer xtremer) async {
     // Check the status code
     if (xhr.status! >= 200 && xhr.status! < 300) {
       String responseBody = xhr.responseText!;
-      print('Update successful: $responseBody');
+      //print('Update successful: $responseBody');
       return "Update successful";
     } else if (xhr.status == 409) {
       String responseBody = xhr.responseText!;
@@ -183,7 +180,7 @@ Future<String> updateMember(Xtremer xtremer) async {
       return 'Request failed with status: ${xhr.status} ${xhr.statusText}';
     }
   } catch (e) {
-    print('Error occurred: $e');
+    //print('Error occurred: $e');
     rethrow;
   }
 }
@@ -201,12 +198,12 @@ Future<String> updateMember(Xtremer xtremer) async {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
       if (res.statusCode >= 200 && res.statusCode < 300) {
         final List<dynamic> jsonList = jsonDecode(res.body);
-        print("In Xtremer list : ${jsonList.length}");
+        //print("In Xtremer list : ${jsonList.length}");
         allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
         // Filter for today's elements
         for (var element in allxtremelist) {
           if (generalxtremelist.contains(element)) {
-            print('already added to today list');
+            //print('already added to today list');
           } else {
             if (element.category == 'General') {
               if (element.isActive == true) {
@@ -216,7 +213,7 @@ Future<String> updateMember(Xtremer xtremer) async {
             }
           }
         }
-        print("General :${generalxtremelist.length}");
+        //print("General :${generalxtremelist.length}");
         return generalxtremelist;
       }
     } catch (e) {}
@@ -231,12 +228,12 @@ Future<String> updateMember(Xtremer xtremer) async {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
       if (res.statusCode >= 200 && res.statusCode < 300) {
         final List<dynamic> jsonList = jsonDecode(res.body);
-        print("In Xtremer list : ${jsonList.length}");
+        //print("In Xtremer list : ${jsonList.length}");
         allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
         // Filter for today's elements
         for (var element in allxtremelist) {
           if (personalxtremelist.contains(element)) {
-            print('already added to today list');
+            //print('already added to today list');
           } else {
             if (element.category == 'Personal') {
               if (element.isActive == true) {
@@ -260,12 +257,12 @@ Future<String> updateMember(Xtremer xtremer) async {
       final res = await http.get(Uri.parse("$api/api/Xtremers"));
       if (res.statusCode >= 200 && res.statusCode < 300) {
         final List<dynamic> jsonList = jsonDecode(res.body);
-        print("In Xtremer list : ${jsonList.length}");
+        //print("In Xtremer list : ${jsonList.length}");
         allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
         // Filter for today's elements
         for (var element in allxtremelist) {
           if (inactivextremelsit.contains(element)) {
-            print('already added to today list');
+            //print('already added to today list');
           } else {
             if (element.isActive == false) {
               // Add all elements whose createddate is today
@@ -290,7 +287,7 @@ Future<String> updateMember(Xtremer xtremer) async {
 //       if (res.statusCode >= 200 && res.statusCode < 300) {
 //         // Parse JSON data
 //         final List<dynamic> jsonList = jsonDecode(res.body);
-//         print("In Xtremer list : ${jsonList.length}");
+//         //print("In Xtremer list : ${jsonList.length}");
 //         allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
 //         DateTime now = DateTime.now();
 //         DateTime today = DateTime(now.year, now.month, now.day);
@@ -299,7 +296,7 @@ Future<String> updateMember(Xtremer xtremer) async {
 // // Filter for today's elements
 //         for (var element in allxtremelist) {
 //           if (todayxtremelsit.contains(element)) {
-//             print('already added to today list');
+//             //print('already added to today list');
 //           } else {
 //             // Create a new DateTime object from createddate without time component
 //             DateTime createdDate = DateTime(element.createddate!.year,
@@ -315,7 +312,7 @@ Future<String> updateMember(Xtremer xtremer) async {
 // // Filter for yesterday's elements
 //         for (var element in allxtremelist) {
 //           if (yesterdayxtremlist.contains(element)) {
-//             print('already added to today list');
+//             //print('already added to today list');
 //           } else {
 //             // Create a new DateTime object from createddate without time component
 //             DateTime createdDate = DateTime(element.createddate!.year,
@@ -328,9 +325,9 @@ Future<String> updateMember(Xtremer xtremer) async {
 //           }
 //         }
 
-//         print("Today Register members :${todayxtremelsit.length}");
-//         print("Yesterday Register members :${yesterdayxtremlist.length}");
-//         print("Drop down index :${pgctrl.overalldropdownindex.value}");
+//         //print("Today Register members :${todayxtremelsit.length}");
+//         //print("Yesterday Register members :${yesterdayxtremlist.length}");
+//         //print("Drop down index :${pgctrl.overalldropdownindex.value}");
 //         switch (pgctrl.overalldropdownindex.value) {
 //           case 0:
 //             return allxtremelist;
@@ -342,7 +339,7 @@ Future<String> updateMember(Xtremer xtremer) async {
 //         }
 //       } else {}
 //     } catch (e) {
-//       print("cant load Xtremer for overall : $e");
+//       //print("cant load Xtremer for overall : $e");
 //     }
 
 //     return [];
@@ -367,15 +364,15 @@ Future<List<Xtremer>> viewMember() async {
     if (xhr.status! >= 200 && xhr.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
-      print("In Xtremer list: ${jsonList.length}");
+      //print("In Xtremer list: ${jsonList.length}");
       List<Xtremer> xtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
 
       return xtremelist;
     } else {
-      print('Failed to load Xtremer. Status: ${xhr.status}');
+      //print('Failed to load Xtremer. Status: ${xhr.status}');
     }
   } catch (e) {
-    print("Can't load Xtremer: $e");
+    //print("Can't load Xtremer: $e");
   }
 
   return [];
@@ -400,14 +397,14 @@ Future<List<Xtremer>> viewPersonalTrainer() async {
     if (xhr.status! >= 200 && xhr.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
-      print("In Xtremer list: ${jsonList.length}");
+      //print("In Xtremer list: ${jsonList.length}");
 
       return jsonList.map((json) => Xtremer.fromJson(json)).toList();
     } else {
-      print('Failed to load Xtremer. Status: ${xhr.status}');
+      //print('Failed to load Xtremer. Status: ${xhr.status}');
     }
   } catch (e) {
-    print("Can't load Xtremer: $e");
+    //print("Can't load Xtremer: $e");
   }
 
   return [];
@@ -444,11 +441,11 @@ Future<Map<int, String>> addStaff(Staff staff) async {
 
     // Check the response status
     if (xhr.status! >= 200 && xhr.status! < 300) {
-      print('User added successfully.');
+      //print('User added successfully.');
       return {200: xhr.responseText!};
     } else {
-      print('Failed to add user. Status code: ${xhr.status}');
-      print('Response body: ${xhr.responseText}');
+      //print('Failed to add user. Status code: ${xhr.status}');
+      //print('Response body: ${xhr.responseText}');
 
       if (xhr.status! >= 500) {
         return {xhr.status!: "Server error. Try Again after some time"};
@@ -457,7 +454,7 @@ Future<Map<int, String>> addStaff(Staff staff) async {
       }
     }
   } catch (e) {
-    print("Error in user registration: $e");
+    //print("Error in user registration: $e");
     return {0: "Error in user registration"};
   }
 }
@@ -494,20 +491,20 @@ Future<List<UserEntity>> viewStaff() async {
     if (statusCode != null && statusCode >= 200 && statusCode < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
-      print("In staff list: ${jsonList.length}");
+      //print("In staff list: ${jsonList.length}");
 
       // Convert JSON data to List<UserEntity>
       stafflist = jsonList.map((json) {
-        print(json);
+        //print(json);
         return UserEntity.fromJson(json);
       }).toList();
 
-      print("In staff list actual: ${stafflist.length}");
+      //print("In staff list actual: ${stafflist.length}");
     } else {
-      print('Failed to load staff. Status code: $statusCode');
+      //print('Failed to load staff. Status code: $statusCode');
     }
   } catch (e) {
-    print("Can't load staff: $e");
+    //print("Can't load staff: $e");
   }
 
   return stafflist.where((element) =>
@@ -524,12 +521,12 @@ Future<List<UserEntity>> viewStaff() async {
       if (res.statusCode >= 200 && res.statusCode < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(res.body);
-        print("In plan list : ${jsonList.length}");
+        //print("In plan list : ${jsonList.length}");
         // Convert JSON data to List<Plan>
         return jsonList.map((json) => Plan.fromJson(json)).toList();
       } else {}
     } catch (e) {
-      print("cant load plans");
+      //print("cant load plans");
     }
 
     return [];
@@ -563,18 +560,18 @@ Future<String> addPlans({required Plan plan}) async {
     // Wait for the response
     await xhr.onLoad.first;
 
-    print("Adding plans: response ${xhr.status}");
+    //print("Adding plans: response ${xhr.status}");
     if (xhr.status! >= 200 && xhr.status! < 300) {
       final d = jsonDecode(xhr.responseText!);
-      print(d);
-      print("${d["Category"]}   ${d["DiscountPercentage"]}  ${d["DurationInMonths"]}  ${d["Name"]}");
+      //print(d);
+      //print("${d["Category"]}   ${d["DiscountPercentage"]}  ${d["DurationInMonths"]}  ${d["Name"]}");
       
       return d["Id"].toString();
     } else {
-      print('Failed to add plan. Status code: ${xhr.status}');
+      //print('Failed to add plan. Status code: ${xhr.status}');
     }
   } catch (e) {
-    print("Error adding plans: $e");
+    //print("Error adding plans: $e");
   }
   return "";
 }
@@ -588,11 +585,11 @@ Future<String> addPlans({required Plan plan}) async {
 
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Plan deleted successfully.');
+      //print('Plan deleted successfully.');
       return true;
     } else {
-      print('Failed to delete plan. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Failed to delete plan. Status code: ${response.statusCode}');
+      //print('Response body: ${response.body}');
     }
     return false;
   }
@@ -628,7 +625,7 @@ Future<String> updatePlans({required Plan plan}) async {
       return 'Failed to update plan. Status code: ${xhr.status}';
     }
   } catch (e) {
-    print("Error updating plans: $e");
+    //print("Error updating plans: $e");
     return "Error updating plans";
   }
 }
@@ -663,7 +660,7 @@ Future<String> addServices({required ServiceEntity service}) async {
       return 'Failed to create service. Status code: ${xhr.status}';
     }
   } catch (e) {
-    print("Error adding service: $e");
+    //print("Error adding service: $e");
     return "Error adding service";
   }
 }
@@ -677,11 +674,11 @@ Future<String> addServices({required ServiceEntity service}) async {
 
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Services deleted successfully.');
+      //print('Services deleted successfully.');
       return "Deleted";
     } else {
-      print('Failed to delete Services. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Failed to delete Services. Status code: ${response.statusCode}');
+      //print('Response body: ${response.body}');
     }
 
     return "Cannot delete";
@@ -711,15 +708,15 @@ Future<List<ServiceEntity>> getServices() async {
     if (xhr.status! >= 200 && xhr.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
-      print("In Services list : ${jsonList.length}");
+      //print("In Services list : ${jsonList.length}");
       
       // Convert JSON data to List<ServiceEntity>
       servicesList = jsonList.map((json) => ServiceEntity.fromJson(json)).toList();
     } else {
-      print('Failed to load services. Status code: ${xhr.status}');
+      //print('Failed to load services. Status code: ${xhr.status}');
     }
   } catch (e) {
-    print("Can't load services: $e");
+    //print("Can't load services: $e");
   }
 
   return servicesList;
@@ -828,7 +825,7 @@ Future<Map<String, dynamic>> addPayments(
   String dates = payment.paymentDate.toString();
   bool tnc = payment.termsAndConditions;
 
-  print("$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
+  //print("$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
 
   if (isonline) {
     try {
@@ -877,11 +874,11 @@ Future<Map<String, dynamic>> addPayments(
           return {"response": xhr.status};
         }
       } else {
-        print("${xhr.statusText} ${xhr.status}");
+        //print("${xhr.statusText} ${xhr.status}");
         return {"response": xhr.status};
       }
     } catch (e) {
-      print("Error during online payment: $e");
+      //print("Error during online payment: $e");
       return {"response": 0}; // Error response
     }
   } else {
@@ -914,14 +911,14 @@ Future<Map<String, dynamic>> addPayments(
 
       // Check the response status
       if (xhr.status! >= 200 && xhr.status! < 300) {
-        print("Payment added: ${xhr.status}");
+        //print("Payment added: ${xhr.status}");
         return {"response": 200};
       } else {
-        print(xhr.statusText);
+        //print(xhr.statusText);
         return {"response": xhr.status};
       }
     } catch (e) {
-      print("Error during cash payment: $e");
+      //print("Error during cash payment: $e");
       return {"response": 0}; // Error response
     }
   }
@@ -948,7 +945,7 @@ Future<String> updatePayment(Alluserpaymentmodel payment) async {
   int? serviceid = payment.serviceUsageId;
   String dates = payment.paymentDate.toString();
 
-  print("$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
+  //print("$amount  $discount  $receivedAmount  $transid  $status  $method  $type $subsid  $dates");
 
   var uri = Uri.parse('$api/api/Payments/PaymentStatus?transId=${payment.transactionId}');
   var headers = {'Content-Type': 'application/json'};
@@ -976,14 +973,14 @@ Future<String> updatePayment(Alluserpaymentmodel payment) async {
 
     // Check the response status
     if (xhr.status! >= 200 && xhr.status! < 300) {
-      print("Payment updated: ${xhr.status}");
+      //print("Payment updated: ${xhr.status}");
       return "Payment Updated Successfully";
     } else {
-      print(xhr.statusText);
+      //print(xhr.statusText);
       return "Failed to update payments.";
     }
   } catch (e) {
-    print("Error updating payments: $e");
+    //print("Error updating payments: $e");
     return "Error updating payments";
   }
 }
@@ -993,7 +990,7 @@ Future<String> updatePayment(Alluserpaymentmodel payment) async {
 
 @override
 Future<List<Alluserpaymentmodel>> viewpayment() async {
-  print('viewpayment function');
+  //print('viewpayment function');
   final url = Uri.parse("$api/api/Payments"); // Example endpoint
 
   try {
@@ -1009,15 +1006,15 @@ Future<List<Alluserpaymentmodel>> viewpayment() async {
     await xhr.onLoad.first;
 
     // Check the response status
-    if (xhr.status == 200) {
+    if (xhr.status!  >= 200 &&  xhr.status! < 300) {
       var alldata = alluserpaymentmodelFromJson(xhr.responseText!);
-      print(alldata[1].receivedAmount);
+      //print(alldata[1].receivedAmount);
       return alldata;
     } else {
-      print('Failed to fetch payments. Status: ${xhr.status}');
+      //print('Failed to fetch payments. Status: ${xhr.status}');
     }
   } catch (e) {
-    print("Error fetching payments: $e");
+    //print("Error fetching payments: $e");
   }
 
   return [];
@@ -1051,15 +1048,15 @@ Future<String> addTrainer(TrainerEntity trainer) async {
 
     // Check the response status
     if (xhr.status! >= 200 && xhr.status! < 300) {
-      print('Trainer added successfully.');
+      //print('Trainer added successfully.');
       return 'added';
     } else {
-      print('Failed to add trainer. Status code: ${xhr.status}');
-      print('Response body: ${xhr.responseText}');
+      //print('Failed to add trainer. Status code: ${xhr.status}');
+      //print('Response body: ${xhr.responseText}');
       return 'error';
     }
   } catch (e) {
-    print('Error adding trainer: $e');
+    //print('Error adding trainer: $e');
     return 'error';
   }
 }
@@ -1073,11 +1070,11 @@ Future<String> addTrainer(TrainerEntity trainer) async {
 
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Trainer deleted successfully.');
+      //print('Trainer deleted successfully.');
       return "Deleted";
     } else {
-      print('Failed to delete Trainer. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Failed to delete Trainer. Status code: ${response.statusCode}');
+      //print('Response body: ${response.body}');
     }
 
     return "Cannot delete";
@@ -1098,7 +1095,7 @@ Future<String> updateTrainer(TrainerEntity trainer) async {
     "isActive": trainer.isActive,
   });
   
-  print(body);
+  //print(body);
 
   try {
     // Create a new XMLHttpRequest
@@ -1117,11 +1114,11 @@ Future<String> updateTrainer(TrainerEntity trainer) async {
     if (xhr.status! >= 200 && xhr.status! < 300) {
       return 'Trainer updated successfully.';
     } else {
-      print('Failed to update trainer. Status code: ${xhr.status}');
-      print('Response body: ${xhr.responseText}');
+      //print('Failed to update trainer. Status code: ${xhr.status}');
+      //print('Response body: ${xhr.responseText}');
     }
   } catch (e) {
-    print('Error updating trainer: $e');
+    //print('Error updating trainer: $e');
     return "Failed to update trainer";
   }
   
@@ -1140,18 +1137,18 @@ Future<List<TrainerEntity>> viewTrainer() async {
     );
 
     // Check the response status
-    if (request.status == 200) {
+    if (request.status!  >= 200 &&  request.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(request.responseText!);
-      print("In trainer list: ${jsonList.length}");
+      //print("In trainer list: ${jsonList.length}");
       // Convert JSON data to List<TrainerEntity>
       return jsonList.map((json) => TrainerEntity.fromJson(json)).toList();
     } else {
-      print('Failed to load trainers. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to load trainers. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error loading trainers: $e");
+    //print("Error loading trainers: $e");
   }
 
   return [];
@@ -1186,12 +1183,12 @@ Future<Map<int, String>> addUser(
     );
 
     // Check the response status
-    if (request.status == 200 || request.status == 201) {
-      print('User added successfully.');
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('User added successfully.');
       return {200: request.responseText!};
     } else {
-      print('Failed to add user. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to add user. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
       if (request.status! >= 500) {
         return {request.status!: "Server error. Try again after some time"};
       } else {
@@ -1199,7 +1196,7 @@ Future<Map<int, String>> addUser(
       }
     }
   } catch (e) {
-    print("Error in user register: $e");
+    //print("Error in user register: $e");
     return {0: "Error in user register"};
   }
 }
@@ -1209,7 +1206,7 @@ Future<Map<int, String>> addUser(
 
 @override
 Future<String?> viewUser(String username, String pass) async {
-  print("in login auth");
+  //print("in login auth");
   String? uid = "";
   String url = "$api/api/Users/login";
 
@@ -1228,17 +1225,17 @@ Future<String?> viewUser(String username, String pass) async {
     );
 
     // Check the response status and parse the JSON response
-    if (request.status == 200) {
+    if (request.status!  >= 200 &&  request.status! < 300) {
       var d = jsonDecode(request.responseText!);
       uid = d["Data"]["UserId"].toString();
-      print(request.responseText);
+      //print(request.responseText);
       return uid;
     } else {
-      print('Failed to log in. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to log in. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error: $e");
+    //print("Error: $e");
   }
 
   return null;
@@ -1255,7 +1252,7 @@ Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule) async 
   String price = serviceschedule.price.toString();
   String status = serviceschedule.status;
   String uri = '$api/api/ServiceUsages'; // Replace with your API endpoint
-  print("$userid  $serviceid $scheduledate $price $status");
+  //print("$userid  $serviceid $scheduledate $price $status");
 
   // Convert the ServiceSchedule instance to JSON
   final body = jsonEncode({
@@ -1278,16 +1275,15 @@ Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule) async 
     );
 
     // Check the response status
-    if (request.status == 200 || request.status == 201) {
-      print('Service schedule added successfully.');
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('Service schedule added successfully.');
       return ServiceSchedule.fromJson(jsonDecode(request.responseText!));
     } else {
-      print(
-          'Failed to add service schedule. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to add service schedule. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error: $e");
+    //print("Error: $e");
   }
 
   return null;
@@ -1306,18 +1302,19 @@ Future<ServiceSchedule?> getServiceUsage(int id) async {
       requestHeaders: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true
     );
 
     // Check the response status
-    if (request.status == 200) {
-      print('Service schedule retrieved successfully.');
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('Service schedule retrieved successfully.');
       return ServiceSchedule.fromJson(jsonDecode(request.responseText!));
     } else {
-      print('Failed to get service schedule. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to get service schedule. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error: $e");
+    //print("Error: $e");
   }
 
   return null;
@@ -1352,15 +1349,15 @@ Future<Subscription?> addSubscription(Subscription subs) async {
     );
 
     // Check the response status
-    if (request.status == 200 || request.status == 201) {
-      print('Subscription added successfully.');
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('Subscription added successfully.');
       return Subscription.fromJson(jsonDecode(request.responseText!));
     } else {
-      print('Failed to add subscription. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to add subscription. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error: $e");
+    //print("Error: $e");
   }
 
   return null;
@@ -1380,12 +1377,12 @@ Future<Subscription?> addSubscription(Subscription subs) async {
 
     // Check the response status
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      print('Subscription get successfully.');
-      print(response.body);
+      //print('Subscription get successfully.');
+      //print(response.body);
       return Subscription.fromJson(jsonDecode(response.body));
     } else {
-      print('Failed to get subscription. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Failed to get subscription. Status code: ${response.statusCode}');
+      //print('Response body: ${response.body}');
     }
 
     return null;
@@ -1409,16 +1406,16 @@ Future<Paymententity?> getpayment(String transactionid) async {
     );
 
     // Check the response status
-    if (request.status == 200) {
-      print('Payment retrieved successfully.');
-      print(request.responseText);
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('Payment retrieved successfully.');
+      //print(request.responseText);
       return Paymententity.fromJson(jsonDecode(request.responseText!));
     } else {
-      print('Failed to get payment. Status code: ${request.status}');
-      print('Response body: ${request.responseText}');
+      //print('Failed to get payment. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error: $e");
+    //print("Error: $e");
   }
 
   return null;
@@ -1441,13 +1438,13 @@ Future<List<Paymentlatest10>> viewlatest10payment() async {
     );
 
     // Check if the request was successful
-    if (request.status == 200) {
+    if (request.status!  >= 200 &&  request.status! < 300) {
       var alldata = Paymentlatest10FromJson(request.responseText!);
-      print(alldata[1].receivedAmount);
+      //print(alldata[1].receivedAmount);
       return alldata;
     }
   } catch (e) {
-    print("Error: ${e.toString()}");
+    //print("Error: ${e.toString()}");
   }
 
   return [];
@@ -1479,12 +1476,12 @@ Future<Map<Admission?, int>> viewadmission() async {
       return {jsonList.map((json) => Admission.fromJson(json)).toList().first: xhr.status!};
     } else {
       // Handle error response
-      print('Failed to load admission. Status code: ${xhr.status}');
+      //print('Failed to load admission. Status code: ${xhr.status}');
       return {null: xhr.status!};
     }
   } catch (e) {
     // Handle exceptions like network errors
-    print('Error fetching admission: $e');
+    //print('Error fetching admission: $e');
     return {null: 0};
   }
 }
@@ -1501,22 +1498,22 @@ Future<Uint8List?> getImage(int id) async {
       url,
       method: 'GET',
       responseType: 'arraybuffer', // To handle binary data (image)
-      
+      withCredentials: true
     );
 
     // Check if the request was successful
-    if (request.status == 200) {
+    if (request.status!  >= 200 &&  request.status! < 300) {
       // Convert the response (ArrayBuffer) to Uint8List
       final Uint8List bytes = Uint8List.fromList(request.response as List<int>);
       return bytes;
     } else {
       // Handle errors or unsuccessful responses
-      print('Failed to load photo. Status code: ${request.status}');
+      //print('Failed to load photo. Status code: ${request.status}');
       return null;
     }
   } catch (e) {
     // Handle exceptions
-    print('Error fetching photo: $e');
+    //print('Error fetching photo: $e');
     return null;
   }
 }
@@ -1526,7 +1523,7 @@ Future<Uint8List?> getImage(int id) async {
 
 @override
 Future<List<Trainee>> viewTrainee(int id) async {
-  print("in trainee api calls");
+  //print("in trainee api calls");
   try {
     final request = await html.HttpRequest.request(
       "$api/api/Trainers/trainer/$id",
@@ -1537,20 +1534,20 @@ Future<List<Trainee>> viewTrainee(int id) async {
       withCredentials: true, // Include credentials
     );
 
-    print("${request.status}");
+    //print("${request.status}");
     if (request.status! >= 200 && request.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(request.responseText!);
-      print("In Trainee list : ${jsonList.length}");
+      //print("In Trainee list : ${jsonList.length}");
       List<Trainee> xtremelist =
           jsonList.map((json) => Trainee.fromJson(json)).toList();
 
       return xtremelist;
     } else {
-      print('Failed to load trainees. Status code: ${request.status}');
+      //print('Failed to load trainees. Status code: ${request.status}');
     }
   } catch (e) {
-    print("Can't load Trainee: $e");
+    //print("Can't load Trainee: $e");
   }
 
   return [];
@@ -1560,7 +1557,7 @@ Future<List<Trainee>> viewTrainee(int id) async {
 
 @override
 Future<List<Membership>> viewMembership() async {
-  print("in membership api calls");
+  //print("in membership api calls");
   try {
     final request = await html.HttpRequest.request(
       "$api/api/Memberships",
@@ -1571,20 +1568,20 @@ Future<List<Membership>> viewMembership() async {
       withCredentials: true, // Include credentials
     );
 
-    print("${request.status}");
+    //print("${request.status}");
     if (request.status! >= 200 && request.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(request.responseText!);
-      print("In Membership list : ${jsonList.length}");
+      //print("In Membership list : ${jsonList.length}");
       List<Membership> membershiplist =
           jsonList.map((json) => Membership.fromJson(json)).toList();
 
       return membershiplist;
     } else {
-      print('Failed to load memberships. Status code: ${request.status}');
+      //print('Failed to load memberships. Status code: ${request.status}');
     }
   } catch (e) {
-    print("Can't load Membership data: $e");
+    //print("Can't load Membership data: $e");
   }
 
   return [];
@@ -1615,12 +1612,258 @@ Future<String> editMembership(Membership membership) async {
       return "Membership Updated Successfully";
     } else {
       return 'Failed to update membership. Status code: ${request.status}';
-      // print('Response body: ${request.responseText}');
+      // //print('Response body: ${request.responseText}');
     }
   } catch (e) {
-    print("Error updating membership: $e");
+    //print("Error updating membership: $e");
     return "Error updating membership";
   }
 }
+
+  @override
+  Future<String> addRoles({required Role role})async {
+    String uri = '$api/api/Roles'; // Replace with your API endpoint
+
+  // Convert the Subscription instance to JSON
+  final body = jsonEncode(role.toMap());
+
+  try {
+    // Send the POST request using universal_html's HttpRequest
+    final request = await html.HttpRequest.request(
+      uri,
+      method: 'POST',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+      sendData: body,
+    );
+
+    // Check the response status
+    if (request.status!  >= 200 &&  request.status! < 300) {
+      //print('Roles added successfully.');
+      return "Roles added";
+    } else {
+      //print('Failed to add Roles. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
+    }
+  } catch (e) {
+    //print("Error: $e");
+  }
+
+  return "Failed to add Roles";
+  }
+
+  @override
+  Future<String> deleteRole({required Role role}) async{
+        final uri = Uri.parse('$api/api/Roles/${role.id}');
+
+  // Convert the Plan instance to JSON
+
+
+  // Send the PUT request
+  try {
+    final request = await html.HttpRequest.request(
+      uri.toString(),
+      method: 'DELETE',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // Include credentials
+    );
+
+    // Check the response status
+    if (request.status! >= 200 && request.status! < 300) {
+      return "Roles deleted Successfully";
+    } else {
+      return 'Failed to delete roles. Status code: ${request.status}';
+      // //print('Response body: ${request.responseText}');
+    }
+  } catch (e) {
+    //print("Error deleteing roles: $e");
+    return "Error deleteing roles";
+  }
+  }
+
+  @override
+  Future<List<Role>> getRoles() async{
+   //print("in roles api calls");
+  try {
+    final request = await html.HttpRequest.request(
+      "$api/api/Roles",
+      method: 'GET',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // Include credentials
+    );
+
+    //print("${request.status}");
+    if (request.status! >= 200 && request.status! < 300) {
+      // Parse JSON data
+      final List<dynamic> jsonList = jsonDecode(request.responseText!);
+      //print("In Role list : ${jsonList.length}");
+      List<Role> rolelist=
+          jsonList.map((json) => Role.fromMap(json)).toList();
+
+      return rolelist;
+    } else {
+      //print('Failed to load roles. Status code: ${request.status}');
+    }
+  } catch (e) {
+    //print("Can't load roles data: $e");
+  }
+
+  return [];
+  }
+
+  @override
+  Future<String> updateRole({required Role role}) async{
+     final uri = Uri.parse('$api/api/Roles/${role.id}');
+
+  // Convert the Plan instance to JSON
+  final body = jsonEncode(role);
+
+  // Send the PUT request
+  try {
+    final request = await html.HttpRequest.request(
+      uri.toString(),
+      method: 'PUT',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      sendData: body,
+      withCredentials: true, // Include credentials
+    );
+
+    // Check the response status
+    if (request.status! >= 200 && request.status! < 300) {
+      return "Roles Updated Successfully";
+    } else {
+      return 'Failed to update roles. Status code: ${request.status}';
+      // //print('Response body: ${request.responseText}');
+    }
+  } catch (e) {
+    //print("Error updating roles: $e");
+    return "Error updating roles";
+  }
+  }
+  
+  @override
+  Future<String> updateadmission(Admission admission) async{
+     final uri = Uri.parse('$api/api/Admissions/${admission.id}');
+
+  // Convert the Plan instance to JSON
+  final body = jsonEncode(admission.toJson());
+
+  // Send the PUT request
+  try {
+    final request = await html.HttpRequest.request(
+      uri.toString(),
+      method: 'PUT',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      sendData: body,
+      withCredentials: true, // Include credentials
+    );
+
+    // Check the response status
+    if (request.status! >= 200 && request.status! < 300) {
+      return "Admission Updated Successfully";
+    } else {
+      return 'Failed to update admission. Status code: ${request.status}';
+      // //print('Response body: ${request.responseText}');
+    }
+  } catch (e) {
+    //print("Error updating admission: $e");
+    return "Error updating admission";
+  }
+  }
+  
+  @override
+  Future<List<ServiceSchedule>> getAllServiceUsage() async{
+   String uri = '$api/api/ServiceUsages'; // Replace with your API endpoint
+
+
+  // Convert the ServiceSchedule instance to JSON
+
+  // Send the POST request using universal_html's HttpRequest
+  try {
+    final request = await html.HttpRequest.request(
+      uri,
+      method: 'GET',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    );
+
+    // Check the response status
+    if (request.status!  >= 200 &&  request.status! < 300) {
+         // Parse the response body
+      final List<dynamic> jsonList = json.decode(request.responseText!);
+
+      // Convert the JSON data to an Admission object
+      return jsonList.map((json) => ServiceSchedule.fromJson(json)).toList();
+      
+    } else {
+      //print( 'Failed to add service schedule. Status code: ${request.status}');
+
+    }
+  } catch (e) {
+    //print("Error: $e");
+  }
+
+     return [];
+  }
+  
+  
+  @override
+  Future<String> updateServiceUsage(ServiceSchedule serviceschedule)async {
+    String userid = serviceschedule.userId.toString();
+  String serviceid = serviceschedule.serviceId.toString();
+  String scheduledate = serviceschedule.scheduleDate.toString();
+  String price = serviceschedule.price.toString();
+  String status = serviceschedule.status;
+  String uri = '$api/api/ServiceUsages/${serviceschedule.id}'; // Replace with your API endpoint
+  //print("$userid  $serviceid $scheduledate $price $status");
+
+  // Convert the ServiceSchedule instance to JSON
+  // final body = jsonEncode({
+  //   'id':serviceschedule.serviceId,
+  //   'userId': userid,
+  //   'serviceId': serviceid,
+  //   'scheduleDate': scheduledate,
+  //   'price': price,
+  //   'status': status,
+  // });
+final body = jsonEncode(serviceschedule.toJson());
+  // Send the POST request using universal_html's HttpRequest
+  try {
+    final request = await html.HttpRequest.request(
+      uri,
+      method: 'PUT',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      sendData: body,
+      withCredentials: true,
+    );
+
+    // Check the response status
+    if (request.status! >= 200 && request.status! < 300) {
+      return 'Service schedule added successfully.';
+     
+    } else {
+      //print('Failed to add service schedule. Status code: ${request.status}');
+      //print('Response body: ${request.responseText}');
+    }
+  } catch (e) {
+    //print("Error: $e");
+  }
+
+  return "failed to update service usage";
+  }
 
 }

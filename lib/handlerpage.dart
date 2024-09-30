@@ -7,6 +7,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ad
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 
 import 'config/const.dart';
 import 'widgets/navbar.dart';
@@ -28,12 +29,10 @@ class _HandlerPageState extends State<HandlerPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Future.delayed(Durations.extralong1,() =>  Get.find<GetxAuthController>().authentications(),);
-       
+        // Future.delayed(Durations.extralong1,() =>  Get.find<GetxAuthController>().authentications(),); 
         Get.put(AddMemberController());
         Get.put(GetxPageController());
-        
-        Get.put(ManagementController());
+        Get.put(ManagementController()).onInit();
       },
     );
 
@@ -54,14 +53,14 @@ class _HandlerPageState extends State<HandlerPage> {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return GetBuilder<GetxPageController>(builder: (pagectrl) {
         return Scaffold(
-          appBar: MediaQuery.sizeOf(context).width < mobilescreen
+          appBar: Responsive.isMobile(context)||Responsive.isTablet(context)
               ? AppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   // title: TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
                   centerTitle: true,
                 )
               : null,
-          drawer: MediaQuery.sizeOf(context).width < mobilescreen
+          drawer: Responsive.isMobile(context)||Responsive.isTablet(context)
               ? Drawer(
                   surfaceTintColor: Colors.transparent,
                   backgroundColor: Theme.of(context).colorScheme.primary,

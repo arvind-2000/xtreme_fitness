@@ -393,7 +393,7 @@ class PaymentDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
       return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
-        print(addmemberctrl.ismember);
+        //print(addmemberctrl.ismember);
         return StatefulBuilder(builder: (context, s) {
           return PageDialog(
               no: () {

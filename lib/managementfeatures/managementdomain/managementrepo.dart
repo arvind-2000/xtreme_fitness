@@ -10,8 +10,8 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import '../../authentifeatures/domain/userentity.dart';
 import 'entities.dart/admission.dart';
 import 'entities.dart/membership.dart';
-import 'entities.dart/paymentdetails.dart';
 import 'entities.dart/planentity.dart';
+import 'entities.dart/roles.dart';
 import 'entities.dart/serviceusage.dart';
 import 'entities.dart/subscription.dart';
 import 'entities.dart/trainee.dart';
@@ -89,12 +89,27 @@ abstract class ManagementRepo {
   ///service usage api
   Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule);
   Future<ServiceSchedule?> getServiceUsage(int id);
+  Future<String> updateServiceUsage(ServiceSchedule serviceschedule);
+  Future<List<ServiceSchedule>> getAllServiceUsage();
 
   //admission
   Future<Map<Admission?,int>> viewadmission();
+  Future<String> updateadmission(Admission admission);
 
   Future<List<Trainee>> viewTrainee(int id);
 
   Future<List<Membership>> viewMembership();
   Future<String> editMembership(Membership membership);
+
+
+   //CRUD for roles
+  Future<List<Role>> getRoles();
+  Future<String> addRoles({required Role role});
+  Future<String> deleteRole({required Role role});
+  Future<String> updateRole({required Role role});
+
+
+  
+
+
 }

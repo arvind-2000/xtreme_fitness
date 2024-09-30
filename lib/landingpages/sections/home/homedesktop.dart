@@ -3,9 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/config/const.dart';
-import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
-import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_desktop.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/gradientbutton.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -22,31 +20,10 @@ class HomeDesktop extends StatefulWidget {
 }
 
 class _HomeDesktopState extends State<HomeDesktop> {
-  // final PageController _controller = PageController();
 
-  @override
-  void initState() {
-    super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) => _animateSlider());
-  }
-
-  // void _animateSlider() {
-  //   Future.delayed(Duration(seconds: 5)).then((_) {
-  //     int nextPage = _controller.page!.round() + 1;
-
-  //     if (nextPage == 5) {
-  //       nextPage = 0;
-  //     }
-
-  //     _controller
-  //         .animateToPage(nextPage, duration: Duration(seconds: 3), curve: Curves.easeIn)
-  //         .then((_) => _animateSlider());
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
     return Stack(
       children: [
         Positioned(

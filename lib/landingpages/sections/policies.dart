@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/termandcondition.dart';
-import 'package:xtreme_fitness/widgets/headingtext.dart';
-import 'package:xtreme_fitness/widgets/titletext.dart';
 
-import '../pages/responsivepages.dart';
 
 class Policies extends StatelessWidget {
   const Policies({super.key});

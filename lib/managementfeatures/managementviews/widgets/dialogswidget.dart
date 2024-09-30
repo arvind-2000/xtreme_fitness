@@ -38,7 +38,7 @@ class PageDialog extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                             padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4):null,
+                            horizontal: 8, vertical: 12):null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -61,7 +61,7 @@ class PageDialog extends StatelessWidget {
                         color: Colors.green[300],
                         onpress: yes,
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                            horizontal: 8, vertical: 12),
                               padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4):null,
                         child: const Row(

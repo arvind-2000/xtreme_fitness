@@ -95,10 +95,10 @@ class ContactController extends GetxController {
         phonecon.text = _contact!.phoneNumber!;
         update();
       } else {
-        print(response.statusText);
+        //print(response.statusText);
       }
     } catch (error) {
-      print('Error: $error');
+      //print('Error: $error');
     }
   }
 
@@ -123,10 +123,10 @@ class ContactController extends GetxController {
     if (response.statusCode == 200) {
       _isloading = false;
       update();
-      print(await response.stream.bytesToString());
+      //print(await response.stream.bytesToString());
       getContactDetails();
     } else {
-      print(response.reasonPhrase);
+      //print(response.reasonPhrase);
     }
   }
 
@@ -238,14 +238,14 @@ class ContactController extends GetxController {
       );
 
       if (response.status == 200 || response.status == 204) {
-        print('Message updated successfully: ${response.responseText}');
+        //print('Message updated successfully: ${response.responseText}');
         getallmessage(); // Refresh the message list after successful update
       } else {
-        print('Failed to update message. Status code: ${response.status}');
+        //print('Failed to update message. Status code: ${response.status}');
       }
     } catch (error) {
       // Handle any errors during the request
-      print('Error updating message: $error');
+      //print('Error updating message: $error');
     }
   }
 
@@ -263,14 +263,14 @@ class ContactController extends GetxController {
       );
 
       if (response.status == 200 || response.status == 204) {
-        print('Message deleted successfully: ${response.responseText}');
+        //print('Message deleted successfully: ${response.responseText}');
         getallmessage(); // Refresh the message list after successful deletion
       } else {
-        print('Failed to delete message. Status code: ${response.status}');
+        //print('Failed to delete message. Status code: ${response.status}');
       }
     } catch (error) {
       // Handle any errors during the request
-      print('Error deleting message: $error');
+      //print('Error deleting message: $error');
     }
   }
 
@@ -310,13 +310,13 @@ class ContactController extends GetxController {
           }
         }
 
-        print(response.responseText);
+        //print(response.responseText);
       } else {
-        print('Failed to fetch messages. Status code: ${response.status}');
+        //print('Failed to fetch messages. Status code: ${response.status}');
       }
     } catch (error) {
       // Handle any errors that occur during the request
-      print('Error fetching messages: $error');
+      //print('Error fetching messages: $error');
     }
   }
 

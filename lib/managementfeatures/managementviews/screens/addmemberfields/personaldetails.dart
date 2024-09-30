@@ -568,7 +568,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                           )),
                           onSelected: (index) {
                             addmembrctrl.setRelation(index!);
-                            print(addmembrctrl.relationship);
+                            //print(addmembrctrl.relationship);
                           },
                           dropdownMenuEntries: relation.entries
                               .map((e) => DropdownMenuEntry(
@@ -616,24 +616,13 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                   onpress: () {
                     if (_formkey.currentState!.validate() &&
                         addmembrctrl.dob != null) {
-                      print(
-                          "${_firstnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${_pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${_emergencynamecontroller.text.trim()} ");
+                      //print("${_firstnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${_pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${_emergencynamecontroller.text.trim()} ");
                       addmembrctrl.addpersonaldetails(
-                        // address: "f",
-                        // emergencycontact: "sds",
-                        // emergencyname: "",
-                        // homephone: "",
-                        // name: "fg",
-                        // occupation: "",
-                        // phone: "",
-                        // postalcode: "",
-                        // email: "",
                         surname: _surnamecontroller.text.trim(),
                         name: _firstnamecontroller.text.trim(),
                         phone: _phonecontroller.text.trim(),
                         homephone: _homephonecontroller.text.trim(),
                         email: _emailcontroller.text.trim(),
-
                         address: _addresscontroller.text.trim(),
                         postalcode: _pincodecontroller.text.trim(),
                         occupation: _occupationcontroller.text.trim(),

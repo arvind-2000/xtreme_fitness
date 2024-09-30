@@ -151,9 +151,9 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
                     ],
                   ),
 
-                  Expanded(child: Padding(
+                 managectrl.xtremer==null?SizedBox() :   Expanded(child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: MemberServiceHistory(),
+                    child: MemberServiceHistory(xtremers: managectrl.xtremer!),
                   ))
                 ],
               ),

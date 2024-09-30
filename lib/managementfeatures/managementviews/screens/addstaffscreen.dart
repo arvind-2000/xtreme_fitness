@@ -3,23 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/traineeprofilescreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
-
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../config/const.dart';
 import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/normaltext.dart';
 import '../../../widgets/titletext.dart';
+import '../../managementdomain/entities.dart/roles.dart';
 import '../widgets/dialogswidget.dart';
 import 'nodatascreen.dart/nodatascreen.dart';
 
@@ -39,12 +37,17 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
   final TextEditingController _passwordcontroller  = TextEditingController();
   final TextEditingController _confirmpasswordcontroller  = TextEditingController();
   final TextEditingController _phonecontroller  = TextEditingController();
-  int roleindex = roles.keys.first;
+  List<Role>  rolelist = [];
+  
+  
+  int roleid = 0;
   addstaff(){
     setState(() {
       isStaffadd = !isStaffadd;
     });
   }
+
+  
 
   bool isactive = true;
   bool _isactive = true;
@@ -55,6 +58,20 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
     });
   }
   // UserEntity? _user; 
+  
+  
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      rolelist = Get.put(ManagementController()).getallRoles.where((element) => element.roleName.toLowerCase()!="superadmin" && element.roleName.toLowerCase()!="member" && element.roleName.toLowerCase()!="servicemember").toList();
+      roleid = rolelist.first.id; 
+    },);
+
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.sizeOf(context).width;
@@ -62,6 +79,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
       builder: (pagectrl) {
         return GetBuilder<ManagementController>(
           builder: (managectrl) {
+          
             return Row(
           
               children: [
@@ -118,11 +136,11 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                               DropdownButton(
                                                underline: const SizedBox(),
                                                hint: const Text("Choose",style: TextStyle(fontSize: 16),),
-                                               value: roleindex,
-                                               items:roles.entries.map((e) => DropdownMenuItem(
-                                                 value: e.key,
-                                                 child: Text(e.value,style: const TextStyle(fontSize: 16)))).toList(),  onChanged: (value) { setState(() {
-                                                                         roleindex = value!;
+                                                value: roleid,
+                                               items:rolelist.map((e) => DropdownMenuItem(
+                                                 value: e.id,
+                                                 child: Text(e.roleName,style: const TextStyle(fontSize: 16)))).toList(),  onChanged: (value) { setState(() {
+                                                                         roleid = value!;
                                                  }); },),
                                              const SizedBox(height: 20,),
                                                                                         
@@ -130,7 +148,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                color: Colors.green[300],
                                                onpress: (){
                                                 if (_globalkey.currentState!.validate()) {
-                                           Staff addstaff = Staff(uid: Random().nextInt(100).toString(), name: _fullnamecontroller.text, phone: _phonecontroller.text, username: _usernamecontroller.text, roleid: Role(roleid:roleindex.toString(), rolename:roles[roleindex]!), isactive: true);
+                                           Staff addstaff = Staff(uid: Random().nextInt(100).toString(), name: _fullnamecontroller.text, phone: _phonecontroller.text, username: _usernamecontroller.text, roleid:rolelist.firstWhere((element) => element.id==roleid,), isactive: true);
                                          
                                                                                         showDialog(context: context, builder: (context) => PageDialog(
                                                                          no: () {
@@ -175,7 +193,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                                            const SizedBox(height: 16,),
                                                                                const Text("Designation",style: TextStyle(fontSize: 14),),
                                                                            const SizedBox(height: 5,),
-                                                                           Text(addstaff.roleid.rolename,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                                                                           Text(addstaff.roleid.roleName,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
                                                                            const SizedBox(height: 16,),
                                                                                           
                                                                            Row(
@@ -249,7 +267,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
                                     mainAxisSpacing: 10,
                                 
-                                    childAspectRatio:  size<500?1:3/3.5,
+                                    childAspectRatio:  size<500?1:size<1400?3/4.2:3/3.5,
                                 
                                     ),
                           
@@ -360,7 +378,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                     if(_globalkey2.currentState!.validate()){
                                                        managectrl.updateStaffs(UserEntity(userName:_usernamecontroller.text,id: e.id,mobileNumber: _phonecontroller.text,isActive: _isactive,roleName: "Staff", passwordHash: e.passwordHash));
                                                 
-                                                      CustomSnackbar(context, "stafff updated");
+                                                      CustomSnackbar(context, "staff updated");
                                                 
                                                     Navigator.pop(context);
                                                     }

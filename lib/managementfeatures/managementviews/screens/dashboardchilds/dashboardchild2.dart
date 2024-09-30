@@ -86,7 +86,7 @@ class DashboardChild2 extends StatelessWidget {
                             d = d + x.receivedAmount ?? 0;
                           }
 
-                          print("in weekly payment $d");
+                          //print("in weekly payment $d");
                           return d;
                         }).toList(),
                         ontap: (v) {},

@@ -265,8 +265,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                         onpress: () {
                                                           if (authctrl
                                                               .ismember) {
-                                                            print(
-                                                                "change plan screen to renewal");
+                                                            //print(   "change plan screen to renewal");
                                                             pagecotrl
                                                                 .changerenewal(
                                                                     true);

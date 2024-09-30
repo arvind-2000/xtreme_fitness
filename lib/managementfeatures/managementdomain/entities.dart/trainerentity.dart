@@ -1,5 +1,7 @@
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/user.dart';
 
+import 'roles.dart';
+
 class TrainerEntity extends User {
   int id;
   String name;
@@ -13,7 +15,7 @@ class TrainerEntity extends User {
     required this.designation,
     required this.timing,
     required this.isActive
-  }) : super(uid: id.toString(), name: name, phone: '', username: '', roleid:Role(roleid: "0", rolename: designation));
+  }) : super(uid: id.toString(), name: name, phone: '', username: '', roleid:Role(id: 0, roleName: designation));
 
   // Convert a Trainer instance to a Map
   Map<String, dynamic> toJson() {

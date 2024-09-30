@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/widgets/headingtext.dart';
 import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
 import '../managementfeatures/managementviews/screens/dashboard.dart';
+import '../responsive/responsive.dart';
 import 'card.dart';
 
 class NavBar extends StatelessWidget {
@@ -64,7 +65,7 @@ class NavBar extends StatelessWidget {
                   ),
                   Cardonly(
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(0);
@@ -115,7 +116,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -136,7 +137,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -165,7 +166,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(10);
@@ -185,7 +186,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(4);
@@ -214,7 +215,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(2);
@@ -233,7 +234,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -254,7 +255,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -265,6 +266,28 @@ class NavBar extends StatelessWidget {
                       child: const NavTiles(
                         icon: Icons.payment,
                         title: 'Payments',
+                      )),
+
+                      
+                  Cardonly(
+                      color: pagectrl.navpage == 15
+                          ? Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.3)
+                          : Colors.transparent,
+                      onpress: () {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                          drawers(context);
+                        }
+
+                        pagectrl.changeNavPage(15);
+                      },
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      child: const NavTiles(
+                        icon: Icons.payment,
+                        title: 'Service Usage',
                       )),
                   Container(
                     height: 0.5,
@@ -282,7 +305,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -302,7 +325,7 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         // contrl.onBadgeTap();
@@ -335,7 +358,7 @@ class NavBar extends StatelessWidget {
           Cardonly(
               color: Colors.transparent,
               onpress: () {
-                if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
                   drawers(context);
                 }
                  Get.dialog(
@@ -347,7 +370,7 @@ class NavBar extends StatelessWidget {
                         yes: () {
                           authctrl.logout();
                         },
-                        child: const Column(
+                        child:authctrl.loginloading?Center(child: CircularProgressIndicator(color: Colors.white,),) :const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(

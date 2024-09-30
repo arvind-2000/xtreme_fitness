@@ -39,7 +39,11 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
   bool istrainer = false;
   void addTrainer() {
     setState(() {
-      istrainer = !istrainer;
+     if(istrainer){
+       istrainer = false;
+     }else{
+        istrainer = true;
+     }
     });
   }
 
