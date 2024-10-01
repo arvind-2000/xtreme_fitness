@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
   <base href="/">
@@ -15,50 +16,69 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>Xtreme Fitness</title>
   <link rel="manifest" href="manifest.json">
   <script src="canvaskit.js" defer></script>
 </head>
+
 <body>
   <style>
-    body{
+    body {
       background-color: #0a0a0a;
       height: 100vh;
       width: 100vw;
       margin: 0px;
-    } 
-    .main-content{
+    }
+
+    .main-content {
       height: 100%;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: opacity .4s ease-out;
+      opacity: 1;
+      transition: opacity 0.4s ease-out;
     }
-    .main-content img {
-  max-width: 10%;
-  max-height: 10%;
-  object-fit: contain;
-  animation: slideInFromBottom 1s ease-out forwards; /* Apply the animation */
-}
 
-/* Keyframes for sliding the image in from the bottom */
-@keyframes slideInFromBottom {
-  0% {
-    transform: translateY(100%); /* Start off the screen at the bottom */
-    opacity: 0; /* Optional: start with zero opacity */
-  }
-  100% {
-    transform: translateY(0); /* End at the normal position */
-    opacity: 1; /* Optional: end with full opacity */
-  }
-}
-    </style>
-   <div class="main-content" id = "loader-content">
-    <img src="logo1.png" alt = "xtreme logo">
-    </div>
+    .main-content img {
+      max-width: 10%;
+      max-height: 10%;
+      object-fit: contain;
+      animation: slideInFromBottom 1s ease-out forwards;
+    }
+
+    @keyframes slideInFromBottom {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <div class="main-content" id="loader-content">
+    <img src="logo1.png" alt="xtreme logo">
+  </div>
+
+  <script>
+    // Hide loader-content after 2 seconds
+    window.onload = function () {
+      setTimeout(function () {
+        document.getElementById("loader-content").style.opacity = '0';
+        setTimeout(function () {
+          document.getElementById("loader-content").style.display = 'none';
+        }, 400); // Match the transition duration for a smooth hide
+      }, 2000); // 2000 milliseconds = 2 seconds
+    };
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
+
 </html>
