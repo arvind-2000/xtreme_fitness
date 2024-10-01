@@ -293,7 +293,7 @@ Future<Map<String?, String>> emailAuthentication({
       //print("Logout :${response.statusText}");
       return response.statusText!;
     } on Exception catch (e) {
-      //print(e);
+      print(e);
     }
     return "Error in logging out";
   }

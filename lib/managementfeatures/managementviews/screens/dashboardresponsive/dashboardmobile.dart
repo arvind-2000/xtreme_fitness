@@ -20,7 +20,7 @@ class DashboardMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ManagementController>(
       builder: (controller) {
-        return controller.managementloading?Center(child: CircularProgressIndicator(color:Theme.of(context).colorScheme.secondary,),): SingleChildScrollView(
+        return controller.managementloadings?Center(child: CircularProgressIndicator(color:Theme.of(context).colorScheme.secondary,),): SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

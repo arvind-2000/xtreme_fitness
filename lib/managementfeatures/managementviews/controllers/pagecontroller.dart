@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
 
 class GetxPageController extends GetxController {
@@ -12,8 +13,12 @@ class GetxPageController extends GetxController {
   bool viewprofile = false;
   bool isrenewalforms = false;
   bool iseditforms = false;
+
+
+    GetxAuthController controller = Get.put(GetxAuthController());
   void changeNavPage(int page) {
     navpage = page;
+    controller.authenticationsforsession();
     update();
   }
 
@@ -28,7 +33,7 @@ class GetxPageController extends GetxController {
     update();
   }
 
-
+  
   void changeaddMemberPage(int addpage) {
     //print('in change page $addpage');
     addmemberpages = addpage;

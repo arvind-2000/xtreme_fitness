@@ -62,7 +62,7 @@ class ContactController extends GetxController {
     log(DateTime.now().toString());
     getContactDetails();
     // getallmessageduplic();
-    getallmessage();
+    // getallmessage();
     // getstoredcount();
   }
 

@@ -524,7 +524,7 @@ Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,List<Membership>
   // Append data rows
   for (var xtremer in xtremerlist) {
     sheet.appendRow([
-      TextCellValue( '${memberlist.firstWhereOrNull((element) => element.userId==xtremer.XtremerId,)??""}'),
+      TextCellValue( '${memberlist.firstWhereOrNull((element) => element.userId==xtremer.XtremerId,)?.membershipId??""}'),
       TextCellValue( xtremer.firstName.toString()),
       TextCellValue( xtremer.surname.toString()),
       TextCellValue( xtremer.mobileNumber.toString()),

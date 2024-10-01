@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
-import 'package:http_parser/http_parser.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
@@ -1702,9 +1700,8 @@ Future<String> editMembership(Membership membership) async {
     if (request.status! >= 200 && request.status! < 300) {
       // Parse JSON data
       final List<dynamic> jsonList = jsonDecode(request.responseText!);
-      //print("In Role list : ${jsonList.length}");
-      List<Role> rolelist=
-          jsonList.map((json) => Role.fromMap(json)).toList();
+      print("In Role list : ${jsonList.length}");
+      List<Role> rolelist= jsonList.map((json) => Role.fromMap(json)).toList();
 
       return {rolelist:request.status!};
     } else {

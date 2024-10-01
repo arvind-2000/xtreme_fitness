@@ -104,10 +104,12 @@ class ManagementController extends GetxController {
   int xtremerloadingstatus = 0;
   int membershiploadingstatus = 0;
   bool iseditpayment = false;
+  bool managementloadings = false;
 
   @override
   void onInit() {
     super.onInit();
+      authctrl.authenticationsforsession();
     getplans();
     getadmission();
     checkmember();
@@ -376,16 +378,15 @@ class ManagementController extends GetxController {
   }
 
   void getpaymentlastest10() async {
-    // managementloading = true;
-    // update();
+    
     _latestpayment10 = await managementRepo.viewlatest10payment();
 
-    managementloading = false;
-
+   
     update();
   }
 
   void viewpayment() async {
+   
     // _allpayments = dummypayments;
     _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
@@ -404,6 +405,7 @@ class ManagementController extends GetxController {
             .toList(),
         );
     //print("In view payment : ${_allpayments.length}");
+   
     update();
   }
 

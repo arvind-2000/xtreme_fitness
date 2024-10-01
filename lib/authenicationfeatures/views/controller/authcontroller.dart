@@ -1,23 +1,21 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
-
+import 'package:universal_html/html.dart' as html;
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
-import '../../../config/encrypt.dart';
+
 import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
-import '../pages/dialogs/logindialog.dart';
 
 class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
@@ -146,34 +144,32 @@ class GetxAuthController extends GetxController {
     update();
     // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await authrepo.logout();
-    Map<Admission?,int> res = await ManagementrepoImpl().viewadmission();
-    if(res.entries.first.value==401){
-    _authentication = false;
-    loginloading = false;
-    _user = null;
-    ismember = true;
+    String s = await authrepo.logout();
+     authentications();
+  
     prefs.remove('key1');
     prefs.remove('key2');
-    signupclose();
-    disposelogin();
-    disposeforgotpass();
-    Get.offAllNamed('/home');
-    }else{
-
-    authentications();
-    }
    
-    update();
+   
+
+  //  Map<List<Role>,int> request = await ManagementrepoImpl().getRoles();
+  //  print(request.entries.first.value);
+  //   if(request.entries.first.value==401 || request.entries.first.value==0){
+  //     print("in status 401");
+
+  //   Get.offAllNamed('/home');
+  //   }
+
+    // update();
   }
 
   void authentications() async {
     //print("in authentications");
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-   Map<List<Role>,int> res = await ManagementrepoImpl().getRoles();
-     print("in authentication ${res.entries.first.value}");
+     Map<List<Role>,int> request = await ManagementrepoImpl().getRoles();
+    //print("${request.status}");
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (res.entries.first.value>=200 && res.entries.first.value<300) {
+    if (request.entries.first.value>=200 && request.entries.first.value<300) {
       print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
@@ -187,8 +183,14 @@ class GetxAuthController extends GetxController {
 
       }
     } else {
-
-      if (res.entries.first.value == 401) {
+ _authentication = false;
+    loginloading = false;
+    _user = null;
+    // ismember = true;
+      signupclose();
+    disposelogin();
+    disposeforgotpass();
+      if (request.entries.first.value == 401||request.entries.first.value==0) {
          if (prefs.containsKey('key1')) {
         Get.dialog(
           barrierDismissible: false,
@@ -201,19 +203,23 @@ class GetxAuthController extends GetxController {
                 child: Cardonly(
                   color: Colors.grey[900],
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                       SizedBox(height: 20,),
                       HeadingText("Session Expired"),
                       SizedBox(height: 20,),
-                      Text("The session has expired or you may not be logged in."),
-                      Text("Log In Again"),
+                      Expanded(child: Center(child: Text("The session has expired or you may not be logged in.",textAlign: TextAlign.center,))),
+                 
                       SizedBox(height: 30,),
                       CardwithShadow(
                         onpress: (){
                           prefs.remove('key1');
                           prefs.remove('key2');
                           Get.offAllNamed('/home');
+                          Get.dialog(LoginDialog(signupdialog: false,));
                         },
-                        child: Text("Go to Home"))
+                        child: Text("Log In Again")),
+                          SizedBox(height: 20,),
                     ],
                   ),
                 ),
@@ -236,6 +242,90 @@ class GetxAuthController extends GetxController {
       }
     }
   }
+
+
+  void authenticationsforsession() async {
+    //print("in authentications");
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+     Map<List<Role>,int> request = await ManagementrepoImpl().getRoles();
+    //print("${request.status}");
+    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
+    if (request.entries.first.value>=200 && request.entries.first.value<300) {
+      // print("in authentication sharedpreferences res");
+
+      // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
+        
+      //   setdataforsession(
+      //  prefs.getString('key1')!, prefs.getBool('key2')!);
+      //   update();
+      //   Get.offAllNamed('/dashboard');
+      // } else {
+      //   Get.offAllNamed('/home');
+
+      // }
+    } else {
+
+      if (request.entries.first.value == 401||request.entries.first.value==0) {
+         _authentication = false;
+    loginloading = false;
+    _user = null;
+    // ismember = true;
+      signupclose();
+    disposelogin();
+    disposeforgotpass();
+         if (prefs.containsKey('key1')) {
+        Get.dialog(
+          barrierDismissible: false,
+          Dialog(
+          
+            child: SizedBox(
+              height: 300,
+              width: 400,
+              child: Center(
+                child: Cardonly(
+                  color: Colors.grey[900],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                       SizedBox(height: 20,),
+                      HeadingText("Session Expired"),
+                      SizedBox(height: 20,),
+                      Expanded(child: Center(child: Text("The session has expired or you may not be logged in.",textAlign: TextAlign.center,))),
+                 
+                      SizedBox(height: 30,),
+                      CardwithShadow(
+                        onpress: (){
+                          prefs.remove('key1');
+                          prefs.remove('key2');
+                          Get.offAllNamed('/home');
+                          Get.dialog(LoginDialog(signupdialog: false,));
+                        },
+                        child: Text("Log In Again")),
+                          SizedBox(height: 20,),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ));
+
+         }else{
+          Get.offAllNamed('/home');
+         }
+     
+
+
+       
+        
+      }else{
+           if (!prefs.containsKey('key1')) {
+        Get.offAllNamed('/home');
+      } 
+      }
+    }
+  }
+
+
 
   void signup(String phone) async {
     signuperror = null;
