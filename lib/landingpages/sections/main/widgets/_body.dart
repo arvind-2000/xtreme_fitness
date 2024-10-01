@@ -36,9 +36,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
 
-
     return Scrollbar(
-      
       child: ScrollablePositionedList.builder(
         itemScrollController: landctrl.scrollControllers,
         initialScrollIndex: 0,
