@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,10 +13,8 @@ import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
-import '../../../config/encrypt.dart';
 import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
-import '../pages/dialogs/logindialog.dart';
 
 class GetxAuthController extends GetxController {
   ///login 0 signup 1 forgotpass 2
@@ -41,31 +38,23 @@ class GetxAuthController extends GetxController {
   bool otploading = false;
   bool? forgotpass;
 
-
-@override
-  void onInit() {
-    super.onInit();
-    // authentications();
-  }
-
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     // changeAuthindex = index;
     // update();
   }
 
-  void setdataforsession(String userid, bool ismem) async{
+  void setdataforsession(String userid, bool ismem) async {
     ismember = ismem;
     userid = userid;
-     Map<UserEntity?, String> v = await authrepo.getUserbyId(int.tryParse(userid) ?? 0);
-            _user = v.entries.first.key;
-             ismember = _user!.roleName!.trim().toLowerCase() == "member";
+    Map<UserEntity?, String> v =
+        await authrepo.getUserbyId(int.tryParse(userid) ?? 0);
+    _user = v.entries.first.key;
+    ismember = _user!.roleName!.trim().toLowerCase() == "member";
     _authentication = true;
     //print('${ismem} ${userid}');
     update();
   }
-
-
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -85,7 +74,7 @@ class GetxAuthController extends GetxController {
         if (d.entries.first.key != null) {
           _authentication = true;
           userid = d.entries.first.key;
-           loginerrortext = d.entries.first.value;
+          loginerrortext = d.entries.first.value;
           if (userid != null) {
             //////print("In authentication check");
             Map<UserEntity?, String> v =
@@ -93,7 +82,7 @@ class GetxAuthController extends GetxController {
             _user = v.entries.first.key;
             if (_user != null) {
               _authentication = true;
-             
+
               //////print("In authentication check member or not ${_user!.roleName}");
               ismember = _user!.roleName!.trim().toLowerCase() == "member";
               //print("in authentication :${ismember} ");
@@ -147,92 +136,85 @@ class GetxAuthController extends GetxController {
     // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await authrepo.logout();
-    Map<Admission?,int> res = await ManagementrepoImpl().viewadmission();
-    if(res.entries.first.value==401){
-    _authentication = false;
-    loginloading = false;
-    _user = null;
-    ismember = true;
-    prefs.remove('key1');
-    prefs.remove('key2');
-    signupclose();
-    disposelogin();
-    disposeforgotpass();
-    Get.offAllNamed('/home');
-    }else{
-
-    authentications();
+    Map<Admission?, int> res = await ManagementrepoImpl().viewadmission();
+    if (res.entries.first.value == 401) {
+      _authentication = false;
+      loginloading = false;
+      _user = null;
+      ismember = true;
+      prefs.remove('key1');
+      prefs.remove('key2');
+      signupclose();
+      disposelogin();
+      disposeforgotpass();
+      Get.offAllNamed('/home');
+    } else {
+      authentications();
     }
-   
+
     update();
   }
 
   void authentications() async {
     //print("in authentications");
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-   Map<List<Role>,int> res = await ManagementrepoImpl().getRoles();
-     print("in authentication ${res.entries.first.value}");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<List<Role>, int> res = await ManagementrepoImpl().getRoles();
+    print("in authentication ${res.entries.first.value}");
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (res.entries.first.value>=200 && res.entries.first.value<300) {
+    if (res.entries.first.value >= 200 && res.entries.first.value < 300) {
       print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
-        
-        setdataforsession(
-       prefs.getString('key1')!, prefs.getBool('key2')!);
+        setdataforsession(prefs.getString('key1')!, prefs.getBool('key2')!);
         update();
         Get.offAllNamed('/dashboard');
       } else {
         Get.offAllNamed('/home');
-
       }
     } else {
-
       if (res.entries.first.value == 401) {
-         if (prefs.containsKey('key1')) {
-        Get.dialog(
-          barrierDismissible: false,
-          Dialog(
-          
-            child: SizedBox(
-              height: 300,
-              width: 400,
-              child: Center(
-                child: Cardonly(
-                  color: Colors.grey[900],
-                  child: Column(
-                    children: [
-                      HeadingText("Session Expired"),
-                      SizedBox(height: 20,),
-                      Text("The session has expired or you may not be logged in."),
-                      Text("Log In Again"),
-                      SizedBox(height: 30,),
-                      CardwithShadow(
-                        onpress: (){
-                          prefs.remove('key1');
-                          prefs.remove('key2');
-                          Get.offAllNamed('/home');
-                        },
-                        child: Text("Go to Home"))
-                    ],
+        if (prefs.containsKey('key1')) {
+          Get.dialog(
+              barrierDismissible: false,
+              Dialog(
+                child: SizedBox(
+                  height: 300,
+                  width: 400,
+                  child: Center(
+                    child: Cardonly(
+                      color: Colors.grey[900],
+                      child: Column(
+                        children: [
+                          const HeadingText("Session Expired"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                              "The session has expired or you may not be logged in."),
+                          const Text("Log In Again"),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          CardwithShadow(
+                              onpress: () {
+                                prefs.remove('key1');
+                                prefs.remove('key2');
+                                Get.offAllNamed('/home');
+                              },
+                              child: const Text("Go to Home"))
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-        ));
-
-         }else{
+              ));
+        } else {
           Get.offAllNamed('/home');
-         }
-     
-
-
-       
-        
-      }else{
-           if (!prefs.containsKey('key1')) {
-        Get.offAllNamed('/home');
-      } 
+        }
+      } else {
+        if (!prefs.containsKey('key1')) {
+          Get.offAllNamed('/home');
+        }
       }
     }
   }
@@ -372,7 +354,7 @@ class GetxAuthController extends GetxController {
     otp = null;
     otploading = false;
     forgotpasserrormessage = null;
-      update();
+    update();
   }
 
   void disposelogin() {
@@ -382,4 +364,3 @@ class GetxAuthController extends GetxController {
     // update();
   }
 }
-    

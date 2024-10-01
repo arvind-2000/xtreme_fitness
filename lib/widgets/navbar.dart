@@ -5,7 +5,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editco
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/dialogswidget.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
 import '../managementfeatures/managementviews/screens/dashboard.dart';
 import '../responsive/responsive.dart';
@@ -65,7 +64,8 @@ class NavBar extends StatelessWidget {
                   ),
                   Cardonly(
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(0);
@@ -116,7 +116,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -137,7 +138,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -166,7 +168,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(10);
@@ -186,7 +189,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(4);
@@ -215,7 +219,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         pagectrl.changeNavPage(2);
@@ -234,7 +239,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -255,7 +261,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -268,7 +275,6 @@ class NavBar extends StatelessWidget {
                         title: 'Payments',
                       )),
 
-                      
                   Cardonly(
                       color: pagectrl.navpage == 15
                           ? Theme.of(context)
@@ -277,7 +283,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -305,7 +312,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -325,7 +333,8 @@ class NavBar extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
                         // contrl.onBadgeTap();
@@ -358,46 +367,53 @@ class NavBar extends StatelessWidget {
           Cardonly(
               color: Colors.transparent,
               onpress: () {
-                if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                if (Responsive.isMobile(context) ||
+                    Responsive.isTablet(context)) {
                   drawers(context);
                 }
-                 Get.dialog(
-                    PageDialog(
-                        heights: 300,
-                        no: () {
-                         Get.back();
-                        },
-                        yes: () {
-                          authctrl.logout();
-                        },
-                        child:authctrl.loginloading?Center(child: CircularProgressIndicator(color: Colors.white,),) :const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.logout),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                HeadingText(
-                                  "Log Out",
-                                  size: 20,
-                                ),
-                              ],
+                Get.dialog(PageDialog(
+                    heights: 300,
+                    no: () {
+                      Get.back();
+                    },
+                    yes: () {
+                      Get.back();
+                      authctrl.logout();
+                    },
+                    child: authctrl.loginloading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
                             ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Center(
-                                child: Text(
-                              "Are you sure you want to logout?\nPress yes to confirm",
-                              style: TextStyle(
-                                fontSize: 16,
+                          )
+                        : const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.logout),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  HeadingText(
+                                    "Log Out",
+                                    size: 20,
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.center,
-                            ))
-                          ],
-                        )));
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Center(
+                                  child: Text(
+                                "Are you sure you want to logout?\nPress yes to confirm",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ))
+                            ],
+                          )));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(

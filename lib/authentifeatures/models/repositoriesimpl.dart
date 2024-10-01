@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/authentifeatures/config/apis.dart';
@@ -70,63 +67,65 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   //   // Fallback if the request took too long
   //   return {uid: "Took too long to respond. Try again"};
   // }
-@override
-Future<Map<String?, String>> emailAuthentication({
-  required String email,
-  required String pass,
-}) async {
-  //print("in login auth");
-  String? uid = "";
-  String message = "";
-  Uri url = Uri.parse("$api/api/Users/login");
+  @override
+  Future<Map<String?, String>> emailAuthentication({
+    required String email,
+    required String pass,
+  }) async {
+    //print("in login auth");
+    String? uid = "";
+    String message = "";
+    Uri url = Uri.parse("$api/api/Users/login");
 
-  final query = {"userName": email, "passwordHash": pass};
+    final query = {"userName": email, "passwordHash": pass};
 
-  try {
-    // Making the request using html.HttpRequest
-    final response = await html.HttpRequest.request(
-      url.toString(),
-      method: 'POST',
-      sendData: jsonEncode(query),
-      requestHeaders: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      withCredentials: true, // This allows cookies to be sent
-    );
+    try {
+      // Making the request using html.HttpRequest
+      final response = await html.HttpRequest.request(
+        url.toString(),
+        method: 'POST',
+        sendData: jsonEncode(query),
+        requestHeaders: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        withCredentials: true, // This allows cookies to be sent
+      );
 
-    //print("Status Code : ${response.status}");
+      //print("Status Code : ${response.status}");
 
-    // Handle the response
-    if (response.status! >= 200 && response.status! < 300) {
-      //print(response);
-      // Parsing the successful response
-      var d = jsonDecode(response.responseText!);
-      var cookies = html.document.cookie; // Get cookies from the document
-      //print("cookies in the login api $cookies");
-      message = d["Message"] ?? d.toString();
-      uid = d["Data"]["UserId"].toString(); // Extract the userId
+      // Handle the response
+      if (response.status! >= 200 && response.status! < 300) {
+        //print(response);
+        // Parsing the successful response
+        var d = jsonDecode(response.responseText!);
+        var cookies = html.document.cookie; // Get cookies from the document
+        //print("cookies in the login api $cookies");
+        message = d["Message"] ?? d.toString();
+        uid = d["Data"]["UserId"].toString(); // Extract the userId
 
-      return {uid: message}; // Return the uid and message on success
-    } else if (response.status! >= 400 && response.status! < 500) {
-      // Client-side errors
-      //print(response.responseText);
-      return {
-        uid: response.responseText ?? "Failed to log in. Check your credentials"
-      };
-    } else if (response.status! >= 500) {
-      // Server-side errors
-      return {uid: "There is an internal error. We will get back soon."};
+        return {uid: message}; // Return the uid and message on success
+      } else if (response.status! >= 400 && response.status! < 500) {
+        // Client-side errors
+        //print(response.responseText);
+        return {
+          uid: response.responseText ??
+              "Failed to log in. Check your credentials"
+        };
+      } else if (response.status! >= 500) {
+        // Server-side errors
+        return {uid: "There is an internal error. We will get back soon."};
+      }
+    } catch (e) {
+      // Handle exceptions like network errors
+      //print(e.toString());
+      return {uid: "Failed to log in. Check your credentials."};
     }
-  } catch (e) {
-    // Handle exceptions like network errors
-    //print(e.toString());
-    return {uid: "Failed to log in. Check your credentials."};
+
+    // Fallback if the request took too long
+    return {uid: "Took too long to respond. Try again"};
   }
 
-  // Fallback if the request took too long
-  return {uid: "Took too long to respond. Try again"};
-}
   @override
   Future<Map<String, int>> userRegistration(
       {required String email,
@@ -182,7 +181,6 @@ Future<Map<String?, String>> emailAuthentication({
           'Content-Type': 'application/json',
         },
         body: jsonEncode(data),
-      
       );
 
       if (response.statusCode == 200) {
@@ -201,37 +199,35 @@ Future<Map<String?, String>> emailAuthentication({
 
   @override
   Future<List<UserEntity>> getAllUsers() async {
-  Uri url = Uri.parse("$api/api/Users");
-  // Convert the ServiceSchedule instance to JSON
+    Uri url = Uri.parse("$api/api/Users");
+    // Convert the ServiceSchedule instance to JSON
 
-  // Send the POST request using universal_html's HttpRequest
-  try {
-    final request = await html.HttpRequest.request(
-      url.toString(),
-      method: 'GET',
-      requestHeaders: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    );
+    // Send the POST request using universal_html's HttpRequest
+    try {
+      final request = await html.HttpRequest.request(
+        url.toString(),
+        method: 'GET',
+        requestHeaders: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      );
 
-    // Check the response status
-    if (request.status!  >= 200 &&  request.status! < 300) {
-         // Parse the response body
-      final List<dynamic> jsonList = json.decode(request.responseText!);
+      // Check the response status
+      if (request.status! >= 200 && request.status! < 300) {
+        // Parse the response body
+        final List<dynamic> jsonList = json.decode(request.responseText!);
 
-      // Convert the JSON data to an Admission object
-      return jsonList.map((json) => UserEntity.fromJson(json)).toList();
-      
-    } else {
-      //print( 'Failed to add service schedule. Status code: ${request.status}');
-
+        // Convert the JSON data to an Admission object
+        return jsonList.map((json) => UserEntity.fromJson(json)).toList();
+      } else {
+        //print( 'Failed to add service schedule. Status code: ${request.status}');
+      }
+    } catch (e) {
+      //print("Error: $e");
     }
-  } catch (e) {
-    //print("Error: $e");
-  }
 
-     return [];
+    return [];
   }
 
   @override
@@ -240,7 +236,9 @@ Future<Map<String?, String>> emailAuthentication({
     AuthenticateUseCases useCase = AuthenticateUseCases();
     Uri url = Uri.parse(
         "$otpapi?apikey=$smsapikey&numbers=$phone&message=${useCase.registerOTP(otp, mins)}&sender=CUBETN");
-    final res = await http.post(url,);
+    final res = await http.post(
+      url,
+    );
 
     return res.statusCode.toString();
   }
@@ -249,21 +247,20 @@ Future<Map<String?, String>> emailAuthentication({
   Future<Map<UserEntity?, String>> getUserbyId(int id) async {
     //print("In get by id $id");
     Uri url = Uri.parse("$api/api/Users/$id");
-      final response = await html.HttpRequest.request(
-        url.toString(),
-        method: 'GET',
-        requestHeaders: {"Content-Type": "application/json"},
-          withCredentials: true, 
-      );
-            //print(" in ok ${response.toString()}");
+    final response = await html.HttpRequest.request(
+      url.toString(),
+      method: 'GET',
+      requestHeaders: {"Content-Type": "application/json"},
+      withCredentials: true,
+    );
+    //print(" in ok ${response.toString()}");
     try {
-    
-
-
       // Check if the request was successful
       if (response.status! >= 200 && response.status! < 300) {
         //print(response.statusText);
-        return {UserEntity.fromJson(jsonDecode(response.responseText!)): "found"};
+        return {
+          UserEntity.fromJson(jsonDecode(response.responseText!)): "found"
+        };
       } else {
         return {null: "User not found"};
       }
@@ -276,7 +273,7 @@ Future<Map<String?, String>> emailAuthentication({
   @override
   Future<String> logout() async {
     Uri url = Uri.parse("$api/api/Users/logout");
-
+    print('logout comming');
 
     try {
       final response = await html.HttpRequest.request(
@@ -286,53 +283,51 @@ Future<Map<String?, String>> emailAuthentication({
         requestHeaders: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-
         },
         withCredentials: true, // Ensuring session cookies are handled
       );
-      //print("Logout :${response.statusText}");
+
+      print("Logout api :$response");
       return response.statusText!;
     } on Exception catch (e) {
-      //print(e);
+      print(e);
     }
     return "Error in logging out";
   }
 
-
-
-@override
-Future<Map<int?, String>> getUserbyNumber(String number) async {
-  // print("In get user by number $number");
-  Uri url = Uri.parse("$api/api/Users/GetByNumber?mobileNumber=$number");
-  try {
-    final request = await html.HttpRequest.request(
-      url.toString(),
-      method: 'GET',
-      requestHeaders: {"Content-Type": "application/json"},
-      withCredentials: true, // Include credentials
-    );
-    // print(request.responseText);
-
-    // Check if the request was successful
-    if (request.status! >= 200 && request.status! < 300) {
+  @override
+  Future<Map<int?, String>> getUserbyNumber(String number) async {
+    // print("In get user by number $number");
+    Uri url = Uri.parse("$api/api/Users/GetByNumber?mobileNumber=$number");
+    try {
+      final request = await html.HttpRequest.request(
+        url.toString(),
+        method: 'GET',
+        requestHeaders: {"Content-Type": "application/json"},
+        withCredentials: true, // Include credentials
+      );
       // print(request.responseText);
-      return {
-        int.tryParse(request.responseText!)! > 0 ? int.tryParse(request.responseText!) : null:
-            "User Found"
-      };
-    } else {
-      if (request.status! >= 500) {
-        return {-1: "User not found or error with the connection"};
-      } else {
-        return {-3: "User not found or error with the connection"};
-      }
-    }
-  } catch (e) {
-    // print(e);
-    return {-3: "Error in data parsing"};
-  }
-}
 
+      // Check if the request was successful
+      if (request.status! >= 200 && request.status! < 300) {
+        // print(request.responseText);
+        return {
+          int.tryParse(request.responseText!)! > 0
+              ? int.tryParse(request.responseText!)
+              : null: "User Found"
+        };
+      } else {
+        if (request.status! >= 500) {
+          return {-1: "User not found or error with the connection"};
+        } else {
+          return {-3: "User not found or error with the connection"};
+        }
+      }
+    } catch (e) {
+      // print(e);
+      return {-3: "Error in data parsing"};
+    }
+  }
 
   @override
   Future<Map<int?, String?>> changePass(int id, String password) async {
