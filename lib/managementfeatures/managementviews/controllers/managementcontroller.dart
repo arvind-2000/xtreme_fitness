@@ -15,6 +15,7 @@ import '../../managementdomain/entities.dart/admission.dart';
 import '../../managementdomain/entities.dart/membership.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/roles.dart';
+import '../../managementdomain/entities.dart/subscription.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -73,11 +74,20 @@ class ManagementController extends GetxController {
   List<Role> _allroles  = [];
 
     List<ServiceSchedule> get getallServicesSchedule => _allserviceschedule;
+    List<ServiceSchedule> get searchServicesSchedule => _searchservice;
   List<ServiceSchedule> _allserviceschedule  = [];
+  List<ServiceSchedule> _searchservice  = [];
+      List<Subscription> get getallSubscription => _allSubscription;
+  List<Subscription> _allSubscription  = [];
+//users
+        // List<UserEntity> get getallSubscription => _allSubscription;
+  List<UserEntity> _allUsers  = [];
+  List<UserEntity> get allUsers  => _allUsers;
   String? searchmessage = "";
   int searchposition = 0;
   Membership? currentmember;
   GetxAuthController authctrl = Get.find<GetxAuthController>();
+  
   Xtremer? xtremer;
   Admission? _admission;
   Admission? get getAdmission=>_admission;
@@ -107,11 +117,11 @@ class ManagementController extends GetxController {
     getTrainer();
     viewpayment();
     getpaymentlastest10();
-    getAllTraineess(10);
     getAllRoles();
     getMemberships();
     getAllServiceSchedules();
-
+    getAllSubscriptions();
+    getAllusers();
 
     update();
   }
@@ -147,6 +157,12 @@ class ManagementController extends GetxController {
         )
         .toList();
 
+    update();
+  }
+
+    
+  void getAllusers() async {
+    _allUsers= await authctrl.authrepo.getAllUsers();
     update();
   }
 
@@ -380,13 +396,13 @@ class ManagementController extends GetxController {
             )
             .toList(),
         DateTime.now());
-    weeklypayments = groupPaymentsBydate(
+    weeklypayments = groupPaymentsByDate(
         _allpayments
             .where(
               (element) => element.paymentStatus!.toLowerCase() == 'success',
             )
             .toList(),
-        DateTime.now());
+        );
     //print("In view payment : ${_allpayments.length}");
     update();
   }
@@ -477,29 +493,39 @@ class ManagementController extends GetxController {
   void searchservice(String keyword) {
     searchmessage = "";
     if (keyword.isEmpty) {
-      _searchpayments = _allpayments;
+      _searchservice  = _allserviceschedule;
 
-      _searchxtremerlist = _allpersonalxtremer;
-
-      _searchxtremerlist = _allgeneralxtremer;
+ 
     } else {
-      _searchpayments = _allpayments.where(
-        (element) {
-          return element.transactionId
-                  .toString()
-                  .toLowerCase()
-                  .contains(keyword.toLowerCase()) ||
-              element.userId
-                  .toString()
-                  .toLowerCase()
-                  .contains(keyword.toLowerCase());
-        },
-      ).toList();
+      // _searchservice = _allserviceschedule.where(
+      //   (element){
+      //    for(UserEntity d in _allUsers){
+      //     if(d.id == element.userId && d.mobileNumber!.contains(keyword.trim())){
+      //         return true;
+      //    }else{
+      //     return false;
+      //    }
+
+      //   }
+      //      return false;
+        
+      //   }
+      // ).toList();
+      List<UserEntity> d = _allUsers.where((element) => element.mobileNumber!=null?element.mobileNumber!.contains(keyword.trim()):false,).toList();
+      _searchservice = _allserviceschedule.where((element) {
+       UserEntity? x = d.firstWhereOrNull((e) => e.id==element.userId,);
+        if(x==null){
+          return false;
+        }else{
+          return true;
+        }
+      }).toList();
+
     }
 
     searchmessage = keyword.isEmpty
         ? ""
-        : "Found ${_searchpayments.length} records with keyoword: $keyword";
+        : "Found ${_searchservice.length} records with keyoword: $keyword";
     update();
   }
 
@@ -575,6 +601,13 @@ class ManagementController extends GetxController {
   ///allservice schedules
   void getAllServiceSchedules()async{
     _allserviceschedule = await managementRepo.getAllServiceUsage();
+    _searchservice = _allserviceschedule;
+    update();
+  }
+
+
+  void getAllSubscriptions()async{
+    _allSubscription = await managementRepo.getAllSubscription();
     update();
   }
 
@@ -584,6 +617,27 @@ class ManagementController extends GetxController {
      getAllServiceSchedules();
     return v;
   
+  }
+
+
+  List<Xtremer> tobeExpired(){
+    List<Xtremer> tobeexpiredlist = [];
+     DateTime dateMinusSevenDays = DateTime.now().subtract(Duration(days: 7));
+    for(Xtremer e in _allxtremer){
+
+      for(Subscription d in _allSubscription){
+        if(d.userId.toString() == e.XtremerId.toString() && d.isActive){  
+            if(d.endDate.isAtSameMomentAs(dateMinusSevenDays)||d.endDate.isAfter(dateMinusSevenDays)){
+                tobeexpiredlist.add(e);
+            }
+        }
+      }
+        
+
+    }
+
+
+return tobeexpiredlist;
   }
 
 

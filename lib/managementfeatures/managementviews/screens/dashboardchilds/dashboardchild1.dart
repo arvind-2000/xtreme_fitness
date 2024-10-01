@@ -52,7 +52,7 @@ class DashboardChild1 extends StatelessWidget {
                   ),
                   FittedBox(
                       child: Text(
-                    "$rupee ${Logics.totalamounts(managectrl.getallpayments, DateTime.now())}",
+                    "$rupee ${Logics.totalamounts(managectrl.getallpayments , DateTime.now())}",
                     style: const TextStyle(fontSize: 40),
                   )),
                 ],

@@ -198,6 +198,18 @@ class memberprofile extends StatelessWidget {
                const SizedBox(height: 10,),
             Text(widget.user!.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
             const SizedBox(height: 16,),
+
+            const Text("Category"),
+               const SizedBox(height: 10,),
+            Text(widget.user!.category??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+            const SizedBox(height: 16,),
+
+            widget.user!.category!=null && widget.user!.category!.toLowerCase()=="personal"?CardwithShadow(
+              onpress: (){},
+              
+              
+
+              child: Center(child: Text("Edit Trainer"),)):SizedBox()
            
           ],
         )));

@@ -103,15 +103,15 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                   : 400,
                               child: TextFieldWidget(
                                   showhint: false,
-                                  hint: "Search services",
+                                  hint: "Search services by phone number",
                                   controller: _searchcontroller,
                                   validator: () {},
                                   onchanged: (text) {
-                                    managectrl.searchpayments(text);
+                                    managectrl.searchservice(text);
                                   },
                                   fieldsubmitted: () {
                                     managectrl
-                                        .searchpayments(_searchcontroller.text);
+                                        .searchservice(_searchcontroller.text);
                                     _searchcontroller.clear();
                                   },
                                   icon: const Icon(Icons.search)),
@@ -139,16 +139,16 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                       ],
                     ),
                   ),
-                  managectrl.getallServicesSchedule.isEmpty
+                  managectrl.searchServicesSchedule.isEmpty
                       ? const NodataScreen(
                           title: "Service Usage", desc: "No service records")
                       : Expanded(
                           child: ListView.builder(
-                            itemCount: managectrl.getallServicesSchedule.length,
+                            itemCount: managectrl.searchServicesSchedule.length,
                             itemBuilder: (c, i) => ListCard2(
-                              servicename: '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.getallServicesSchedule[i].serviceId,)?.name}',
-                              name:   "${managectrl.getallXtremer.firstWhereOrNull((element) => element.XtremerId==managectrl.getallServicesSchedule[i].userId,)?.firstName} ${managectrl.getallXtremer.firstWhereOrNull((element) => element.XtremerId==managectrl.getallServicesSchedule[i].userId,)?.surname}",
-                                service: managectrl.getallServicesSchedule[i],
+                              servicename: '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.searchServicesSchedule[i].serviceId,)!.name}',
+                              name:   "${managectrl.allUsers.firstWhereOrNull((element) => element.id==managectrl.searchServicesSchedule[i].userId,)?.mobileNumber}",
+                                service: managectrl.searchServicesSchedule[i],
                                 edit: () {
                                   Get.dialog(Dialog(
                                     child: SizedBox(
@@ -203,7 +203,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                           Row(
                                                             children: [
                                                               const Text(
-                                                                "Name",
+                                                                "Phone",
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         14),
@@ -212,7 +212,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                             ],
                                                           ),
                                                           Text(
-                                                              "${managectrl.getallXtremer.firstWhereOrNull((element) => element.XtremerId==managectrl.getallServicesSchedule[i].userId,)?.firstName} ${managectrl.getallXtremer.firstWhereOrNull((element) => element.XtremerId==managectrl.getallServicesSchedule[i].userId,)?.surname}"),
+                                                              "${managectrl.allUsers.firstWhereOrNull((element) => element.id==managectrl.searchServicesSchedule[i].userId,)?.mobileNumber}"),
                                                           const SizedBox(
                                                             height: 16,
                                                           ),
@@ -223,7 +223,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                           ),
                                                             
                                                           Text(
-                                                             '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.getallServicesSchedule[i].serviceId,)?.name}'),
+                                                             '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.searchServicesSchedule[i].serviceId,)?.name}'),
                                                           const SizedBox(
                                                             height: 16,
                                                           ),
@@ -233,7 +233,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                                 fontSize: 14),
                                                           ),
                                                           Text(
-                                                              "${managectrl.getallServicesSchedule[i].scheduleDate.day}/${managectrl.getallServicesSchedule[i].scheduleDate.month}/${managectrl.getallServicesSchedule[i].scheduleDate.year}"),
+                                                              "${managectrl.searchServicesSchedule[i].scheduleDate.day}/${managectrl.searchServicesSchedule[i].scheduleDate.month}/${managectrl.searchServicesSchedule[i].scheduleDate.year}"),
                                                           const SizedBox(
                                                             height: 16,
                                                           ),
@@ -243,7 +243,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                                 fontSize: 14),
                                                           ),
                                                           Text(
-                                                            "${managectrl.getallServicesSchedule[i].serviceId}",
+                                                            "${managectrl.searchServicesSchedule[i].serviceId}",
                                                             style:
                                                                 const TextStyle(
                                                                     fontSize:
@@ -271,7 +271,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                               },
 
                                                               hintText:
-                                                                 managectrl.getallServicesSchedule[i].status,
+                                                                 managectrl.searchServicesSchedule[i].status,
                                                               dropdownMenuEntries: 
                                                                   d.asMap()
                                                                   .entries
@@ -300,10 +300,10 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                   margin: EdgeInsets.zero,
                                                   color: Colors.blue,
                                                   onpress: () async {
-                                                    ServiceSchedule d = managectrl.getallServicesSchedule[i];
+                                                    ServiceSchedule d = managectrl.searchServicesSchedule[i];
                                                     d.status = serviceStatus??d.status;
                                                     String v = await managectrl.updateserviceschedule(d);
-                                                    // createAndPrintPdf(Paymententity(id: managectrl.getallServicesSchedule[i].id, userId: managectrl.getallServicesSchedule[i].userId!, amount: managectrl.getallServicesSchedule[i].amount!, discountPercentage: managectrl.getallServicesSchedule[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getallServicesSchedule[i].receivedAmount, paymentDate: managectrl.getallServicesSchedule[i].paymentDate, transactionId:managectrl.getallServicesSchedule[i].transactionId!, paymentStatus: managectrl.getallServicesSchedule[i].paymentStatus!, paymentMethod:managectrl.getallServicesSchedule[i].paymentMethod!, paymentType: managectrl.getallServicesSchedule[i].paymentType!, subscriptionId: managectrl.getallServicesSchedule[i].subscriptionId, serviceUsageId: managectrl.getallServicesSchedule[i].serviceUsageId, termsAndConditions: true));
+                                                    // createAndPrintPdf(Paymententity(id: managectrl.searchServicesSchedule[i].id, userId: managectrl.searchServicesSchedule[i].userId!, amount: managectrl.searchServicesSchedule[i].amount!, discountPercentage: managectrl.searchServicesSchedule[i].discountPercentage!.toDouble(), receivedAmount: managectrl.searchServicesSchedule[i].receivedAmount, paymentDate: managectrl.searchServicesSchedule[i].paymentDate, transactionId:managectrl.searchServicesSchedule[i].transactionId!, paymentStatus: managectrl.searchServicesSchedule[i].paymentStatus!, paymentMethod:managectrl.searchServicesSchedule[i].paymentMethod!, paymentType: managectrl.searchServicesSchedule[i].paymentType!, subscriptionId: managectrl.searchServicesSchedule[i].subscriptionId, serviceUsageId: managectrl.searchServicesSchedule[i].serviceUsageId, termsAndConditions: true));
                                                     Navigator.pop(context);
                                                     CustomSnackbar(
                                                         context, v);

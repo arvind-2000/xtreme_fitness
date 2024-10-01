@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart';
@@ -5,7 +6,9 @@ import 'dart:html' as html;
 import 'package:excel/excel.dart';
 import 'package:printing/printing.dart';
 
+import '../managementdomain/entities.dart/membership.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
+import '../managementdomain/entities.dart/subscription.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 
@@ -25,7 +28,7 @@ double percentprice(double? actualprice,double? dis){
   Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
     final pdf = pw.Document();
     //print("in //print pdf");
-    final logoData = await _loadImageData('assets/logo2.png');
+    final logoData = await _loadImageData('assets/logo3.png');
 
 
       pdf.addPage(
@@ -35,7 +38,7 @@ double percentprice(double? actualprice,double? dis){
       margin: const pw.EdgeInsets.all(16),
       build: (pw.Context context) {
         return pw.Container(
-          height: 400,
+          height: 420,
           child:  pw.Padding(
           padding: const pw.EdgeInsets.all(16),
           child: pw.Container(
@@ -238,7 +241,7 @@ double percentprice(double? actualprice,double? dis){
                
 
               ]),
-              pw.SizedBox(height: 10),
+              pw.SizedBox(height: 30),
                      pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.end,
                 children: [
@@ -255,10 +258,10 @@ double percentprice(double? actualprice,double? dis){
               ),
 
             pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
+                mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
                   pw.Text(
-                    'This receipt is computer generated.',
+                    'Note:This receipt is computer generated.',
                     style: pw.TextStyle(fontSize: 10),
                   ),
 
@@ -351,36 +354,66 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
 }
 
 
-// Function to group payments by month and year
-Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
-    List<Alluserpaymentmodel> payments,DateTime date) {
+// // Function to group payments by month and year
+// Map<int, List<Alluserpaymentmodel>> groupPaymentsBydate(
+//     List<Alluserpaymentmodel> payments,DateTime date) {
   
-  Map<int, List<Alluserpaymentmodel>> paymentsByday = {};
+//   Map<int, List<Alluserpaymentmodel>> paymentsByday = {};
+
+//   for (var payment in payments) {
+//     // Format the date to 'Month Year' (e.g., "July 2023")
+
+//     if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
+      
+//     int days = payment.paymentDate.day;
+//     ////print("in fliterpayment function");
+//     if (paymentsByday.containsKey(days)) {
+//        ////print("in fliterpayment functionds");
+//       // If the month-year key exists, add the payment to the list
+//       paymentsByday[days]!.add(payment);
+//     } else {
+//       // If the month-year key does not exist, create a new list
+//     ////print("in fliterpayment functionree");
+//       paymentsByday[days] = [payment];
+//     }
+//     }
+
+//   }
+  
+//   return paymentsByday;
+
+// }
+Map<int, List<Alluserpaymentmodel>> groupPaymentsByDate(
+    List<Alluserpaymentmodel> payments) {
+  
+  Map<int, List<Alluserpaymentmodel>> paymentsByDay = {};
+  
+  // Check if there are any payments
+  if (payments.isEmpty) return paymentsByDay;
+
+  // Find the last payment date
+  DateTime lastPaymentDate = payments.map((payment) => payment.paymentDate).reduce((a, b) => a.isAfter(b) ? a : b);
+
+  // Calculate the start date (30 days before the last payment date)
+  DateTime startDate = lastPaymentDate.subtract(Duration(days: 30));
 
   for (var payment in payments) {
-    // Format the date to 'Month Year' (e.g., "July 2023")
-
-    if(payment.paymentDate.year == date.year && payment.paymentDate.month == date.month){
+    // Check if the payment date is within the last 30 days
+    if (payment.paymentDate.isAfter(startDate) && payment.paymentDate.isBefore(lastPaymentDate.add(Duration(days: 1)))) {
       
-    int days = payment.paymentDate.day;
-    ////print("in fliterpayment function");
-    if (paymentsByday.containsKey(days)) {
-       ////print("in fliterpayment functionds");
-      // If the month-year key exists, add the payment to the list
-      paymentsByday[days]!.add(payment);
-    } else {
-      // If the month-year key does not exist, create a new list
-    ////print("in fliterpayment functionree");
-      paymentsByday[days] = [payment];
-    }
-    }
+      int day = payment.paymentDate.day;
 
+      // Group payments by day
+      if (paymentsByDay.containsKey(day)) {
+        paymentsByDay[day]!.add(payment);
+      } else {
+        paymentsByDay[day] = [payment];
+      }
+    }
   }
-  
-  return paymentsByday;
 
+  return paymentsByDay;
 }
-
 
 Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
     List<Alluserpaymentmodel> payments) {
@@ -467,20 +500,19 @@ Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
 }
 
 
-Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,String payments) async {
+Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,List<Membership> memberlist,String payments,List<Subscription> subs) async {
   var excel = Excel.createExcel();
   Sheet sheet = excel["Sheet1"];
 
   // Define headers
   List<String> headers = [ 
-   'Xtremer Id',
+    'Membership Id',
     'First Name',
     'Last Name',
     'Phone',
     'Address',
     'Pin Code',
     'Status',
-    'Membership Id',
     'Start Date',
     'End Date'
   ];
@@ -492,18 +524,18 @@ Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,String payments)
   // Append data rows
   for (var xtremer in xtremerlist) {
     sheet.appendRow([
-      TextCellValue( xtremer.XtremerId.toString()),
+      TextCellValue( '${memberlist.firstWhereOrNull((element) => element.userId==xtremer.XtremerId,)??""}'),
       TextCellValue( xtremer.firstName.toString()),
       TextCellValue( xtremer.surname.toString()),
       TextCellValue( xtremer.mobileNumber.toString()),
       TextCellValue( xtremer.address.toString()),
       TextCellValue( xtremer.postcode.toString()),
-      TextCellValue( xtremer.isActive.toString()),
+      TextCellValue( xtremer.isActive!=null && xtremer.isActive!?"Active" :"InActive"),
       TextCellValue( xtremer.XtremerId.toString()),
       // IntCellValue(  payment.discountPercentage??0,),
       // DoubleCellValue(  payment.receivedAmount,),
-      DateCellValue.fromDateTime(DateTime.now()),
-      DateCellValue.fromDateTime(DateTime.now()),
+      DateCellValue.fromDateTime(subs.firstWhereOrNull((element) => element.userId==xtremer.XtremerId.toString(),)?.startDate??DateTime(2000)),
+      DateCellValue.fromDateTime(subs.firstWhereOrNull((element) => element.userId==xtremer.XtremerId.toString(),)?.endDate??DateTime(2000)),
       // TextCellValue(payment.paymentStatus.toString()),
       // TextCellValue(payment.paymentMethod.toString()),
      

@@ -39,7 +39,7 @@ class _MemoryImageWidgetState extends State<MemoryImageWidget> {
     return  Center(
         child: _photoBytes != null
             ? Image.memory(_photoBytes!) // Display the image from memory
-            : CircularProgressIndicator(), // Show loading indicator while fetching
+            :Icon(Icons.person), // Show loading indicator while fetching
       );
   }
 }

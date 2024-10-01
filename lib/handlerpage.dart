@@ -31,7 +31,7 @@ class _HandlerPageState extends State<HandlerPage> {
       (timeStamp) {
         // Future.delayed(Durations.extralong1,() =>  Get.find<GetxAuthController>().authentications(),); 
         Get.put(AddMemberController());
-        Get.put(GetxPageController());
+        Get.put(GetxPageController()).onInit();
         Get.put(ManagementController()).onInit();
       },
     );
@@ -45,7 +45,7 @@ class _HandlerPageState extends State<HandlerPage> {
   void dispose() {
     Get.find<AddMemberController>().onClose();
     Get.find<GetxAuthController>().disposelogin();
-    
+ 
     super.dispose();
   }
   @override

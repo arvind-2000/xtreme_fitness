@@ -54,10 +54,7 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                     constraints: const BoxConstraints(maxWidth: 600),
                     child: PaymentStatusCard(
                       callback: () async {
-                          authctrl.authentications();
-              
-
-                   
+                          authctrl.authentications();              
                       },
                     )),
               ));

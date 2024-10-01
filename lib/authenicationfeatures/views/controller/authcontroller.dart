@@ -169,7 +169,7 @@ class GetxAuthController extends GetxController {
   void authentications() async {
     //print("in authentications");
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<Admission?,int> res = await ManagementrepoImpl().viewadmission();
+    Map<Admission?,int> res = await ManagementrepoImpl().getAllRoles();
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (res.entries.first.value>=200 && res.entries.first.value<300) {
       //print("in authentication sharedpreferences");
@@ -186,34 +186,45 @@ class GetxAuthController extends GetxController {
       }
     } else {
       if (res.entries.first.value == 401) {
-        // Get.dialog(
-        //   barrierDismissible: false,
-        //   Dialog(
+         if (prefs.containsKey('key1')) {
+        Get.dialog(
+          barrierDismissible: false,
+          Dialog(
           
-        //     child: SizedBox(
-        //       height: 300,
-        //       child: Center(
-        //         child: Cardonly(
-        //           color: Colors.grey[900],
-        //           child: Column(
-        //             children: [
-        //               HeadingText("Session Expired"),
-        //               SizedBox(height: 20,),
-        //               Text("The session has expired or you may not be logged in."),
-        //               Text("Log In Again"),
-        //               SizedBox(height: 30,),
-        //               CardwithShadow(
-        //                 onpress: (){
-        //                   Get.offAllNamed('/home');
-        //                 },
-        //                 child: Text("Go to Home"))
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        // ));
-         Get.offAllNamed('/home');
+            child: SizedBox(
+              height: 300,
+              width: 400,
+              child: Center(
+                child: Cardonly(
+                  color: Colors.grey[900],
+                  child: Column(
+                    children: [
+                      HeadingText("Session Expired"),
+                      SizedBox(height: 20,),
+                      Text("The session has expired or you may not be logged in."),
+                      Text("Log In Again"),
+                      SizedBox(height: 30,),
+                      CardwithShadow(
+                        onpress: (){
+                          prefs.remove('key1');
+                          prefs.remove('key2');
+                          Get.offAllNamed('/home');
+                        },
+                        child: Text("Go to Home"))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ));
+
+         }else{
+          Get.offAllNamed('/home');
+         }
+     
+
+
+       
         
       }else{
            if (!prefs.containsKey('key1')) {

@@ -200,10 +200,38 @@ Future<Map<String?, String>> emailAuthentication({
   }
 
   @override
-  Future<Map<UserEntity, int>> getAllUsers() async {
-    //  final response =  await dio.get(getAllUsersApi);
-    //       log('response ${response.data}');
-    throw UnimplementedError();
+  Future<List<UserEntity>> getAllUsers() async {
+  Uri url = Uri.parse("$api/api/Users");
+  // Convert the ServiceSchedule instance to JSON
+
+  // Send the POST request using universal_html's HttpRequest
+  try {
+    final request = await html.HttpRequest.request(
+      url.toString(),
+      method: 'GET',
+      requestHeaders: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    );
+
+    // Check the response status
+    if (request.status!  >= 200 &&  request.status! < 300) {
+         // Parse the response body
+      final List<dynamic> jsonList = json.decode(request.responseText!);
+
+      // Convert the JSON data to an Admission object
+      return jsonList.map((json) => UserEntity.fromJson(json)).toList();
+      
+    } else {
+      //print( 'Failed to add service schedule. Status code: ${request.status}');
+
+    }
+  } catch (e) {
+    //print("Error: $e");
+  }
+
+     return [];
   }
 
   @override

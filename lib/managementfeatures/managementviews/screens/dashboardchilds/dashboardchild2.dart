@@ -36,7 +36,7 @@ class DashboardChild2 extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "This month",
+                    "Previous 30 days",
                     style: TextStyle(fontSize: 10),
                   ),
                   // DropdownButton(
@@ -59,13 +59,7 @@ class DashboardChild2 extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: managectrl.weeklypayments.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    : GraphsWidget(
+                child: GraphsWidget(
                         charttype: ChartType.line,
                         tooltip:
                             (data, point, series, pointIndex, seriesIndex) =>

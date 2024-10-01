@@ -85,6 +85,7 @@ abstract class ManagementRepo {
   ///subscription api
   Future<Subscription?> addSubscription(Subscription subs);
   Future<Subscription?> getSubscription(int id);
+  Future<List<Subscription>> getAllSubscription();
 
   ///service usage api
   Future<ServiceSchedule?> addServiceUsage(ServiceSchedule serviceschedule);

@@ -23,6 +23,8 @@ class GetxPageController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     navpage = 0;
+    addmemberpages = 0;
+    
     update();
   }
 

@@ -60,7 +60,7 @@ class _EditmemberFormState extends State<EditmemberForm> {
                             const HeadingText("Edit Profile"),
                             IconButton(onPressed: (){
                               addmemberctrl.onClose();
-                              pagectrl.disposes();
+                              // pagectrl.disposes();
                               pagectrl.changeeditform(false);
                             }, icon: Icon(Icons.close),tooltip: "Close",)
                           ],

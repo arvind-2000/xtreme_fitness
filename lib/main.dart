@@ -15,12 +15,14 @@ import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/sections/main/main_section.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'dart:html' as html;
+
+import 'managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 void main() async {
   runApp(const MyApp());
   setUrlStrategy(PathUrlStrategy());
   Get.put(GetxPageController());
   Get.put(GetxAuthController()).authentications();
-  // Get.put(ContactController());
+  Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
    
 

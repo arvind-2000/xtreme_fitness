@@ -220,10 +220,12 @@ class ContactWdget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HeadingText(
-                "Contact Us",
+                "Get in Touch",
                 size: 40,
                 isbold: true,
               ),
+              SizedBox(height: 10,),
+              
               const SizedBox(height: 10),
               const Divider(color: Colors.red, thickness: 2),
               const SizedBox(height: 20),

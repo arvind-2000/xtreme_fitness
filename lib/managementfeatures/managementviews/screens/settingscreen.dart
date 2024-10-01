@@ -22,19 +22,21 @@ class SettingPage extends StatelessWidget {
     return GetBuilder<ManagementController>(builder: (_) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const HeadingText('Settings'),    
-            SizedBox(height: 20,),
-            Roles(),
-            SizedBox(height: 10,),
-            Admissioncard(),
-            SizedBox(height:10),
-            CardwithShadow(child: EditContacts(formKey: _formKey, cntrl: cntrl)),
-
-          ],
-
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadingText('Settings'),    
+              SizedBox(height: 20,),
+              Roles(),
+              SizedBox(height: 10,),
+              Admissioncard(),
+              SizedBox(height:10),
+              CardwithShadow(child: EditContacts(formKey: _formKey, cntrl: cntrl)),
+          
+            ],
+          
+          ),
         ),
       );
     
