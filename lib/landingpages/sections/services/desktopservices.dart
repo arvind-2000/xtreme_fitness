@@ -22,7 +22,8 @@ class ServicesDesktop extends StatelessWidget {
     return GetBuilder<GetxLandingcontroller>(builder: (managectrl) {
       return Container(
         height: 800,
-        padding: EdgeInsets.all( MediaQuery.sizeOf(context).width<=mobilescreen?16:0),
+        padding: EdgeInsets.all(
+            MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 0),
         color: const Color.fromARGB(255, 36, 34, 34),
         child: SizedBox(
           child: Column(
@@ -31,10 +32,12 @@ class ServicesDesktop extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                width: MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
+                width: MediaQuery.sizeOf(context).width <= mobilescreen
+                    ? null
+                    : 100,
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: HeadingText(
                     // align: TextAlign.left,
                     "The Best Programs\nWe Offers For You"),
@@ -63,7 +66,10 @@ class ServicesDesktop extends StatelessWidget {
                         managectrl.getallservices[index]; // Access the service
 
                     return Padding(
-                     padding:MediaQuery.sizeOf(context).width<=mobilescreen?EdgeInsets.symmetric(horizontal: 16):const EdgeInsets.only(left: 100, right: 16),
+                      padding: MediaQuery.sizeOf(context).width <= mobilescreen
+                          ? const EdgeInsets.symmetric(horizontal: 16)
+                          : const EdgeInsets.only(
+                              left: 100, right: 16, bottom: 20),
                       child: SizedBox(
                         width: 300,
                         height: 400,
@@ -180,8 +186,10 @@ class ServicesDesktop extends StatelessWidget {
               ),
               Row(
                 children: [
-               SizedBox(
-                    width:   MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width <= mobilescreen
+                        ? null
+                        : 100,
                   ),
                   Expanded(
                     child: SizedBox(
@@ -259,8 +267,10 @@ class ServicesDesktop extends StatelessWidget {
                                 )),
                     ),
                   ),
-                 SizedBox(
-                     width: MediaQuery.sizeOf(context).width<=mobilescreen?null:100,
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width <= mobilescreen
+                        ? null
+                        : 100,
                   ),
                 ],
               ),

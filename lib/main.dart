@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/mobile/logindialogmobile.dart';
 import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import 'authenicationfeatures/views/controller/authcontroller.dart';
 import 'config/scroll.dart';
@@ -24,12 +24,9 @@ void main() async {
   Get.put(GetxAuthController()).authentications();
   Get.put(ContactController());
   Get.put(GetxLandingcontroller()).onInit();
-   
-
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
@@ -38,14 +35,14 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
-            scrollbarTheme: ScrollbarThemeData(
-              
-            trackBorderColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
-              trackColor:  WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
-          thumbColor: WidgetStateProperty.all(Colors.red.withOpacity(0.6)), // Scrollbar color
+        scrollbarTheme: ScrollbarThemeData(
+          trackBorderColor:
+              WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
+          trackColor: WidgetStateProperty.all(Colors.red.withOpacity(0.6)),
+          thumbColor: WidgetStateProperty.all(
+              Colors.red.withOpacity(0.6)), // Scrollbar color
           radius: const Radius.circular(4),
-          thickness:  WidgetStateProperty.all(3), 
-          
+          thickness: WidgetStateProperty.all(3),
         ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white, // Cursor color
@@ -54,7 +51,6 @@ class MyApp extends StatelessWidget {
           selectionHandleColor:
               Colors.grey.withOpacity(0.3), // Selection handle color
         ),
-  
         scaffoldBackgroundColor: const Color.fromARGB(255, 15, 15, 15),
       ),
       // theme:lightThemes,
@@ -75,11 +71,10 @@ class MyApp extends StatelessWidget {
             name: '/home',
             page: () => const MainPage(),
             transition: Transition.noTransition),
-              GetPage(
+        GetPage(
             name: '/',
             page: () => const MainPage(),
             transition: Transition.noTransition),
-
         GetPage(
             name: '/createmember',
             page: () => const PaymentRedirectPage(),

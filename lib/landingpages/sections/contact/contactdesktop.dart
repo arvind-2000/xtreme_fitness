@@ -574,95 +574,103 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ],
                                         )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 32),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                 SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                   child: CardwithShadow(
-                                                    
-                                                          onpress: () {
-                                             String url = 'https://www.facebook.com/xtremefitnessmantripukhri';         
-                                              js.context.callMethod('open',[url,'_blank']);
-                                                          },
-                                                         child: Image.asset(
-                                                            
-                                                            "assets/facebook-logo.png"
-                                                       
+                                      : Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 8),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                               SizedBox(
+                                                        height: 50,
+                                                        child: Image.asset(
+                                                            "assets/logo1.png")),
+                                                 
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 32),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                   SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                     child: CardwithShadow(
+                                                      
+                                                            onpress: () {
+                                               String url = 'https://www.facebook.com/xtremefitnessmantripukhri';         
+                                                js.context.callMethod('open',[url,'_blank']);
+                                                            },
+                                                           child: Image.asset(
+                                                              
+                                                              "assets/facebook-logo.png"
+                                                         
+                                                       ),
                                                      ),
                                                    ),
-                                                 ),
-                                                  const SizedBox(
-                                                    width: 30,
-                                                  ),
-                                                           SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                   child: CardwithShadow(
-                                                    
-                                                          onpress: () {
-                                             String url = 'https://www.instagram.com/xtremefitness_imphal_manipur';         
-                                              js.context.callMethod('open',[url,'_blank']);
-                                                          },
-                                                         child: Image.asset(
-                                                            
-                                                            "assets/instagram.png"
-                                                       
+                                                    const SizedBox(
+                                                      width: 30,
+                                                    ),
+                                                             SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                     child: CardwithShadow(
+                                                      
+                                                            onpress: () {
+                                               String url = 'https://www.instagram.com/xtremefitness_imphal_manipur';         
+                                                js.context.callMethod('open',[url,'_blank']);
+                                                            },
+                                                           child: Image.asset(
+                                                              
+                                                              "assets/instagram.png"
+                                                         
+                                                       ),
                                                      ),
                                                    ),
-                                                 ),
-                                                  const SizedBox(
-                                                    width: 30,
-                                                  ),
-                                                     SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                   child: CardwithShadow(
-                                                    
-                                                          onpress: () {
-                                             String url = 'https://twitter.com/Xtremefitness19';         
-                                              js.context.callMethod('open',[url,'_blank']);
-                                                          },
-                                                         child: Image.asset(
-                                                            
-                                                            "assets/twiter.jpeg"
-                                                       
+                                                    const SizedBox(
+                                                      width: 30,
+                                                    ),
+                                                       SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                     child: CardwithShadow(
+                                                      
+                                                            onpress: () {
+                                               String url = 'https://twitter.com/Xtremefitness19';         
+                                                js.context.callMethod('open',[url,'_blank']);
+                                                            },
+                                                           child: Image.asset(
+                                                              
+                                                              "assets/twiter.jpeg"
+                                                         
+                                                       ),
                                                      ),
                                                    ),
-                                                 ),
-                                                  const SizedBox(
-                                                    width: 30,
-                                                  ),
-                                                     SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                   child: CardwithShadow(
-                                                    
-                                                          onpress: () {
-                                             String url = 'https://www.youtube.com/@xtremefitnessimphal.2851';         
-                                              js.context.callMethod('open',[url,'_blank']);
-                                                          },
-                                                         child: Image.asset(
-                                                            
-                                                            "assets/youtube.png"
-                                                       
+                                                    const SizedBox(
+                                                      width: 30,
+                                                    ),
+                                                       SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                     child: CardwithShadow(
+                                                      
+                                                            onpress: () {
+                                               String url = 'https://www.youtube.com/@xtremefitnessimphal.2851';         
+                                                js.context.callMethod('open',[url,'_blank']);
+                                                            },
+                                                           child: Image.asset(
+                                                              
+                                                              "assets/youtube.png"
+                                                         
+                                                       ),
                                                      ),
                                                    ),
-                                                 ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
+                                            ],
+                                          ),
+                                      ),
                                 ),
                               ],
                             ),

@@ -7,9 +7,6 @@ import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_deskto
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_mobile.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 
-import '../../../authenicationfeatures/views/controller/authcontroller.dart';
-
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -18,12 +15,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-   
   }
 
   @override
@@ -34,14 +29,20 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: const Color.fromARGB(255, 15, 15, 15),
       drawer: !Responsive.isDesktop(context) ? const MobileDrawer() : null,
       extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Body(),
-            Responsive.isTablet(context) || Responsive.isMobile(context)
-                ? const NavBarMobile()
-                : const NavbarDesktop(),
-          ],
+      body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.onEdge,
+        onRefresh: () async {
+          GetxLandingcontroller().onInit();
+        },
+        child: SafeArea(
+          child: Stack(
+            children: [
+              const Body(),
+              Responsive.isTablet(context) || Responsive.isMobile(context)
+                  ? const NavBarMobile()
+                  : const NavbarDesktop(),
+            ],
+          ),
         ),
       ),
     );

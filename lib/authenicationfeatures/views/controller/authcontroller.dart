@@ -15,6 +15,7 @@ import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
 import '../../../config/encrypt.dart';
+import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
 import '../pages/dialogs/logindialog.dart';
 
@@ -169,10 +170,11 @@ class GetxAuthController extends GetxController {
   void authentications() async {
     //print("in authentications");
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<Admission?,int> res = await ManagementrepoImpl().getAllRoles();
+   Map<List<Role>,int> res = await ManagementrepoImpl().getRoles();
+     print("in authentication ${res.entries.first.value}");
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (res.entries.first.value>=200 && res.entries.first.value<300) {
-      //print("in authentication sharedpreferences");
+      print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
         
@@ -185,6 +187,7 @@ class GetxAuthController extends GetxController {
 
       }
     } else {
+
       if (res.entries.first.value == 401) {
          if (prefs.containsKey('key1')) {
         Get.dialog(

@@ -18,7 +18,7 @@ class DashboardChild2 extends StatelessWidget {
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return CardwithShadow(
         padding: EdgeInsets.zero,
-        child: Column(
+        child: managectrl.weeklypayments.isEmpty?Center(child: CircularProgressIndicator(color: Colors.white,)) : Column(
           children: [
             const Padding(
               padding: EdgeInsets.all(32.0),

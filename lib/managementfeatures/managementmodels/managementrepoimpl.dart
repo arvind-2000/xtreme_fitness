@@ -1686,7 +1686,7 @@ Future<String> editMembership(Membership membership) async {
   }
 
   @override
-  Future<List<Role>> getRoles() async{
+  Future<Map<List<Role>,int>> getRoles() async{
    //print("in roles api calls");
   try {
     final request = await html.HttpRequest.request(
@@ -1706,15 +1706,16 @@ Future<String> editMembership(Membership membership) async {
       List<Role> rolelist=
           jsonList.map((json) => Role.fromMap(json)).toList();
 
-      return rolelist;
+      return {rolelist:request.status!};
     } else {
+        return {[]:request.status!};
       //print('Failed to load roles. Status code: ${request.status}');
     }
   } catch (e) {
     //print("Can't load roles data: $e");
   }
 
-  return [];
+  return {[]:0};
   }
 
   @override

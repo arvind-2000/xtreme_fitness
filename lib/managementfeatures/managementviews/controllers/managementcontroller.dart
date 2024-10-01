@@ -558,7 +558,8 @@ class ManagementController extends GetxController {
 
   ///roles get all role list
   void getAllRoles()async{
-    _allroles = await managementRepo.getRoles();
+    Map<List<Role>,int> d = await managementRepo.getRoles();
+    _allroles = d.entries.first.key;
     update();
   }
 

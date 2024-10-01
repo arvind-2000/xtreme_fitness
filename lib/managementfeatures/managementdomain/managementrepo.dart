@@ -104,7 +104,7 @@ abstract class ManagementRepo {
 
 
    //CRUD for roles
-  Future<List<Role>> getRoles();
+  Future<Map<List<Role>,int>> getRoles();
   Future<String> addRoles({required Role role});
   Future<String> deleteRole({required Role role});
   Future<String> updateRole({required Role role});
