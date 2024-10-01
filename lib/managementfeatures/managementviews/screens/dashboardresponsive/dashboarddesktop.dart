@@ -22,12 +22,12 @@ class DashboardDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ManagementController controller = Get.put(ManagementController());
+    ManagementController controller = Get.find<ManagementController>();
     GetxPageController pagecontrl = Get.put(GetxPageController());
     ContactController cntrl = Get.put(ContactController());
     return GetBuilder<ContactController>(builder: (_) {
       return GetBuilder<ManagementController>(builder: (_) {
-        return controller.managementloading
+        return controller.managementloadings
             ? Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).colorScheme.secondary,

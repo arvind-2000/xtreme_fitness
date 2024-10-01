@@ -23,7 +23,7 @@ class PageDialog extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         width: 400,
-        height: heights ?? 600,
+        height: heights ?? 400,
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
@@ -63,7 +63,7 @@ class PageDialog extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 12),
                               padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4):null,
+                            horizontal: 8, vertical: 12):null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

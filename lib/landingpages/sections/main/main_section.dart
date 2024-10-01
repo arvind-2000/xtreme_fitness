@@ -6,10 +6,8 @@ import 'package:xtreme_fitness/landingpages/sections/main/widgets/_mobile_drawer
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_desktop.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_navbar_mobile.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -17,7 +15,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

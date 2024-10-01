@@ -62,30 +62,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const HeadingText("Service Usage"),
-                             SizedBox(
-                                        height:MediaQuery.sizeOf(context).width<=mobilescreen?40 :50,
-                                     
-                                        child: CardBorder(
-                                          onpress: () {
-                                          
-                                          },
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary
-                                              .withOpacity(0.4),
-                                          margin: EdgeInsets.zero,
-                                          padding: const EdgeInsets.only(
-                                              left: 16, right: 16),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                height: 20,
-                                                width: 20,
-                                                child: Image.asset('assets/file.png',)),
-                                              Text("Export"),
-                                            ],
-                                          )
-                                        )),
+             
                           ],
                         ),
 

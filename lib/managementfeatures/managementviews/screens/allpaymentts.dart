@@ -34,7 +34,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ManagementController>().getxtremer();
+    // Get.find<ManagementController>().getxtremer();
   }
 
   final TextEditingController _searchcontroller = TextEditingController();

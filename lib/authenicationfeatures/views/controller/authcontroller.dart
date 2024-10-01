@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/admission.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -135,33 +135,31 @@ class GetxAuthController extends GetxController {
     update();
     // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await authrepo.logout();
-    Map<Admission?, int> res = await ManagementrepoImpl().viewadmission();
-    if (res.entries.first.value == 401) {
-      _authentication = false;
-      loginloading = false;
-      _user = null;
-      ismember = true;
-      prefs.remove('key1');
-      prefs.remove('key2');
-      signupclose();
-      disposelogin();
-      disposeforgotpass();
-      Get.offAllNamed('/home');
-    } else {
-      authentications();
-    }
+    String s = await authrepo.logout();
+    authentications();
 
-    update();
+    prefs.remove('key1');
+    prefs.remove('key2');
+
+    //  Map<List<Role>,int> request = await ManagementrepoImpl().getRoles();
+    //  print(request.entries.first.value);
+    //   if(request.entries.first.value==401 || request.entries.first.value==0){
+    //     print("in status 401");
+
+    //   Get.offAllNamed('/home');
+    //   }
+
+    // update();
   }
 
   void authentications() async {
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<List<Role>, int> res = await ManagementrepoImpl().getRoles();
-    print("in authentication ${res.entries.first.value}");
+    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+    //print("${request.status}");
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (res.entries.first.value >= 200 && res.entries.first.value < 300) {
+    if (request.entries.first.value >= 200 &&
+        request.entries.first.value < 300) {
       print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
@@ -172,7 +170,15 @@ class GetxAuthController extends GetxController {
         Get.offAllNamed('/home');
       }
     } else {
-      if (res.entries.first.value == 401) {
+      _authentication = false;
+      loginloading = false;
+      _user = null;
+      // ismember = true;
+      signupclose();
+      disposelogin();
+      disposeforgotpass();
+      if (request.entries.first.value == 401 ||
+          request.entries.first.value == 0) {
         if (prefs.containsKey('key1')) {
           Get.dialog(
               barrierDismissible: false,
@@ -184,14 +190,21 @@ class GetxAuthController extends GetxController {
                     child: Cardonly(
                       color: Colors.grey[900],
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
                           const HeadingText("Session Expired"),
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text(
-                              "The session has expired or you may not be logged in."),
-                          const Text("Log In Again"),
+                          const Expanded(
+                              child: Center(
+                                  child: Text(
+                            "The session has expired or you may not be logged in.",
+                            textAlign: TextAlign.center,
+                          ))),
                           const SizedBox(
                             height: 30,
                           ),
@@ -200,8 +213,103 @@ class GetxAuthController extends GetxController {
                                 prefs.remove('key1');
                                 prefs.remove('key2');
                                 Get.offAllNamed('/home');
+                                Get.dialog(const LoginDialog(
+                                  signupdialog: false,
+                                ));
                               },
-                              child: const Text("Go to Home"))
+                              child: const Text("Log In Again")),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ));
+        } else {
+          Get.offAllNamed('/home');
+        }
+      } else {
+        if (!prefs.containsKey('key1')) {
+          Get.offAllNamed('/home');
+        }
+      }
+    }
+  }
+
+  void authenticationsforsession() async {
+    //print("in authentications");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+    //print("${request.status}");
+    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
+    if (request.entries.first.value >= 200 &&
+        request.entries.first.value < 300) {
+      // print("in authentication sharedpreferences res");
+
+      // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
+
+      //   setdataforsession(
+      //  prefs.getString('key1')!, prefs.getBool('key2')!);
+      //   update();
+      //   Get.offAllNamed('/dashboard');
+      // } else {
+      //   Get.offAllNamed('/home');
+
+      // }
+    } else {
+      if (request.entries.first.value == 401 ||
+          request.entries.first.value == 0) {
+        _authentication = false;
+        loginloading = false;
+        _user = null;
+        // ismember = true;
+        signupclose();
+        disposelogin();
+        disposeforgotpass();
+        if (prefs.containsKey('key1')) {
+          Get.dialog(
+              barrierDismissible: false,
+              Dialog(
+                child: SizedBox(
+                  height: 300,
+                  width: 400,
+                  child: Center(
+                    child: Cardonly(
+                      color: Colors.grey[900],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const HeadingText("Session Expired"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Expanded(
+                              child: Center(
+                                  child: Text(
+                            "The session has expired or you may not be logged in.",
+                            textAlign: TextAlign.center,
+                          ))),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          CardwithShadow(
+                              onpress: () {
+                                prefs.remove('key1');
+                                prefs.remove('key2');
+                                Get.offAllNamed('/home');
+                                Get.dialog(const LoginDialog(
+                                  signupdialog: false,
+                                ));
+                              },
+                              child: const Text("Log In Again")),
+                          const SizedBox(
+                            height: 20,
+                          ),
                         ],
                       ),
                     ),
