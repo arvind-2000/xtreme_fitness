@@ -18,7 +18,6 @@ class PaymentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
       return SizedBox(
-        height: MediaQuery.of(context).size.height,
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
@@ -117,6 +116,7 @@ class PaymentStatusCard extends StatelessWidget {
                                     "Unfortunately the payment has been cancelled by the user.")
                                 : addmemberctrl.paymentstatus == 5
                                     ? const Text(
+                                        textAlign: TextAlign.center,
                                         "Error creating Xtremer.\nTry Again")
                                     : const Text(
                                         "Unfortunately the payment has been declined"),

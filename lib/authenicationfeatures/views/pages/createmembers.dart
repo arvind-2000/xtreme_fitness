@@ -128,7 +128,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
                           child: Center(
                             child: InkWell(
                                 onTap: () {
-                                  _showExitWarningDialog(context);
+                                  // _showExitWarningDialog(context);
                                 },
                                 child: Image.asset(
                                     height: 60, width: 60, "assets/logo1.png")),
