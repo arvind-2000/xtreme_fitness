@@ -25,6 +25,7 @@ class GetxAuthController extends GetxController {
   String? forgotpasserrormessage;
   int? signups;
   bool _authentication = false;
+  bool get getauthentication => _authentication;
   bool loginloading = false;
   String? loginerrortext;
   UserEntity? _user;
@@ -36,29 +37,36 @@ class GetxAuthController extends GetxController {
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
-  bool ismember = false;
+  bool ismember = true;
 
   int? otp;
   bool otploading = false;
   bool? forgotpass;
-
+  // bool isauthloading = true;
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     // changeAuthindex = index;
     // update();
   }
 
-  void setdataforsession(String userid, bool ismem) async {
-    ismember = ismem;
+  void setdataforsession(String userid) async {
+    // ismember = null;
+    // update();
     userid = userid;
     Map<UserEntity?, String> v =
         await authrepo.getUserbyId(int.tryParse(userid) ?? 0);
     _user = v.entries.first.key;
     ismember = _user!.roleName!.trim().toLowerCase() == "member";
     _authentication = true;
+         isauthloading.value = false;
+    
     //print('${ismem} ${userid}');
     update();
   }
+
+
+
+
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -78,32 +86,17 @@ class GetxAuthController extends GetxController {
         if (d.entries.first.key != null) {
           _authentication = true;
           userid = d.entries.first.key;
-          loginerrortext = d.entries.first.value;
+        
           if (userid != null) {
-            //////print("In authentication check");
-            Map<UserEntity?, String> v =
-                await authrepo.getUserbyId(int.tryParse(userid!) ?? 0);
-            _user = v.entries.first.key;
-            if (_user != null) {
-              _authentication = true;
-
-              //////print("In authentication check member or not ${_user!.roleName}");
-              ismember = _user!.roleName!.trim().toLowerCase() == "member";
-              //print("in authentication :${ismember} ");
-              //print('userid');
-              // final encrypteduser = encryptData(userid!);
               pref.setString('key1', userid!);
-              pref.setBool('key2', ismember);
+              // pref.setBool('key2', ismember!);
+         
+               loginerrortext = d.entries.first.value;
               loginloading = false;
               update();
-              Get.offAllNamed('/dashboard');
-            } else {
-              loginerrortext = "Unauthorized login";
-              //////print("user null");
-              _authentication = false;
-              ismember = true;
-              loginloading = false;
-            }
+              Get.offAllNamed('/dashboard');    
+              
+         
           }
         } else {
           _authentication = false;
@@ -137,23 +130,17 @@ class GetxAuthController extends GetxController {
     loginloading = true;
     loginerrortext = null;
     update();
-    // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await authrepo.logout();
+    try {
+  await authrepo.logout();
+} on Exception catch (e) {
+  // TODO
+}
     authentications();
 
     prefs.remove('key1');
     prefs.remove('key2');
 
-    //  Map<List<Role>,int> request = await ManagementrepoImpl().getRoles();
-    //  print(request.entries.first.value);
-    //   if(request.entries.first.value==401 || request.entries.first.value==0){
-    //     print("in status 401");
-
-    //   Get.offAllNamed('/home');
-    //   }
-
-    // update();
   }
 
   void authentications() async {
@@ -166,12 +153,12 @@ class GetxAuthController extends GetxController {
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
+           _authentication = true;
       print("in authentication sharedpreferences res");
 
-      if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
-        setdataforsession(prefs.getString('key1')!, prefs.getBool('key2')!);
-        isauthloading.value = false;
-
+      if (prefs.containsKey('key1')) {
+        setdataforsession(prefs.getString('key1')!);
+          isauthloading.value = false;
         update();
         Get.offAllNamed('/dashboard');
       } else {
@@ -199,7 +186,8 @@ class GetxAuthController extends GetxController {
                   height: 300,
                   width: 400,
                   child: Center(
-                    child: Cardonly(
+                    child: CardwithShadow(
+                      margin: EdgeInsets.zero,
                       color: Colors.grey[900],
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -254,20 +242,20 @@ class GetxAuthController extends GetxController {
 
   void authenticationsforsession() async {
     //print("in authentications");
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
     //print("${request.status}");
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
-      // print("in authentication sharedpreferences res");
+           _authentication = true;
+      print("in authentication sharedpreferences res");
 
       // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
 
       //   setdataforsession(
       //  prefs.getString('key1')!, prefs.getBool('key2')!);
-      //   update();
-      //   Get.offAllNamed('/dashboard');
       // } else {
       //   Get.offAllNamed('/home');
 
@@ -341,6 +329,106 @@ class GetxAuthController extends GetxController {
       }
     }
   }
+
+
+ Future<void> authenticationsforReload() async {
+       isauthloading.value = true;
+ 
+    //print("in authentications");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+    //print("${request.status}");
+    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
+    if (request.entries.first.value >= 200 &&
+        request.entries.first.value < 300) {
+           _authentication = true;
+      print("in authentication sharedpreferences res");
+
+      if (prefs.containsKey('key1') ) {
+
+        setdataforsession(
+       prefs.getString('key1')!);
+      } else {
+        Get.offAllNamed('/home');
+     isauthloading.value = false;
+    update();
+      }
+    } else {
+      if (request.entries.first.value == 401 ||
+          request.entries.first.value == 0) {
+        _authentication = false;
+        loginloading = false;
+             isauthloading.value = false;
+  
+        _user = null;
+        // ismember = true;
+        signupclose();
+        disposelogin();
+        disposeforgotpass();
+        if (prefs.containsKey('key1')) {
+          Get.dialog(
+              barrierDismissible: false,
+              Dialog(
+                child: SizedBox(
+                  height: 300,
+                  width: 400,
+                  child: Center(
+                    child: Cardonly(
+                      color: Colors.grey[900],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const HeadingText("Session Expired"),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Expanded(
+                              child: Center(
+                                  child: Text(
+                            "The session has expired or you may not be logged in.",
+                            textAlign: TextAlign.center,
+                          ))),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          CardwithShadow(
+                              onpress: () {
+                                prefs.remove('key1');
+                                prefs.remove('key2');
+                                Get.offAllNamed('/home');
+                                Get.dialog(const LoginDialog(
+                                  signupdialog: false,
+                                ));
+                              },
+                              child: const Text("Log In Again")),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ));
+        }
+        // else {
+        //   Get.offAllNamed('/home');
+        // }
+      } else {
+             isauthloading.value = false;
+    update();
+        if (!prefs.containsKey('key1')) {
+          Get.offAllNamed('/home');
+        }
+      }
+    }
+  }
+
+
+
 
   void signup(String phone) async {
     signuperror = null;

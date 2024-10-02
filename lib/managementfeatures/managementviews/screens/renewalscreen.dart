@@ -38,6 +38,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
     _searchfocus.dispose();
     Get.find<GetxPageController>().disposes();
     Get.find<AddMemberController>().onClose();
+      Get.find<AddMemberController>().closeaddmembers();
     super.dispose();
   }
 
@@ -67,10 +68,10 @@ class _RenewalScreenState extends State<RenewalScreen> {
       pos = widget.pos!;
     }
 
-    Get.put(AddMemberController()).onInit();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) => Get.find<ManagementController>().getxtremer(),
-    );
+    Get.put(AddMemberController());
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (timeStamp) => Get.find<ManagementController>().getxtremer(),
+    // );
   }
 
   @override
@@ -131,6 +132,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     left: 16, right: 8),
                                                 child: DropdownButton(
                                                   underline: const SizedBox(),
+                                                  focusColor: Colors.transparent,
                                                   value: pos,
                                                   hint: Text(d[pos],
                                                       style: const TextStyle(
@@ -163,9 +165,11 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                       } else if (pos == 2) {
                                                         managectrl
                                                             .generalxtremer();
-                                                      } else {
+                                                      } else if(pos ==3){
                                                         managectrl
                                                             .inactivextremer();
+                                                      }else{
+                                                        managectrl.tobeexpiredlist();
                                                       }
                                                     });
                                                   },
@@ -363,7 +367,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                                             : managectrl.tobeExpired(),
                                                                             managectrl.getallMembership,
                                                                             "Xtremer list",
-                                                                            managectrl.getallSubscription);
+                                                                           );
                                                                         CustomSnackbar(
                                                                             context,
                                                                             v ? "Xtremer Reports exported." : "failed to export");
@@ -588,14 +592,20 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                               context)
                                                                           .width <=
                                                                       mobilescreen
-                                                                  ? Text(
-                                                                      managectrl
-                                                                          .getsearchXtremer[
-                                                                              index]
-                                                                          .mobileNumber!,
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14))
+                                                                  ? Row(
+                                                                    children: [
+                                                                      Icon(Icons.phone,size:12),
+                                                                      SizedBox(width: 5,),
+                                                                      Text(
+                                                                          managectrl
+                                                                              .getsearchXtremer[
+                                                                                  index]
+                                                                              .mobileNumber!,
+                                                                          style: const TextStyle(
+                                                                              fontSize:
+                                                                                  14)),
+                                                                    ],
+                                                                  )
                                                                   : const SizedBox(),
                                                               const SizedBox(
                                                                 height: 5,
@@ -663,9 +673,15 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
-                                                                    const Text(
-                                                                        "4/5/2024",
-                                                                        style: TextStyle(
+                                                                    Text(
+                                                                        '${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].startDate?.day}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].startDate?.month}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].startDate?.year}',
+                                                                        style: const TextStyle(
                                                                             fontSize:
                                                                                 14)),
                                                                     const SizedBox(
@@ -673,8 +689,14 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                     ),
                                                                     MediaQuery.sizeOf(context).width <=
                                                                             mobilescreen
-                                                                        ? const Text(
-                                                                            "4/5/2024",
+                                                                        ? Text(
+                                                                            '${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.day}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.month}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.year}',
                                                                             style:
                                                                                 TextStyle(fontSize: 14))
                                                                         : const SizedBox()
@@ -685,9 +707,15 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                       .width <=
                                                                   mobilescreen
                                                               ? const SizedBox()
-                                                              : const Expanded(
+                                                              :  Expanded(
                                                                   child: Text(
-                                                                      "4/5/2024",
+                                                                       '${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.day}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.month}/${  managectrl
+                                                                          .getsearchXtremer[
+                                                                              index].endDate?.year}',
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               14))),
@@ -697,26 +725,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                   mobilescreen
                                                               ? const SizedBox()
                                                               : Expanded(
-                                                                  child: InkWell(
-                                                                      onTap: () {
-                                                                        Get.dialog(Dialog(
-                                                                            child: PageDialog(
-                                                                          //  heights: 300,
-                                                                          child:
-                                                                              const Text("Are you sure you want to change?"),
-                                                                          no: () =>
-                                                                              Navigator.pop(context),
-                                                                          yes:
-                                                                              () async {
-                                                                            String
-                                                                                s =
-                                                                                await managectrl.activateXtremer(managectrl.getsearchXtremer[index]);
-                                                                            //print(s);
-                                                                          },
-                                                                        )));
-                                                                      },
-                                                                      //  managectrl.getsearchXtremer[index].isActive!?"Active":"Inactive",
-                                                                      child: Text(managectrl.getsearchXtremer[index].category != null ? managectrl.getsearchXtremer[index].category! : "", style: const TextStyle(fontSize: 14)))),
+                                                                  child: Text(managectrl.getsearchXtremer[index].category != null ? managectrl.getsearchXtremer[index].category! : "", style: const TextStyle(fontSize: 14))),
                                                           Expanded(
                                                               flex: MediaQuery.sizeOf(
                                                                               context)

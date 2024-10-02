@@ -75,10 +75,10 @@ class ServicesDesktop extends StatelessWidget {
                   //   crossAxisSpacing: 10, // Space between columns
                   // ),
                   itemCount:
-                      managectrl.getallservices.length, // Total number of items
+                      managectrl.getallactiveservices.length, // Total number of items
                   itemBuilder: (context, index) {
                     var e =
-                        managectrl.getallservices[index]; // Access the service
+                        managectrl.getallactiveservices[index]; // Access the service
 
                     return Padding(
                       padding: MediaQuery.sizeOf(context).width <= mobilescreen

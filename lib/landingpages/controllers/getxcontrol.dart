@@ -31,6 +31,7 @@ class GetxLandingcontroller extends GetxController {
   bool get isUserScroll => _isUserScroll;
   List<Plan> _plan = [];
   List<ServiceEntity> _services = [];
+  List<ServiceEntity> _activeservices = [];
   bool _isHovered = false;
   bool get isHovered => _isHovered;
 
@@ -39,6 +40,7 @@ class GetxLandingcontroller extends GetxController {
 
   List<Plan> get getallplans => _plan;
   List<ServiceEntity> get getallservices => _services;
+  List<ServiceEntity> get getallactiveservices => _activeservices;
   ServiceEntity? services;
   int page = 0;
   int plandurations = 1;
@@ -223,7 +225,7 @@ class GetxLandingcontroller extends GetxController {
 
   void getServices() async {
     _services = await managementrepoImpl.getServices();
-
+    _activeservices = _services.where((element) => element.isactive,).toList();
     update();
   }
 

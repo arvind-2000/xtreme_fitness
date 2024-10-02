@@ -8,12 +8,15 @@ class ResponsivePages extends StatelessWidget {
       this.child2,
       this.screenheight,
       this.colors,
-      this.issize = true});
+      this.issize = true,
+      this.ispadding = true
+      });
   final Widget child1;
   final Widget? child2;
   final double? screenheight;
   final Color? colors;
   final bool issize;
+  final bool ispadding;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +24,7 @@ class ResponsivePages extends StatelessWidget {
       child: Responsive.isMobile(context) || Responsive.isTablet(context)
           ? SizedBox(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding:ispadding? const EdgeInsets.all(16.0):EdgeInsets.zero,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [child1, child2 ?? const SizedBox()],

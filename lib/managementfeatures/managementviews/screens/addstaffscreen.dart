@@ -163,8 +163,11 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                  _passwordcontroller.clear();
                                                  _usernamecontroller.clear();
                                                  _phonecontroller.clear();
-                                                 
+
                                                  Navigator.pop(context);
+                                                 setState(() {
+                                                   isStaffadd = false;
+                                                 });
                                                                          },
                                                                          child: Column(
                                                                            crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +238,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           TitleText("Staff (${managectrl.getallstaff.length})"),
+                           HeadingText("Staff (${managectrl.getallstaff.length})"),
                                            CardBorder(
                         onpress: addstaff,
                         padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
@@ -249,7 +252,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         ],
                       ),
                       const SizedBox(height: 16,),
-                                         managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
+                                         managectrl.authctrl.ismember!=null&&   managectrl.authctrl.ismember! || managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -267,11 +270,12 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
                                     mainAxisSpacing: 10,
                                 
-                                    childAspectRatio:  size<500?1:size<1400?3/4.2:3/3.5,
+                                    childAspectRatio:  size<500?1/1.3:size<1400?3/4.2:size>1500?3/3.3 :3/3.5,
                                 
                                     ),
                           
-                          children:managectrl.getallstaff.where((element) => element.isActive==isactive,).map((e){
+                          children:managectrl.getallstaff.where((element) => element.isActive==isactive && '${element.roleName?.toLowerCase()}'!="superadmin" && '${element.roleName?.toLowerCase()}'!="member"&& '${element.roleName?.toLowerCase()}'!="servicemember",).map((e){
+                            
                           return CardwithShadow(
                             margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
                             child: Column(
@@ -307,80 +311,86 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                           onpress: (){
                                             _phonecontroller.text = e.mobileNumber!;
                                             _usernamecontroller.text = e.userName!;
-
+                                        
+                                              _isactive = e.isActive??false;
                                             
-                                            showDialog(context: context, builder: (context) => StatefulBuilder(
+                                            
+                                           Get.dialog(StatefulBuilder(
                                               builder: (context,s) {
-                                                return PageDialog(child:  Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                const TitleText("Edit Staff"),
-                                                                                IconButton(onPressed: (){
-                                                                                  Navigator.pop(context);
-                                                                                }, icon: const Icon(Icons.close))
-                                                                              ],
-                                                                            ),
-                                                                            const SizedBox(height: 20,),
-                                                                            SizedBox(
-                                                                              width: double.maxFinite,
-                                                                              child: Form(
-                                                                                key: _globalkey2,
-                                                                                child: Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                      
+                                                return PageDialog(child:  SizedBox(
+                                                  height: 400,
+                                                  child: Column(
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
-                                                                                   TextFieldWidget(hint: "Phone", controller: _phonecontroller),
-                                                   const SizedBox(height: 10,),
-                                                  //  TextFieldWidget(hint: "Full Name", controller: _fullnamecontroller),
-                                                   const SizedBox(height: 10,),
-                                                   TextFieldWidget(hint: "Username", controller: _usernamecontroller),],
-                                                                              )),
-                                                                            ),
-                                                                                
-                                                                                      SizedBox(
-                                                                              height: 20,
-                                                                            ),
-                                                                            _isactive
-                                                                                ? const Text("Staff Active")
-                                                                                : const Text("Staff InActive"),
-                                                                            Switch(
-                                                                              activeColor: Colors.blue,
-                                                                              hoverColor: Colors.blue.withOpacity(0.5),
-                                                                              activeTrackColor: Colors.white,
-                                                                              inactiveTrackColor: Colors.grey[300],
-                                                                              value: _isactive,
-                                                                              onChanged: (value) {
-                                                                                s(() {
-                                                                                  _isactive = value;
-                                                                                });
-                                                                              },
-                                                                            ),
-                                                                         
-                                                                          
-                                                                            Expanded(
-                                                                        
-                                                                              child: Row(
-                                                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                children: [
-                                                                                  Expanded(child: CardwithShadow(
-                                                                                    color: Theme.of(context).colorScheme.error.withOpacity(0.6),
-                                                                                    margin: const EdgeInsets.all(16),
-                                                                                    child: const Text("Are you sure you want to edit this user?\nPress Yes to confirm",textAlign: TextAlign.center,)))
+                                                                                  const TitleText("Edit Staff"),
+                                                                                  IconButton(onPressed: (){
+                                                                                    Get.back();
+                                                                                  }, icon: const Icon(Icons.close))
                                                                                 ],
                                                                               ),
-                                                                            )
-                                                                          ],
-                                                      ), no: (){
-                                                    Navigator.pop(context);
+                                                                              const SizedBox(height: 20,),
+                                                                              SizedBox(
+                                                                                width: double.maxFinite,
+                                                                                child: Form(
+                                                                                  key: _globalkey2,
+                                                                                  child: Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                     TextFieldWidget(hint: "Phone", controller: _phonecontroller),
+                                                     const SizedBox(height: 10,),
+                                                    //  TextFieldWidget(hint: "Full Name", controller: _fullnamecontroller),
+                                                     const SizedBox(height: 10,),
+                                                     TextFieldWidget(hint: "Username", controller: _usernamecontroller),],
+                                                                                )),
+                                                                              ),
+                                                                                  
+                                                                                        SizedBox(
+                                                                                height: 20,
+                                                                              ),
+                                                                              _isactive
+                                                                                  ? const Text("Staff Active")
+                                                                                  : const Text("Staff InActive"),
+                                                                              Switch(
+                                                                                activeColor: Colors.blue,
+                                                                                hoverColor: Colors.blue.withOpacity(0.5),
+                                                                                activeTrackColor: Colors.white,
+                                                                                inactiveTrackColor: Colors.grey[300],
+                                                                                value: _isactive,
+                                                                                onChanged: (value) {
+                                                                                  s(() {
+                                                                                    _isactive = value;
+                                                                                  });
+                                                                                },
+                                                                              ),
+                                                                           
+                                                                            
+                                                                              Expanded(
+                                                                          
+                                                                                child: Row(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                  children: [
+                                                                                    Expanded(child: CardwithShadow(
+                                                                                      color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+                                                                                      margin: const EdgeInsets.all(16),
+                                                                                      child: const Text("Are you sure you want to edit this user?\nPress Yes to confirm",textAlign: TextAlign.center,)))
+                                                                                  ],
+                                                                                ),
+                                                                              )
+                                                                            ],
+                                                        ),
+                                                ), no: (){
+                                                   Get.back();
                                                 }, yes: (){
                                                     if(_globalkey2.currentState!.validate()){
                                                        managectrl.updateStaffs(UserEntity(userName:_usernamecontroller.text,id: e.id,mobileNumber: _phonecontroller.text,isActive: _isactive,roleName: "Staff", passwordHash: e.passwordHash));
                                                 
                                                       CustomSnackbar(context, "staff updated");
                                                 
-                                                    Navigator.pop(context);
+                                                   Get.back();
                                                     }
                                                                                          
                                                 });

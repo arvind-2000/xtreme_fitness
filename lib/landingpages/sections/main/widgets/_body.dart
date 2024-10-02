@@ -16,40 +16,32 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
-    landctrl.itemPositionsListener.itemPositions.addListener(
-      () {
-        landctrl.setNavIndex(context);
-      },
+
+    return ScrollablePositionedList.builder(
+      itemScrollController: landctrl.scrollControllers,
+      initialScrollIndex: 0,
+      itemCount: 5,
+      itemBuilder: (context, index) => index == 0
+          ? const HomeDesktop()
+          : index == 1
+              ? const Pricesdesktop()
+              : index == 2
+                  ? const ServicesDesktop()
+                  : index == 3
+                      ? const GalleryDesktopCopy()
+                      : const ContactDesktop(),
+      // children: [
+      // // HomePage(),
+      // HomeDesktop(),
+      // // Prices(),
+      // Pricesdesktop(),
+      // // // Services(),
+      // ServicesDesktop(),
+      // // // Gallery(),
+      // GalleryDesktop(),
+      // // // Contact()
+      // ContactDesktop()
+      // ],
     );
-    return GetBuilder<GetxLandingcontroller>(builder: (_) {
-      return Column(
-        children: [
-          // Display the current index
-          const SizedBox(
-            height: 30,
-          ),
-          Expanded(
-            child: Scrollbar(
-              child: ScrollablePositionedList.builder(
-                shrinkWrap: true,
-                itemScrollController: landctrl.scrollControllers,
-                itemPositionsListener: landctrl.itemPositionsListener,
-                initialScrollIndex: 0,
-                itemCount: 5,
-                itemBuilder: (context, index) => index == 0
-                    ? const HomeDesktop()
-                    : index == 1
-                        ? const Pricesdesktop()
-                        : index == 2
-                            ? const ServicesDesktop()
-                            : index == 3
-                                ? const GalleryDesktopCopy()
-                                : const ContactDesktop(),
-              ),
-            ),
-          ),
-        ],
-      );
-    });
   }
 }

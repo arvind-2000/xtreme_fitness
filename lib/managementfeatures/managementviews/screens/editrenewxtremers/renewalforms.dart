@@ -43,7 +43,7 @@ class _RenewalFormsState extends State<RenewalForms> {
       return GetBuilder<GetxPageController>(builder: (pagectrl) {
         return Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 800),
+            constraints: const BoxConstraints(maxWidth: 1400, maxHeight: 800),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -233,13 +233,13 @@ class PaymentDialogs extends StatelessWidget {
                     //   ],
                     // )
 
-                    addmemberctrl.authctrl.ismember
+                    addmemberctrl.authctrl.ismember!=null&&addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : const Text("Choose Payment Method"),
                     const SizedBox(
                       height: 16,
                     ),
-                    addmemberctrl.authctrl.ismember
+                       addmemberctrl.authctrl.ismember!=null&&addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : Row(
                             children: [

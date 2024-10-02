@@ -11,6 +11,7 @@ import '../managementdomain/entities.dart/paymententity.dart';
 import '../managementdomain/entities.dart/subscription.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
+import '../managementdomain/entities.dart/xtremerwithsubs.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -25,7 +26,7 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true, required String name}) async {
+  Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true}) async {
     final pdf = pw.Document();
     //print("in //print pdf");
     final logoData = await _loadImageData('assets/logo3.png');
@@ -110,20 +111,20 @@ double percentprice(double? actualprice,double? dis){
               ),
        
               pw.SizedBox(height: 20),
-                       pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    'Payment received from: ',
-                    style: pw.TextStyle(fontSize: 12),
-                  ),
-                  pw.Text(
-                    '$name',
-                    style: pw.TextStyle(fontSize: 12),
-                  ),
-                ]
+              //          pw.Row(
+              //   mainAxisAlignment: pw.MainAxisAlignment.start,
+              //   children: [
+              //     pw.Text(
+              //       'Payment received from: ',
+              //       style: pw.TextStyle(fontSize: 12),
+              //     ),
+              //     pw.Text(
+              //       '$name',
+              //       style: pw.TextStyle(fontSize: 12),
+              //     ),
+              //   ]
                 
-              ),
+              // ),
  pw.SizedBox(height: 10),
                    pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -242,20 +243,20 @@ double percentprice(double? actualprice,double? dis){
 
               ]),
               pw.SizedBox(height: 30),
-                     pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.end,
-                children: [
-                  pw.Text(
-                    'Signed By: ',
-                    style: pw.TextStyle(fontSize: 10),
-                  ),
+              //        pw.Row(
+              //   mainAxisAlignment: pw.MainAxisAlignment.end,
+              //   children: [
+              //     pw.Text(
+              //       'Signed By: ',
+              //       style: pw.TextStyle(fontSize: 10),
+              //     ),
 
-                  pw.Text(
-                    'Staff',
-                    style: pw.TextStyle(fontSize: 10),
-                  ),
-                ],
-              ),
+              //     pw.Text(
+              //       'Staff',
+              //       style: pw.TextStyle(fontSize: 10),
+              //     ),
+              //   ],
+              // ),
 
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -284,7 +285,7 @@ double percentprice(double? actualprice,double? dis){
     // Create a blob from the PDF bytes
     if(isprint){
 await Printing.layoutPdf(
-      format: PdfPageFormat.a5,
+      format: PdfPageFormat.a4,
       onLayout: (PdfPageFormat format) async => pdfData,
     );
     }else{
@@ -346,11 +347,12 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
     }
 
   }
-  for(var i in paymentsByMonth.entries){
-      //print(" ${months[i.key]}  ${i.value.length}");
 
-  }
-  return paymentsByMonth;
+
+  var sortedKeys = paymentsByMonth.keys.toList()..sort();  // Sort by DateTime in ascending order
+  var sortedMap = {for (var key in sortedKeys) key: paymentsByMonth[key]!};
+
+  return sortedMap;
 }
 
 
@@ -444,7 +446,7 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByyear(
 
 Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,String payments) async {
   var excel = Excel.createExcel();
-  Sheet sheet = excel[payments];
+  Sheet sheet = excel["Sheet1"];
 
   // Define headers
   List<String> headers = [ 
@@ -456,8 +458,6 @@ Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
     'Payment Status',
     'Payment Method',
     'Payment Type',
-    'Subscription ID',
-    'Service Usage ID'
   ];
   
   // Append headers
@@ -474,6 +474,7 @@ Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
       DateCellValue.fromDateTime(payment.paymentDate),
       TextCellValue(payment.paymentStatus.toString()),
       TextCellValue(payment.paymentMethod.toString()),
+      TextCellValue(payment.paymentType.toString()),
      
     ]);
   }
@@ -500,7 +501,7 @@ Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
 }
 
 
-Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,List<Membership> memberlist,String payments,List<Subscription> subs) async {
+Future<bool> exportXtremerDataToExcel(List<XtremerWithSubscription> xtremerlist,List<Membership> memberlist,String payments) async {
   var excel = Excel.createExcel();
   Sheet sheet = excel["Sheet1"];
 
@@ -531,11 +532,10 @@ Future<bool> exportXtremerDataToExcel(List<Xtremer> xtremerlist,List<Membership>
       TextCellValue( xtremer.address.toString()),
       TextCellValue( xtremer.postcode.toString()),
       TextCellValue( xtremer.isActive!=null && xtremer.isActive!?"Active" :"InActive"),
-      TextCellValue( xtremer.XtremerId.toString()),
       // IntCellValue(  payment.discountPercentage??0,),
       // DoubleCellValue(  payment.receivedAmount,),
-      DateCellValue.fromDateTime(subs.firstWhereOrNull((element) => element.userId==xtremer.XtremerId.toString(),)?.startDate??DateTime(2000)),
-      DateCellValue.fromDateTime(subs.firstWhereOrNull((element) => element.userId==xtremer.XtremerId.toString(),)?.endDate??DateTime(2000)),
+      DateCellValue.fromDateTime(xtremer.startDate??DateTime(2000)),
+      DateCellValue.fromDateTime(xtremer.endDate??DateTime(2000)),
       // TextCellValue(payment.paymentStatus.toString()),
       // TextCellValue(payment.paymentMethod.toString()),
      
@@ -583,3 +583,52 @@ List<Alluserpaymentmodel> returnexcelpayments(List<Alluserpaymentmodel> paymentl
   return listss;
 }
 
+
+String subscriptiondateStart(List<Subscription> d,int userid){
+  print("in subs start date: ${d.length}");
+//  int x =  d.lastIndexWhere((element) => element.userId == userid.toString(),);
+  DateTime? date;
+  for(Subscription k in d ){
+        print(k.startDate);
+    if(k.userId == userid.toString()){
+      if(date == null){
+        date= k.startDate;
+      }else if(date.isAfter(k.startDate)){
+        date = k.startDate;
+      }
+
+    }
+  }
+
+
+   return date!=null?"${date.day}/${date.month}${date.year}":"no";
+  }
+
+
+
+
+String subscriptiondateEnd(List<Subscription> d,int userid){
+  DateTime? date;
+  print(d.length);
+  for(Subscription k in d ){
+    print(k.endDate);
+    if(k.userId == userid.toString()){
+      if(date ==null){
+        date= k.endDate;
+      }else if(date.isAfter(k.endDate)){
+        date = k.endDate;
+      }
+
+    }
+  }
+
+
+   return date!=null?"${date.day}/${date.month}${date.year}":"";
+
+}
+
+int daysLeftUntil(DateTime futureDate) {
+  DateTime currentDate = DateTime.now();
+  Duration difference = futureDate.difference(currentDate);
+  return difference.inDays;
+}

@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import '../../../config/apis.dart';
+import '../../../widgets/card.dart';
 import '../../../widgets/cardswithshadow.dart';
 
 class ContactDesktop extends StatelessWidget {
@@ -55,26 +56,23 @@ class ContactDesktop extends StatelessWidget {
                                 SizedBox(
                                   height: 40,
                                 ),
-                                Text(
-                                  "About Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"About Us",
+                                
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Why Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                               TextWithHover(
+                                  text:"Why Us",
+                                 
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Partnership",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"Partnership",
+                                 
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -87,34 +85,31 @@ class ContactDesktop extends StatelessWidget {
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                               Text(
                                   "Services",
-                                  style: TextStyle(
+                                 style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 40,
                                 ),
-                                Text(
-                                  "BMI",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"BMI",
+                             
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Steam Bath",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                 TextWithHover(
+                                  text:"Steam Bath",
+                               
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Massage Chair",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text: "Massage Chair",
+                                
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -127,40 +122,35 @@ class ContactDesktop extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Help",
-                                  style: TextStyle(
+                                Text("Help",
+                                 style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                const Text(
-                                  "Account",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text: "Account",
+                                
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  "Support Center",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                            TextWithHover(
+                                  text:"Support Center",
+                                
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                InkWell(
-                                  onTap: () async {
-                                    final String url = 'https://$api/policies';
+                             TextWithHover(
+                                  text:"Privacy Policy",
+                                  callback: () async {
+                                    const String url = 'https://www.xtremefitnessimphal.com/policies';
                                     js.context
                                         .callMethod('open', [url, '_blank']);
                                   },
-                                  child: const Text(
-                                    "Privacy Policy",
-                                    style: TextStyle(color: Colors.white60),
-                                  ),
+                                 
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -263,7 +253,7 @@ class ContactDesktop extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 32),
+                                          horizontal: 16),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -271,7 +261,8 @@ class ContactDesktop extends StatelessWidget {
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.facebook.com/xtremefitnessmantripukhri';
@@ -283,12 +274,13 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.instagram.com/xtremefitness_imphal_manipur';
@@ -300,12 +292,13 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://twitter.com/Xtremefitness19';
@@ -317,12 +310,13 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.youtube.com/@xtremefitnessimphal.2851';
@@ -366,26 +360,24 @@ class ContactDesktop extends StatelessWidget {
                                         SizedBox(
                                           height: 30,
                                         ),
-                                        Text(
-                                          "About Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         
+                            TextWithHover(
+                                  text: "About Us",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Why Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                       TextWithHover(
+                                  text:  "Why Us",
+                                      
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Partnership",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                        TextWithHover(
+                                  text:  "Partnership",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -407,26 +399,23 @@ class ContactDesktop extends StatelessWidget {
                                         SizedBox(
                                           height: 30,
                                         ),
-                                        Text(
-                                          "BMI",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                       TextWithHover(
+                                  text:   "BMI",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Steam Bath",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         TextWithHover(
+                                  text: "Steam Bath",
+                                         
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Massage Chair",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         TextWithHover(
+                                  text:  "Massage Chair",
+                                         
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -448,34 +437,28 @@ class ContactDesktop extends StatelessWidget {
                                         const SizedBox(
                                           height: 30,
                                         ),
-                                        const Text(
-                                          "Account",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                        TextWithHover(
+                                  text: "Account",
+                                         
                                         ),
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        const Text(
-                                          "Support Center",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
+                                        TextWithHover(text: "Support Center", callback: () {  },),
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        InkWell(
-                                          onTap: () {
+                                     TextWithHover(
+                                 callback:  () {
                                             final String url =
                                                 'https://$api/policies';
                                             js.context.callMethod(
                                                 'open', [url, '_blank']);
                                           },
-                                          child: const Text(
+                                        text: 
                                             "Privacy Policy",
-                                            style: TextStyle(
-                                                color: Colors.white60),
-                                          ),
+                                         
+                                  
                                         ),
                                         const SizedBox(
                                           height: 10,
@@ -569,123 +552,100 @@ class ContactDesktop extends StatelessWidget {
                               ),
                               const Divider(height: 1, color: Colors.white60),
                               SizedBox(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                        height: 50,
-                                        child: Image.asset("assets/logo1.png")),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          // Facebook Icon with Hover and Tooltip
-                                          MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: Tooltip(
-                                              message: "Facebook",
-                                              child: SizedBox(
-                                                height: 55,
-                                                width: 55,
-                                                child: CardwithShadow(
-                                                  onpress: () {
-                                                    String url =
-                                                        'https://www.facebook.com/xtremefitnessmantripukhri';
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [url, '_blank']);
-                                                  },
-                                                  child: Image.asset(
-                                                      "assets/facebook-logo.png"),
-                                                ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                          height: 50,
+                                          child:
+                                              Image.asset("assets/logo1.png")),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 32),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
+                                                onpress: () {
+                                                  String url =
+                                                      'https://www.facebook.com/xtremefitnessmantripukhri';
+                                                  js.context.callMethod(
+                                                      'open', [url, '_blank']);
+                                                },
+                                                child: Image.asset(
+                                                    "assets/facebook-logo.png"),
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 30),
-
-                                          // Instagram Icon with Hover and Tooltip
-                                          MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: Tooltip(
-                                              message: "Instagram",
-                                              child: SizedBox(
-                                                height: 55,
-                                                width: 55,
-                                                child: CardwithShadow(
-                                                  onpress: () {
-                                                    String url =
-                                                        'https://www.instagram.com/xtremefitness_imphal_manipur';
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [url, '_blank']);
-                                                  },
-                                                  child: Image.asset(
-                                                      "assets/instagram.png"),
-                                                ),
+                                            const SizedBox(
+                                              width: 30,
+                                            ),
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
+                                                onpress: () {
+                                                  String url =
+                                                      'https://www.instagram.com/xtremefitness_imphal_manipur';
+                                                  js.context.callMethod(
+                                                      'open', [url, '_blank']);
+                                                },
+                                                child: Image.asset(
+                                                    "assets/instagram.png"),
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 30),
-
-                                          // Twitter Icon with Hover and Tooltip
-                                          MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: Tooltip(
-                                              message: "Twitter",
-                                              child: SizedBox(
-                                                height: 55,
-                                                width: 55,
-                                                child: CardwithShadow(
-                                                  onpress: () {
-                                                    String url =
-                                                        'https://twitter.com/Xtremefitness19';
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [url, '_blank']);
-                                                  },
-                                                  child: Image.asset(
-                                                      "assets/twiter.jpeg"),
-                                                ),
+                                            const SizedBox(
+                                              width: 30,
+                                            ),
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: Cardonly(
+                                                margin: EdgeInsets.zero,
+                                                onpress: () {
+                                                  String url =
+                                                      'https://twitter.com/Xtremefitness19';
+                                                  js.context.callMethod(
+                                                      'open', [url, '_blank']);
+                                                },
+                                                child: Image.asset(
+                                                    "assets/twiter.jpeg"),
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 30),
-
-                                          // YouTube Icon with Hover and Tooltip
-                                          MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: Tooltip(
-                                              message: "YouTube",
-                                              child: SizedBox(
-                                                height: 55,
-                                                width: 55,
-                                                child: CardwithShadow(
-                                                  onpress: () {
-                                                    String url =
-                                                        'https://www.youtube.com/@xtremefitnessimphal.2851';
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [url, '_blank']);
-                                                  },
-                                                  child: Image.asset(
-                                                      "assets/youtube.png"),
-                                                ),
+                                            const SizedBox(
+                                              width: 30,
+                                            ),
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
+                                                onpress: () {
+                                                  String url =
+                                                      'https://www.youtube.com/@xtremefitnessimphal.2851';
+                                                  js.context.callMethod(
+                                                      'open', [url, '_blank']);
+                                                },
+                                                child: Image.asset(
+                                                    "assets/youtube.png"),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              )),
+                              ),
                             ],
                           ),
                         ),
@@ -696,6 +656,39 @@ class ContactDesktop extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class TextWithHover extends StatefulWidget {
+  const TextWithHover({
+    super.key, this.callback, required this.text,
+  });
+  final VoidCallback? callback;
+  final String text;
+
+  @override
+  State<TextWithHover> createState() => _TextWithHoverState();
+}
+
+class _TextWithHoverState extends State<TextWithHover> {
+  bool ishov = false;
+  @override
+  Widget build(BuildContext context) {
+
+    return InkWell(
+      onTap: widget.callback??(){},
+      onHover: (v){
+        setState(() {
+          ishov = v;
+        });
+
+      },
+      child:  Text(
+          widget.text,
+        style:
+            TextStyle(color:ishov?Colors.blue[400]: Colors.white60),
+      ),
+    );
   }
 }
 

@@ -12,6 +12,7 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 import '../../../config/const.dart';
 
 import '../../../widgets/cardborder.dart';
+import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -131,8 +132,9 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                     child: SizedBox(
                                       width: 500,
                                       height: 600,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(32),
+                                      child: CardwithShadow(
+                                        margin: EdgeInsets.zero,
+                                        color: Colors.grey[900],
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -246,7 +248,7 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                                   serviceStatus = d[index!];
                                                               });
                                                               },
-
+                                                                                
                                                               hintText:
                                                                  managectrl.searchServicesSchedule[i].status,
                                                               dropdownMenuEntries: 
@@ -356,7 +358,7 @@ class _ListCardState extends State<ListCard2> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TitleText(
-                              "Name: ${widget.name}",
+                              "Phone: ${widget.name}",
                               size: 16,
                             ),
                             const SizedBox(

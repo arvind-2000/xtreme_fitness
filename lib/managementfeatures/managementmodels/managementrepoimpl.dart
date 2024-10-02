@@ -23,6 +23,7 @@ import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
 import '../managementdomain/entities.dart/roles.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
+import '../managementdomain/entities.dart/xtremerwithsubs.dart';
 
 class ManagementrepoImpl implements ManagementRepo {
   @override
@@ -394,6 +395,42 @@ class ManagementrepoImpl implements ManagementRepo {
     return [];
   }
 
+
+  @override
+  Future<List<XtremerWithSubscription>> viewMemberwithSubs() async {
+    try {
+      // Create a new XMLHttpRequest
+      final xhr = html.HttpRequest();
+
+      // Open the request
+      xhr.open('GET', '$api/api/Xtremers/GetXtremerWithSubscription', async: true);
+      xhr.withCredentials = true; // Set withCredentials to true
+
+      // Send the request
+      xhr.send();
+
+      // Wait for the response
+      await xhr.onLoad.first;
+
+      if (xhr.status! >= 200 && xhr.status! < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
+        //print("In Xtremer list: ${jsonList.length}");
+        List<XtremerWithSubscription> xtremelist =
+            jsonList.map((json) => XtremerWithSubscription.fromJson(json)).toList();
+
+        return xtremelist;
+      } else {
+        //print('Failed to load Xtremer. Status: ${xhr.status}');
+      }
+    } catch (e) {
+      //print("Can't load Xtremer: $e");
+    }
+
+    return [];
+  }
+
+
   @override
   Future<List<Xtremer>> viewPersonalTrainer() async {
     try {
@@ -568,6 +605,7 @@ class ManagementrepoImpl implements ManagementRepo {
         "durationInMonths": plan.durationInMonths,
         "discountPercentage": plan.discountPercentage,
         "category": plan.category,
+        "isActive":plan.isActive
       });
 
       // Send the request with the JSON body

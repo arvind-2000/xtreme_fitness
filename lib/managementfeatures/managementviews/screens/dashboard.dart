@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmembersscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addstaffscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addtrainer/addtrainerscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/allpaymentts.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/analyticsscreen.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardmemberpage/dashboard1.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardresponsive/dashboardscreen1.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/message/messagepage.dart';
 
@@ -41,11 +41,11 @@ class DashBoardScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: authctrl.ismember
+                                child:authctrl.ismember
                                     ? NavBarMember(
-                                        pagectrl: pagectrl, authctrl: authctrl)
+                                      authctrl: authctrl)
                                     : NavBar(
-                                        pagectrl: pagectrl,
+                                      
                                         authctrl: authctrl,
                                       ),
                               ),
@@ -61,10 +61,10 @@ class DashBoardScreen extends StatelessWidget {
                         //   width:double.maxFinite,
                         //   color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
                         // ),
-                        authctrl.ismember
+                   authctrl.ismember
                             ? Expanded(
-                                child: pagectrl.navpage == 5
-                                    ? const PlansScreen()
+                                child: pagectrl.navpage == 0
+                                    ?DashBoardMemberScreen():pagectrl.navpage == 5? const PlansScreen()
                                     : const ServicesScreen())
                             : Expanded(
                                 child: pagectrl.navpage == 0

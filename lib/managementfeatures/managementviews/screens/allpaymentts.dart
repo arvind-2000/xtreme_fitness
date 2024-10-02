@@ -6,7 +6,6 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
-import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../config/const.dart';
@@ -34,7 +33,6 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
   @override
   void initState() {
     super.initState();
-    // Get.find<ManagementController>().getxtremer();
   }
 
   final TextEditingController _searchcontroller = TextEditingController();
@@ -459,7 +457,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                   : 400,
                               child: TextFieldWidget(
                                   showhint: false,
-                                  hint: "Search by transaction id",
+                                  hint: "Search by Receipt# ",
                                   controller: _searchcontroller,
                                   validator: () {},
                                   onchanged: (text) {
@@ -970,7 +968,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                         subscriptionId: managectrl.getsearchpayments[i].subscriptionId,
                                                         serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId,
                                                         termsAndConditions: true),
-                                                        name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
+                                                        // name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
                                                         
                                                         );
                                                   },

@@ -238,13 +238,25 @@ class _SignUpPageState extends State<SignUpPage> {
                                           if (authctrl
                                               .confirmotp(_confirmotp.text)) {
                                             print('otp confirm here page');
-
-                                            Get.to(() => CreateXtremers(
-                                                  phonenumber:
-                                                      _phonecontroller.text,
-                                                  services: landingcontroller
-                                                      .services,
-                                                ));
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CreateXtremers(
+                                                        phonenumber:
+                                                            _phonecontroller
+                                                                .text,
+                                                        services:
+                                                            landingcontroller
+                                                                .services,
+                                                      )),
+                                            );
+                                            // Get.to(() => CreateXtremers(
+                                            //       phonenumber:
+                                            //           _phonecontroller.text,
+                                            //       services: landingcontroller
+                                            //           .services,
+                                            //     ));
 
                                             setState(() {
                                               otpcorrect = true;
