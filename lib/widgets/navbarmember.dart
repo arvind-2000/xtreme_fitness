@@ -92,7 +92,8 @@ class NavBarMember extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -113,7 +114,8 @@ class NavBarMember extends StatelessWidget {
                               .withOpacity(0.3)
                           : Colors.transparent,
                       onpress: () {
-                        if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                        if (Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)) {
                           drawers(context);
                         }
 
@@ -160,49 +162,54 @@ class NavBarMember extends StatelessWidget {
           Cardonly(
               color: Colors.transparent,
               onpress: () {
-                if (Responsive.isMobile(context)||Responsive.isTablet(context)) {
+                if (Responsive.isMobile(context) ||
+                    Responsive.isTablet(context)) {
                   drawers(context);
                 }
-                Get.dialog(
-                
-                 PageDialog(
-                    
-                        heights: 300,
-                        no: () {
-                         Get.back();
-                        },
-                        yes: () {
-                          authctrl.logout();
-                         
-                        },
-                        child:authctrl.loginloading?Center(child: CircularProgressIndicator(color: Colors.white,),) : const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.logout),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                HeadingText(
-                                  "Log Out",
-                                  size: 20,
-                                ),
-                              ],
+                Get.dialog(PageDialog(
+
+                    // heights: 300,
+                    no: () {
+                      Get.back();
+                    },
+                    yes: () {
+                      authctrl.logout();
+                    },
+                    islogoutdialog: true,
+                    child: authctrl.loginloading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
                             ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Center(
-                                child: Text(
-                              "Are you sure you want to logout?\nPress yes to confirm",
-                              style: TextStyle(
-                                fontSize: 16,
+                          )
+                        : const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.logout),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  HeadingText(
+                                    "Log Out",
+                                    size: 20,
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.center,
-                            ))
-                          ],
-                        )));
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Center(
+                                  child: Text(
+                                "Are you sure you want to logout?\nPress yes to confirm",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ))
+                            ],
+                          )));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(

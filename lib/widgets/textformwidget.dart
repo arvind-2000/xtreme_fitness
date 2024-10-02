@@ -90,7 +90,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 return '${widget.hint} is  empty';
               }
             } else {
-              if (widget.controller.text.length > 25) {
+              if (widget.controller.text.length > (widget.counter ?? 25)) {
                 return "Should be between 1 to ${25} characters. Exceeds limits";
               } else {
                 return widget.validator!();
@@ -128,8 +128,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
               border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)))
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(8)))),
         ),
       ],
     );

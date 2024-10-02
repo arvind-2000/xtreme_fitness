@@ -4,31 +4,38 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import '../../../config/const.dart';
 
 class PageDialog extends StatelessWidget {
-  const PageDialog(
-      {super.key,
-      required this.child,
-      required this.no,
-      required this.yes,
-      this.heights});
+  const PageDialog({
+    super.key,
+    required this.child,
+    required this.no,
+    required this.yes,
+    this.islogoutdialog,
+  });
+  final bool? islogoutdialog;
   final Widget child;
   final VoidCallback no;
   final VoidCallback yes;
-  final double? heights;
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
-         insetPadding: const EdgeInsets.all(16),
-         backgroundColor: Colors.grey[800],
-      alignment: const Alignment(0.25, -0.5),
+      insetPadding: const EdgeInsets.all(16),
+      backgroundColor: Colors.grey[800],
+      alignment: islogoutdialog != null ? null : const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),
         width: 400,
-        height: heights ?? 400,
+        // height: heights ?? 400,
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(child: child),
+              child,
+              // Expanded(child: child),
+              const SizedBox(
+                height: 15,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -37,8 +44,11 @@ class PageDialog extends StatelessWidget {
                         onpress: no,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
-                            padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 12):null,
+                        padding:
+                            MediaQuery.sizeOf(context).width <= mobilescreen
+                                ? const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 12)
+                                : null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -62,8 +72,11 @@ class PageDialog extends StatelessWidget {
                         onpress: yes,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 12),
-                              padding: MediaQuery.sizeOf(context).width<=mobilescreen? EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 12):null,
+                        padding:
+                            MediaQuery.sizeOf(context).width <= mobilescreen
+                                ? const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 12)
+                                : null,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

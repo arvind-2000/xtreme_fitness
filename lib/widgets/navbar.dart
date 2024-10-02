@@ -351,10 +351,12 @@ class NavBar extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            '( ${contrl.unreadmessagelist.length.toString()} )',
-                            style: const TextStyle(color: Colors.red),
-                          )
+                          contrl.unreadmessagelist.isEmpty
+                              ? const SizedBox()
+                              : Text(
+                                  '( ${contrl.unreadmessagelist.length.toString()} )',
+                                  style: const TextStyle(color: Colors.red),
+                                )
                         ],
                       )),
                 ],
@@ -372,7 +374,7 @@ class NavBar extends StatelessWidget {
                   drawers(context);
                 }
                 Get.dialog(PageDialog(
-                    heights: 300,
+                    // heights: 300,
                     no: () {
                       Get.back();
                     },
@@ -380,6 +382,7 @@ class NavBar extends StatelessWidget {
                       Get.back();
                       authctrl.logout();
                     },
+                    islogoutdialog: true,
                     child: authctrl.loginloading
                         ? const Center(
                             child: CircularProgressIndicator(

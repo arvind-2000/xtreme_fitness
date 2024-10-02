@@ -34,10 +34,10 @@ class DashBoardScreen extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                 Responsive.isMobile(context)||Responsive.isTablet(context)
+                  Responsive.isMobile(context) || Responsive.isTablet(context)
                       ? const SizedBox()
                       : SizedBox(
-                          width:  250,
+                          width: 250,
                           child: Row(
                             children: [
                               Expanded(
@@ -49,7 +49,6 @@ class DashBoardScreen extends StatelessWidget {
                                         authctrl: authctrl,
                                       ),
                               ),
-
                             ],
                           ),
                         ),
@@ -88,11 +87,13 @@ class DashBoardScreen extends StatelessWidget {
                                                                 : pagectrl.navpage ==
                                                                         8
                                                                     ? SettingPage()
-                                                                    :pagectrl.navpage ==
-                                                                            15?ServiceUsageScreen(): pagectrl.navpage ==
-                                                                            10
-                                                                        ? const AddTrainerScreen()
-                                                                        : const MessageListScreen(),
+                                                                    : pagectrl.navpage ==
+                                                                            15
+                                                                        ? const ServiceUsageScreen()
+                                                                        : pagectrl.navpage ==
+                                                                                10
+                                                                            ? const AddTrainerScreen()
+                                                                            : const MessageListScreen(),
                               )
                       ],
                     ),
@@ -127,10 +128,10 @@ class NavTiles extends StatelessWidget {
         const SizedBox(
           width: 20,
         ),
-    Text(
-                title,
-                // size: 16,
-              ),
+        Text(
+          title,
+          // size: 16,
+        ),
       ],
     );
   }

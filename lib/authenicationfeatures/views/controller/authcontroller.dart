@@ -8,11 +8,12 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindi
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
-
+import 'package:universal_html/html.dart' as html;
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
+
 import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
 
@@ -135,7 +136,7 @@ class GetxAuthController extends GetxController {
     update();
     // html.window.document.cookie = 'name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String s = await authrepo.logout();
+    await authrepo.logout();
     authentications();
 
     prefs.remove('key1');
@@ -316,9 +317,10 @@ class GetxAuthController extends GetxController {
                   ),
                 ),
               ));
-        } else {
-          Get.offAllNamed('/home');
         }
+        // else {
+        //   Get.offAllNamed('/home');
+        // }
       } else {
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
@@ -400,7 +402,7 @@ class GetxAuthController extends GetxController {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    ////print(otp.toString());
+    print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 

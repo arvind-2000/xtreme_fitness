@@ -18,7 +18,8 @@ class PersonaldetailsField extends StatefulWidget {
     super.key,
     required this.pagectrl,
     this.phonenumber,
-    required this.callback, this.buttonText,
+    required this.callback,
+    this.buttonText,
   });
   final String? phonenumber;
   final GetxPageController pagectrl;
@@ -298,6 +299,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       : Expanded(
                           flex: 3,
                           child: TextFieldWidget(
+                              counter: 40,
                               hint: "Address",
                               controller: _addresscontroller,
                               focusnode: _addressFocusNode,
@@ -313,6 +315,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
               ),
               size < mobilescreen
                   ? TextFieldWidget(
+                      counter: 40,
                       hint: "Address",
                       controller: _addresscontroller,
                       focusnode: _addressFocusNode,
@@ -634,7 +637,8 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                       if (addmembrctrl.dob == null) {
                         CustomSnackbar(context, "DOB field cannot be empty.");
                       } else {
-                        CustomSnackbar(context,  "Add required fields before proceeding");
+                        CustomSnackbar(
+                            context, "Add required fields before proceeding");
                       }
                     }
                   },
@@ -649,7 +653,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         width: 10,
                       ),
                       Text(
-                       widget.buttonText?? "Add plan",
+                        widget.buttonText ?? "Add plan",
                         style: const TextStyle(color: Colors.white),
                       )
                     ],

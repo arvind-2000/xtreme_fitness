@@ -42,7 +42,7 @@ class GetxLandingcontroller extends GetxController {
   int page = 0;
   int plandurations = 1;
 
-  bool _isloading = false;
+  bool _isloading = true;
   bool get isloading => _isloading;
 
   //Text controller for contact us form
@@ -155,8 +155,7 @@ class GetxLandingcontroller extends GetxController {
         curve: Curves.easeInOut,
       )
           .then((_) {
-        setscroll(
-            true); 
+        setscroll(true);
       });
     }
   }
@@ -190,12 +189,11 @@ class GetxLandingcontroller extends GetxController {
 
   void getServices() async {
     _services = await managementrepoImpl.getServices();
- 
+
     update();
   }
 
   void addServices(ServiceEntity servic) async {
-
     services = servic;
   }
 
@@ -204,7 +202,7 @@ class GetxLandingcontroller extends GetxController {
     update();
   }
 
-  void sendmessage() async {
+  Future sendmessage() async {
     _isloading = true;
     update();
     var headers = {'Content-Type': 'application/json'};
@@ -259,7 +257,6 @@ class GetxLandingcontroller extends GetxController {
                   'Thank you for contacting us',
                   size: 25,
                 ),
-
           const SizedBox(height: 10),
           _isloading
               ? const SizedBox()
@@ -280,6 +277,7 @@ class GetxLandingcontroller extends GetxController {
                         phonecontroller.clear();
                         subjectcontroller.clear();
                         messagecontroller.clear();
+
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(

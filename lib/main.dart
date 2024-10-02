@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
+import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
+import 'package:xtreme_fitness/landingpages/pages/network/noserverpage.dart';
 import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
@@ -29,6 +32,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    Get.put(NetworkController());
     return GetMaterialApp(
       scrollBehavior: CustomScrollBehavior(),
       title: 'Xtreme Fitness',
@@ -63,12 +67,20 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
+            name: '/registration',
+            page: () => const CreateXtremers(),
+            transition: Transition.noTransition),
+        GetPage(
             name: '/dashboard',
             page: () => const HandlerPage(),
             transition: Transition.noTransition),
         GetPage(
             name: '/home',
             page: () => const MainPage(),
+            transition: Transition.noTransition),
+        GetPage(
+            name: '/servererror',
+            page: () => const ServerErrorPage(),
             transition: Transition.noTransition),
         GetPage(
             name: '/',

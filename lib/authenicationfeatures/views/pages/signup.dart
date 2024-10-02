@@ -14,7 +14,8 @@ import '../../../widgets/textformwidget.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({
     super.key,
-    this.changelogin, required this.formkey,
+    this.changelogin,
+    required this.formkey,
   });
   final Function(bool)? changelogin;
   final GlobalKey<FormState> formkey;
@@ -23,12 +24,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
-
   final TextEditingController _confirmotp = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
   final FocusNode _confirmotpfocus = FocusNode();
-    final TextEditingController _otp1Controller = TextEditingController();
+  final TextEditingController _otp1Controller = TextEditingController();
   final TextEditingController _otp2Controller = TextEditingController();
   final TextEditingController _otp3Controller = TextEditingController();
   final TextEditingController _otp4Controller = TextEditingController();
@@ -37,7 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode _otp2FocusNode = FocusNode();
   final FocusNode _otp3FocusNode = FocusNode();
   final FocusNode _otp4FocusNode = FocusNode();
-
 
   final FocusNode _phonefocus = FocusNode();
   final AuthenticateUseCases _authUseCases = AuthenticateUseCases();
@@ -80,7 +78,8 @@ class _SignUpPageState extends State<SignUpPage> {
     return GetBuilder<GetxLandingcontroller>(builder: (landingcontroller) {
       return GetBuilder<GetxAuthController>(builder: (authctrl) {
         return Container(
-                padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
+          padding: EdgeInsets.all(
+              MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 32),
           alignment: Alignment.center,
           // color: Theme.of(context).colorScheme.primary,
           child: SizedBox(
@@ -119,14 +118,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 Center(
                   child: authctrl.numberexists != null &&
                           authctrl.numberexists == false
-                      ? HeadingText(
-                          'OTP Verification',
-                          size: 20
-                        )
-                      : HeadingText(
-                          'Membership Registration',
-                          size:  20
-                        ),
+                      ? const HeadingText('OTP Verification', size: 20)
+                      : const HeadingText('Membership Registration', size: 20),
                 ),
                 Form(
                     key: widget.formkey,
@@ -238,10 +231,25 @@ class _SignUpPageState extends State<SignUpPage> {
                               onpress: authctrl.otploading
                                   ? null
                                   : () async {
-                                      if (widget.formkey.currentState!.validate()) {
+                                      if (widget.formkey.currentState!
+                                          .validate()) {
                                         if (authctrl.otp != null) {
                                           if (authctrl
                                               .confirmotp(_confirmotp.text)) {
+                                            print('otp confirm here page');
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           CreateXtremers(
+                                            //             phonenumber:
+                                            //                 _phonecontroller
+                                            //                     .text,
+                                            //             services:
+                                            //                 landingcontroller
+                                            //                     .services,
+                                            //           )),
+                                            // );
                                             Get.to(() => CreateXtremers(
                                                   phonenumber:
                                                       _phonecontroller.text,
@@ -253,12 +261,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                               otpcorrect = true;
                                             });
                                           } else {
+                                            print("otpcorrect false");
                                             setState(() {
                                               otpcorrect = false;
                                             });
                                           }
                                           //confirm otp
                                         } else {
+                                          print("authctrl.otp false");
                                           //send otp
                                           authctrl
                                               .signup(_phonecontroller.text);
@@ -330,15 +340,11 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       });
     });
-
-
-
-
-    
   }
 
-
-    Widget _otpTextField(TextEditingController controller, FocusNode currentFocus, FocusNode? nextFocus,{bool enabletext = true}) {
+  Widget _otpTextField(TextEditingController controller, FocusNode currentFocus,
+      FocusNode? nextFocus,
+      {bool enabletext = true}) {
     return SizedBox(
       width: 50,
       child: TextFormField(
@@ -349,35 +355,30 @@ class _SignUpPageState extends State<SignUpPage> {
         textAlign: TextAlign.center,
         cursorColor: Theme.of(context).colorScheme.onPrimary,
         decoration: InputDecoration(
-          
-          counterText: "",  // Hides the character count
+          counterText: "", // Hides the character count
           border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              borderRadius: BorderRadius.all(Radius.circular(8))),
           enabled: enabletext,
-        focusedBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).colorScheme.onPrimary),
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-              ),
-
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.onPrimary),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+          ),
         ),
-        
-
         onChanged: (value) {
           if (value.length == 1) {
             // Move to the next field when the user enters a digit
             if (nextFocus != null) {
               FocusScope.of(context).requestFocus(nextFocus);
             } else {
-              currentFocus.unfocus(); // If it's the last field, unfocus the input
+              currentFocus
+                  .unfocus(); // If it's the last field, unfocus the input
             }
           }
         },
-
-
-        
         onFieldSubmitted: (value) {
-          currentFocus.unfocus(); // When pressing enter, unfocus the current field
+          currentFocus
+              .unfocus(); // When pressing enter, unfocus the current field
         },
       ),
     );

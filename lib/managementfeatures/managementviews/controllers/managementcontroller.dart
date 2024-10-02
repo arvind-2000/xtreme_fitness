@@ -31,7 +31,7 @@ class ManagementController extends GetxController {
   List<Paymentlatest10> _latestpayment10 = [];
   List<UserEntity> _allstaff = [];
   List<Xtremer> _allxtremer = [];
-  List<Xtremer> _allxtremerforoverall = [];
+  final List<Xtremer> _allxtremerforoverall = [];
   List<Xtremer> _allinactivextremer = [];
   List<Membership> _allmembership = [];
   bool ismember = true;
@@ -71,26 +71,26 @@ class ManagementController extends GetxController {
   List<Trainee> get getallTrainee => _alltrainee;
   List<Membership> get getallMembership => _allmembership;
   List<Role> get getallRoles => _allroles;
-  List<Role> _allroles  = [];
+  List<Role> _allroles = [];
 
-    List<ServiceSchedule> get getallServicesSchedule => _allserviceschedule;
-    List<ServiceSchedule> get searchServicesSchedule => _searchservice;
-  List<ServiceSchedule> _allserviceschedule  = [];
-  List<ServiceSchedule> _searchservice  = [];
-      List<Subscription> get getallSubscription => _allSubscription;
-  List<Subscription> _allSubscription  = [];
+  List<ServiceSchedule> get getallServicesSchedule => _allserviceschedule;
+  List<ServiceSchedule> get searchServicesSchedule => _searchservice;
+  List<ServiceSchedule> _allserviceschedule = [];
+  List<ServiceSchedule> _searchservice = [];
+  List<Subscription> get getallSubscription => _allSubscription;
+  List<Subscription> _allSubscription = [];
 //users
-        // List<UserEntity> get getallSubscription => _allSubscription;
-  List<UserEntity> _allUsers  = [];
-  List<UserEntity> get allUsers  => _allUsers;
+  // List<UserEntity> get getallSubscription => _allSubscription;
+  List<UserEntity> _allUsers = [];
+  List<UserEntity> get allUsers => _allUsers;
   String? searchmessage = "";
   int searchposition = 0;
   Membership? currentmember;
   GetxAuthController authctrl = Get.find<GetxAuthController>();
-  
+
   Xtremer? xtremer;
   Admission? _admission;
-  Admission? get getAdmission=>_admission;
+  Admission? get getAdmission => _admission;
 
   /// 0 [week] 1[month]
   int servicefilter = 1;
@@ -109,7 +109,7 @@ class ManagementController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-      authctrl.authenticationsforsession();
+    authctrl.authenticationsforsession();
     getplans();
     getadmission();
     checkmember();
@@ -127,7 +127,6 @@ class ManagementController extends GetxController {
 
     update();
   }
-
 
   ///for realtime data calls
   void dashboardTimer() {
@@ -162,9 +161,8 @@ class ManagementController extends GetxController {
     update();
   }
 
-    
   void getAllusers() async {
-    _allUsers= await authctrl.authrepo.getAllUsers();
+    _allUsers = await authctrl.authrepo.getAllUsers();
     update();
   }
 
@@ -202,13 +200,27 @@ class ManagementController extends GetxController {
         (element) => element.XtremerId.toString() == authctrl.userid,
       );
       update();
-    }else{
+    } else {
       _searchxtremerlist = _allxtremer;
-      _allgeneralxtremer = _allxtremer.where((element) => element.category == 'General'&& element.isActive == true,).toList();
-      _allpersonalxtremer = _allxtremer.where((element) => element.category == 'Personal'&& element.isActive == true,).toList();
-      _allinactivextremer = _allxtremer.where((element) =>element.isActive == false,).toList();
+      _allgeneralxtremer = _allxtremer
+          .where(
+            (element) =>
+                element.category == 'General' && element.isActive == true,
+          )
+          .toList();
+      _allpersonalxtremer = _allxtremer
+          .where(
+            (element) =>
+                element.category == 'Personal' && element.isActive == true,
+          )
+          .toList();
+      _allinactivextremer = _allxtremer
+          .where(
+            (element) => element.isActive == false,
+          )
+          .toList();
     }
-    
+
     update();
   }
 
@@ -276,10 +288,9 @@ class ManagementController extends GetxController {
   // }
 
   void getadmission() async {
-    Map<Admission?,int> d =  await managementRepo.viewadmission();
+    Map<Admission?, int> d = await managementRepo.viewadmission();
     _admission = d.entries.first.key;
     update();
-
   }
 
   void getMembershipbyid(int id) async {
@@ -290,7 +301,7 @@ class ManagementController extends GetxController {
           //print(i.userId);
           if (i.userId == id) {
             currentmember = i;
-            
+
             //print("membership found");
             update();
             return;
@@ -378,15 +389,12 @@ class ManagementController extends GetxController {
   }
 
   void getpaymentlastest10() async {
-    
     _latestpayment10 = await managementRepo.viewlatest10payment();
 
-   
     update();
   }
 
   void viewpayment() async {
-   
     // _allpayments = dummypayments;
     _allpayments = await managementRepo.viewpayment();
     _searchpayments = _allpayments;
@@ -398,14 +406,14 @@ class ManagementController extends GetxController {
             .toList(),
         DateTime.now());
     weeklypayments = groupPaymentsByDate(
-        _allpayments
-            .where(
-              (element) => element.paymentStatus!.toLowerCase() == 'success',
-            )
-            .toList(),
-        );
+      _allpayments
+          .where(
+            (element) => element.paymentStatus!.toLowerCase() == 'success',
+          )
+          .toList(),
+    );
     //print("In view payment : ${_allpayments.length}");
-   
+
     update();
   }
 
@@ -491,13 +499,10 @@ class ManagementController extends GetxController {
     update();
   }
 
-
   void searchservice(String keyword) {
     searchmessage = "";
     if (keyword.isEmpty) {
-      _searchservice  = _allserviceschedule;
-
- 
+      _searchservice = _allserviceschedule;
     } else {
       // _searchservice = _allserviceschedule.where(
       //   (element){
@@ -510,19 +515,26 @@ class ManagementController extends GetxController {
 
       //   }
       //      return false;
-        
+
       //   }
       // ).toList();
-      List<UserEntity> d = _allUsers.where((element) => element.mobileNumber!=null?element.mobileNumber!.contains(keyword.trim()):false,).toList();
+      List<UserEntity> d = _allUsers
+          .where(
+            (element) => element.mobileNumber != null
+                ? element.mobileNumber!.contains(keyword.trim())
+                : false,
+          )
+          .toList();
       _searchservice = _allserviceschedule.where((element) {
-       UserEntity? x = d.firstWhereOrNull((e) => e.id==element.userId,);
-        if(x==null){
+        UserEntity? x = d.firstWhereOrNull(
+          (e) => e.id == element.userId,
+        );
+        if (x == null) {
           return false;
-        }else{
+        } else {
           return true;
         }
       }).toList();
-
     }
 
     searchmessage = keyword.isEmpty
@@ -530,9 +542,6 @@ class ManagementController extends GetxController {
         : "Found ${_searchservice.length} records with keyoword: $keyword";
     update();
   }
-
-
-
 
   ///call in search to make personal only
   void personalxtremer() {
@@ -556,92 +565,71 @@ class ManagementController extends GetxController {
     update();
   }
 
-
-
   ///roles get all role list
-  void getAllRoles()async{
-    Map<List<Role>,int> d = await managementRepo.getRoles();
+  void getAllRoles() async {
+    Map<List<Role>, int> d = await managementRepo.getRoles();
     _allroles = d.entries.first.key;
     update();
   }
 
-
   ///add roles to api
-  Future<String> addroles(Role role)async{
-
+  Future<String> addroles(Role role) async {
     String v = await managementRepo.addRoles(role: role);
     getAllRoles();
     return v;
-
   }
 
-    Future<String> updateAdmission(Admission admissionfees)async{
-
+  Future<String> updateAdmission(Admission admissionfees) async {
     String v = await managementRepo.updateadmission(admissionfees);
     getadmission();
     return v;
-
   }
 
-  Future<String> updateroles(Role role)async{
-
+  Future<String> updateroles(Role role) async {
     String v = await managementRepo.updateRole(role: role);
-     getAllRoles();
+    getAllRoles();
     return v;
-  
   }
 
-
-  Future<String> deleteRole(Role role)async{
-
+  Future<String> deleteRole(Role role) async {
     String v = await managementRepo.deleteRole(role: role);
-     getAllRoles();
+    getAllRoles();
     return v;
-  
   }
-
 
   ///allservice schedules
-  void getAllServiceSchedules()async{
+  void getAllServiceSchedules() async {
     _allserviceschedule = await managementRepo.getAllServiceUsage();
     _searchservice = _allserviceschedule;
     update();
   }
 
-
-  void getAllSubscriptions()async{
+  void getAllSubscriptions() async {
     _allSubscription = await managementRepo.getAllSubscription();
     update();
   }
 
- Future<String> updateserviceschedule(ServiceSchedule serviceschedule)async{
-
+  Future<String> updateserviceschedule(ServiceSchedule serviceschedule) async {
     String v = await managementRepo.updateServiceUsage(serviceschedule);
-     getAllServiceSchedules();
+    getAllServiceSchedules();
     return v;
-  
   }
 
-
-  List<Xtremer> tobeExpired(){
+  List<Xtremer> tobeExpired() {
     List<Xtremer> tobeexpiredlist = [];
-     DateTime dateMinusSevenDays = DateTime.now().subtract(Duration(days: 7));
-    for(Xtremer e in _allxtremer){
-
-      for(Subscription d in _allSubscription){
-        if(d.userId.toString() == e.XtremerId.toString() && d.isActive){  
-            if(d.endDate.isAtSameMomentAs(dateMinusSevenDays)||d.endDate.isAfter(dateMinusSevenDays)){
-                tobeexpiredlist.add(e);
-            }
+    DateTime dateMinusSevenDays =
+        DateTime.now().subtract(const Duration(days: 7));
+    for (Xtremer e in _allxtremer) {
+      for (Subscription d in _allSubscription) {
+        if (d.userId.toString() == e.XtremerId.toString() && d.isActive) {
+          if (d.endDate.isAtSameMomentAs(dateMinusSevenDays) ||
+              d.endDate.isAfter(dateMinusSevenDays)) {
+            tobeexpiredlist.add(e);
+          }
         }
       }
-        
-
     }
 
-
-return tobeexpiredlist;
+    return tobeexpiredlist;
   }
-
-
 }

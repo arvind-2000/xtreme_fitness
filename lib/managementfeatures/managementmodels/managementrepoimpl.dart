@@ -1674,28 +1674,34 @@ class ManagementrepoImpl implements ManagementRepo {
   @override
   Future<Map<List<Role>, int>> getRoles() async {
     //print("in roles api calls");
+    try {
+      final request = await html.HttpRequest.request(
+        "$api/api/Roles",
+        method: 'GET',
+        requestHeaders: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true, // Include credentials
+      );
 
-    final request = await html.HttpRequest.request(
-      "$api/api/Roles",
-      method: 'GET',
-      requestHeaders: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Include credentials
-    );
+      //print("${request.status}");
+      if (request.status! >= 200 && request.status! < 300) {
+        // Parse JSON data
+        final List<dynamic> jsonList = jsonDecode(request.responseText!);
+        print("In Role list : ${jsonList.length}");
+        List<Role> rolelist =
+            jsonList.map((json) => Role.fromMap(json)).toList();
 
-    //print("${request.status}");
-    if (request.status! >= 200 && request.status! < 300) {
-      // Parse JSON data
-      final List<dynamic> jsonList = jsonDecode(request.responseText!);
-      print("In Role list : ${jsonList.length}");
-      List<Role> rolelist = jsonList.map((json) => Role.fromMap(json)).toList();
-
-      return {rolelist: request.status!};
-    } else {
-      return {[]: request.status!};
-      //print('Failed to load roles. Status code: ${request.status}');
+        return {rolelist: request.status!};
+      } else {
+        return {[]: request.status!};
+        //print('Failed to load roles. Status code: ${request.status}');
+      }
+    } catch (e) {
+      //print("Can't load roles data: $e");
     }
+
+    return {[]: 0};
   }
 
   @override

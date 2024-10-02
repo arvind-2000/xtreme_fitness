@@ -29,99 +29,125 @@ class _CreateXtremersState extends State<CreateXtremers> {
   @override
   void initState() {
     super.initState();
-        Get.put(ManagementController());
-        Get.put(AddMemberController());
-    Future.delayed(Duration(seconds: 2)).then((value) => setState(() {
-      isLoading = false;
-    })
-    
-    );
+    Get.put(ManagementController());
+    Get.put(AddMemberController());
+    Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {
+          isLoading = false;
+        }));
 
-        // Listen for the 'beforeunload' event to show a warning when the user tries to navigate awa
+    // Listen for the 'beforeunload' event to show a warning when the user tries to navigate awa
   }
- // Function to show a custom warning dialog
+
+  // Function to show a custom warning dialog
   Future<bool> _showExitWarningDialog(BuildContext context) async {
     return await showDialog(
-      
-      context: context,
-      builder: (context) => PageDialog(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                HeadingText("Registration!!"),
-                IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.close))
-              ],
-            ),
-            SizedBox(height: 10,),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  NormalText(text:"Cancel Registration?",size: 20,),
-                  SizedBox(height: 16,),
-                  Text("Press Yes to cancel the registration."),
-                ],
-              ),
-            )
-          ],
-        ),
-        
-         no:() {
-              setState(() {
-                canpos = false;
-              });
-              Navigator.of(context).pop(false); // Don't leave
-            },
-           
-        
-    
-         yes:() {
-              setState(() {
-                canpos = true;
-              });
-              Navigator.of(context).pop(true);
-              Get.offAllNamed('/home'); // Leave
-            },
-        
-    )) ??
-    false; // If the dialog is dismissed without choosing, return false (stay)
+            context: context,
+            builder: (context) => PageDialog(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const HeadingText("Registration!!"),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NormalText(
+                              text: "Cancel Registration?",
+                              size: 20,
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text("Press Yes to cancel the registration."),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  no: () {
+                    setState(() {
+                      canpos = false;
+                    });
+                    Navigator.of(context).pop(false); // Don't leave
+                  },
+                  yes: () {
+                    setState(() {
+                      canpos = true;
+                    });
+                    Navigator.of(context).pop(true);
+                    Get.offAllNamed('/home'); // Leave
+                  },
+                )) ??
+        false; // If the dialog is dismissed without choosing, return false (stay)
   }
 
-  
   @override
   Widget build(BuildContext context) {
-    final AddMemberController addMemberController = Get.put(AddMemberController());
+    final AddMemberController addMemberController =
+        Get.put(AddMemberController());
     return PopScope(
-   canPop: canpos,
+      canPop: canpos,
       onPopInvoked: (didPop) {
-          _showExitWarningDialog(context);
+        _showExitWarningDialog(context);
       },
       child: Scaffold(
-        body: isLoading? Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(color: Colors.white,),
-              SizedBox(height: 16,),
-              HeadingText("Creating Xtremer Account ...")
-            ],
-          ),
-        ): Center(
-          child: ConstrainedBox(
-              constraints:  const BoxConstraints(maxWidth:1000),
-             child: Column(
-               children: [
-                SizedBox(height: 100,child: Center(child: InkWell(
-                  onTap: (){
-          _showExitWarningDialog(context);
-                  },
-                  child: Image.asset(height: 60,width: 60,"assets/logo1.png")),),),
-                 Expanded(child: CardBorderHover(child:addMemberController.selectedservice!=null?AddServiceUsage(serviceEntity: addMemberController.selectedservice,phonenumber:widget.phonenumber):AddMemberScreen(phonenumber: widget.phonenumber,))),
-               ],
-             )),
-        ),
+        body: isLoading
+            ? const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    HeadingText("Creating Xtremer Account ...")
+                  ],
+                ),
+              )
+            : Center(
+                child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1000),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: InkWell(
+                                onTap: () {
+                                  _showExitWarningDialog(context);
+                                },
+                                child: Image.asset(
+                                    height: 60, width: 60, "assets/logo1.png")),
+                          ),
+                        ),
+                        Expanded(
+                            child: CardBorderHover(
+                                child: addMemberController.selectedservice !=
+                                        null
+                                    ? AddServiceUsage(
+                                        serviceEntity:
+                                            addMemberController.selectedservice,
+                                        phonenumber: widget.phonenumber)
+                                    : AddMemberScreen(
+                                        phonenumber: widget.phonenumber,
+                                      ))),
+                      ],
+                    )),
+              ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/authentifeatures/config/apis.dart';
@@ -273,7 +276,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<String> logout() async {
     Uri url = Uri.parse("$api/api/Users/logout");
-    print('logout comming');
 
     try {
       final response = await html.HttpRequest.request(
@@ -286,8 +288,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         },
         withCredentials: true, // Ensuring session cookies are handled
       );
-
-      print("Logout api :$response");
+      //print("Logout :${response.statusText}");
       return response.statusText!;
     } on Exception catch (e) {
       print(e);

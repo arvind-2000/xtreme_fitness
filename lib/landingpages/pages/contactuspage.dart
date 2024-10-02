@@ -180,6 +180,7 @@ class SendMessageWidget extends StatelessWidget {
                   // If all fields are valid, show the Thank You dialog
                   landingcontroller.showThankYouDialog(context);
                   landingcontroller.sendmessage();
+                  _formKey.currentState!.reset();
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -224,8 +225,9 @@ class ContactWdget extends StatelessWidget {
                 size: 40,
                 isbold: true,
               ),
-              SizedBox(height: 10,),
-              
+              const SizedBox(
+                height: 10,
+              ),
               const SizedBox(height: 10),
               const Divider(color: Colors.red, thickness: 2),
               const SizedBox(height: 20),

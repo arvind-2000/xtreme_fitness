@@ -21,12 +21,11 @@ class MobileDrawer extends StatelessWidget {
                 child: SizedBox(
                   height: 40,
                   child: InkWell(
-                    onTap: (){
+                      onTap: () {
                         landingcontroller.setnavindex(0);
-                         landingcontroller.changeScrolltoScreen(0);
-                      
-                    },
-                    child: Image.asset(height: 50, "assets/logo2.png")),
+                        landingcontroller.changeScrolltoScreen(0);
+                      },
+                      child: Image.asset(height: 50, "assets/logo2.png")),
                 ),
               ),
               const Divider(),
@@ -43,11 +42,10 @@ class MobileDrawer extends StatelessWidget {
                           : Colors.transparent,
                       onTap: () {
                         landingcontroller.setnavindex(e.key);
-                         landingcontroller.changeScrolltoScreen(e.key);
+                        landingcontroller.changeScrolltoScreen(e.key);
                         // landingcontroller.scroll(e.key, isMobile: true);
                         Navigator.pop(context);
                       },
-                  
                       title: Text(
                         e.value,
                         style: TextStyle(
@@ -57,7 +55,6 @@ class MobileDrawer extends StatelessWidget {
                       ),
                     ),
                   )),
-
             ],
           ),
         ),

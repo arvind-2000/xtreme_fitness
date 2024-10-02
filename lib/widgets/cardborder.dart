@@ -23,10 +23,11 @@ class _CardBorderState extends State<CardBorder> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: widget.margin ??
+          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: hover?Colors.blue.withOpacity(0.3):null,
+          color: hover ? Colors.blue.withOpacity(0.3) : null,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             width: 1,
@@ -36,7 +37,7 @@ class _CardBorderState extends State<CardBorder> {
       child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: widget.onpress,
-          onHover: (v){
+          onHover: (v) {
             setState(() {
               hover = v;
             });
