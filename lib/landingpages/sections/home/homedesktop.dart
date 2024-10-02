@@ -20,15 +20,15 @@ class HomeDesktop extends StatefulWidget {
 }
 
 class _HomeDesktopState extends State<HomeDesktop> {
-
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Positioned(
             child: SizedBox(
-                height: MediaQuery.sizeOf(context).width<=mobilescreen?900:1000,
+                height: MediaQuery.sizeOf(context).width <= mobilescreen
+                    ? 900
+                    : 1000,
                 width: MediaQuery.sizeOf(context).width,
                 child: Image.asset(
                   'assets/backg.jpg',
@@ -36,7 +36,8 @@ class _HomeDesktopState extends State<HomeDesktop> {
                 ))),
         ResponsivePages(
             // screenheight: MediaQuery.sizeOf(context).height,
-              screenheight: MediaQuery.sizeOf(context).width<=mobilescreen?900:1000,
+            screenheight:
+                MediaQuery.sizeOf(context).width <= mobilescreen ? 900 : 1000,
             child1: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
@@ -44,9 +45,8 @@ class _HomeDesktopState extends State<HomeDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                 
                     const SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     HeadingText(
                       "Your Fitness, Your Way",
@@ -86,29 +86,31 @@ class _HomeDesktopState extends State<HomeDesktop> {
                       height: 20,
                     ),
                     GradientButton(
-                        onpress: () {
-                          // Get.toNamed('/signupmobile');
-                          Get.dialog(
-                            barrierDismissible: false,
-                            const LoginDialog(
-                              signupdialog: true,
-                            ),
-                          );
-                        },
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 32),
-                        color: Theme.of(context).colorScheme.secondary,
-                        child:  TitleText(
-                          "Become a Member",
-                         size:MediaQuery.sizeOf(context).width<=mobilescreen?16:20,
-                              // color: Color.fromARGB(255, 219, 218, 218),
-                              ),
-                        ),
+                      onpress: () {
+                        // Get.toNamed('/signupmobile');
+                        Get.dialog(
+                          barrierDismissible: false,
+                          const LoginDialog(
+                            signupdialog: true,
+                          ),
+                        );
+                      },
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 32),
+                      color: Theme.of(context).colorScheme.secondary,
+                      child: TitleText(
+                        "Become a Member",
+                        size: MediaQuery.sizeOf(context).width <= mobilescreen
+                            ? 16
+                            : 20,
+                        // color: Color.fromARGB(255, 219, 218, 218),
+                      ),
+                    ),
                     const SizedBox(
                       height: 60,
                     ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 400),
+                      constraints: const BoxConstraints(maxWidth: 400),
                       child: CardwithShadow(
                           margin: EdgeInsets.zero,
                           padding: const EdgeInsets.all(16),

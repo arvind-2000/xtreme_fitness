@@ -28,6 +28,7 @@ class GetxLandingcontroller extends GetxController {
   int get imagehoverindex => _imagehoverindex;
   int _currentIndex = 0;
   bool _isUserScroll = true; // Flag to control scroll listener
+  bool get isUserScroll => _isUserScroll;
   List<Plan> _plan = [];
   List<ServiceEntity> _services = [];
   bool _isHovered = false;
@@ -44,7 +45,8 @@ class GetxLandingcontroller extends GetxController {
 
   bool _isloading = true;
   bool get isloading => _isloading;
-
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   //Text controller for contact us form
 
   TextEditingController namecontroller = TextEditingController();
@@ -62,7 +64,31 @@ class GetxLandingcontroller extends GetxController {
   }
 
   GetxLandingcontroller() {
-    scrollController.addListener(_onScroll);
+    // scrollController.addListener(_onScroll);
+
+    itemPositionsListener.itemPositions.addListener(() {
+      if (isUserScroll) {
+        log('itemPositionsListener listening');
+        setscroll(true);
+        final visibleItems = itemPositionsListener.itemPositions.value;
+        if (visibleItems.isNotEmpty) {
+          // Find the first visible item
+          final firstVisibleItem = visibleItems
+              .where((ItemPosition position) => position.itemLeadingEdge >= 0)
+              .reduce((current, next) =>
+                  current.itemLeadingEdge < next.itemLeadingEdge
+                      ? current
+                      : next);
+
+          // Update the index based on the first visible item
+
+          _currentIndex = firstVisibleItem.index;
+          log("Index :$_currentIndex");
+
+          update();
+        }
+      }
+    });
   }
 
   void setscrollcontroller(ItemScrollController controller) {
@@ -71,11 +97,16 @@ class GetxLandingcontroller extends GetxController {
   }
 
   void changeScrolltoScreen(int index) {
+    setscroll(false);
     debugPrint("in scroll control");
-    scrollControllers!.scrollTo(
-        index: index % 5,
-        duration: const Duration(seconds: 2),
-        curve: Curves.easeInOutCubic);
+    scrollControllers!
+        .scrollTo(
+            index: index % 5,
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeInOutCubic)
+        .then((_) {
+      setscroll(true);
+    });
   }
 
   PageController get controller => scrollController;
