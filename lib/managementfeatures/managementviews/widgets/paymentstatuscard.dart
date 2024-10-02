@@ -31,17 +31,20 @@ class PaymentStatusCard extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: callback,
-                              icon: const Icon(Icons.close)),
-                        ],
-                      ),
-                    ),
+                    addmemberctrl.paymentstatus == 3 ||
+                            addmemberctrl.paymentstatus == 0
+                        ? const SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: callback,
+                                    icon: const Icon(Icons.close)),
+                              ],
+                            ),
+                          ),
                     Container(
                       height: 200,
                       width: 200,
@@ -56,7 +59,8 @@ class PaymentStatusCard extends StatelessWidget {
                                       ? Colors.green[200]
                                       : Colors.red[200],
                             ),
-                      child: addmemberctrl.paymentstatus == 3||addmemberctrl.paymentstatus==0
+                      child: addmemberctrl.paymentstatus == 3 ||
+                              addmemberctrl.paymentstatus == 0
                           ? Lottie.asset('assets/images/payloading.json')
                           : addmemberctrl.paymentstatus == 1
                               ? const Icon(
@@ -65,7 +69,9 @@ class PaymentStatusCard extends StatelessWidget {
                                   size: 80,
                                 )
                               : Icon(
-                                addmemberctrl.paymentstatus == 4?Icons.cancel:Icons.dangerous,
+                                  addmemberctrl.paymentstatus == 4
+                                      ? Icons.cancel
+                                      : Icons.dangerous,
                                   color: Colors.white,
                                   size: 80,
                                 ),
@@ -78,16 +84,26 @@ class PaymentStatusCard extends StatelessWidget {
                                 size: 30,
                                 color: Colors.green,
                               )
-                            : addmemberctrl.paymentstatus == 4?const HeadingText("Cancelled", size: 30) : addmemberctrl.paymentstatus == 2
-                                ? const HeadingText("Failed", size: 30)
-                                : addmemberctrl.paymentstatus == 3?const HeadingText("Processing Payment",
-                                    size: 30):addmemberctrl.paymentstatus == 5?const HeadingText("Failed to Create User",
-                                    size: 30):const HeadingText("Error processing Payment",
-                                    size: 30),
+                            : addmemberctrl.paymentstatus == 4
+                                ? const HeadingText("Cancelled", size: 30)
+                                : addmemberctrl.paymentstatus == 2
+                                    ? const HeadingText("Failed", size: 30)
+                                    : addmemberctrl.paymentstatus == 3
+                                        ? const HeadingText(
+                                            "Processing Payment",
+                                            size: 30)
+                                        : addmemberctrl.paymentstatus == 5
+                                            ? const HeadingText(
+                                                "Failed to Create User",
+                                                size: 30)
+                                            : const HeadingText(
+                                                "Error processing Payment",
+                                                size: 30),
                     const SizedBox(
                       height: 10,
                     ),
-                    addmemberctrl.paymentstatus == 3 ||addmemberctrl.paymentstatus==0
+                    addmemberctrl.paymentstatus == 3 ||
+                            addmemberctrl.paymentstatus == 0
                         ? const Center(
                             child: Text(
                                 textAlign: TextAlign.center,
@@ -96,10 +112,14 @@ class PaymentStatusCard extends StatelessWidget {
                         : addmemberctrl.paymentstatus == 1
                             ? const Text(
                                 "The Payment has been successfully processed")
-                            :addmemberctrl.paymentstatus == 4? const Text(
-                                "Unfortunately the payment has been cancelled by the user.") :addmemberctrl.paymentstatus == 5? const Text(
-                                "Error creating Xtremer.\nTry Again"): const Text(
-                                "Unfortunately the payment has been declined"),
+                            : addmemberctrl.paymentstatus == 4
+                                ? const Text(
+                                    "Unfortunately the payment has been cancelled by the user.")
+                                : addmemberctrl.paymentstatus == 5
+                                    ? const Text(
+                                        "Error creating Xtremer.\nTry Again")
+                                    : const Text(
+                                        "Unfortunately the payment has been declined"),
                     const SizedBox(
                       height: 40,
                     ),
@@ -118,7 +138,9 @@ class PaymentStatusCard extends StatelessWidget {
                             onpress: () {
                               // Navigator.pop(context);
 
-                             createAndprintPdf(addmemberctrl.paymentsdetails!,name:'${addmemberctrl.authctrl.getuser!.userName}');
+                              createAndprintPdf(addmemberctrl.paymentsdetails!,
+                                  name:
+                                      '${addmemberctrl.authctrl.getuser!.userName}');
                             },
                             color: Colors.blue,
                             child:
