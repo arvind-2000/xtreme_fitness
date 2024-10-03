@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/addserviceusage.dart';
@@ -43,7 +44,10 @@ class _CreateXtremersState extends State<CreateXtremers> {
     return await showDialog(
             context: context,
             builder: (context) => PageDialog(
+                  allignToCenter: true,
+                  iscancelreg: true,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,22 +61,20 @@ class _CreateXtremersState extends State<CreateXtremers> {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      const Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            NormalText(
-                              text: "Cancel Registration?",
-                              size: 20,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text("Press Yes to cancel the registration."),
-                          ],
-                        ),
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          NormalText(
+                            text: "Cancel Registration?",
+                            size: 20,
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("Press Yes to cancel the registration."),
+                        ],
                       )
                     ],
                   ),
@@ -97,6 +99,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
   Widget build(BuildContext context) {
     final AddMemberController addMemberController =
         Get.put(AddMemberController());
+    GetxAuthController authctrl = Get.find<GetxAuthController>();
     return PopScope(
       canPop: canpos,
       onPopInvoked: (didPop) {
@@ -118,36 +121,48 @@ class _CreateXtremersState extends State<CreateXtremers> {
                   ],
                 ),
               )
-            : Center(
-                child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1000),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          child: Center(
-                            child: InkWell(
-                                onTap: () {
-                                  // _showExitWarningDialog(context);
-                                },
-                                child: Image.asset(
-                                    height: 60, width: 60, "assets/logo1.png")),
-                          ),
+            : Obx(() {
+                return authctrl.isauthloading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
                         ),
-                        Expanded(
-                            child: CardBorderHover(
-                                child: addMemberController.selectedservice !=
-                                        null
-                                    ? AddServiceUsage(
-                                        serviceEntity:
-                                            addMemberController.selectedservice,
-                                        phonenumber: widget.phonenumber)
-                                    : AddMemberScreen(
-                                        phonenumber: widget.phonenumber,
-                                      ))),
-                      ],
-                    )),
-              ),
+                      )
+                    : Center(
+                        child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 1000),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 100,
+                                  child: Center(
+                                    child: InkWell(
+                                        onTap: () {
+                                          _showExitWarningDialog(context);
+                                        },
+                                        child: Image.asset(
+                                            height: 60,
+                                            width: 60,
+                                            "assets/logo1.png")),
+                                  ),
+                                ),
+                                Expanded(
+                                    child: CardBorderHover(
+                                        child: addMemberController
+                                                    .selectedservice !=
+                                                null
+                                            ? AddServiceUsage(
+                                                serviceEntity:
+                                                    addMemberController
+                                                        .selectedservice,
+                                                phonenumber: widget.phonenumber)
+                                            : AddMemberScreen(
+                                                phonenumber: widget.phonenumber,
+                                              ))),
+                              ],
+                            )),
+                      );
+              }),
       ),
     );
   }

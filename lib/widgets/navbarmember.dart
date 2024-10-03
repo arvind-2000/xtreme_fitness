@@ -175,7 +175,7 @@ class NavBarMember extends StatelessWidget {
                     yes: () {
                       authctrl.logout();
                     },
-                    islogoutdialog: true,
+                    allignToCenter: true,
                     child: authctrl.loginloading
                         ? const Center(
                             child: CircularProgressIndicator(

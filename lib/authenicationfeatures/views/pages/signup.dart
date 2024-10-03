@@ -137,6 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   authctrl.numberexists == false
                               ? const SizedBox()
                               : TextFieldWidget(
+                                  counter: 10,
                                   hint: "Phone",
                                   icon: const Icon(Icons.phone),
                                   controller: _phonecontroller,

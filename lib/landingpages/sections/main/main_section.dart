@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
 import 'package:xtreme_fitness/landingpages/pages/landingnavmobile.dart';
@@ -27,6 +28,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
+
     final NetworkController networkController = Get.find<NetworkController>();
     return Obx(() {
       if (networkController.connectionStatus.value == ConnectivityResult.none) {

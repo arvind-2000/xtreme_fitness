@@ -174,8 +174,9 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                           MediaQuery.sizeOf(context).width <=
                                                   mobilescreen
                                               ? EdgeInsets.zero
-                                              : const EdgeInsets.only(
-                                                  left: 100, right: 16),
+                                              : const EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                ),
                                       child: SizedBox(
                                         width:
                                             MediaQuery.sizeOf(context).width <=

@@ -30,6 +30,9 @@ class GetxAuthController extends GetxController {
   UserEntity? _user;
   UserEntity? get getuser => _user;
   String? userid;
+
+  var isauthloading = false.obs;
+
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
@@ -154,6 +157,8 @@ class GetxAuthController extends GetxController {
   }
 
   void authentications() async {
+    isauthloading.value = true;
+
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
@@ -165,12 +170,18 @@ class GetxAuthController extends GetxController {
 
       if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
         setdataforsession(prefs.getString('key1')!, prefs.getBool('key2')!);
+        isauthloading.value = false;
+
         update();
         Get.offAllNamed('/dashboard');
       } else {
+        isauthloading.value = false;
+
         Get.offAllNamed('/home');
       }
     } else {
+      isauthloading.value = false;
+
       _authentication = false;
       loginloading = false;
       _user = null;
@@ -229,9 +240,11 @@ class GetxAuthController extends GetxController {
                 ),
               ));
         } else {
+          isauthloading.value = false;
           Get.offAllNamed('/home');
         }
       } else {
+        isauthloading.value = false;
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
         }

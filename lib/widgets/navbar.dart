@@ -382,7 +382,7 @@ class NavBar extends StatelessWidget {
                       Get.back();
                       authctrl.logout();
                     },
-                    islogoutdialog: true,
+                    allignToCenter: true,
                     child: authctrl.loginloading
                         ? const Center(
                             child: CircularProgressIndicator(

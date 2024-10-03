@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/createmember.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
@@ -118,9 +119,11 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                               ),
                             ),
                             CardwithShadow(
-                                onpress: () {
-                                  pagectrl.changeaddMemberPage(1);
-                                },
+                                onpress: pagectrl.istwo
+                                    ? () {
+                                        pagectrl.changeaddMemberPage(1);
+                                      }
+                                    : null,
                                 color: pagectrl.addmemberpages == 1
                                     ? Theme.of(context)
                                         .colorScheme
@@ -152,9 +155,11 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                               ),
                             ),
                             CardwithShadow(
-                                onpress: () {
-                                  pagectrl.changeaddMemberPage(2);
-                                },
+                                onpress: pagectrl.isthree
+                                    ? () {
+                                        pagectrl.changeaddMemberPage(2);
+                                      }
+                                    : null,
                                 color: pagectrl.addmemberpages == 2
                                     ? Theme.of(context)
                                         .colorScheme
@@ -188,9 +193,11 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                               ),
                             ),
                             CardwithShadow(
-                                onpress: () {
-                                  pagectrl.changeaddMemberPage(3);
-                                },
+                                onpress: pagectrl.isfour
+                                    ? () {
+                                        pagectrl.changeaddMemberPage(3);
+                                      }
+                                    : null,
                                 color: pagectrl.addmemberpages == 3
                                     ? Theme.of(context)
                                         .colorScheme
@@ -222,9 +229,11 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                               ),
                             ),
                             CardwithShadow(
-                                onpress: () {
-                                  pagectrl.changeaddMemberPage(4);
-                                },
+                                onpress: pagectrl.isfive
+                                    ? () {
+                                        pagectrl.changeaddMemberPage(4);
+                                      }
+                                    : null,
                                 color: pagectrl.addmemberpages == 4
                                     ? Theme.of(context)
                                         .colorScheme
@@ -275,17 +284,21 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                                                   null) {
                                                 pagectrl.changeaddMemberPage(2);
                                               } else {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "Choose a Trainer for personal plan before proceeding")));
+                                                CustomSnackbar(context,
+                                                    'Choose a Trainer for personal plan before proceeding');
+                                                // ScaffoldMessenger.of(context)
+                                                //     .showSnackBar(const SnackBar(
+                                                //         content: Text(
+                                                //             "Choose a Trainer for personal plan before proceeding")));
                                               }
                                             }
                                           } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "Choose a plan before proceeding")));
+                                            CustomSnackbar(context,
+                                                'Choose a plan before proceeding');
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(const SnackBar(
+                                            //         content: Text(
+                                            //             "Choose a plan before proceeding")));
                                           }
                                         },
                                       )
