@@ -68,14 +68,12 @@ class _PlansScreenState extends State<PlansScreen> {
                                 ? const SizedBox()
                                 : CardBorder(
                                     onpress: () {
-                                      Get.dialog(
-                                        
-                                        
-                                        Dialog(
-                                          backgroundColor: Colors.grey[800],
-                                          insetPadding: const EdgeInsets.all(16),
+                                      Get.dialog(Dialog(
+                                        backgroundColor: Colors.grey[800],
+                                        insetPadding: const EdgeInsets.all(16),
                                         child: ConstrainedBox(
-                                          constraints: const BoxConstraints(maxWidth: 500),
+                                          constraints: const BoxConstraints(
+                                              maxWidth: 500),
                                           // height: 600,
                                           // width: 500,
                                           child: AddPlanFields(onpress: () {
@@ -95,7 +93,7 @@ class _PlansScreenState extends State<PlansScreen> {
                           ],
                         ),
                       ),
-                     authctrl.ismember ||
+                      authctrl.ismember ||
                               managementcontroller.getallplans.isEmpty
                           ? const SizedBox()
                           : Row(
@@ -227,14 +225,26 @@ class _PlansScreenState extends State<PlansScreen> {
                                                             .start,
                                                     children: [
                                                       const Text("Price"),
-                                                      Text(
-                                                        e.value.price
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            e.value.price
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Text(
+                                                            "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .italic),
+                                                          )
+                                                        ],
                                                       ),
                                                       const SizedBox(
                                                         height: 10,

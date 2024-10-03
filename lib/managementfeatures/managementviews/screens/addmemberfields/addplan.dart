@@ -62,11 +62,22 @@ class PlanSelectionField extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text("Price"),
-                                          Text(
-                                            e.value.price.toString(),
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                e.value.price.toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
+                                                style: const TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    fontSize: 12),
+                                              )
+                                            ],
                                           ),
                                           const SizedBox(
                                             height: 10,
@@ -171,11 +182,22 @@ class PlanSelectionField extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const Text("Price"),
-                                        Text(
-                                          e.value.price.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              e.value.price.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                         const SizedBox(
                                           height: 10,

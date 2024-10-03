@@ -68,23 +68,27 @@ class GetxLandingcontroller extends GetxController {
 
     itemPositionsListener.itemPositions.addListener(() {
       if (isUserScroll) {
-        log('itemPositionsListener listening');
         setscroll(true);
+
         final visibleItems = itemPositionsListener.itemPositions.value;
         if (visibleItems.isNotEmpty) {
           // Find the first visible item
-          final firstVisibleItem = visibleItems
-              .where((ItemPosition position) => position.itemLeadingEdge >= 0)
+          const screenMidpoint = 0.5; // Midpoint of the screen (50%)
+
+          // Find the first item that crosses the midpoint
+          final midPointItem = visibleItems
+              .where((ItemPosition position) =>
+                  position.itemLeadingEdge < screenMidpoint &&
+                  position.itemTrailingEdge > screenMidpoint)
               .reduce((current, next) =>
                   current.itemLeadingEdge < next.itemLeadingEdge
                       ? current
                       : next);
 
-          // Update the index based on the first visible item
+          // Update the index based on the item passing the midpoint
+          _currentIndex = midPointItem.index;
 
-          _currentIndex = firstVisibleItem.index;
-          log("Index :$_currentIndex");
-
+          // Call update function to reflect the change
           update();
         }
       }
@@ -140,7 +144,6 @@ class GetxLandingcontroller extends GetxController {
   void setscroll(bool isscroll) {
     _isUserScroll = isscroll;
     update();
-    log("isUserScroll: $_isUserScroll");
   }
 
   void onHover(bool ishov, int ind) {

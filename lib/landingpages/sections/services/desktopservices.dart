@@ -38,9 +38,24 @@ class ServicesDesktop extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: HeadingText(
-                    // align: TextAlign.left,
-                    "The Best Programs\nWe Offers For You"),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HeadingText(
+                          size: 30,
+                          // align: TextAlign.left,
+                          "The Best Programs"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      HeadingText(
+                          size: 20,
+                          // align: TextAlign.left,
+                          "We Offers For You"),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 50,

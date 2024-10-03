@@ -26,23 +26,26 @@ class SettingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HeadingText('Settings'),    
-              SizedBox(height: 20,),
-              Roles(),
-              SizedBox(height: 10,),
-              Admissioncard(),
-              SizedBox(height:10),
-              CardwithShadow(child: EditContacts(formKey: _formKey, cntrl: cntrl)),
-          
+              const HeadingText('Settings'),
+              const SizedBox(
+                height: 20,
+              ),
+              const Roles(),
+              const SizedBox(
+                height: 10,
+              ),
+              const Admissioncard(),
+              const SizedBox(height: 10),
+              CardwithShadow(
+                  child: EditContacts(formKey: _formKey, cntrl: cntrl)),
             ],
-          
           ),
         ),
       );
-    
     });
   }
 }
+
 class Admissioncard extends StatefulWidget {
   const Admissioncard({
     super.key,
@@ -62,95 +65,133 @@ class _AdmissioncardState extends State<Admissioncard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
-  
   }
+
   @override
   void dispose() {
-   admissionprice.dispose();
+    admissionprice.dispose();
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return CardwithShadow(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  showadmi?const  HeadingText("Edit Admission Fees",size: 20,) :const  HeadingText("Admission Fees",size: 20,),
-                  IconButton(onPressed: (){
-                      if(showadmi){
-                          //addroles
-                        setState(() {
-                          showadmi = false;
-                        });
-                      }else{
-                        setState((){
-                          showadmi = true;
-                          if(managectrl.getAdmission!=null){
-                            admissionprice.text = managectrl.getAdmission!.price.toString();
-                          }
-                        });
-                          
-                      }
-
-                  }, icon:showadmi?const Icon(Icons.close) : const Icon(Icons.edit),tooltip:showadmi?"Close": "Edit Admission",)
-                ],
-            
-        
-              ),
-                 SizedBox(height: 20,),
-                 showadmi?ConstrainedBox(
-                   constraints: BoxConstraints(maxWidth: 500),
-                   child: Form(key: _formkey,child: Column(children: [
-                     TextFieldWidget(hint: "Admission Price", controller: admissionprice,validator: (){
-                      try{
-                          double.tryParse(admissionprice.text);
-                      }on Exception{
-                        return "Enter a valid number";
-                      }
-                     },),
-                   
-                        SizedBox(height: 6,),
-                        Row(
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return CardwithShadow(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                showadmi
+                    ? const HeadingText(
+                        "Edit Admission Fees",
+                        size: 20,
+                      )
+                    : const HeadingText(
+                        "Admission Fees",
+                        size: 20,
+                      ),
+                IconButton(
+                  onPressed: () {
+                    if (showadmi) {
+                      //addroles
+                      setState(() {
+                        showadmi = false;
+                      });
+                    } else {
+                      setState(() {
+                        showadmi = true;
+                        if (managectrl.getAdmission != null) {
+                          admissionprice.text =
+                              managectrl.getAdmission!.price.toString();
+                        }
+                      });
+                    }
+                  },
+                  icon: showadmi
+                      ? const Icon(Icons.close)
+                      : const Icon(Icons.edit),
+                  tooltip: showadmi ? "Close" : "Edit Admission",
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            showadmi
+                ? ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Form(
+                        key: _formkey,
+                        child: Column(
                           children: [
-                            CardBorder(
-                              margin: EdgeInsets.zero,
-                              onpress: ()async{
-                                    //addd roles
-                                    if(_formkey.currentState!.validate()){
-                                       String v = await managectrl.updateAdmission(Admission(id: managectrl.getAdmission!.id, name: managectrl.getAdmission!.name, price: double.tryParse( admissionprice.text)??0, discountPercentage:  managectrl.getAdmission!.discountPercentage));
-                                      CustomSnackbar(context, v);
-                                      admissionprice.clear();
-                                      setState(() {
-                                        showadmi = false;
-                                      });
-                                    }
-                                               
-                                  
+                            TextFieldWidget(
+                              hint: "Admission Price",
+                              controller: admissionprice,
+                              validator: () {
+                                try {
+                                  double.tryParse(admissionprice.text);
+                                } on Exception {
+                                  return "Enter a valid number";
+                                }
                               },
-                              child: Center(child: Text("Edit Admission"))),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                CardBorder(
+                                    margin: EdgeInsets.zero,
+                                    onpress: () async {
+                                      //addd roles
+                                      if (_formkey.currentState!.validate()) {
+                                        String v = await managectrl
+                                            .updateAdmission(Admission(
+                                                id: managectrl.getAdmission!.id,
+                                                name: managectrl
+                                                    .getAdmission!.name,
+                                                price: double.tryParse(
+                                                        admissionprice.text) ??
+                                                    0,
+                                                discountPercentage: managectrl
+                                                    .getAdmission!
+                                                    .discountPercentage));
+                                        CustomSnackbar(
+                                          context,
+                                          v,
+                                        );
+                                        admissionprice.clear();
+                                        setState(() {
+                                          showadmi = false;
+                                        });
+                                      }
+                                    },
+                                    child: const Center(
+                                        child: Text("Edit Admission"))),
+                              ],
+                            )
                           ],
-                        )
-                   
-                   ],)).animate().fadeIn(),
-                 ) : Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                      Text("Admission Price"),
-                      SizedBox(height: 10,),
-                      managectrl.getAdmission!=null?Text('Rs. ${managectrl.getAdmission!.price}'):SizedBox()
-                 ],).animate().fadeIn()
-            ],
-          ),
-        );
-      }
-    );
+                        )).animate().fadeIn(),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Admission Price"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      managectrl.getAdmission != null
+                          ? Text('Rs. ${managectrl.getAdmission!.price}')
+                          : const SizedBox()
+                    ],
+                  ).animate().fadeIn()
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -169,114 +210,169 @@ class _RolesState extends State<Roles> {
   final TextEditingController rolenamecontroller = TextEditingController();
   AuthenticateUseCases useCases = AuthenticateUseCases();
 
-
   @override
   void dispose() {
     rolenamecontroller.dispose();
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return CardwithShadow(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  showroles?const  HeadingText("Add Roles",size: 20,) :const  HeadingText("Roles",size: 20,),
-                  IconButton(onPressed: (){
-                      if(showroles){
-                          //addroles
-                        setState(() {
-                          showroles = false;
-                        });
-                      }else{
-                        setState((){
-                          showroles = true;
-                        });
-                          
-                      }
-
-                  }, icon:showroles?Icon(Icons.close) : Icon(Icons.add),tooltip:showroles?"Close": "Add roles",)
-                ],
-            
-        
-              ),
-                 SizedBox(height: 20,),
-                 showroles?ConstrainedBox(
-                   constraints: BoxConstraints(maxWidth: 500),
-                   child: Form(key: _formkey,child: Column(children: [
-                     TextFieldWidget(hint: "RoleName", controller: rolenamecontroller,validator: (){
-                       return useCases.nameAuth(rolenamecontroller.text, "Role Name");
-                     },),
-                   
-                        SizedBox(height: 6,),
-                        Row(
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return CardwithShadow(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                showroles
+                    ? const HeadingText(
+                        "Add Roles",
+                        size: 20,
+                      )
+                    : const HeadingText(
+                        "Roles",
+                        size: 20,
+                      ),
+                IconButton(
+                  onPressed: () {
+                    if (showroles) {
+                      //addroles
+                      setState(() {
+                        showroles = false;
+                      });
+                    } else {
+                      setState(() {
+                        showroles = true;
+                      });
+                    }
+                  },
+                  icon: showroles
+                      ? const Icon(Icons.close)
+                      : const Icon(Icons.add),
+                  tooltip: showroles ? "Close" : "Add roles",
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            showroles
+                ? ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Form(
+                        key: _formkey,
+                        child: Column(
                           children: [
-                            CardBorder(
-                              margin: EdgeInsets.zero,
-                              onpress: ()async{
-                                    //addd roles
-                                    if(_formkey.currentState!.validate()){
-                                       String v = await managectrl.addroles(Role(id: 0, roleName: rolenamecontroller.text));
-                                      CustomSnackbar(context, v);
-                                      rolenamecontroller.clear();
-                                      setState(() {
-                                        showroles = false;
-                                      });
-                                    }
-                                               
-                                  
+                            TextFieldWidget(
+                              hint: "RoleName",
+                              controller: rolenamecontroller,
+                              validator: () {
+                                return useCases.nameAuth(
+                                    rolenamecontroller.text, "Role Name");
                               },
-                              child: Center(child: Text("Add Role"))),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                CardBorder(
+                                    margin: EdgeInsets.zero,
+                                    onpress: () async {
+                                      //addd roles
+                                      if (_formkey.currentState!.validate()) {
+                                        String v = await managectrl.addroles(
+                                            Role(
+                                                id: 0,
+                                                roleName:
+                                                    rolenamecontroller.text));
+                                        CustomSnackbar(context, v);
+                                        rolenamecontroller.clear();
+                                        setState(() {
+                                          showroles = false;
+                                        });
+                                      }
+                                    },
+                                    child:
+                                        const Center(child: Text("Add Role"))),
+                              ],
+                            )
                           ],
-                        )
-                   
-                   ],)).animate().fadeIn(),
-                 ) : GridView.builder(
+                        )).animate().fadeIn(),
+                  )
+                : GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160,childAspectRatio: 1/0.4), itemBuilder: (context, index) => Stack(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 160, childAspectRatio: 1 / 0.4),
+                    itemBuilder: (context, index) => Stack(
                       children: [
-                 CardBorder(child: Center(child: Text( managectrl.getallRoles[index].roleName,style: TextStyle(fontSize: 12),))),
-                       managectrl.getallRoles[index].roleName.toLowerCase()=="superadmin" ||  managectrl.getallRoles[index].roleName.toLowerCase()=="member" ||managectrl.getallRoles[index].roleName.toLowerCase()=="servicemember" ?SizedBox() :    Positioned(
-                          right: 0,
-                          top: 0,
-                          child: IconButton(onPressed: (){
-                              Get.dialog(PageDialog(child: Row(
-                                children: [
-                                  Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        HeadingText("Delete Role"),
-                                        SizedBox(height: 20,),
-                                        Text("Role Name"),
-                                        SizedBox(height: 10,),
-                                        Text(managectrl.getallRoles[index].roleName)
-                                  
-                                      ],
-                                  
-                                  ),
-                                ],
-                              ), no:(){
-                                  Get.back();
-                              }, yes: ()async{
-                               String v = await  managectrl.deleteRole(managectrl.getallRoles[index]);
-                                CustomSnackbar(context, v);
-                                Get.back();
-                              }));
-
-                          }, icon: const Icon(Icons.close)))
+                        CardBorder(
+                            child: Center(
+                                child: Text(
+                          managectrl.getallRoles[index].roleName,
+                          style: const TextStyle(fontSize: 12),
+                        ))),
+                        managectrl.getallRoles[index].roleName.toLowerCase() ==
+                                    "superadmin" ||
+                                managectrl.getallRoles[index].roleName
+                                        .toLowerCase() ==
+                                    "member" ||
+                                managectrl.getallRoles[index].roleName
+                                        .toLowerCase() ==
+                                    "servicemember"
+                            ? const SizedBox()
+                            : Positioned(
+                                right: 0,
+                                top: 0,
+                                child: IconButton(
+                                    onPressed: () {
+                                      Get.dialog(PageDialog(
+                                          child: Row(
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const HeadingText(
+                                                      "Delete Role"),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  const Text("Role Name"),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(managectrl
+                                                      .getallRoles[index]
+                                                      .roleName)
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          no: () {
+                                            Get.back();
+                                          },
+                                          yes: () async {
+                                            String v = await managectrl
+                                                .deleteRole(managectrl
+                                                    .getallRoles[index]);
+                                            CustomSnackbar(context, v);
+                                            Get.back();
+                                          }));
+                                    },
+                                    icon: const Icon(Icons.close)))
                       ],
-                    ),itemCount: managectrl.getallRoles.length,).animate().fadeIn()
-            ],
-          ),
-        );
-      }
-    );
+                    ),
+                    itemCount: managectrl.getallRoles.length,
+                  ).animate().fadeIn()
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -303,31 +399,40 @@ class _EditContactsState extends State<EditContacts> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           children: [
-             isEdit?const HeadingText('Edit Contact Info',size: 20,): const HeadingText('Contact Info',size: 20,),
-             IconButton(onPressed: (){
-                      if(isEdit){
-                          //addroles
-                        setState(() {
-                          isEdit = false;
-                        });
-                      }else{
-                        setState((){
-                          isEdit = true;
-                        });
-                          
-                      }
-
-                  }, icon:isEdit?Icon(Icons.close) : Icon(Icons.edit),tooltip:isEdit?"Close": "edit",)
-                
-           ],
-         ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isEdit
+                  ? const HeadingText(
+                      'Edit Contact Info',
+                      size: 20,
+                    )
+                  : const HeadingText(
+                      'Contact Info',
+                      size: 20,
+                    ),
+              IconButton(
+                onPressed: () {
+                  if (isEdit) {
+                    //addroles
+                    setState(() {
+                      isEdit = false;
+                    });
+                  } else {
+                    setState(() {
+                      isEdit = true;
+                    });
+                  }
+                },
+                icon: isEdit ? const Icon(Icons.close) : const Icon(Icons.edit),
+                tooltip: isEdit ? "Close" : "edit",
+              )
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
-         Center(
+          Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 500),
               child: Column(
@@ -346,7 +451,7 @@ class _EditContactsState extends State<EditContacts> {
                     height: 10,
                   ),
                   TextFieldWidget(
-                      enabletext: isEdit,
+                    enabletext: isEdit,
                     hint: "Pin Code",
                     controller: widget.cntrl.pincodecon,
                     counter: 50,
@@ -372,27 +477,29 @@ class _EditContactsState extends State<EditContacts> {
             ),
           ),
           const SizedBox(height: 20),
-          isEdit?Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CardwithShadow(
-                isShadow: true,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'Save',
-                  ),
-                ),
-                onpress: () {
-                  widget.cntrl.showDialogforupdate(context);
-                  widget.cntrl.updatecontactinfo();
-                  setState(() {
-                    isEdit = false;
-                  });
-                },
-              )
-            ],
-          ):SizedBox()
+          isEdit
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CardwithShadow(
+                      isShadow: true,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'Save',
+                        ),
+                      ),
+                      onpress: () {
+                        widget.cntrl.showDialogforupdate(context);
+                        widget.cntrl.updatecontactinfo();
+                        setState(() {
+                          isEdit = false;
+                        });
+                      },
+                    )
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
@@ -159,6 +160,7 @@ class ManagementController extends GetxController {
         .toList();
 
     update();
+    log("all ACtive Plans : ${_allactiveplans.length}");
   }
 
   void getAllusers() async {

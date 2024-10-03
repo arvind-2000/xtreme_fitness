@@ -5,6 +5,7 @@ import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -31,6 +32,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
   Widget build(BuildContext context) {
     AddMemberController addmemberctrl = Get.put(AddMemberController());
     GetxLandingcontroller managectrl = Get.put(GetxLandingcontroller());
+    ManagementController mngctrl = Get.put(ManagementController());
     return GetBuilder<AddMemberController>(builder: (_) {
       return GetBuilder<GetxLandingcontroller>(builder: (_) {
         return SingleChildScrollView(
@@ -131,7 +133,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                         ? null
                         : 470,
                     child: Center(
-                      child: managectrl.getallplans
+                      child: mngctrl.getallactiveplans
                               .where(
                                 (element) {
                                   return element.durationInMonths ==
@@ -156,7 +158,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                           mobilescreen
                                       ? Axis.vertical
                                       : Axis.horizontal,
-                              children: managectrl.getallplans
+                              children: mngctrl.getallactiveplans
                                   .where(
                                     (element) {
                                       return element.durationInMonths ==
