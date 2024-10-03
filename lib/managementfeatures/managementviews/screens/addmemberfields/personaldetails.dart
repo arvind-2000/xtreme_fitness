@@ -254,8 +254,12 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                                   lastDate: DateTime(DateTime.now().year + 1))
                               .then(
                             (value) {
-                              addmembrctrl.addDOB(value ?? DateTime.now());
-                              _addressFocusNode.requestFocus();
+                              if(value!=null){
+                                    addmembrctrl.addDOB(value);
+                                       _addressFocusNode.requestFocus();
+                              }
+                            
+                           
                             },
                           );
                         },

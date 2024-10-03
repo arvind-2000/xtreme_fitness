@@ -147,7 +147,7 @@ class PlanSelectionField extends StatelessWidget {
                               ? 1
                               : size < 700
                                   ? 4 / 7.2
-                                  : 3 / 5,
+                                  :size < 1300? 3 / 5:size < 1500?3/4:3/3.5,
                         ),
                         children: managectrl.getallactiveplans
                             .asMap()
@@ -198,46 +198,48 @@ class PlanSelectionField extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  CardBorder(
-                                      onpress: () {
-                                        addmemberctrl.addplan(e.value);
-                                      },
-                                      color: Colors.green[300],
-                                      child: FittedBox(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
+                                  Center(
+                                    child: CardBorder(
+                                        onpress: () {
+                                          addmemberctrl.addplan(e.value);
+                                        },
+                                        color: Colors.green[300],
+                                        child: FittedBox(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                addmemberctrl.selectedplan !=
+                                                            null &&
+                                                        addmemberctrl
+                                                                .selectedplan!
+                                                                .id ==
+                                                            e.value.id
+                                                    ? Icons.check
+                                                    : Icons.add,
+                                                color: Colors.white,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
                                               addmemberctrl.selectedplan !=
                                                           null &&
                                                       addmemberctrl
-                                                              .selectedplan!
-                                                              .id ==
+                                                              .selectedplan!.id ==
                                                           e.value.id
-                                                  ? Icons.check
-                                                  : Icons.add,
-                                              color: Colors.white,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            addmemberctrl.selectedplan !=
-                                                        null &&
-                                                    addmemberctrl
-                                                            .selectedplan!.id ==
-                                                        e.value.id
-                                                ? const Text("Plan Added",
-                                                    style: TextStyle(
-                                                        color: Colors.white))
-                                                : const Text(
-                                                    "Add Plan",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  )
-                                          ],
-                                        ),
-                                      ))
+                                                  ? const Text("Plan Added",
+                                                      style: TextStyle(
+                                                          color: Colors.white))
+                                                  : const Text(
+                                                      "Add Plan",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    )
+                                            ],
+                                          ),
+                                        )),
+                                  )
                                 ],
                               )),
                             )
@@ -264,7 +266,7 @@ class PlanSelectionField extends StatelessWidget {
                             onSelected: (index) {
                               addmemberctrl.addTrainer(index!);
                             },
-                            dropdownMenuEntries: managectrl.getalltrainer
+                            dropdownMenuEntries: managectrl.getalltrainer.where((element) => element.isActive,)
                                 .map((e) => DropdownMenuEntry(
                                     value: e,
                                     label: e.name,

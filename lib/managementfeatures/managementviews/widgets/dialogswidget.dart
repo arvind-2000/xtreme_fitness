@@ -3,7 +3,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../config/const.dart';
 
-class PageDialog extends StatelessWidget {
+class PageDialog extends StatefulWidget {
   const PageDialog({
     super.key,
     required this.child,
@@ -17,11 +17,16 @@ class PageDialog extends StatelessWidget {
   final VoidCallback yes;
 
   @override
+  State<PageDialog> createState() => _PageDialogState();
+}
+
+class _PageDialogState extends State<PageDialog> {
+  @override
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: const EdgeInsets.all(16),
       backgroundColor: Colors.grey[800],
-      alignment: islogoutdialog != null ? null : const Alignment(0.25, -0.5),
+      alignment: widget.islogoutdialog != null ? null : const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),
         width: 400,
@@ -31,7 +36,7 @@ class PageDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              child,
+              widget.child,
               // Expanded(child: child),
               const SizedBox(
                 height: 15,
@@ -41,7 +46,7 @@ class PageDialog extends StatelessWidget {
                   Expanded(
                     child: CardwithShadow(
                         color: Colors.redAccent,
-                        onpress: no,
+                        onpress: widget.no,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         padding:
@@ -69,7 +74,7 @@ class PageDialog extends StatelessWidget {
                   Expanded(
                     child: CardwithShadow(
                         color: Colors.green[300],
-                        onpress: yes,
+                        onpress: widget.yes,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 12),
                         padding:

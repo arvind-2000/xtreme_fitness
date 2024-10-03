@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
-import 'package:xtreme_fitness/landingpages/pages/landingnavmobile.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/nointernetpage.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/noserverpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/main/widgets/_body.dart';

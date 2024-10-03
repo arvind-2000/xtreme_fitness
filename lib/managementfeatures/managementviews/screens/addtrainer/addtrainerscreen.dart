@@ -386,7 +386,7 @@ bool isactive = true;
                               height: 16,
                             ),
                         
-                        managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
+                         managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -420,7 +420,7 @@ bool isactive = true;
                                                       : 4,
                                           mainAxisSpacing: 10,
                                           childAspectRatio:
-                                              size < 500 ? 1 : 3 / 4,
+                                              size < 500 ? 1 : size >1500?3/3.3 : 3 / 4,
                                         ),
                                       
                                     children: managectrl.getalltrainer.where((e)=>e.isActive==isactive).map((e) => 
@@ -450,12 +450,17 @@ bool isactive = true;
                                                                   });
                                                                   Get.dialog(
                                                                       Dialog(
+                                                                        
                                                                     backgroundColor:Theme.of(context).colorScheme.primary,
                                                                     child:
-                                                                        AddEditTrainer(
-                                                                      trainer:
-                                                                          e,
-                                                                    ),
+                                                                        CardwithShadow(
+                                                                          color: Colors.grey[900],
+                                                                          margin:EdgeInsets.zero,
+                                                                          child: AddEditTrainer(
+                                                                                                                                                trainer:
+                                                                            e,
+                                                                                                                                              ),
+                                                                        ),
                                                                   ));
 
                                                                 },

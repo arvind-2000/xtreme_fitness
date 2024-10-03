@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/addserviceusage.dart';
@@ -43,38 +44,41 @@ class _CreateXtremersState extends State<CreateXtremers> {
     return await showDialog(
             context: context,
             builder: (context) => PageDialog(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const HeadingText("Registration!!"),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  child: SizedBox(
+                      height: 400,
+                      child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            NormalText(
-                              text: "Cancel Registration?",
-                              size: 20,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text("Press Yes to cancel the registration."),
+                            const HeadingText("Registration!!"),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.close))
                           ],
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              NormalText(
+                                text: "Cancel Registration?",
+                                size: 20,
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text("Press Yes to cancel the registration."),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   no: () {
                     setState(() {
@@ -120,7 +124,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
               )
             : Center(
                 child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1000),
+                    constraints: const BoxConstraints(maxWidth: 1400),
                     child: Column(
                       children: [
                         SizedBox(

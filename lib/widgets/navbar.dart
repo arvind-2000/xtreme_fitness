@@ -13,10 +13,9 @@ import 'card.dart';
 class NavBar extends StatelessWidget {
   const NavBar({
     super.key,
-    required this.pagectrl,
     required this.authctrl,
   });
-  final GetxPageController pagectrl;
+
   final GetxAuthController authctrl;
 
   void drawers(BuildContext context) {
@@ -27,7 +26,7 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxPageController pagecontrl = Get.put(GetxPageController());
+    GetxPageController pagectrl = Get.put(GetxPageController());
     ContactController contrl = Get.put(ContactController());
     return Container(
       // color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
@@ -37,7 +36,7 @@ class NavBar extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              pagecontrl.changeNavPage(0);
+              pagectrl.changeNavPage(0);
             },
             child: SizedBox(
               height: 70,
@@ -373,50 +372,62 @@ class NavBar extends StatelessWidget {
                     Responsive.isTablet(context)) {
                   drawers(context);
                 }
-                Get.dialog(PageDialog(
-                    // heights: 300,
-                    no: () {
-                      Get.back();
-                    },
-                    yes: () {
-                      Get.back();
-                      authctrl.logout();
-                    },
-                    islogoutdialog: true,
-                    child: authctrl.loginloading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.logout),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  HeadingText(
-                                    "Log Out",
-                                    size: 20,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Center(
-                                  child: Text(
-                                "Are you sure you want to logout?\nPress yes to confirm",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ))
-                            ],
-                          )));
+                Get.dialog(StatefulBuilder (
+                  builder: (context,s) {
+                    return GetBuilder<GetxAuthController>(
+                      builder: (auth) {
+                        return PageDialog(
+                            // heights: 300,
+                            no: () {
+                              Get.back();
+                            },
+                            yes: () {
+                              // Get.back();
+                        
+                              authctrl.logout();
+                                          
+                            
+                              
+                            },
+                            islogoutdialog: true,
+                            child:  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.logout),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          HeadingText(
+                                            "Log Out",
+                                            size: 20,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                     auth.loginloading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Center(
+                                          child: Text(
+                                        "Are you sure you want to logout?\nPress yes to confirm",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ))
+                                    ],
+                                  ));
+                      }
+                    );
+                  }
+                ));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(

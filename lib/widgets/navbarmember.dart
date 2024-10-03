@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
 import '../managementfeatures/managementviews/screens/dashboard.dart';
 import '../managementfeatures/managementviews/widgets/dialogswidget.dart';
@@ -11,10 +12,9 @@ import 'headingtext.dart';
 class NavBarMember extends StatelessWidget {
   const NavBarMember({
     super.key,
-    required this.pagectrl,
     required this.authctrl,
   });
-  final GetxPageController pagectrl;
+
   final GetxAuthController authctrl;
 
   void drawers(BuildContext context) {
@@ -25,6 +25,7 @@ class NavBarMember extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GetxPageController pagectrl = Get.find<GetxPageController>();
     return Container(
       // color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
       color: Theme.of(context).colorScheme.primary,
@@ -50,31 +51,31 @@ class NavBarMember extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
-                  // Cardonly(
-                  //     onpress: () {
-                  //       if (MediaQuery.sizeOf(context).width < mobilescreen) {
-                  //         drawers(context);
-                  //       }
-                  //       pagectrl.changeNavPage(0);
-                  //     },
-                  //     color: pagectrl.navpage == 0
-                  //         ? Theme.of(context)
-                  //             .colorScheme
-                  //             .secondary
-                  //             .withOpacity(0.3)
-                  //         : Colors.transparent,
-                  //     margin: const EdgeInsets.symmetric(
-                  //         vertical: 4, horizontal: 16),
-                  //     child: const NavTiles(
-                  //       icon: Icons.dashboard,
-                  //       title: 'Dashboard',
-                  //     )),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Cardonly(
+                      onpress: () {
+                        if (MediaQuery.sizeOf(context).width < mobilescreen) {
+                          drawers(context);
+                        }
+                        pagectrl.changeNavPage(0);
+                      },
+                      color: pagectrl.navpage == 0
+                          ? Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.3)
+                          : Colors.transparent,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
+                      child: const NavTiles(
+                        icon: Icons.dashboard,
+                        title: 'Dashboard',
+                      )),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Container(
                     height: 0.5,
                     width: double.maxFinite,
@@ -85,7 +86,7 @@ class NavBarMember extends StatelessWidget {
                   ),
 
                   Cardonly(
-                      color: pagectrl.navpage == 0
+                      color: pagectrl.navpage == 3
                           ? Theme.of(context)
                               .colorScheme
                               .secondary
@@ -97,7 +98,7 @@ class NavBarMember extends StatelessWidget {
                           drawers(context);
                         }
 
-                        pagectrl.changeNavPage(0);
+                        pagectrl.changeNavPage(3);
                       },
                       margin: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 16),
@@ -159,57 +160,69 @@ class NavBarMember extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Cardonly(
+        Cardonly(
               color: Colors.transparent,
               onpress: () {
                 if (Responsive.isMobile(context) ||
                     Responsive.isTablet(context)) {
                   drawers(context);
                 }
-                Get.dialog(PageDialog(
-
-                    // heights: 300,
-                    no: () {
-                      Get.back();
-                    },
-                    yes: () {
-                      authctrl.logout();
-                    },
-                    islogoutdialog: true,
-                    child: authctrl.loginloading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.logout),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  HeadingText(
-                                    "Log Out",
-                                    size: 20,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Center(
-                                  child: Text(
-                                "Are you sure you want to logout?\nPress yes to confirm",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ))
-                            ],
-                          )));
+                Get.dialog(StatefulBuilder (
+                  builder: (context,s) {
+                    return GetBuilder<GetxAuthController>(
+                      builder: (auth) {
+                        return PageDialog(
+                            // heights: 300,
+                            no: () {
+                              Get.back();
+                            },
+                            yes: () {
+                              // Get.back();
+                        
+                              authctrl.logout();
+                                          
+                            
+                              
+                            },
+                            islogoutdialog: true,
+                            child:  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Icon(Icons.logout),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          HeadingText(
+                                            "Log Out",
+                                            size: 20,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                     auth.loginloading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Center(
+                                          child: Text(
+                                        "Are you sure you want to logout?\nPress yes to confirm",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ))
+                                    ],
+                                  ));
+                      }
+                    );
+                  }
+                ));
               },
               margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: const NavTiles(

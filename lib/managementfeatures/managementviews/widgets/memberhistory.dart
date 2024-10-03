@@ -36,6 +36,7 @@ class MemberServiceHistory extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Payment Details"),
+                                    const SizedBox(height:20),
                    Row(
                      children: [
               
@@ -56,14 +57,16 @@ class MemberServiceHistory extends StatelessWidget {
                                ),tooltip: "Copy transaction id",)
                              ],
                            ),
-                                                                 Text("${e.transactionId}",),
+                                                                 Text("${e.transactionId}",style: TextStyle(
+                                                                   fontSize: 14
+                                                                 ),),
                          ],
                        ),
                      ],
                    ),
                   const SizedBox(height:5),
                   Text("Payment Method"),
-                              Text("${e.paymentMethod}",style: const TextStyle(fontSize: 16),),
+                              Text("${e.paymentMethod}",style: const TextStyle(fontSize: 14),),
                   const SizedBox(height:10),
                 
                   ],
@@ -75,7 +78,10 @@ class MemberServiceHistory extends StatelessWidget {
                                                     margin: EdgeInsets.zero,
                                                     color: Colors.green,
                                                     onpress: (){
-                                                      createAndprintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true),name: managectrl.xtremer!.firstName!+managectrl.xtremer!.surname!);
+                                                      createAndprintPdf(Paymententity(id: e.id, userId: e.userId!, amount: e.amount!, discountPercentage: e.discountPercentage!.toDouble(), receivedAmount: e.receivedAmount, paymentDate: e.paymentDate, transactionId: e.transactionId!, paymentStatus: e.paymentStatus!, paymentMethod: e.paymentMethod!, paymentType: e.paymentType!, subscriptionId: e.subscriptionId, serviceUsageId: e.serviceUsageId, termsAndConditions:true),
+                                                      // name: managectrl.xtremer!.firstName!+managectrl.xtremer!.surname!
+                                                      
+                                                      );
                                                     },
                                                     child: const Text("Download PDF")),
                                                     const SizedBox(height: 16,),

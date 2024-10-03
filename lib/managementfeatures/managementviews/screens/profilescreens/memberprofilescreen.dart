@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/config/const.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/membership.dart';
 
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -49,6 +50,7 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
+               
                 children: [
                   //title
                 Row(
@@ -66,6 +68,7 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
                   widget.user==null?const Center(child: Text("No User"),) :size<=mobilescreen?Expanded(
                     child: SingleChildScrollView(
                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                                   memberprofile(widget: widget), 
                                   SizedBox(height: 20,),           
@@ -76,6 +79,7 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
                     ),
                   ) :Expanded(
                     child: Row(
+                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                            memberprofile(widget: widget), 
                         Expanded(
@@ -113,9 +117,7 @@ class memberplanwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardwithShadow(
-    color: Colors.transparent,
-    child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
                 
@@ -139,7 +141,7 @@ class memberplanwidget extends StatelessWidget {
               SizedBox(height: 16,),
               MemberServiceHistory(xtremers: widget.user!,)
       ],
-    ));
+    );
   }
 }
 
@@ -153,65 +155,73 @@ class memberprofile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 300,
-      child: CardwithShadow(
-        margin: const EdgeInsets.only(right: 16),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<ManagementController>(
+      builder: (managectrl) {
+        Membership? d  = managectrl.getallMembership.firstWhereOrNull((element) => element.userId==widget.user?.XtremerId,);
+        return SizedBox(
+          width: 300,
+          child: CardwithShadow(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  child:SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: MemoryImageWidget(id: widget.user!.id)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      child:SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: MemoryImageWidget(id: widget.user!.id)),
+                    ),
+                    
+                    // IconButton(onPressed: (){}, icon: const Icon(Icons.edit,size: 16,))
+                  ],
                 ),
-                
-                // IconButton(onPressed: (){}, icon: const Icon(Icons.edit,size: 16,))
+                      const SizedBox(height: 30,),
+                //name details
+                    
+                const Text("Name"),
+                const SizedBox(height: 10,),
+                 Text("${widget.user?.firstName??""} ${widget.user?.surname??""}",style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20,),
+                  const Text("Membership Id"),
+                const SizedBox(height: 10,),
+                 Text('${d?.membershipId}',style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20,),
+                const Text("Phone"),
+                   const SizedBox(height: 10,),
+                Text(widget.user?.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20,),
+                const Text("Designation"),
+                   const SizedBox(height: 10,),
+                const Text("Member",style: TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20,),
+                const Text("Address"),
+                   const SizedBox(height: 10,),
+                Text(widget.user?.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20,),
+                const Text("Email"),
+                   const SizedBox(height: 10,),
+                Text(widget.user?.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 16,),
+                const Text("Category"),
+                   const SizedBox(height: 10,),
+                Text(widget.user?.category??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(height: 16,),
+        
+                widget.user?.category!=null && widget.user!.category!.toLowerCase()=="personal"?CardwithShadow(
+                  onpress: (){},
+                  
+                  
+        
+                  child: Center(child: Text("Edit Trainer"),)):SizedBox()
+               
               ],
-            ),
-                  const SizedBox(height: 30,),
-            //name details
-                
-            const Text("Name"),
-            const SizedBox(height: 10,),
-            //  Text("${user!.firstName??""} ${user!.surname??""}",style: const TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 20,),
-            const Text("Phone"),
-               const SizedBox(height: 10,),
-            Text(widget.user!.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 20,),
-            const Text("Designation"),
-               const SizedBox(height: 10,),
-            const Text("Member",style: TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 20,),
-            const Text("Address"),
-               const SizedBox(height: 10,),
-            Text(widget.user!.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 20,),
-            const Text("Email"),
-               const SizedBox(height: 10,),
-            Text(widget.user!.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 16,),
-
-            const Text("Category"),
-               const SizedBox(height: 10,),
-            Text(widget.user!.category??"",style: const TextStyle(fontWeight: FontWeight.bold),),
-            const SizedBox(height: 16,),
-
-            widget.user!.category!=null && widget.user!.category!.toLowerCase()=="personal"?CardwithShadow(
-              onpress: (){},
-              
-              
-
-              child: Center(child: Text("Edit Trainer"),)):SizedBox()
-           
-          ],
-        )));
+            )));
+      }
+    );
   }
 }

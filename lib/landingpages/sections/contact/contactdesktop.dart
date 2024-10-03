@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/landingpages/pages/responsivepages.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
 import '../../../config/apis.dart';
+import '../../../widgets/card.dart';
 import '../../../widgets/cardswithshadow.dart';
 
 class ContactDesktop extends StatelessWidget {
@@ -153,7 +154,7 @@ class ContactDesktop extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    final String url = 'https://$api/policies';
+                                    const String url = 'https://www.xtremefitnessimphal.com/policies';
                                     js.context
                                         .callMethod('open', [url, '_blank']);
                                   },
@@ -271,7 +272,8 @@ class ContactDesktop extends StatelessWidget {
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.facebook.com/xtremefitnessmantripukhri';
@@ -288,7 +290,8 @@ class ContactDesktop extends StatelessWidget {
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.instagram.com/xtremefitness_imphal_manipur';
@@ -305,7 +308,8 @@ class ContactDesktop extends StatelessWidget {
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://twitter.com/Xtremefitness19';
@@ -322,7 +326,8 @@ class ContactDesktop extends StatelessWidget {
                                           SizedBox(
                                             height: 50,
                                             width: 50,
-                                            child: CardwithShadow(
+                                            child: Cardonly(
+                                                  margin: EdgeInsets.zero,
                                               onpress: () {
                                                 String url =
                                                     'https://www.youtube.com/@xtremefitnessimphal.2851';
@@ -590,7 +595,8 @@ class ContactDesktop extends StatelessWidget {
                                             SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: CardwithShadow(
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
                                                 onpress: () {
                                                   String url =
                                                       'https://www.facebook.com/xtremefitnessmantripukhri';
@@ -607,7 +613,8 @@ class ContactDesktop extends StatelessWidget {
                                             SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: CardwithShadow(
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
                                                 onpress: () {
                                                   String url =
                                                       'https://www.instagram.com/xtremefitness_imphal_manipur';
@@ -624,7 +631,8 @@ class ContactDesktop extends StatelessWidget {
                                             SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: CardwithShadow(
+                                              child: Cardonly(
+                                                margin: EdgeInsets.zero,
                                                 onpress: () {
                                                   String url =
                                                       'https://twitter.com/Xtremefitness19';
@@ -641,7 +649,8 @@ class ContactDesktop extends StatelessWidget {
                                             SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: CardwithShadow(
+                                              child: Cardonly(
+                                                    margin: EdgeInsets.zero,
                                                 onpress: () {
                                                   String url =
                                                       'https://www.youtube.com/@xtremefitnessimphal.2851';

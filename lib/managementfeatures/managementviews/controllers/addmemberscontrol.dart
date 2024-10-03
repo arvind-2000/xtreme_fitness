@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/authentifeatures/domain/userentity.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
@@ -102,7 +103,7 @@ class AddMemberController extends GetxController {
   }
 
   void checkmember() {
-    ismember = authctrl.ismember;
+    ismember = authctrl.ismember??true;
     update();
   }
 
@@ -174,6 +175,47 @@ class AddMemberController extends GetxController {
     Subscription? subss = await repo.addSubscription(subs);
     return subss;
   }
+
+
+  Future<Map<String,bool>> checknumbers(String? phones)async{  
+    isloading = true;
+    update();
+    if(xtremer!=null){
+      //check if the number exists
+    if(phones!=null && xtremer?.mobileNumber!=phones){
+      //check number
+
+     Map<int?,String> d =   await authctrl.authrepo.getUserbyNumber(xtremer?.mobileNumber??"");
+      if(d.entries.first.key!=null){
+          //get back
+          return {"A number already exists. Try another":false}; 
+      }else{
+        Map<UserEntity?,String> user = await authctrl.authrepo.getUserbyId(xtremer!.XtremerId!);
+        //update phone and xtremer
+        if(user.entries.first.key!=null){
+          UserEntity d = user.entries.first.key!;
+          d.mobileNumber = xtremer!.mobileNumber;
+           String s =  await repo.updateStaff(d);
+            print("updating member $s");
+        }
+         return updateXtremer();
+
+      }
+    }else{
+      
+      return updateXtremer();
+
+
+    }
+
+     
+
+    }
+    isloading = false;
+    update();
+    return {"Failed to update":false}; 
+    
+  }   
 
   Future<Map<String, bool>> updateXtremer() async {
     isloading = true;
@@ -314,12 +356,12 @@ class AddMemberController extends GetxController {
     //print("${authctrl.userid}");
     Paymententity payments = Paymententity(
         id: 0,
-        userId: isMember
-            ? int.tryParse(authctrl.userid!) ?? 0
-            : xtremer!.XtremerId!,
-        amount: selectedservice!.nonMemberPrice,
+        userId:authctrl.ismember
+            ? authctrl.getuser?.id?? 0
+            : int.tryParse(_userid!)??0,
+        amount:authctrl.getuser!=null?selectedservice!.memberPrice:selectedservice!.nonMemberPrice,
         discountPercentage: 0,
-        receivedAmount: selectedservice!.nonMemberPrice,
+        receivedAmount: authctrl.getuser!=null?selectedservice!.memberPrice:selectedservice!.nonMemberPrice,
         paymentDate: DateTime.now(),
         transactionId: await generateUniqueRandomNumber(12),
         paymentStatus: paymentonline ? "Initiated" : "Success",
@@ -340,7 +382,9 @@ class AddMemberController extends GetxController {
         checkpayment(() async {
           ServiceSchedule s = ServiceSchedule(
               id: 0,
-              userId: xtremer!.id!,
+              userId: authctrl.ismember!=null && authctrl.ismember!
+            ? int.tryParse(authctrl.userid!) ?? 0
+            : int.tryParse(_userid!)??0,
               serviceId: selectedservice!.id,
               scheduleDate: DateTime.now(),
               price: authctrl.userid != null && isMember
@@ -364,11 +408,12 @@ class AddMemberController extends GetxController {
 
       if (d["response"] == 200) {
         paymentsdetails = await repo.getpayment(paymentdetails!.transactionId);
-        if (selectedservice != null) {
-          //print('${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
+          print('${selectedservice!.nonMemberPrice} ${selectedservice!.id} ${xtremer!.XtremerId}');
           ServiceSchedule s = ServiceSchedule(
               id: 0,
-              userId: xtremer!.id!,
+              userId:  authctrl.ismember
+            ? int.tryParse(authctrl.userid!) ?? 0
+            : int.tryParse(_userid!)??0,
               serviceId: selectedservice!.id,
               scheduleDate: DateTime.now(),
               price: authctrl.userid != null && isMember
@@ -376,11 +421,9 @@ class AddMemberController extends GetxController {
                   : selectedservice!.nonMemberPrice,
               status: "Active");
           await repo.addServiceUsage(s);
-          paymentstatus = 1;
+          changepaymentstatus(1);
           update();
-        } else {
-          //print("no in service usage");
-        }
+        
 
         //  createAndPrintPdf(PaymentDetails(id: 0, userId: paymentdetails!.userId, amount: paymentsdetails!.amount, discountPercentage: paymentdetails!.discountPercentage, receivedAmount: paymentdetails!.receivedAmount, paymentDate:paymentdetails!.paymentDate, transactionId: paymentdetails!.transactionId, paymentStatus: paymentdetails!.paymentStatus, paymentMethod: paymentdetails!.paymentMethod, paymentType:paymentdetails!.paymentType, subscriptionId:paymentdetails!.subscriptionId!,serviceUsageId: paymentdetails!.serviceUsageId));
         // creatextremer();
@@ -414,27 +457,26 @@ class AddMemberController extends GetxController {
       //print("in add details $name  $e");
     }
 
-    //print("in add details 1");
+
 
     try {
       xtremer!.mobileNumber = phone;
-      //print("in add details 2");
       xtremer!.homeNumber = homephone;
-      //print("in add details 3");
+     
       xtremer!.postcode = postalcode;
-      //print("in add details 4");
+
       xtremer!.occupation = occupation;
-      //print("in add details 5");
+ 
       xtremer!.address = address;
-      //print("in add details 6");
+   
       xtremer!.email = email;
-      //print("in add details 7");
+   
       xtremer!.relationship = relation[relationship]!;
-      //print("in add details 8");
+  
       xtremer!.contactNumber = emergencycontact;
-      //print("in add details 9");
+ 
       xtremer!.contactName = emergencyname;
-      //print("in add details 10");
+    
     } catch (e) {
       //print("error");
     }
@@ -468,7 +510,13 @@ class AddMemberController extends GetxController {
 
   void addDOB(DateTime datetime) {
     dob = datetime;
-    xtremer!.dateOfBirth = dob;
+    if(xtremer!=null){
+   xtremer!.dateOfBirth = dob;
+    }else{
+      xtremer = Xtremer();
+      xtremer!.dateOfBirth = dob;
+    }
+ 
     update();
   }
 
@@ -499,7 +547,10 @@ class AddMemberController extends GetxController {
 
     selectedplan = plan;
     print('Plan Selected');
-    xtremer!.category = selectedplan!.category;
+    if(xtremer!=null){
+      xtremer!.category = selectedplan!.category;
+    }
+    
     // if (selectedplan != null) {
     //   // if (selectedplan!.planid == plan.planid) {
     //   //   selectedplan = null;
@@ -540,8 +591,8 @@ class AddMemberController extends GetxController {
 
   @override
   void onClose() {
-    // selectedplan = null;
-    // xtremer = null;
+    selectedplan = null;
+    xtremer = null;
     paymentdetails = null;
     disability = false;
     relationship = 4;
@@ -562,7 +613,7 @@ class AddMemberController extends GetxController {
 
   void closeaddmembers() {
     // xtremer= null;
-    selectedplan = null;
+    // selectedplan = null;
     _trainer = null;
     selectedservice = null;
     paymentstatus = 0;
@@ -722,15 +773,15 @@ class AddMemberController extends GetxController {
     // if (xtremer!.XtremerId != null || (authctrl.ismember && authctrl.userid!=null )) {
     ////print("In renewal submission  fhjd  ${authctrl.userid}");
     ManagementController managectrl = Get.find<ManagementController>();
-    if (authctrl.ismember) {
+    if (authctrl.ismember && authctrl.getuser!=null) {
       xtremer = managectrl.getallXtremer.firstWhere(
-        (element) => element.XtremerId.toString() == authctrl.userid,
+        (element) => element.XtremerId == authctrl.getuser?.id,
       );
     }
 
     Subscription subs = Subscription(
         userId: authctrl.ismember
-            ? authctrl.userid!
+            ? authctrl.getuser!.id.toString()
             : xtremer!.XtremerId.toString(),
         planId: selectedplan!.id,
         startDate: DateTime.now(),
@@ -744,7 +795,7 @@ class AddMemberController extends GetxController {
 
     Paymententity payments = Paymententity(
         id: 0,
-        userId: ismember
+        userId: authctrl.ismember
             ? int.tryParse(authctrl.userid!) ?? 0
             : xtremer!.XtremerId!,
         amount: selectedplan!.price,
@@ -767,7 +818,7 @@ class AddMemberController extends GetxController {
     //online
     if (!ispaymentcash) {
       var d = await repo.addPayments(payments,
-          userid: ismember ? authctrl.userid! : xtremer!.XtremerId.toString(),
+          userid: ismember ? authctrl.getuser!.id.toString() : xtremer!.XtremerId.toString(),
           isonline: true);
       if (d["response"] == 200) {
         // //print("in response: 200");

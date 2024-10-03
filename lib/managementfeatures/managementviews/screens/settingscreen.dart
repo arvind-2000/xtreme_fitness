@@ -13,6 +13,9 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
+import '../../../widgets/card.dart';
+import '../../../widgets/titletext.dart';
+
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
   final _formKey = GlobalKey<FormState>();
@@ -27,11 +30,11 @@ class SettingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HeadingText('Settings'),    
-              SizedBox(height: 20,),
-              Roles(),
-              SizedBox(height: 10,),
-              Admissioncard(),
-              SizedBox(height:10),
+              const SizedBox(height: 20,),
+              const Roles(),
+              const SizedBox(height: 10,),
+              const Admissioncard(),
+              const SizedBox(height:10),
               CardwithShadow(child: EditContacts(formKey: _formKey, cntrl: cntrl)),
           
             ],
@@ -99,14 +102,14 @@ class _AdmissioncardState extends State<Admissioncard> {
                           
                       }
 
-                  }, icon:showadmi?const Icon(Icons.close) : const Icon(Icons.edit),tooltip:showadmi?"Close": "Edit Admission",)
+                  }, icon:showadmi?const Icon(Icons.close,size: 14,) : const Icon(Icons.edit,size: 14,),tooltip:showadmi?"Close": "Edit Admission",)
                 ],
             
         
               ),
-                 SizedBox(height: 20,),
+                 const SizedBox(height: 20,),
                  showadmi?ConstrainedBox(
-                   constraints: BoxConstraints(maxWidth: 500),
+                   constraints: const BoxConstraints(maxWidth: 500),
                    child: Form(key: _formkey,child: Column(children: [
                      TextFieldWidget(hint: "Admission Price", controller: admissionprice,validator: (){
                       try{
@@ -116,7 +119,7 @@ class _AdmissioncardState extends State<Admissioncard> {
                       }
                      },),
                    
-                        SizedBox(height: 6,),
+                        const SizedBox(height: 6,),
                         Row(
                           children: [
                             CardBorder(
@@ -134,7 +137,7 @@ class _AdmissioncardState extends State<Admissioncard> {
                                                
                                   
                               },
-                              child: Center(child: Text("Edit Admission"))),
+                              child: const Center(child: Text("Edit Admission"))),
                           ],
                         )
                    
@@ -142,9 +145,9 @@ class _AdmissioncardState extends State<Admissioncard> {
                  ) : Column(
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                      Text("Admission Price"),
-                      SizedBox(height: 10,),
-                      managectrl.getAdmission!=null?Text('Rs. ${managectrl.getAdmission!.price}'):SizedBox()
+                      const Text("Admission Price"),
+                      const SizedBox(height: 10,),
+                      managectrl.getAdmission!=null?Text('Rs. ${managectrl.getAdmission!.price}'):const SizedBox()
                  ],).animate().fadeIn()
             ],
           ),
@@ -201,20 +204,20 @@ class _RolesState extends State<Roles> {
                           
                       }
 
-                  }, icon:showroles?Icon(Icons.close) : Icon(Icons.add),tooltip:showroles?"Close": "Add roles",)
+                  }, icon:showroles?const Icon(Icons.close,size: 14,) : const Icon(Icons.add,size: 14,),tooltip:showroles?"Close": "Add roles",)
                 ],
             
         
               ),
-                 SizedBox(height: 20,),
+                 const SizedBox(height: 20,),
                  showroles?ConstrainedBox(
-                   constraints: BoxConstraints(maxWidth: 500),
+                   constraints: const BoxConstraints(maxWidth: 500),
                    child: Form(key: _formkey,child: Column(children: [
                      TextFieldWidget(hint: "RoleName", controller: rolenamecontroller,validator: (){
                        return useCases.nameAuth(rolenamecontroller.text, "Role Name");
                      },),
                    
-                        SizedBox(height: 6,),
+                        const SizedBox(height: 6,),
                         Row(
                           children: [
                             CardBorder(
@@ -232,46 +235,57 @@ class _RolesState extends State<Roles> {
                                                
                                   
                               },
-                              child: Center(child: Text("Add Role"))),
+                              child: const Center(child: Text("Add Role"))),
                           ],
                         )
                    
                    ],)).animate().fadeIn(),
                  ) : GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160,childAspectRatio: 1/0.4), itemBuilder: (context, index) => Stack(
-                      children: [
-                 CardBorder(child: Center(child: Text( managectrl.getallRoles[index].roleName,style: TextStyle(fontSize: 12),))),
-                       managectrl.getallRoles[index].roleName.toLowerCase()=="superadmin" ||  managectrl.getallRoles[index].roleName.toLowerCase()=="member" ||managectrl.getallRoles[index].roleName.toLowerCase()=="servicemember" ?SizedBox() :    Positioned(
-                          right: 0,
-                          top: 0,
-                          child: IconButton(onPressed: (){
-                              Get.dialog(PageDialog(child: Row(
-                                children: [
-                                  Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        HeadingText("Delete Role"),
-                                        SizedBox(height: 20,),
-                                        Text("Role Name"),
-                                        SizedBox(height: 10,),
-                                        Text(managectrl.getallRoles[index].roleName)
-                                  
-                                      ],
-                                  
-                                  ),
-                                ],
-                              ), no:(){
-                                  Get.back();
-                              }, yes: ()async{
-                               String v = await  managectrl.deleteRole(managectrl.getallRoles[index]);
-                                CustomSnackbar(context, v);
-                                Get.back();
-                              }));
-
-                          }, icon: const Icon(Icons.close)))
-                      ],
-                    ),itemCount: managectrl.getallRoles.length,).animate().fadeIn()
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      
+                      mainAxisSpacing: 4,
+                      crossAxisSpacing: 4,
+                      maxCrossAxisExtent: 160,childAspectRatio: 1/0.4), itemBuilder: (context, index) => CardwithShadow(
+                                      
+                        onpress: (){},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text( managectrl.getallRoles[index].roleName,style: const TextStyle(fontSize: 12),),
+                              managectrl.getallRoles[index].roleName.toLowerCase()=="superadmin" ||  managectrl.getallRoles[index].roleName.toLowerCase()=="member" ||managectrl.getallRoles[index].roleName.toLowerCase()=="servicemember" ?const SizedBox() :    Cardonly(
+                                
+                              
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                padding: EdgeInsets.all(4),
+                              
+                                onpress: (){
+                                  Get.dialog(PageDialog(child: Row(
+                                    children: [
+                                      Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const HeadingText("Delete Role"),
+                                            const SizedBox(height: 20,),
+                                            const Text("Role Name"),
+                                            const SizedBox(height: 10,),
+                                            Text(managectrl.getallRoles[index].roleName)
+                                      
+                                          ],
+                                      
+                                      ),
+                                    ],
+                                  ), no:(){
+                                      Get.back();
+                                  }, yes: ()async{
+                                   String v = await  managectrl.deleteRole(managectrl.getallRoles[index]);
+                                    CustomSnackbar(context, v);
+                                    Get.back();
+                                  }));
+                              
+                              }, child: const Center(child: Icon(Icons.delete,size: 12,)))
+                          ],
+                        )),itemCount: managectrl.getallRoles.length,).animate().fadeIn()
             ],
           ),
         );
@@ -320,14 +334,14 @@ class _EditContactsState extends State<EditContacts> {
                           
                       }
 
-                  }, icon:isEdit?Icon(Icons.close) : Icon(Icons.edit),tooltip:isEdit?"Close": "edit",)
+                  }, icon:isEdit?const Icon(Icons.close,size: 14,) : const Icon(Icons.edit,size: 14,),tooltip:isEdit?"Close": "Edit Contact Info",)
                 
            ],
          ),
           const SizedBox(
             height: 20,
           ),
-         Center(
+       isEdit?Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 500),
               child: Column(
@@ -370,7 +384,39 @@ class _EditContactsState extends State<EditContacts> {
                 ],
               ),
             ),
-          ),
+          ).animate().fadeIn():Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:[
+               const SizedBox(
+                    height: 16,
+                  ),
+                  const TitleText("Address",size:16),
+                   const SizedBox(height:5),
+                  Text(widget.cntrl.contact?.address??"",style:const TextStyle(fontSize: 14)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                          const TitleText("PinCode",size:16),
+                   const SizedBox(height:5),
+                  Text(widget.cntrl.contact?.pinCode??"",style:const TextStyle(fontSize: 14)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                         const TitleText("Phone Number",size:16),
+                   const SizedBox(height:5),
+                  Text(widget.cntrl.contact?.phoneNumber??"",style:const TextStyle(fontSize: 14)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                         const TitleText("Email",size:16),
+                   const SizedBox(height:5),
+                  Text(widget.cntrl.contact?.email??"",style:const TextStyle(fontSize: 14)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                
+            ]
+          ).animate().fadeIn(),
           const SizedBox(height: 20),
           isEdit?Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -392,7 +438,7 @@ class _EditContactsState extends State<EditContacts> {
                 },
               )
             ],
-          ):SizedBox()
+          ):const SizedBox()
         ],
       ),
     );

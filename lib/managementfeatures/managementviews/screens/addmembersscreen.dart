@@ -56,7 +56,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                     ? PaymentStatusCard(
                         callback: () {
                           addmemberctrl.changepaymentstatus(0);
-                          addmemberctrl.authctrl.authentications();
+                          // addmemberctrl.authctrl.authentications();
                           // if (addmemberctrl.ismember) {
                           //   Get.offAllNamed('/home');
                           //   Get.dialog(const LoginDialog());

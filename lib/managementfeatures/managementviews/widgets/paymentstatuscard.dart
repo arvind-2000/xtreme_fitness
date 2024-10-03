@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/authentifeatures/models/repositoriesimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../authentifeatures/domain/userentity.dart';
 import '../../../widgets/cardborder.dart';
 import '../../managementmodels/calculationusecase.dart';
 import 'package:lottie/lottie.dart';
@@ -80,7 +82,7 @@ class PaymentStatusCard extends StatelessWidget {
                               )
                             : addmemberctrl.paymentstatus == 4?const HeadingText("Cancelled", size: 30) : addmemberctrl.paymentstatus == 2
                                 ? const HeadingText("Failed", size: 30)
-                                : addmemberctrl.paymentstatus == 3?const HeadingText("Processing Payment",
+                                : addmemberctrl.paymentstatus == 3 || addmemberctrl.paymentstatus==0?const HeadingText("Processing Payment",
                                     size: 30):addmemberctrl.paymentstatus == 5?const HeadingText("Failed to Create User",
                                     size: 30):const HeadingText("Error processing Payment",
                                     size: 30),
@@ -115,10 +117,12 @@ class PaymentStatusCard extends StatelessWidget {
                     ? SizedBox(
                         width: double.maxFinite,
                         child: CardBorder(
-                            onpress: () {
+                            onpress: () async{
                               // Navigator.pop(context);
-
-                             createAndprintPdf(addmemberctrl.paymentsdetails!,name:'${addmemberctrl.authctrl.getuser!.userName}');
+                                 Map<UserEntity?, String> v = await AuthenticationRepositoryImpl().getUserbyId(addmemberctrl.paymentdetails?.userId??0);                  
+                             createAndprintPdf(addmemberctrl.paymentsdetails!,
+                            //  name:v.entries.first.key?.userName??""
+                             );
                             },
                             color: Colors.blue,
                             child:

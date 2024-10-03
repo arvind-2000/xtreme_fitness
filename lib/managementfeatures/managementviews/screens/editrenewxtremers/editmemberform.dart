@@ -26,12 +26,13 @@ class EditmemberForm extends StatefulWidget {
 }
 
 class _EditmemberFormState extends State<EditmemberForm> {
-
+  String? editphone;
     @override
   void initState() {
 
     super.initState();
     Get.put(AddMemberController());
+    editphone = Get.find<AddMemberController>().xtremer?.mobileNumber;
   }
 @override
   void dispose() {
@@ -62,6 +63,7 @@ class _EditmemberFormState extends State<EditmemberForm> {
                               addmemberctrl.onClose();
                               // pagectrl.disposes();
                               pagectrl.changeeditform(false);
+                              pagectrl.changeaddMemberPage(0);
                             }, icon: Icon(Icons.close),tooltip: "Close",)
                           ],
                         ),
@@ -74,11 +76,24 @@ class _EditmemberFormState extends State<EditmemberForm> {
                                         pagectrl.changeaddMemberPage(2);
                                                       
                              },buttonText: "Edit Member",):pagectrl.addmemberpages==2?Questionnare(pagectrl: pagectrl):pagectrl.addmemberpages==3?DoctorDetails(pagectrl: pagectrl):CreateMember(iseditform: true,buttontext: "Edit Xtremer",callback: ()async{
-                                 Map<String,bool> x = await  addmemberctrl.updateXtremer();
+                                 if(editphone!=null){
+                                       Map<String,bool> x = await  addmemberctrl.checknumbers(editphone);
+                                          if(x.entries.first.value){
+                                    pagectrl.changeeditform(false);
+                                    pagectrl.changeaddMemberPage(0);
+                                  }
+                                 CustomSnackbar(context, x.entries.first.key);
+                                 }else{
+                                  Map<String,bool> x = await  addmemberctrl.updateXtremer();
                                   if(x.entries.first.value){
                                     pagectrl.changeeditform(false);
+                                    pagectrl.changeaddMemberPage(0);
                                   }
-                                CustomSnackbar(context, x.entries.first.key);
+                                 CustomSnackbar(context, x.entries.first.key);
+                                 }
+                                 
+                              
+                          
                              },),
                            ],
                          ),

@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authentifeatures/domain/domainusecases.dart';
-import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
@@ -170,6 +168,7 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
                                 String v = await managementctrl.editplan(plan);
                                 snack= v ;
                                 }else{
+                                  plan.isActive = true;
                                 String v = await managementctrl.addplan(plan);
                               snack = v;
                               }

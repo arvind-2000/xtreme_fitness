@@ -36,33 +36,31 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
 
-    return Scrollbar(
-      child: ScrollablePositionedList.builder(
-        itemScrollController: landctrl.scrollControllers,
-        initialScrollIndex: 0,
-        itemCount: 5,
-        itemBuilder: (context, index) => index == 0
-            ? const HomeDesktop()
-            : index == 1
-                ? const Pricesdesktop()
-                : index == 2
-                    ? const ServicesDesktop()
-                    : index == 3
-                        ? const GalleryDesktopCopy()
-                        : const ContactDesktop(),
-        // children: [
-        // // HomePage(),
-        // HomeDesktop(),
-        // // Prices(),
-        // Pricesdesktop(),
-        // // // Services(),
-        // ServicesDesktop(),
-        // // // Gallery(),
-        // GalleryDesktop(),
-        // // // Contact()
-        // ContactDesktop()
-        // ],
-      ),
+    return ScrollablePositionedList.builder(
+      itemScrollController: landctrl.scrollControllers,
+      initialScrollIndex: 0,
+      itemCount: 5,
+      itemBuilder: (context, index) => index == 0
+          ? const HomeDesktop()
+          : index == 1
+              ? const Pricesdesktop()
+              : index == 2
+                  ? const ServicesDesktop()
+                  : index == 3
+                      ? const GalleryDesktopCopy()
+                      : const ContactDesktop(),
+      // children: [
+      // // HomePage(),
+      // HomeDesktop(),
+      // // Prices(),
+      // Pricesdesktop(),
+      // // // Services(),
+      // ServicesDesktop(),
+      // // // Gallery(),
+      // GalleryDesktop(),
+      // // // Contact()
+      // ContactDesktop()
+      // ],
     );
   }
 }
