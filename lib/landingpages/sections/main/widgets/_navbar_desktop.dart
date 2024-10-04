@@ -33,8 +33,9 @@ class NavbarDesktop extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                   landingctrl.setnavindex(0);
-                                   landingctrl.changeScrolltoScreen(0);
+                                  Get.offAllNamed('/home');
+                                  landingctrl.setnavindex(0);
+                                  landingctrl.changeScrolltoScreen(0);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -78,7 +79,7 @@ class NavbarDesktop extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   CardBorder(
-                                    margin:EdgeInsets.zero,      
+                                    margin: EdgeInsets.zero,
                                     padding: EdgeInsets.zero,
                                     onpress: () {
                                       Get.dialog(

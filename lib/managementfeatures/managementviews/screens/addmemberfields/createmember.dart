@@ -369,6 +369,7 @@ class PaymentDialog extends StatelessWidget {
         //print(addmemberctrl.ismember);
         return StatefulBuilder(builder: (context, s) {
           return PageDialog(
+              allignToCenter: true,
               // heights: 500,
               no: () {
                 Navigator.pop(context);

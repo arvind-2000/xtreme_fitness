@@ -25,7 +25,7 @@ class DashboardChild3 extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              const Padding(
+         Padding(
                 padding: EdgeInsets.all(32.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,10 +37,10 @@ class DashboardChild3 extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Services"),
+                  
                       ],
                     ),
-                      Text("This Year"),
+                      Text("This Year",style: TextStyle(color: Colors.grey[500])),
 
     
                   ],

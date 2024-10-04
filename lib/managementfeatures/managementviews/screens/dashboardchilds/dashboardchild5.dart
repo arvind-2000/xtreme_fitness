@@ -31,7 +31,7 @@ class Dashboardchild5 extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      Text(pgctrl.overalldropdownname),
+                      Text(pgctrl.overalldropdownname,style: TextStyle(  color: Colors.grey[500],),),
                     ],
                   ),
                   // Card(

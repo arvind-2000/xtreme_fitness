@@ -11,6 +11,7 @@ import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/imagewidgets.dart';
 
 import '../../../../responsive/responsive.dart';
+import '../../../../widgets/titletext.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
 
 class MemberProfilescreen extends StatefulWidget {
@@ -85,9 +86,9 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                        // memberprofile(widget: widget), 
-                                        SizedBox(height: 20,),           
+                       
                                     memberplanwidget(widget: widget), 
                                      SizedBox(height: 40,), 
                               ],
@@ -120,24 +121,8 @@ class memberplanwidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-                
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth:600),
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: CardwithShadow(
-                         margin: const EdgeInsets.only(right: 16),
-                    child: Column(
-                    children: [
-                      const Text("Plan"),
-                      const SizedBox(height: 16,),
-                      Text(widget.user!.category!=null?"${widget.user!.category}":""),
-                      const SizedBox(height: 16,),
-                                      
-                    ],
-                  )),
-                ),
-              ),
+              TitleText("Service History"),  
+              Container(width: 100,height: 0.7,color: Colors.grey[500],),
               SizedBox(height: 16,),
               MemberServiceHistory(xtremers: widget.user!,)
       ],
@@ -159,7 +144,7 @@ class memberprofile extends StatelessWidget {
       builder: (managectrl) {
         Membership? d  = managectrl.getallMembership.firstWhereOrNull((element) => element.userId==widget.user?.XtremerId,);
         return SizedBox(
-          width: 300,
+          width:MediaQuery.sizeOf(context).width<mobilescreen ?double.maxFinite :300,
           child: CardwithShadow(
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(16),
@@ -183,41 +168,39 @@ class memberprofile extends StatelessWidget {
                       const SizedBox(height: 30,),
                 //name details
                     
-                const Text("Name"),
-                const SizedBox(height: 10,),
-                 Text("${widget.user?.firstName??""} ${widget.user?.surname??""}",style: const TextStyle(fontWeight: FontWeight.bold),),
+                 TitleText("${widget.user?.firstName??""} ${widget.user?.surname??""}",size: 16,),
                 const SizedBox(height: 20,),
-                  const Text("Membership Id"),
-                const SizedBox(height: 10,),
-                 Text('${d?.membershipId}',style: const TextStyle(fontWeight: FontWeight.bold),),
+               d?.membershipId!=null?  Text("Membership Id",style: TextStyle(color: Colors.grey[500]),):SizedBox(),
+                const SizedBox(height: 5,),
+                 d?.membershipId!=null?  Text('${d?.membershipId}',style: TextStyle(fontWeight: FontWeight.bold,),):SizedBox(),
                 const SizedBox(height: 20,),
-                const Text("Phone"),
-                   const SizedBox(height: 10,),
-                Text(widget.user?.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                Row(
+                  children: [
+                    Icon(Icons.phone,size: 12,color: Colors.grey[500]),
+                    SizedBox(width: 4,),
+                    Text(widget.user?.mobileNumber??"",style: TextStyle(color: Colors.grey[500],fontSize: 16),),
+                  ],
+                ),
                 const SizedBox(height: 20,),
-                const Text("Designation"),
-                   const SizedBox(height: 10,),
-                const Text("Member",style: TextStyle(fontWeight: FontWeight.bold),),
-                const SizedBox(height: 20,),
-                const Text("Address"),
-                   const SizedBox(height: 10,),
+        Text("Address",style: TextStyle(color: Colors.grey[500]),),
+                   const SizedBox(height: 5,),
                 Text(widget.user?.address??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                 const SizedBox(height: 20,),
-                const Text("Email"),
-                   const SizedBox(height: 10,),
+               Text("Email",style: TextStyle(color: Colors.grey[500])),
+                   const SizedBox(height: 5,),
                 Text(widget.user?.email??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                 const SizedBox(height: 16,),
-                const Text("Category"),
-                   const SizedBox(height: 10,),
+                 Text("Category",style: TextStyle(color: Colors.grey[500])),
+                   const SizedBox(height: 5,),
                 Text(widget.user?.category??"",style: const TextStyle(fontWeight: FontWeight.bold),),
                 const SizedBox(height: 16,),
         
-                widget.user?.category!=null && widget.user!.category!.toLowerCase()=="personal"?CardwithShadow(
-                  onpress: (){},
+                // widget.user?.category!=null && widget.user!.category!.toLowerCase()=="personal"?CardwithShadow(
+                //   onpress: (){},
                   
                   
         
-                  child: Center(child: Text("Edit Trainer"),)):SizedBox()
+                //   child: Center(child: Text("Edit Trainer"),)):SizedBox()
                
               ],
             )));

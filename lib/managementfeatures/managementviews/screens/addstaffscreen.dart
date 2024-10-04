@@ -252,7 +252,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         ],
                       ),
                       const SizedBox(height: 16,),
-                                         managectrl.authctrl.ismember!=null&&   managectrl.authctrl.ismember! || managectrl.getallstaff.isEmpty?const SizedBox():Row(
+                                      managectrl.authctrl.ismember|| managectrl.getallstaff.isEmpty?const SizedBox():Row(
               children: [
                 Cardonly(
                   onpress: changeIsActive,
@@ -287,13 +287,18 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                     const SizedBox(height: 20,),
                                     CircleAvatar(backgroundColor: Colors.grey[100],child: const Icon(Icons.person,size: 30,color: Colors.grey,),),
                                     const SizedBox(height: 20,),
-                                    TitleText(e.userName!),
+                                    TitleText(e.userName!,size: size<mobilescreen?18:null,),
                                     const SizedBox(height: 10,),
-                                    const Text("phone"),
-                                    Text(e.mobileNumber??"",style: const TextStyle(fontWeight: FontWeight.bold)),
+                                
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.phone,size:12,color: Colors.grey[500],),SizedBox(width: 5,),
+                                        Text(e.mobileNumber??"",style:  TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[500])),
+                                      ],
+                                    ),
                                     const SizedBox(height: 6,),
-                                       const Text("Designation"),
-                                    Text(e.roleName??"",style: const TextStyle(fontWeight: FontWeight.bold),),
+                                    Text(e.roleName??"",style:TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[500]),),
                                   ],
                                                         ),
                                 ),
@@ -397,7 +402,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                               }
                                             ),);
                                           },
-                                            padding: const EdgeInsets.all(8),
+                                            padding: const EdgeInsets.symmetric(vertical:8,horizontal: 16),
                                           color: Colors.red[300]!.withOpacity(0.3),
                                           child: Row(
                                             children: [

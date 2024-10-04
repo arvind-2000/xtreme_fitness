@@ -31,6 +31,9 @@ class GetxAuthController extends GetxController {
   UserEntity? _user;
   UserEntity? get getuser => _user;
   String? userid;
+
+  var isauthloading = false.obs;
+
   bool? numberexists;
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
@@ -39,7 +42,7 @@ class GetxAuthController extends GetxController {
   int? otp;
   bool otploading = false;
   bool? forgotpass;
-  bool isauthloading = true;
+  // bool isauthloading.obx = true;
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     // changeAuthindex = index;
@@ -55,7 +58,7 @@ class GetxAuthController extends GetxController {
     _user = v.entries.first.key;
     ismember = _user!.roleName!.trim().toLowerCase() == "member";
     _authentication = true;
-         isauthloading = false;
+         isauthloading.value = false;
     
     //print('${ismem} ${userid}');
     update();
@@ -141,6 +144,8 @@ class GetxAuthController extends GetxController {
   }
 
   void authentications() async {
+    isauthloading.value = true;
+
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
@@ -153,12 +158,17 @@ class GetxAuthController extends GetxController {
 
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
+          isauthloading.value = false;
         update();
         Get.offAllNamed('/dashboard');
       } else {
+        isauthloading.value = false;
+
         Get.offAllNamed('/home');
       }
     } else {
+      isauthloading.value = false;
+
       _authentication = false;
       loginloading = false;
       _user = null;
@@ -218,9 +228,11 @@ class GetxAuthController extends GetxController {
                 ),
               ));
         } else {
+          isauthloading.value = false;
           Get.offAllNamed('/home');
         }
       } else {
+        isauthloading.value = false;
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
         }
@@ -320,7 +332,7 @@ class GetxAuthController extends GetxController {
 
 
  Future<void> authenticationsforReload() async {
-       isauthloading = true;
+       isauthloading.value = true;
  
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -338,7 +350,7 @@ class GetxAuthController extends GetxController {
        prefs.getString('key1')!);
       } else {
         Get.offAllNamed('/home');
-     isauthloading = false;
+     isauthloading.value = false;
     update();
       }
     } else {
@@ -346,7 +358,7 @@ class GetxAuthController extends GetxController {
           request.entries.first.value == 0) {
         _authentication = false;
         loginloading = false;
-             isauthloading = false;
+             isauthloading.value = false;
   
         _user = null;
         // ismember = true;
@@ -406,7 +418,7 @@ class GetxAuthController extends GetxController {
         //   Get.offAllNamed('/home');
         // }
       } else {
-             isauthloading = false;
+             isauthloading.value = false;
     update();
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');

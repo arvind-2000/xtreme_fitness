@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
+import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../config/const.dart';
@@ -33,13 +34,16 @@ class ContactUsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Left Section
-                  const Expanded(
-                    flex: 1,
-                    child: ContactWdget(),
+                  Expanded(
+                    flex: Responsive.isMobile(context) ||
+                            Responsive.isTablet(context)
+                        ? 15
+                        : 10,
+                    child: const ContactWdget(),
                   ),
                   const SizedBox(width: 40),
                   // Right Section
-                  Expanded(flex: 2, child: SendMessageWidget()),
+                  Expanded(flex: 20, child: SendMessageWidget()),
                 ],
               ),
       ),

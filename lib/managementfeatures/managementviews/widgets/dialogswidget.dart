@@ -9,9 +9,11 @@ class PageDialog extends StatefulWidget {
     required this.child,
     required this.no,
     required this.yes,
-    this.islogoutdialog,
+    this.allignToCenter,
+    this.iscancelreg,
   });
-  final bool? islogoutdialog;
+  final bool? allignToCenter;
+  final bool? iscancelreg;
   final Widget child;
   final VoidCallback no;
   final VoidCallback yes;
@@ -26,7 +28,7 @@ class _PageDialogState extends State<PageDialog> {
     return Dialog(
       insetPadding: const EdgeInsets.all(16),
       backgroundColor: Colors.grey[800],
-      alignment: widget.islogoutdialog != null ? null : const Alignment(0.25, -0.5),
+      alignment: widget.allignToCenter != null ? null : const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),
         width: 400,
@@ -54,7 +56,7 @@ class _PageDialogState extends State<PageDialog> {
                                 ? const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 12)
                                 : null,
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Icon(
@@ -62,8 +64,8 @@ class _PageDialogState extends State<PageDialog> {
                             //   color: Colors.white,
                             // ),
                             Text(
-                              "Cancel",
-                              style: TextStyle(color: Colors.white),
+                              widget.iscancelreg == null ? "Cancel" : "NO",
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ],
                         )),
@@ -82,14 +84,15 @@ class _PageDialogState extends State<PageDialog> {
                                 ? const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 12)
                                 : null,
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Icon(
                             //   Icons.check,
                             //   color: Colors.white,
                             // ),
-                            Text("OK", style: TextStyle(color: Colors.white)),
+                            Text(widget.iscancelreg == null ? "OK" : "YES",
+                                style: const TextStyle(color: Colors.white)),
                           ],
                         )),
                   )

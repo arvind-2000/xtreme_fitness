@@ -20,7 +20,11 @@ Widget buildContactInfo(
             ),
           ),
           const SizedBox(height: 5),
-          Text(content),
+          Text(
+            content,
+            softWrap: true,
+            overflow: TextOverflow.visible,
+          ),
         ],
       ),
     ],

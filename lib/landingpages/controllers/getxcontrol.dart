@@ -28,6 +28,7 @@ class GetxLandingcontroller extends GetxController {
   int get imagehoverindex => _imagehoverindex;
   int _currentIndex = 0;
   bool _isUserScroll = true; // Flag to control scroll listener
+  bool get isUserScroll => _isUserScroll;
   List<Plan> _plan = [];
   List<ServiceEntity> _services = [];
   List<ServiceEntity> _activeservices = [];
@@ -46,7 +47,8 @@ class GetxLandingcontroller extends GetxController {
 
   bool _isloading = true;
   bool get isloading => _isloading;
-
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   //Text controller for contact us form
 
   TextEditingController namecontroller = TextEditingController();
@@ -64,7 +66,35 @@ class GetxLandingcontroller extends GetxController {
   }
 
   GetxLandingcontroller() {
-    scrollController.addListener(_onScroll);
+    // scrollController.addListener(_onScroll);
+
+    itemPositionsListener.itemPositions.addListener(() {
+      if (isUserScroll) {
+        setscroll(true);
+
+        final visibleItems = itemPositionsListener.itemPositions.value;
+        if (visibleItems.isNotEmpty) {
+          // Find the first visible item
+          const screenMidpoint = 0.5; // Midpoint of the screen (50%)
+
+          // Find the first item that crosses the midpoint
+          final midPointItem = visibleItems
+              .where((ItemPosition position) =>
+                  position.itemLeadingEdge < screenMidpoint &&
+                  position.itemTrailingEdge > screenMidpoint)
+              .reduce((current, next) =>
+                  current.itemLeadingEdge < next.itemLeadingEdge
+                      ? current
+                      : next);
+
+          // Update the index based on the item passing the midpoint
+          _currentIndex = midPointItem.index;
+
+          // Call update function to reflect the change
+          update();
+        }
+      }
+    });
   }
 
   void setscrollcontroller(ItemScrollController controller) {
@@ -73,11 +103,16 @@ class GetxLandingcontroller extends GetxController {
   }
 
   void changeScrolltoScreen(int index) {
+    setscroll(false);
     debugPrint("in scroll control");
-    scrollControllers!.scrollTo(
-        index: index % 5,
-        duration: const Duration(seconds: 2),
-        curve: Curves.easeInOutCubic);
+    scrollControllers!
+        .scrollTo(
+            index: index % 5,
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeInOutCubic)
+        .then((_) {
+      setscroll(true);
+    });
   }
 
   PageController get controller => scrollController;
@@ -111,7 +146,6 @@ class GetxLandingcontroller extends GetxController {
   void setscroll(bool isscroll) {
     _isUserScroll = isscroll;
     update();
-    log("isUserScroll: $_isUserScroll");
   }
 
   void onHover(bool ishov, int ind) {
