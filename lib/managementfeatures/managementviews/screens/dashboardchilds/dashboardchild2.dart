@@ -36,7 +36,7 @@ class DashboardChild2 extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "Previous 30 days",
+                    "Most Recent",
                     style: TextStyle(fontSize: 10),
                   ),
                   // DropdownButton(

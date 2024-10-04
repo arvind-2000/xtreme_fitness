@@ -226,7 +226,7 @@ class ManagementController extends GetxController {
   void getmemberxtreme(){
     if(authctrl.ismember){
             if (authctrl.ismember) {
-    print("In get xtremer");
+    // print("In get xtremer");
     xtremer = _allxtremer.firstWhereOrNull(
       (element) => element.XtremerId == authctrl.getuser!.id,
     );
@@ -357,25 +357,23 @@ class ManagementController extends GetxController {
   }
 
   void getMemberships() async {
-    _allmembership = await managementRepo.viewMembership();
-      print("in memberships ${_allmembership.length}"); 
+    _allmembership = await managementRepo.viewMembership(); 
     update();
   }
 
 
   void checkmemberships(){
 
-    if (authctrl.ismember!=null) {
-  if (authctrl.ismember!) {
-    print("In current meber ${_allmembership.length}");
+
+  if (authctrl.ismember) {
 
     currentmember = _allmembership.firstWhereOrNull(
       (element) =>
           element.userId == authctrl.getuser!.id,
     );
-      print(currentmember?.membershipId);
+     
   }
-}
+
 
   }
 
@@ -418,7 +416,6 @@ class ManagementController extends GetxController {
 
   void getpaymentlastest10() async {
     _latestpayment10 = await managementRepo.viewlatest10payment();
-
     update();
   }
 
@@ -440,7 +437,6 @@ class ManagementController extends GetxController {
           )
           .toList(),
     );
-    //print("In view payment : ${_allpayments.length}");
 
     update();
   }
@@ -532,20 +528,6 @@ class ManagementController extends GetxController {
     if (keyword.isEmpty) {
       _searchservice = _allserviceschedule;
     } else {
-      // _searchservice = _allserviceschedule.where(
-      //   (element){
-      //    for(UserEntity d in _allUsers){
-      //     if(d.id == element.userId && d.mobileNumber!.contains(keyword.trim())){
-      //         return true;
-      //    }else{
-      //     return false;
-      //    }
-
-      //   }
-      //      return false;
-
-      //   }
-      // ).toList();
       List<UserEntity> d = _allUsers
           .where(
             (element) => element.mobileNumber != null

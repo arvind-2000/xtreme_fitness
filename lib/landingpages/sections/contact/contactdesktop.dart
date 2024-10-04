@@ -56,26 +56,23 @@ class ContactDesktop extends StatelessWidget {
                                 SizedBox(
                                   height: 40,
                                 ),
-                                Text(
-                                  "About Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"About Us",
+                                
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Why Us",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                               TextWithHover(
+                                  text:"Why Us",
+                                 
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Partnership",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"Partnership",
+                                 
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -88,34 +85,31 @@ class ContactDesktop extends StatelessWidget {
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                               Text(
                                   "Services",
-                                  style: TextStyle(
+                                 style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 40,
                                 ),
-                                Text(
-                                  "BMI",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text:"BMI",
+                             
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Steam Bath",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                 TextWithHover(
+                                  text:"Steam Bath",
+                               
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Massage Chair",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text: "Massage Chair",
+                                
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -128,40 +122,35 @@ class ContactDesktop extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Help",
-                                  style: TextStyle(
+                                Text("Help",
+                                 style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                const Text(
-                                  "Account",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                                TextWithHover(
+                                  text: "Account",
+                                
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  "Support Center",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white60),
+                            TextWithHover(
+                                  text:"Support Center",
+                                
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                InkWell(
-                                  onTap: () async {
+                             TextWithHover(
+                                  text:"Privacy Policy",
+                                  callback: () async {
                                     const String url = 'https://www.xtremefitnessimphal.com/policies';
                                     js.context
                                         .callMethod('open', [url, '_blank']);
                                   },
-                                  child: const Text(
-                                    "Privacy Policy",
-                                    style: TextStyle(color: Colors.white60),
-                                  ),
+                                 
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -264,7 +253,7 @@ class ContactDesktop extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 32),
+                                          horizontal: 16),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -285,7 +274,7 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
@@ -303,7 +292,7 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
@@ -321,7 +310,7 @@ class ContactDesktop extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 30,
+                                            width: 10,
                                           ),
                                           SizedBox(
                                             height: 50,
@@ -371,26 +360,24 @@ class ContactDesktop extends StatelessWidget {
                                         SizedBox(
                                           height: 30,
                                         ),
-                                        Text(
-                                          "About Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         
+                            TextWithHover(
+                                  text: "About Us",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Why Us",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                       TextWithHover(
+                                  text:  "Why Us",
+                                      
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Partnership",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                        TextWithHover(
+                                  text:  "Partnership",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -412,26 +399,23 @@ class ContactDesktop extends StatelessWidget {
                                         SizedBox(
                                           height: 30,
                                         ),
-                                        Text(
-                                          "BMI",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                       TextWithHover(
+                                  text:   "BMI",
+                                       
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Steam Bath",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         TextWithHover(
+                                  text: "Steam Bath",
+                                         
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Massage Chair",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                         TextWithHover(
+                                  text:  "Massage Chair",
+                                         
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -453,34 +437,28 @@ class ContactDesktop extends StatelessWidget {
                                         const SizedBox(
                                           height: 30,
                                         ),
-                                        const Text(
-                                          "Account",
-                                          style:
-                                              TextStyle(color: Colors.white60),
+                                        TextWithHover(
+                                  text: "Account",
+                                         
                                         ),
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        const Text(
-                                          "Support Center",
-                                          style:
-                                              TextStyle(color: Colors.white60),
-                                        ),
+                                        TextWithHover(text: "Support Center", callback: () {  },),
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        InkWell(
-                                          onTap: () {
+                                     TextWithHover(
+                                 callback:  () {
                                             final String url =
                                                 'https://$api/policies';
                                             js.context.callMethod(
                                                 'open', [url, '_blank']);
                                           },
-                                          child: const Text(
+                                        text: 
                                             "Privacy Policy",
-                                            style: TextStyle(
-                                                color: Colors.white60),
-                                          ),
+                                         
+                                  
                                         ),
                                         const SizedBox(
                                           height: 10,
@@ -678,6 +656,39 @@ class ContactDesktop extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class TextWithHover extends StatefulWidget {
+  const TextWithHover({
+    super.key, this.callback, required this.text,
+  });
+  final VoidCallback? callback;
+  final String text;
+
+  @override
+  State<TextWithHover> createState() => _TextWithHoverState();
+}
+
+class _TextWithHoverState extends State<TextWithHover> {
+  bool ishov = false;
+  @override
+  Widget build(BuildContext context) {
+
+    return InkWell(
+      onTap: widget.callback??(){},
+      onHover: (v){
+        setState(() {
+          ishov = v;
+        });
+
+      },
+      child:  Text(
+          widget.text,
+        style:
+            TextStyle(color:ishov?Colors.blue[400]: Colors.white60),
+      ),
+    );
   }
 }
 

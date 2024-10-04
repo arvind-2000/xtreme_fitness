@@ -196,7 +196,7 @@ class AddMemberController extends GetxController {
           UserEntity d = user.entries.first.key!;
           d.mobileNumber = xtremer!.mobileNumber;
            String s =  await repo.updateStaff(d);
-            print("updating member $s");
+            // print("updating member $s");
         }
          return updateXtremer();
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
@@ -363,7 +364,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                               })),
                 ],
               ),
-
+      
               SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
@@ -413,7 +414,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                               })),
                 ],
               ),
-
+      
               SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
@@ -456,7 +457,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                           groupValue: addmembrctrl.disability,
                           onChanged: (v) {
                             addmembrctrl.setdisability(v!);
-
+      
                             _disabilityFocusNode.requestFocus();
                           },
                           activeColor: Colors.blue,
@@ -500,7 +501,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                             _disabilitycontroller.text, "Disabilty");
                       }).animate().fadeIn()
                   : const SizedBox(),
-
+      
               const SizedBox(
                 height: 20,
               ),
@@ -539,7 +540,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                               })),
                 ],
               ),
-
+      
               SizedBox(
                 height: size < mobilescreen ? 16 : 0,
               ),
@@ -617,7 +618,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
               const SizedBox(
                 height: 20,
               ),
-
+      
               CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
                   onpress: () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget(
@@ -117,16 +118,18 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               filled: false,
               focusColor: Theme.of(context).colorScheme.secondary,
               focusedBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).colorScheme.onPrimary),
+                borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.onPrimary),
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               prefixIcon: widget.icon,
               fillColor: Theme.of(context).colorScheme.primary,
               hintText: widget.hint,
               hintStyle: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withOpacity(0.4)),
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)))),
         ),

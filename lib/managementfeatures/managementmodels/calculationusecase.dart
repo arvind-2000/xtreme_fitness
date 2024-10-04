@@ -352,11 +352,6 @@ Map<int, List<Alluserpaymentmodel>> groupPaymentsByMonth(
   var sortedKeys = paymentsByMonth.keys.toList()..sort();  // Sort by DateTime in ascending order
   var sortedMap = {for (var key in sortedKeys) key: paymentsByMonth[key]!};
 
-  // Printing the sorted map
-  sortedMap.forEach((key, value) {
-    print('$key: $value');
-  });
-
   return sortedMap;
 }
 
