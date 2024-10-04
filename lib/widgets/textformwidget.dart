@@ -113,7 +113,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                       },
                       icon: Icon(
                           toggless ? Icons.visibility_off : Icons.visibility))
-                  : const SizedBox(),
+                  : null,
               filled: false,
               focusColor: Theme.of(context).colorScheme.secondary,
               focusedBorder: OutlineInputBorder(
