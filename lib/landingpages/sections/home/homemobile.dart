@@ -52,7 +52,7 @@ class _HomeDesktopState extends State<HomeMobile> {
                 height: MediaQuery.sizeOf(context).height,
                 width: MediaQuery.sizeOf(context).width,
                 child: Image.asset(
-                  'assets/backg.jpg',
+                  'assets/gym.jpg',
                   fit: BoxFit.cover,
                 ))),
         ResponsivePages(

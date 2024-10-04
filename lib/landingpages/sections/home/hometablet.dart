@@ -52,7 +52,7 @@ class _HomeTabletState extends State<HomeTablet> {
                 height: 1000,
                 width: MediaQuery.sizeOf(context).width,
                 child: Image.asset(
-                  'assets/backg.jpg',
+                  'assets/gym.jpg',
                   fit: BoxFit.cover,
                 ))),
         ResponsivePages(

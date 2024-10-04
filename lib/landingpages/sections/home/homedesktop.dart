@@ -31,8 +31,12 @@ class _HomeDesktopState extends State<HomeDesktop> {
                     : 1000,
                 width: MediaQuery.sizeOf(context).width,
                 child: Image.asset(
-                  'assets/backg.jpg',
+                  'assets/gym.jpg',
                   fit: BoxFit.cover,
+                  color: const Color.fromARGB(255, 16, 0, 2)
+                      .withOpacity(0.9), // Darken the image with opacity
+                  colorBlendMode:
+                      BlendMode.darken, // Apply the darken blend mode
                 ))),
         ResponsivePages(
             // screenheight: MediaQuery.sizeOf(context).height,
