@@ -58,6 +58,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
+
     return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
       return GetBuilder<GetxAuthController>(builder: (authcrl) {
         return GetBuilder<ManagementController>(
@@ -76,7 +77,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             "Service",
                             size: 30,
                           ),
-                          authcrl.ismember
+                          authcrl.ismember!=null && authcrl.ismember!
                               ? const SizedBox()
                               : CardBorder(
                                   onpress: () {
@@ -111,7 +112,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         ],
                       ),
                     ),
-                    managementcontroller.authctrl.ismember ||
+                    managementcontroller.authctrl.ismember!=null && managementcontroller.authctrl.ismember! ||
                             managementcontroller.getallservices.isEmpty
                         ? const SizedBox()
                         : Row(
@@ -192,7 +193,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                       size: 24,
                                                     ),
                                                   ),
-                                                  authcrl.ismember
+                                                  authcrl.ismember!=null&&authcrl.ismember!
                                                       ? const SizedBox()
                                                       : Row(
                                                           children: [

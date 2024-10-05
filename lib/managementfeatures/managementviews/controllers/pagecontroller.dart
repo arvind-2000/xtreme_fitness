@@ -33,12 +33,9 @@ class GetxPageController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     navpage = 0;
     addmemberpages = 0;
-
-    update();
   }
 
   void changeaddMemberPage(int addpage) {

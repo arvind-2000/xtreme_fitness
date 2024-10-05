@@ -12,6 +12,7 @@ import 'package:xtreme_fitness/widgets/titletext.dart';
 import '../../../config/const.dart';
 
 import '../../../widgets/cardborder.dart';
+import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
@@ -131,8 +132,9 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                     child: SizedBox(
                                       width: 500,
                                       height: 600,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(32),
+                                      child: CardwithShadow(
+                                        margin: EdgeInsets.zero,
+                                        color: Colors.grey[900],
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -232,21 +234,21 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                           DropdownMenu(
                                                               menuStyle:
                                                                   MenuStyle(
-                                                                      backgroundColor:
-                                                                          WidgetStateColor
-                                                                              .resolveWith(
-                                                                (states) => Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .primary,
-                                                              )),
+                                                                                shape: WidgetStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+                              backgroundColor: WidgetStateColor.resolveWith(
+                            (states) => Colors.grey[800]!,
+                          )),
                                                               onSelected:
                                                                   (index) {
                                                                 setState(() {
                                                                   serviceStatus = d[index!];
                                                               });
                                                               },
-
+                                                                                
                                                               hintText:
                                                                  managectrl.searchServicesSchedule[i].status,
                                                               dropdownMenuEntries: 
@@ -356,17 +358,19 @@ class _ListCardState extends State<ListCard2> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TitleText(
-                              "Name: ${widget.name}",
-                              size: 16,
+                              "Phone: ${widget.name}",
+                              size: 14,
+                              color: Colors.grey[300],
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                          
                            
                                  TitleText(
                               "Service Name: ${widget.servicename}",
-                              size: 16,
+                              size: 14,
+                                color: Colors.grey[300],
                             ),
                             const SizedBox(
                               height: 10,
@@ -374,7 +378,7 @@ class _ListCardState extends State<ListCard2> {
                             const Text("status"),
                             Text(
                                 widget.service.status,
-                                style: const TextStyle(fontWeight: FontWeight.bold)),
+                                style:  TextStyle(  color: Colors.grey[300],)),
                             const SizedBox(
                               height: 6,
                             ),

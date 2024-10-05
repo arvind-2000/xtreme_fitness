@@ -493,13 +493,13 @@ class PaymentDialog extends StatelessWidget {
                     //   ],
                     // )
 
-                    addmemberctrl.authctrl.ismember
+                    addmemberctrl.authctrl.ismember==null||addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : const Text("Choose Payment Method"),
                     SizedBox(
                       height: phone != null ? 0 : 16,
                     ),
-                    addmemberctrl.authctrl.ismember
+                       addmemberctrl.authctrl.ismember==null||addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : Row(
                             children: [

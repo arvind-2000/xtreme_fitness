@@ -43,76 +43,79 @@ class _RenewalFormsState extends State<RenewalForms> {
       return GetBuilder<GetxPageController>(builder: (pagectrl) {
         return Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 800),
+            constraints: const BoxConstraints(maxWidth: 1400),
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  addmemberctrl.paymentstatus == 0
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const HeadingText("Plan Renewal"),
-                            IconButton(
-                              onPressed: () {
-                                addmemberctrl.onClose();
-                                // pagectrl.disposes();
-                                pagectrl.changerenewal(false);
-                                if (widget.callback != null) {
-                                  widget.callback!();
-                                }
-                              },
-                              icon: const Icon(Icons.close),
-                              tooltip: "Close",
-                            )
-                          ],
-                        )
-                      : const SizedBox(),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  addmemberctrl.paymentstatus != 0
-                      ? PaymentStatusCard(callback: () {
-                          addmemberctrl.changepaymentstatus(0);
-                          pagectrl.changerenewal(false);
-                        })
-                      : PlanSelectionField(
-                          pagectrl: pagectrl,
-                          buttontext: 'Renew Plan',
-                          callback: () {
-                            if (addmemberctrl.selectedplan != null) {
-                              if (addmemberctrl.selectedplan!.category
-                                      .toLowerCase() ==
-                                  "personal") {
-                                if (addmemberctrl.gettrainer != null) {
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    addmemberctrl.paymentstatus == 0
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const HeadingText("Plan Renewal"),
+                              IconButton(
+                                onPressed: () {
+                                  addmemberctrl.onClose();
+                                  // pagectrl.disposes();
+                                  pagectrl.changerenewal(false);
+                                  if (widget.callback != null) {
+                                    widget.callback!();
+                                  }
+                                },
+                                icon: const Icon(Icons.close),
+                                tooltip: "Close",
+                              )
+                            ],
+                          )
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    addmemberctrl.paymentstatus != 0
+                        ? PaymentStatusCard(callback: () {
+                            addmemberctrl.changepaymentstatus(0);
+                            pagectrl.changerenewal(false);
+                          })
+                        : PlanSelectionField(
+                            pagectrl: pagectrl,
+                            buttontext: 'Renew Plan',
+                            callback: () {
+                              if (addmemberctrl.selectedplan != null) {
+                                if (addmemberctrl.selectedplan!.category
+                                        .toLowerCase() ==
+                                    "personal") {
+                                  if (addmemberctrl.gettrainer != null) {
+                                    Get.dialog(PaymentDialogs(callback: () {
+                                      Navigator.pop(context);
+                                      addmemberctrl.changepaymentstatus(3);
+                                      Future.delayed(
+                                        const Duration(seconds: 2),
+                                        () => addmemberctrl.renewalsubmission(),
+                                      );
+                                    }));
+                                  } else {
+                                    CustomSnackbar(
+                                        context, "No Trainers Selected");
+                                  }
+                                } else {
                                   Get.dialog(PaymentDialogs(callback: () {
                                     Navigator.pop(context);
-                                    addmemberctrl.changepaymentstatus(3);
-                                    Future.delayed(
-                                      const Duration(seconds: 2),
-                                      () => addmemberctrl.renewalsubmission(),
-                                    );
+                                    addmemberctrl.renewalsubmission();
                                   }));
-                                } else {
-                                  CustomSnackbar(
-                                      context, "No Trainers Selected");
                                 }
                               } else {
-                                Get.dialog(PaymentDialogs(callback: () {
-                                  Navigator.pop(context);
-                                  addmemberctrl.renewalsubmission();
-                                }));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("No Plans Selected")));
                               }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("No Plans Selected")));
-                            }
-                          },
-                        ),
-                  const SizedBox(
-                    height: 100,
-                  )
-                ],
+                            },
+                          ),
+                    const SizedBox(
+                      height: 100,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -233,13 +236,13 @@ class PaymentDialogs extends StatelessWidget {
                     //   ],
                     // )
 
-                    addmemberctrl.authctrl.ismember
+                    addmemberctrl.authctrl.ismember!=null&&addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : const Text("Choose Payment Method"),
                     const SizedBox(
                       height: 16,
                     ),
-                    addmemberctrl.authctrl.ismember
+                       addmemberctrl.authctrl.ismember!=null&&addmemberctrl.authctrl.ismember!
                         ? const SizedBox()
                         : Row(
                             children: [

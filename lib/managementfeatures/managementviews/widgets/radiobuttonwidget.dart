@@ -11,7 +11,7 @@ class RadiobuttonWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(question,style: const TextStyle(fontSize: 16),),
+        Text(question,style: const TextStyle(fontSize: 16),textAlign: TextAlign.justify,),
          Row(
                   children: [
                     Row(

@@ -137,7 +137,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                               .where(
                                 (element) {
                                   return element.durationInMonths ==
-                                      managectrl.plandurations;
+                                      managectrl.plandurations && element.isActive!;
                                 },
                               )
                               .toList()
@@ -162,7 +162,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                   .where(
                                     (element) {
                                       return element.durationInMonths ==
-                                          managectrl.plandurations;
+                                          managectrl.plandurations && element.isActive!;
                                     },
                                   )
                                   .toList()

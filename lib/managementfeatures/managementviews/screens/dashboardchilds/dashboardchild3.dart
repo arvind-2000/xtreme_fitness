@@ -25,44 +25,28 @@ class DashboardChild3 extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(32.0),
+         Padding(
+                padding: EdgeInsets.all(32.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TitleText("Analytics"),
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Services"),
+                  
                       ],
                     ),
-                    // DropdownButton(
-                    //   underline: const SizedBox(),
-                    //   hint:  Text(
-                    //     dayslist[managectrl.servicefilter],
-                    //     style: TextStyle(fontSize: 10),
-                    //   ),
-                    //   value: managectrl.servicefilter,
-                    //   items: List.generate(
-                    //     3,
-                    //     (index) => DropdownMenuItem(
-                    //         value: index,
-                    //         child: Text(dayslist[index],
-                    //             style: const TextStyle(fontSize: 10))),
-                    //   ),
-                    //   onChanged: (value) {
+                      Text("This Year",style: TextStyle(color: Colors.grey[500])),
 
-                    //     // managectrl.changeservicefilter(value!%3);
-                    //   },
-                    // )
+    
                   ],
                 ),
               ),
-             managectrl.filterpayments.isEmpty?SizedBox():Expanded(
+             managectrl.filterpayments.isEmpty?const SizedBox():Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GraphsWidget(
@@ -79,11 +63,11 @@ class DashboardChild3 extends StatelessWidget {
                   ],
                 ),
               ),
-                  seriesdata: managectrl.filterpayments.entries.map((e){
+                  seriesdata: managectrl.filterpayments.entries.map ((e){
                     double d = 0;
                     for(Alluserpaymentmodel x in e.value){
 
-                        d = d + x.receivedAmount??0;
+                        d = d + x.receivedAmount;
 
                     }
 

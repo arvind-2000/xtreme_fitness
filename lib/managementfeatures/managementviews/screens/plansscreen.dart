@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
@@ -224,7 +226,12 @@ class _PlansScreenState extends State<PlansScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      const Text("Price"),
+                                                      Text(
+                                                        "Price",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .grey[500]),
+                                                      ),
                                                       Row(
                                                         children: [
                                                           Text(
@@ -238,25 +245,32 @@ class _PlansScreenState extends State<PlansScreen> {
                                                           ),
                                                           Text(
                                                             "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontStyle:
                                                                     FontStyle
-                                                                        .italic),
+                                                                        .italic,
+                                                                color: Colors
+                                                                    .grey[500]),
                                                           )
                                                         ],
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                      const Text("Discount"),
+                                                      Text(
+                                                        "Discount",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .grey[500]),
+                                                      ),
                                                       Text(
                                                         "${e.value.discountPercentage}%",
                                                         style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,

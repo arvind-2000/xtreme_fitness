@@ -13,6 +13,9 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 import 'package:xtreme_fitness/widgets/textformwidget.dart';
 
+import '../../../widgets/card.dart';
+import '../../../widgets/titletext.dart';
+
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
   final _formKey = GlobalKey<FormState>();
@@ -250,8 +253,14 @@ class _RolesState extends State<Roles> {
                     }
                   },
                   icon: showroles
-                      ? const Icon(Icons.close)
-                      : const Icon(Icons.add),
+                      ? const Icon(
+                          Icons.close,
+                          size: 14,
+                        )
+                      : const Icon(
+                          Icons.add,
+                          size: 14,
+                        ),
                   tooltip: showroles ? "Close" : "Add roles",
                 )
               ],
@@ -307,29 +316,34 @@ class _RolesState extends State<Roles> {
                     shrinkWrap: true,
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 160, childAspectRatio: 1 / 0.4),
-                    itemBuilder: (context, index) => Stack(
-                      children: [
-                        CardBorder(
-                            child: Center(
-                                child: Text(
-                          managectrl.getallRoles[index].roleName,
-                          style: const TextStyle(fontSize: 12),
-                        ))),
-                        managectrl.getallRoles[index].roleName.toLowerCase() ==
-                                    "superadmin" ||
-                                managectrl.getallRoles[index].roleName
-                                        .toLowerCase() ==
-                                    "member" ||
-                                managectrl.getallRoles[index].roleName
-                                        .toLowerCase() ==
-                                    "servicemember"
-                            ? const SizedBox()
-                            : Positioned(
-                                right: 0,
-                                top: 0,
-                                child: IconButton(
-                                    onPressed: () {
+                            mainAxisSpacing: 4,
+                            crossAxisSpacing: 4,
+                            maxCrossAxisExtent: 160,
+                            childAspectRatio: 1 / 0.4),
+                    itemBuilder: (context, index) => CardwithShadow(
+                        onpress: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              managectrl.getallRoles[index].roleName,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "superadmin" ||
+                                    managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "member" ||
+                                    managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "servicemember"
+                                ? const SizedBox()
+                                : Cardonly(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    padding: const EdgeInsets.all(4),
+                                    onpress: () {
                                       Get.dialog(PageDialog(
                                           child: Row(
                                             children: [
@@ -360,13 +374,17 @@ class _RolesState extends State<Roles> {
                                             String v = await managectrl
                                                 .deleteRole(managectrl
                                                     .getallRoles[index]);
-                                            CustomSnackbar(context, v);
                                             Get.back();
+                                            CustomSnackbar(context, v);
                                           }));
                                     },
-                                    icon: const Icon(Icons.close)))
-                      ],
-                    ),
+                                    child: const Center(
+                                        child: Icon(
+                                      Icons.delete,
+                                      size: 12,
+                                    )))
+                          ],
+                        )),
                     itemCount: managectrl.getallRoles.length,
                   ).animate().fadeIn()
           ],
@@ -424,58 +442,100 @@ class _EditContactsState extends State<EditContacts> {
                     });
                   }
                 },
-                icon: isEdit ? const Icon(Icons.close) : const Icon(Icons.edit),
-                tooltip: isEdit ? "Close" : "edit",
+                icon: isEdit
+                    ? const Icon(
+                        Icons.close,
+                        size: 14,
+                      )
+                    : const Icon(
+                        Icons.edit,
+                        size: 14,
+                      ),
+                tooltip: isEdit ? "Close" : "Edit Contact Info",
               )
             ],
           ),
           const SizedBox(
             height: 20,
           ),
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          isEdit
+              ? Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        TextFieldWidget(
+                          enabletext: isEdit,
+                          hint: "Address",
+                          controller: widget.cntrl.addresscon,
+                          counter: 100,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                          enabletext: isEdit,
+                          hint: "Pin Code",
+                          controller: widget.cntrl.pincodecon,
+                          counter: 50,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                            enabletext: isEdit,
+                            hint: "Phone Number",
+                            controller: widget.cntrl.phonecon,
+                            counter: 50),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                            enabletext: isEdit,
+                            hint: "Email",
+                            controller: widget.cntrl.mailcon,
+                            counter: 50),
+                      ],
+                    ),
+                  ),
+                ).animate().fadeIn()
+              : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(
                     height: 16,
                   ),
-                  TextFieldWidget(
-                    enabletext: isEdit,
-                    hint: "Address",
-                    controller: widget.cntrl.addresscon,
-                    counter: 100,
-                  ),
+                  const TitleText("Address", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.address ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                    enabletext: isEdit,
-                    hint: "Pin Code",
-                    controller: widget.cntrl.pincodecon,
-                    counter: 50,
-                  ),
+                  const TitleText("PinCode", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.pinCode ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                      enabletext: isEdit,
-                      hint: "Phone Number",
-                      controller: widget.cntrl.phonecon,
-                      counter: 50),
+                  const TitleText("Phone Number", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.phoneNumber ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                      enabletext: isEdit,
-                      hint: "Email",
-                      controller: widget.cntrl.mailcon,
-                      counter: 50),
-                ],
-              ),
-            ),
-          ),
+                  const TitleText("Email", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.email ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]).animate().fadeIn(),
           const SizedBox(height: 20),
           isEdit
               ? Row(

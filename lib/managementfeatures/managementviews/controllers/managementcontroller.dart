@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrepo.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -20,6 +21,7 @@ import '../../managementdomain/entities.dart/subscription.dart';
 import '../../managementdomain/entities.dart/trainee.dart';
 import '../../managementdomain/entities.dart/user.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
+import '../../managementdomain/entities.dart/xtremerwithsubs.dart';
 
 class ManagementController extends GetxController {
   final ManagementRepo managementRepo = ManagementrepoImpl();
@@ -31,33 +33,33 @@ class ManagementController extends GetxController {
   List<Alluserpaymentmodel> _searchpayments = [];
   List<Paymentlatest10> _latestpayment10 = [];
   List<UserEntity> _allstaff = [];
-  List<Xtremer> _allxtremer = [];
-  final List<Xtremer> _allxtremerforoverall = [];
-  List<Xtremer> _allinactivextremer = [];
+  List<XtremerWithSubscription> _allxtremer = [];
+  final List<XtremerWithSubscription> _allxtremerforoverall = [];
+  List<XtremerWithSubscription> _allinactivextremer = [];
   List<Membership> _allmembership = [];
   bool ismember = true;
-  List<Xtremer> get allinactivextremer => _allinactivextremer;
-  List<Xtremer> _allpersonalxtremer = [];
-  final List<Xtremer> _allpersonalxtremerforoverall = [];
-  List<Xtremer> get allpersonalxtremerforoverall =>
+  List<XtremerWithSubscription> get allinactivextremer => _allinactivextremer;
+  List<XtremerWithSubscription> _allpersonalxtremer = [];
+  final List<XtremerWithSubscription> _allpersonalxtremerforoverall = [];
+  List<XtremerWithSubscription> get allpersonalxtremerforoverall =>
       _allpersonalxtremerforoverall;
 
-  final List<Xtremer> _allgeneralxtremerforoverall = [];
-  List<Xtremer> get allgenerallxtremerforoverall =>
+  final List<XtremerWithSubscription> _allgeneralxtremerforoverall = [];
+  List<XtremerWithSubscription> get allgenerallxtremerforoverall =>
       _allgeneralxtremerforoverall;
 
-  final List<Xtremer> _allinactivextremerforoverall = [];
-  List<Xtremer> get allinactivextremerforoverall =>
+  final List<XtremerWithSubscription> _allinactivextremerforoverall = [];
+  List<XtremerWithSubscription> get allinactivextremerforoverall =>
       _allinactivextremerforoverall;
-  List<Xtremer> _allgeneralxtremer = [];
+  List<XtremerWithSubscription> _allgeneralxtremer = [];
   List<TrainerEntity> _alltrainer = [];
-  List<Xtremer> _searchxtremerlist = [];
+  List<XtremerWithSubscription> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
-  List<Xtremer> get getallXtremer => _allxtremer;
-  List<Xtremer> get getallxtremerforoverall => _allxtremerforoverall;
-  List<Xtremer> get getsearchXtremer => _searchxtremerlist;
-  List<Xtremer> get allpersonalxtremer => _allpersonalxtremer;
-  List<Xtremer> get allgeneralxtremer => _allgeneralxtremer;
+  List<XtremerWithSubscription> get getallXtremer => _allxtremer;
+  List<XtremerWithSubscription> get getallxtremerforoverall => _allxtremerforoverall;
+  List<XtremerWithSubscription> get getsearchXtremer => _searchxtremerlist;
+  List<XtremerWithSubscription> get allpersonalxtremer => _allpersonalxtremer;
+  List<XtremerWithSubscription> get allgeneralxtremer => _allgeneralxtremer;
   List<Paymentlatest10> get latestpayment10 => _latestpayment10;
 
   List<ServiceEntity> _allservices = [];
@@ -88,8 +90,8 @@ class ManagementController extends GetxController {
   int searchposition = 0;
   Membership? currentmember;
   GetxAuthController authctrl = Get.find<GetxAuthController>();
-
-  Xtremer? xtremer;
+  AddMemberController addmemberctrl = Get.put(AddMemberController());
+  XtremerWithSubscription? xtremer;
   Admission? _admission;
   Admission? get getAdmission => _admission;
 
@@ -110,23 +112,24 @@ class ManagementController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    authctrl.authenticationsforsession();
     getplans();
-    getadmission();
-    checkmember();
-    getxtremer();
-    getStaff();
     getallServices();
+    getadmission();
     getTrainer();
-    viewpayment();
-    getpaymentlastest10();
+    getxtremer();
     getAllRoles();
     getMemberships();
-    getAllServiceSchedules();
-    getAllSubscriptions();
-    getAllusers();
+    getStaff();
+    // if(authctrl.ismember!=null && !authctrl.ismember!){
+
+    // }
+
+
+
+
 
     update();
+    
   }
 
   ///for realtime data calls
@@ -178,53 +181,64 @@ class ManagementController extends GetxController {
     return d;
   }
 
-  void getinactivextremer() async {
-    _allinactivextremer = await managementRepo.viewinactivemembers();
-    update();
-  }
+  // void getinactivextremer() async {
+  //   _allinactivextremer = await managementRepo.viewinactivemembers();
+  //   update();
+  // }
 
-  void getallpersonalextremer() async {
-    _allpersonalxtremer = await managementRepo.viewpersonalmembers();
-    update();
-  }
+  // void getallpersonalextremer() async {
+  //   _allpersonalxtremer = await managementRepo.viewpersonalmembers();
+  //   update();
+  // }
 
-  void getallgeneralextremer() async {
-    _allgeneralxtremer = await managementRepo.viewgeneralmembers();
-    update();
-  }
+  // void getallgeneralextremer() async {
+  //   _allgeneralxtremer = await managementRepo.viewgeneralmembers();
+  //   update();
+  // }
 
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
-    _allxtremer = await managementRepo.viewMember();
-    if (authctrl.ismember) {
-      //print("In get xtremer");
-      xtremer = _allxtremer.firstWhereOrNull(
-        (element) => element.XtremerId.toString() == authctrl.userid,
-      );
-      update();
-    } else {
-      _searchxtremerlist = _allxtremer;
-      _allgeneralxtremer = _allxtremer
-          .where(
-            (element) =>
-                element.category == 'General' && element.isActive == true,
-          )
-          .toList();
-      _allpersonalxtremer = _allxtremer
-          .where(
-            (element) =>
-                element.category == 'Personal' && element.isActive == true,
-          )
-          .toList();
-      _allinactivextremer = _allxtremer
-          .where(
-            (element) => element.isActive == false,
-          )
-          .toList();
-    }
+    _allxtremer = await managementRepo.viewMemberwithSubs();
+    if (authctrl.ismember!=null) {
+  if (!authctrl.ismember!) {
+    _searchxtremerlist = _allxtremer;
+    _allgeneralxtremer = _allxtremer
+        .where(
+          (element) =>
+              element.category == 'General' && element.isActive == true,
+        )
+        .toList();
+    _allpersonalxtremer = _allxtremer
+        .where(
+          (element) =>
+              element.category == 'Personal' && element.isActive == true,
+        )
+        .toList();
+    _allinactivextremer = _allxtremer
+        .where(
+          (element) => element.isActive == false,
+        )
+        .toList();
+  }
+}
 
     update();
   }
+
+  void getmemberxtreme(){
+    if(authctrl.ismember){
+            if (authctrl.ismember) {
+    // print("In get xtremer");
+    xtremer = _allxtremer.firstWhereOrNull(
+      (element) => element.XtremerId == authctrl.getuser!.id,
+    );
+    addmemberctrl.addxtremersrenewaledit(xtremer);
+    update();
+  } 
+    }
+  }
+
+
 
   Future<String> addplan(Plan plan) async {
     String v = await managementRepo.addPlans(plan: plan);
@@ -345,17 +359,29 @@ class ManagementController extends GetxController {
   }
 
   void getMemberships() async {
-    _allmembership = await managementRepo.viewMembership();
-    if (authctrl.ismember) {
-      // //print("In current meber");
-      currentmember = _allmembership.firstWhereOrNull(
-        (element) =>
-            element.userId.toString() == authctrl.userid && element.isActive!,
-      );
-      // currentmember = Membership(id: 1,userId: 12,membershipId: 1200,admissionId: 12,admissionFeePaid: true,bmiUsed: false,isActive: true,startDate: DateTime.now());
-    }
+    _allmembership = await managementRepo.viewMembership(); 
     update();
   }
+
+
+  void checkmemberships(){
+
+
+  if (authctrl.ismember) {
+
+    currentmember = _allmembership.firstWhereOrNull(
+      (element) =>
+          element.userId == authctrl.getuser!.id,
+    );
+     
+  }
+
+
+  }
+
+
+
+
 
   void getStaff() async {
     // _allstaff = dummystaff;
@@ -392,7 +418,6 @@ class ManagementController extends GetxController {
 
   void getpaymentlastest10() async {
     _latestpayment10 = await managementRepo.viewlatest10payment();
-
     update();
   }
 
@@ -414,7 +439,6 @@ class ManagementController extends GetxController {
           )
           .toList(),
     );
-    //print("In view payment : ${_allpayments.length}");
 
     update();
   }
@@ -506,20 +530,6 @@ class ManagementController extends GetxController {
     if (keyword.isEmpty) {
       _searchservice = _allserviceschedule;
     } else {
-      // _searchservice = _allserviceschedule.where(
-      //   (element){
-      //    for(UserEntity d in _allUsers){
-      //     if(d.id == element.userId && d.mobileNumber!.contains(keyword.trim())){
-      //         return true;
-      //    }else{
-      //     return false;
-      //    }
-
-      //   }
-      //      return false;
-
-      //   }
-      // ).toList();
       List<UserEntity> d = _allUsers
           .where(
             (element) => element.mobileNumber != null
@@ -564,6 +574,11 @@ class ManagementController extends GetxController {
 
   void allxtremer() {
     _searchxtremerlist = _allxtremer;
+    update();
+  }
+
+    void tobeexpiredlist() {
+    _searchxtremerlist = tobeExpired();
     update();
   }
 
@@ -617,19 +632,18 @@ class ManagementController extends GetxController {
     return v;
   }
 
-  List<Xtremer> tobeExpired() {
-    List<Xtremer> tobeexpiredlist = [];
-    DateTime dateMinusSevenDays =
-        DateTime.now().subtract(const Duration(days: 7));
-    for (Xtremer e in _allxtremer) {
-      for (Subscription d in _allSubscription) {
-        if (d.userId.toString() == e.XtremerId.toString() && d.isActive) {
-          if (d.endDate.isAtSameMomentAs(dateMinusSevenDays) ||
-              d.endDate.isAfter(dateMinusSevenDays)) {
+  List<XtremerWithSubscription> tobeExpired() {
+    List<XtremerWithSubscription > tobeexpiredlist = [];
+    DateTime dateaddSevenDays =
+        DateTime.now().add(const Duration(days: 7));
+    for (XtremerWithSubscription e in _allxtremer) {
+
+        if(e.endDate!.compareTo(DateTime.now())>-1 && e.endDate!.compareTo(dateaddSevenDays)<1 ){
+
             tobeexpiredlist.add(e);
-          }
         }
-      }
+
+
     }
 
     return tobeexpiredlist;

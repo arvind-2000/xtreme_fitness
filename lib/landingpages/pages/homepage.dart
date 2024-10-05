@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
-import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
-import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
-import 'package:xtreme_fitness/landingpages/pages/servicespage.dart';
+
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'dart:html' as html;
 
 import '../../widgets/card.dart';
 import '../../widgets/cardswithshadow.dart';
-
-import 'landingnavbarpage.dart';
-import 'pricingpage.dart';
 
 class LandingHomePage extends StatefulWidget {
   const LandingHomePage({super.key, this.index});

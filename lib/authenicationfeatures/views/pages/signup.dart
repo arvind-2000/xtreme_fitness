@@ -138,6 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ? const SizedBox()
                               : TextFieldWidget(
                                   counter: 10,
+
                                   hint: "Phone",
                                   icon: const Icon(Icons.phone),
                                   controller: _phonecontroller,
@@ -147,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   validator: () {
                                     return _authUseCases.phoneAuth(
                                         _phonecontroller.text.trim(),
-                                        "Phone NUmber");
+                                        "Phone Number");
                                   },
                                   fieldsubmitted: () {
                                     authctrl.signup(_phonecontroller.text);

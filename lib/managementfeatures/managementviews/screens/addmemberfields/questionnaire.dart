@@ -30,11 +30,8 @@ class Questionnare extends StatelessWidget {
       builder: (addmemberctrl) {
         return Cardonly(
           margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
           color: Colors.transparent,
-     
-
-          
-        
         
           child: Center(
             child: Column(
@@ -78,8 +75,11 @@ class Questionnare extends StatelessWidget {
                      ))
                   ],
                 ),ResponsivePages(
+                  ispadding: false,
                   issize: false,
-                  child1: Column(children: [const SizedBox(height: 30,),
+                  child1: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [const SizedBox(height: 30,),
                 RadiobuttonWidget(question: "Have you, for any reason, been unable to exercise in the past?",groupValue: addmemberctrl.healthQuestions['exerciseQ']??false, onChanged: (v){addmemberctrl.updatequestion('exerciseQ', v!);} ,),
                 const SizedBox(height: 10,),
                   RadiobuttonWidget(question: "Have your  physician ever advised you against exercising?",groupValue:addmemberctrl.healthQuestions['physicianQ']??false, onChanged: (v){addmemberctrl.updatequestion('physicianQ', v!);} ,),

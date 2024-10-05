@@ -234,7 +234,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Text("Amount"),
-                                            Text(
+                                            authctrl.getuser!=null&& authctrl.ismember?Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
                                                 "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                           ],
                                         ),
@@ -249,7 +250,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Text("Total Amount"),
-                                            Text(
+                                         authctrl.getuser!=null && authctrl.ismember?Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
                                                 "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                           ],
                                         ),
@@ -307,8 +309,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                   .spaceBetween,
                                                           children: [
                                                             const Text("Amount"),
-                                                            Text(
-                                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                             authctrl.getuser!=null && authctrl.ismember?Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                                           ],
                                                         ),
                                                         const SizedBox(
@@ -324,18 +327,19 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                           children: [
                                                             const Text(
                                                                 "Total Amount"),
-                                                            Text(
-                                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                          authctrl.getuser!=null && authctrl.ismember?Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                                           ],
                                                         ),
                                                         const SizedBox(
                                                           height: 16,
                                                         ),
-                                                        addmemberctrl.ismember
+                                                        addmemberctrl.authctrl.ismember
                                                             ? const SizedBox()
                                                             : const Text(
                                                                 "Choose Payment Method"),
-                                                        addmemberctrl.ismember
+                                                        addmemberctrl.authctrl.ismember
                                                             ? const SizedBox()
                                                             : Row(
                                                                 children: [
@@ -391,7 +395,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                         const SizedBox(
                                                           height: 16,
                                                         ),
-                                                        authctrl.userid == null ||
+                                                        authctrl.getuser == null ||
                                                                 authctrl.ismember ==
                                                                     false
                                                             ? Form(
@@ -436,7 +440,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                     bool v = true;
                                                     // create user
                           
-                                                    if (authctrl.userid == null ||
+                                                    if (authctrl.getuser==null ||
                                                         authctrl.ismember ==
                                                             false) {
                                                       if (_formkey.currentState!
@@ -455,7 +459,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                 _name.text.trim(),
                                                                 _phonenumber.text
                                                                     .trim(),
-                                                                role: authctrl.userid ==
+                                                                role: authctrl.getuser ==
                                                                             null ||
                                                                         authctrl.ismember ==
                                                                             false
@@ -482,7 +486,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                         );
                                                       }
                                                     } else {
-                                                      Navigator.pop(context);
+                                                     Get.back();
+
+                                                    
                                                       addmemberctrl
                                                           .changepaymentstatus(3);
                                                       Future.delayed(

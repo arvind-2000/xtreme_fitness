@@ -20,7 +20,7 @@ class DashboardChild2 extends StatelessWidget {
         padding: EdgeInsets.zero,
         child: managectrl.weeklypayments.isEmpty?Center(child: CircularProgressIndicator(color: Colors.white,)) : Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(32.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,12 +32,12 @@ class DashboardChild2 extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text("Earnings"),
+                      Text("Earnings",style: TextStyle(color: Colors.grey[500])),
                     ],
                   ),
                   Text(
-                    "Previous 30 days",
-                    style: TextStyle(fontSize: 10),
+                    "Most Recent",
+                    style: TextStyle(fontSize: 10,color: Colors.grey[500]),
                   ),
                   // DropdownButton(
                   //   underline: const SizedBox(),

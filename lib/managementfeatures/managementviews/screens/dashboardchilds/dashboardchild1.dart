@@ -32,7 +32,7 @@ class DashboardChild1 extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"),
+                          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",style: TextStyle(color: Colors.grey[500]),),
                     ],
                   ),
                 ],
@@ -53,7 +53,7 @@ class DashboardChild1 extends StatelessWidget {
                   FittedBox(
                       child: Text(
                     "$rupee ${Logics.totalamounts(managectrl.getallpayments , DateTime.now())}",
-                    style: const TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 40,color: Colors.grey[300]),
                   )),
                 ],
               )),

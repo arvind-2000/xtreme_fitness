@@ -37,9 +37,10 @@ class PieChartWidget extends StatelessWidget {
         series: <CircularSeries>[
           PieSeries<ChartData, String>(
             enableTooltip: true,
-
+            
             dataSource: <ChartData>[
               ChartData('Personal Trainee',
+                  
                   controller.allpersonalxtremer.length.toDouble()),
               ChartData('General Trainee',
                   (controller.allgeneralxtremer.length).toDouble()),
@@ -55,9 +56,10 @@ class PieChartWidget extends StatelessWidget {
             yValueMapper: (ChartData data, _) => data.value,
             // Optional: set color for each segment
             pointColorMapper: (ChartData data, _) {
+              
               switch (data.category) {
                 case 'Personal Trainee':
-                  return Color.fromARGB(255, 16, 209, 235);
+                  return Color.fromARGB(255, 16, 175, 96);
                 case 'General Trainee':
                   return Color.fromARGB(255, 45, 156, 219);
                 case 'Inactive Trainee':
@@ -67,8 +69,8 @@ class PieChartWidget extends StatelessWidget {
               }
               return null;
             },
-            dataLabelSettings: const DataLabelSettings(
-                // textStyle: TextStyle(fontSize: 16),
+            dataLabelSettings:  DataLabelSettings(
+             
                 isVisible: true,
                 showZeroValue: false), // Show data labels
           ),

@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xtreme_fitness/authentifeatures/domain/domainusecases.dart';
-import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/config/manageconfig.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/planentity.dart';
@@ -127,9 +125,14 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
                       ),
                       DropdownMenu(
                           menuStyle: MenuStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                               backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
-                          )),
+                                (states) => Colors.grey[800]!,
+                              )),
                           onSelected: (index) {
                             setState(() {
                               _plancat = plancategory[
@@ -164,9 +167,14 @@ class _AddPlanFieldsState extends State<AddPlanFields> {
                       ),
                       DropdownMenu(
                           menuStyle: MenuStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                               backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
-                          )),
+                                (states) => Colors.grey[800]!,
+                              )),
                           onSelected: (index) {
                             setState(() {
                               // _plancat = plancategory[(index??0)%plancategory.length];
