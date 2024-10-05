@@ -18,18 +18,18 @@ class DashboardChild2 extends StatelessWidget {
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return CardwithShadow(
         padding: EdgeInsets.zero,
-        child: managectrl.weeklypayments.isEmpty?Center(child: CircularProgressIndicator(color: Colors.white,)) : Column(
+        child: managectrl.weeklypayments.isEmpty?const Center(child: CircularProgressIndicator(color: Colors.white,)) : Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(32.0),
+              padding: const EdgeInsets.all(32.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitleText("Sales"),
-                      SizedBox(
+                      const TitleText("Sales"),
+                      const SizedBox(
                         height: 5,
                       ),
                       Text("Earnings",style: TextStyle(color: Colors.grey[500])),

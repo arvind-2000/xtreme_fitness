@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffo
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../../config/const.dart';
 import '../../../../widgets/normaltext.dart';
 import '../../../../widgets/textformwidget.dart';
 import '../../../../widgets/titletext.dart';
@@ -395,7 +396,7 @@ class PaymentDialog extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const TitleText("Payment Method"),
+                     TitleText("Payment Method",size:MediaQuery.sizeOf(context).width<mobilescreen?16:null),
                         IconButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -493,7 +494,7 @@ class PaymentDialog extends StatelessWidget {
                     //   ],
                     // )
 
-                    addmemberctrl.authctrl.ismember==null||addmemberctrl.authctrl.ismember!
+                 addmemberctrl.authctrl.ismember
                         ? const SizedBox()
                         : const Text("Choose Payment Method"),
                     SizedBox(

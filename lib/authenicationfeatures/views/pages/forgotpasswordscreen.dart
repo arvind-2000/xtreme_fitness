@@ -182,6 +182,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                             .validate()) {
                                           authctrl.changepassword(
                                               _passwordcontroller.text.trim());
+                                            
                                         }
                                       },
                                     ),
@@ -265,7 +266,9 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                             fieldsubmitted: () {
                                               authctrl.passwordrenew(
                                                   _phonecontroller.text);
+                                             authctrl.startTimer();
                                             },
+                                         
                                           ),
                                     const SizedBox(
                                       height: 20,
@@ -304,20 +307,41 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                     authctrl.otp != null
                                         ? PinPutForm(
                                             onsubmit: (vad) {
-                                              if (authctrl.otp != null) {
-                                                if (authctrl.confirmotp()) {
-                                                  Get.to(() =>
-                                                      const LoginDialog());
+                                              // if (authctrl.otp != null) {
+                                              //   if (authctrl.confirmotp()) {
+                                              //     Get.to(() =>
+                                              //         const LoginDialog());
 
-                                                  setState(() {
-                                                    _otpcorrect = true;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    _otpcorrect = false;
-                                                  });
+                                              //     setState(() {
+                                              //       _otpcorrect = true;
+                                              //     });
+                                              //   } else {
+                                              //     setState(() {
+                                              //       _otpcorrect = false;
+                                              //     });
+                                              //   }
+                                              // }
+                                                                  if (widget.formkey.currentState!
+                                                    .validate()) {
+                                                  if (authctrl.otp != null) {
+                                                    if (authctrl.confirmotp(
+                                                        )) {
+                                                      setState(() {
+                                                        _otpcorrect = true;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        _otpcorrect = false;
+                                                      });
+                                                    }
+                                                    //confirm otp
+                                                  } else {
+                                                    //send otp
+                                                    authctrl.passwordrenew(
+                                                        _phonecontroller.text);
+                                          authctrl.startTimer();
+                                                  }
                                                 }
-                                              }
                                             },
                                           )
                                         // ? Center(
@@ -355,6 +379,36 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         //     ),
                                         //   )
                                         : const SizedBox(),
+
+                                     authctrl.otp != null
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                   authctrl.timertext>0?Text(
+                                      "Time Remaining : ${authctrl.getFormattedTime(authctrl.timertext)}",
+                                   style: TextStyle(color: Colors.grey[500]), ):
+                                    TextButton(
+                                      onPressed: authctrl.isButtonActive
+                                          ? () {
+                                              authctrl.passwordrenew(
+                                                  _phonecontroller.text);
+                  
+                                           authctrl.startTimer();
+                                            }
+                                          : null,
+                                      child:  Row(
+                                        children: [
+                                          const HeadingText('Resend OTP',
+                                              size: 12),
+                                              SizedBox(width:5),
+                                              Icon(Icons.replay_outlined,size: 12,color: Colors.grey[400]!,)
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),   
                                     !authctrl.otploading &&
                                             _otpcorrect != null &&
                                             _otpcorrect == false
@@ -379,12 +433,11 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         onpress: authctrl.otploading
                                             ? null
                                             : () async {
-                                                if (widget.formkey.currentState!
+                                                        if (widget.formkey.currentState!
                                                     .validate()) {
                                                   if (authctrl.otp != null) {
-                                                    if (authctrl.confirmotp()) {
-                                                      Get.to(() =>
-                                                          const LoginDialog());
+                                                    if (authctrl.confirmotp(
+                                                      )) {
                                                       setState(() {
                                                         _otpcorrect = true;
                                                       });
@@ -398,6 +451,10 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                                     //send otp
                                                     authctrl.passwordrenew(
                                                         _phonecontroller.text);
+                                                        
+                                                                     
+                                              authctrl.startTimer();
+                                            
                                                   }
                                                 }
                                               },
