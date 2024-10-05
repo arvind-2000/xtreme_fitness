@@ -129,6 +129,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                                     0.5),
                                                             fontSize: 12),
                                                       ),
+                                                      SizedBox(height: 10,),
                                                       SizedBox(
                                                           height: 50,
                                                           child: CardBorder(

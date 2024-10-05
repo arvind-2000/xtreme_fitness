@@ -15,6 +15,7 @@ import 'package:xtreme_fitness/widgets/headingtext.dart';
 import '../../../managementfeatures/managementviews/controllers/managementcontroller.dart';
 import '../../../widgets/cardborderhover.dart';
 import '../../../widgets/normaltext.dart';
+import '../controller/authcontroller.dart';
 
 class CreateXtremers extends StatefulWidget {
   const CreateXtremers({super.key, this.phonenumber, this.services});
@@ -130,7 +131,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
                       )
                     : Center(
                         child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 1000),
+                            constraints: const BoxConstraints(maxWidth: 1400),
                             child: Column(
                               children: [
                                 SizedBox(

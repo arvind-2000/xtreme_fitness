@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+
 import '../config/const.dart';
 import '../managementfeatures/managementviews/controllers/pagecontroller.dart';
 import '../managementfeatures/managementviews/screens/dashboard.dart';

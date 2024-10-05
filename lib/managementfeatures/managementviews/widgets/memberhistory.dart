@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
-import '../../../widgets/card.dart';
 import '../../../widgets/cardborder.dart';
-import '../../../widgets/headingtext.dart';
 import '../../managementdomain/entities.dart/paymententity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementmodels/calculationusecase.dart';

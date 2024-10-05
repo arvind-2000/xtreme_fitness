@@ -23,6 +23,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    // Get.put(GetxAuthController()).homepage();
   }
 
   @override

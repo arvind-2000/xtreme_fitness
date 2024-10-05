@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -29,23 +27,21 @@ class Body extends StatelessWidget {
             height: 30,
           ),
           Expanded(
-            child: Scrollbar(
-              child: ScrollablePositionedList.builder(
-                shrinkWrap: true,
-                itemScrollController: landctrl.scrollControllers,
-                itemPositionsListener: landctrl.itemPositionsListener,
-                initialScrollIndex: 0,
-                itemCount: 5,
-                itemBuilder: (context, index) => index == 0
-                    ? const HomeDesktop()
-                    : index == 1
-                        ? const Pricesdesktop()
-                        : index == 2
-                            ? const ServicesDesktop()
-                            : index == 3
-                                ? const GalleryDesktopCopy()
-                                : const ContactDesktop(),
-              ),
+            child: ScrollablePositionedList.builder(
+              shrinkWrap: true,
+              itemScrollController: landctrl.scrollControllers,
+              itemPositionsListener: landctrl.itemPositionsListener,
+              initialScrollIndex: 0,
+              itemCount: 5,
+              itemBuilder: (context, index) => index == 0
+                  ? const HomeDesktop()
+                  : index == 1
+                      ? const Pricesdesktop()
+                      : index == 2
+                          ? const ServicesDesktop()
+                          : index == 3
+                              ? const GalleryDesktopCopy()
+                              : const ContactDesktop(),
             ),
           ),
         ],

@@ -36,70 +36,72 @@ class _PageDialogState extends State<PageDialog> {
         // height: heights ?? 400,
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              widget.child,
-              // Expanded(child: child),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CardwithShadow(
-                        color: Colors.redAccent,
-                        onpress: widget.no,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        padding:
-                            MediaQuery.sizeOf(context).width <= mobilescreen
-                                ? const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 12)
-                                : null,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Icon(
-                            //   Icons.cancel,
-                            //   color: Colors.white,
-                            // ),
-                            Text(
-                              widget.iscancelreg == null ? "Cancel" : "NO",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        )),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: CardwithShadow(
-                        color: Colors.green[300],
-                        onpress: widget.yes,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 12),
-                        padding:
-                            MediaQuery.sizeOf(context).width <= mobilescreen
-                                ? const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 12)
-                                : null,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Icon(
-                            //   Icons.check,
-                            //   color: Colors.white,
-                            // ),
-                            Text(widget.iscancelreg == null ? "OK" : "YES",
-                                style: const TextStyle(color: Colors.white)),
-                          ],
-                        )),
-                  )
-                ],
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                widget.child,
+                // Expanded(child: child),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CardwithShadow(
+                          color: Colors.redAccent,
+                          onpress: widget.no,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          padding:
+                              MediaQuery.sizeOf(context).width <= mobilescreen
+                                  ? const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 12)
+                                  : null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Icon(
+                              //   Icons.cancel,
+                              //   color: Colors.white,
+                              // ),
+                              Text(
+                                widget.iscancelreg == null ? "Cancel" : "NO",
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: CardwithShadow(
+                          color: Colors.green[300],
+                          onpress: widget.yes,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 12),
+                          padding:
+                              MediaQuery.sizeOf(context).width <= mobilescreen
+                                  ? const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 12)
+                                  : null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Icon(
+                              //   Icons.check,
+                              //   color: Colors.white,
+                              // ),
+                              Text(widget.iscancelreg == null ? "OK" : "YES",
+                                  style: const TextStyle(color: Colors.white)),
+                            ],
+                          )),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

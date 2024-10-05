@@ -87,5 +87,10 @@ class GetxPageController extends GetxController {
     isrenewalforms = false;
     iseditforms = false;
     navpage = 0;
+
+    _istwo = false;
+ _isthree = false;
+ _isfour = false;
+ _isfive = false;
   }
 }

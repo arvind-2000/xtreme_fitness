@@ -17,6 +17,8 @@ class _LoginDialogState extends State<LoginDialog> {
   bool isforgot = false;
   bool isSignup = false;
   final _formkey = GlobalKey<FormState>();
+  final _signupformkey = GlobalKey<FormState>();
+  final _forgotformkey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -40,10 +42,10 @@ class _LoginDialogState extends State<LoginDialog> {
               // height:  MediaQuery.sizeOf(context).width<=mobilescreen?500:isSignup || isforgot ? 600 : 650,
               child: Cardonly(
                   margin: EdgeInsets.zero,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   color: Colors.grey[900],
                   child: isforgot
-                      ? ForgotPassWordScreen(formkey: _formkey,
+                      ? ForgotPassWordScreen(formkey: _forgotformkey,
                           changelogin: (v) {
                             state(() {
                               isforgot = v;
@@ -52,7 +54,7 @@ class _LoginDialogState extends State<LoginDialog> {
                         )
                       : isSignup
                           ? SignUpPage(
-                            formkey: _formkey,
+                            formkey: _signupformkey,
                               changelogin: (v) {
                                 state(() {
                                   isSignup = false;

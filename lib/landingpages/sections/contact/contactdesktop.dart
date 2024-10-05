@@ -122,21 +122,21 @@ class ContactDesktop extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Help",
+                                const Text("Help",
                                  style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                TextWithHover(
+                                const TextWithHover(
                                   text: "Account",
                                 
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                            TextWithHover(
+                            const TextWithHover(
                                   text:"Support Center",
                                 
                                 ),
@@ -461,7 +461,7 @@ class ContactDesktop extends StatelessWidget {
                                         const SizedBox(
                                           height: 30,
                                         ),
-                                        TextWithHover(
+                                        const TextWithHover(
                                   text: "Account",
                                          
                                         ),
@@ -474,8 +474,8 @@ class ContactDesktop extends StatelessWidget {
                                         ),
                                      TextWithHover(
                                  callback:  () {
-                                            final String url =
-                                                'https://$api/policies';
+                                           const String url =
+                                                'https://www.xtremefitnessimphal.com/policies';
                                             js.context.callMethod(
                                                 'open', [url, '_blank']);
                                           },

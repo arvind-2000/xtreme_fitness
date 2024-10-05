@@ -101,6 +101,11 @@ class GetxAuthController extends GetxController {
     update();
   }
 
+  void homepage() {
+    ismember = true;
+    _user = null;
+  }
+
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
     loginerrortext = null;
@@ -175,7 +180,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() async {
     isauthloading.value = true;
-
+    ismember = true;
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
@@ -189,6 +194,7 @@ class GetxAuthController extends GetxController {
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
         isauthloading.value = false;
+
         update();
         Get.offAllNamed('/dashboard');
       } else {
