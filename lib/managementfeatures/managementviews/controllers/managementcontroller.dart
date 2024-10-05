@@ -226,16 +226,17 @@ class ManagementController extends GetxController {
   }
 
   void getmemberxtreme(){
-    if(authctrl.ismember){
             if (authctrl.ismember) {
     // print("In get xtremer");
     xtremer = _allxtremer.firstWhereOrNull(
       (element) => element.XtremerId == authctrl.getuser!.id,
     );
-    addmemberctrl.addxtremersrenewaledit(xtremer);
-    update();
-  } 
+    if(xtremer!=null){
+       addmemberctrl.addxtremersrenewaledit(xtremer);
     }
+
+  } 
+    
   }
 
 

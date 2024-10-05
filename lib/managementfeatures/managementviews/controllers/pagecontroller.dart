@@ -27,7 +27,7 @@ class GetxPageController extends GetxController {
   GetxAuthController controller = Get.put(GetxAuthController());
   void changeNavPage(int page) {
     navpage = page;
-    controller.authenticationsforsession();
+    controller.authenticationsForSession();
     update();
   }
 

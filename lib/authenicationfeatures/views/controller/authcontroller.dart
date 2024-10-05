@@ -86,7 +86,7 @@ class GetxAuthController extends GetxController {
     }
   }
 
-  void setdataforsession(String userid) async {
+  Future<void> setdataforsession(String userid) async {
     // ismember = null;
     // update();
     userid = userid;
@@ -178,287 +178,297 @@ class GetxAuthController extends GetxController {
     prefs.remove('key2');
   }
 
-  void authentications() async {
-    isauthloading.value = true;
-    ismember = true;
-    //print("in authentications");
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
-    //print("${request.status}");
-    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (request.entries.first.value >= 200 &&
-        request.entries.first.value < 300) {
-      _authentication = true;
-      // print("in authentication sharedpreferences res");
+  // void authentications() async {
+  //   isauthloading.value = true;
+  //   ismember = true;
+  //   //print("in authentications");
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+  //   //print("${request.status}");
+  //   //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
+  //   if (request.entries.first.value >= 200 &&
+  //       request.entries.first.value < 300) {
+  //     _authentication = true;
+  //     // print("in authentication sharedpreferences res");
 
+  //     if (prefs.containsKey('key1')) {
+  //       setdataforsession(prefs.getString('key1')!);
+  //       isauthloading.value = false;
+
+  //       update();
+  //       Get.offAllNamed('/dashboard');
+  //     } else {
+  //       isauthloading.value = false;
+
+  //       Get.offAllNamed('/home');
+  //     }
+  //   } else {
+  //     isauthloading.value = false;
+
+  //     _authentication = false;
+  //     loginloading = false;
+  //     _user = null;
+  //     // ismember = true;
+  //     signupclose();
+  //     disposelogin();
+  //     disposeforgotpass();
+  //     if (request.entries.first.value == 401 ||
+  //         request.entries.first.value == 0) {
+  //       if (prefs.containsKey('key1')) {
+  //         Get.dialog(
+  //             barrierDismissible: false,
+  //             Dialog(
+  //               child: SizedBox(
+  //                 height: 300,
+  //                 width: 400,
+  //                 child: Center(
+  //                   child: CardwithShadow(
+  //                     margin: EdgeInsets.zero,
+  //                     color: Colors.grey[900],
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.center,
+  //                       children: [
+  //                         const SizedBox(
+  //                           height: 20,
+  //                         ),
+  //                         const HeadingText("Session Expired"),
+  //                         const SizedBox(
+  //                           height: 20,
+  //                         ),
+  //                         const Expanded(
+  //                             child: Center(
+  //                                 child: Text(
+  //                           "The session has expired or you may not be logged in.",
+  //                           textAlign: TextAlign.center,
+  //                         ))),
+  //                         const SizedBox(
+  //                           height: 30,
+  //                         ),
+  //                         CardwithShadow(
+  //                             onpress: () {
+  //                               prefs.remove('key1');
+  //                               prefs.remove('key2');
+  //                               Get.offAllNamed('/home');
+  //                               Get.dialog(const LoginDialog(
+  //                                 signupdialog: false,
+  //                               ));
+  //                             },
+  //                             child: const Text("Log In Again")),
+  //                         const SizedBox(
+  //                           height: 20,
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ));
+  //       } else {
+  //         isauthloading.value = false;
+  //         Get.offAllNamed('/home');
+  //       }
+  //     } else {
+  //       isauthloading.value = false;
+  //       if (!prefs.containsKey('key1')) {
+  //         Get.offAllNamed('/home');
+  //       }
+  //     }
+  //   }
+  // }
+
+
+
+void authentications() async {
+  isauthloading.value = true;
+  ismember = true;
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+  int statusCode = request.entries.first.value;
+
+  // Handle successful authentication
+  if (statusCode >= 200 && statusCode < 300) {
+    _authentication = true;
+
+    if (prefs.containsKey('key1')) {
+      await setdataforsession(prefs.getString('key1')!);
+      navigateToDashboard();
+    } else {
+      handleSessionInvalid(prefs);
+    }
+  } 
+  // Handle authentication failure or session expiry
+  else {
+    _authentication = false;
+    loginloading = false;
+    _user = null;
+    
+    signupclose();
+    disposelogin();
+    disposeforgotpass();
+
+    if (statusCode == 401 || statusCode == 0) {
       if (prefs.containsKey('key1')) {
-        setdataforsession(prefs.getString('key1')!);
-        isauthloading.value = false;
-
-        update();
-        Get.offAllNamed('/dashboard');
+        showSessionExpiredDialog(prefs);
       } else {
-        isauthloading.value = false;
-
-        Get.offAllNamed('/home');
+        handleSessionInvalid(prefs);
       }
     } else {
-      isauthloading.value = false;
+      handleSessionInvalid(prefs);
+    }
+  }
+}
 
-      _authentication = false;
-      loginloading = false;
-      _user = null;
-      // ismember = true;
-      signupclose();
-      disposelogin();
-      disposeforgotpass();
-      if (request.entries.first.value == 401 ||
-          request.entries.first.value == 0) {
-        if (prefs.containsKey('key1')) {
-          Get.dialog(
-              barrierDismissible: false,
-              Dialog(
-                child: SizedBox(
-                  height: 300,
-                  width: 400,
+// Helper function to navigate to the dashboard
+void navigateToDashboard() {
+  isauthloading.value = false;
+  update();
+  Get.offAllNamed('/dashboard');
+}
+
+
+  void authenticationsForSession() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  
+  // Fetch roles and check response
+  Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+  int statusCode = request.entries.first.value;
+
+  if (statusCode >= 200 && statusCode < 300) {
+    // If the request was successful
+    _authentication = true;
+
+    // Check if session data exists and set it
+    if (prefs.containsKey('key1')) {
+      setdataforsession(prefs.getString('key1')!);
+    } else {
+      handleSessionInvalid(prefs);
+    }
+  } 
+  // Handle session expiration or failure
+  else if (statusCode == 401 || statusCode == 0) {
+    handleSessionExpiry(prefs);
+  } 
+  // Handle any other failure case
+  else {
+    if (!prefs.containsKey('key1')) {
+      handleSessionInvalid(prefs);
+    }
+  }
+}
+
+Future<bool> authenticationsForReload() async {
+  isauthloading.value = true;
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
+  int statusCode = request.entries.first.value;
+  
+  print("In request: $statusCode");
+
+  // Check if the request was successful
+  if (statusCode >= 200 && statusCode < 300) {
+    _authentication = true;
+
+    // Check if key1 exists in shared preferences
+    if (prefs.containsKey('key1')) {
+      await setdataforsession(prefs.getString('key1')!);
+
+      if (_user == null) {
+        handleSessionInvalid(prefs);
+      }
+      return _user != null;
+    } else {
+      handleSessionInvalid(prefs);
+    }
+  } 
+  // Handle session expiration or failure cases
+  else if (statusCode == 401 || statusCode == 0) {
+    handleSessionExpiry(prefs);
+  } 
+  // Handle any other failure case
+  else {
+    handleSessionInvalid(prefs);
+  }
+
+  return false;
+}
+
+// Helper function to handle session expiration
+void handleSessionExpiry(SharedPreferences prefs) {
+  _user = null;
+  signupclose();
+  disposelogin();
+  disposeforgotpass();
+
+  if (prefs.containsKey('key1')) {
+    showSessionExpiredDialog(prefs);
+  } else {
+    handleSessionInvalid(prefs);
+  }
+
+  _authentication = false;
+  loginloading = false;
+  isauthloading.value = false;
+}
+
+// Helper function to handle invalid session and navigate to home
+void handleSessionInvalid(SharedPreferences prefs) {
+  prefs.remove('key1');
+  Get.offAllNamed('/home');
+  isauthloading.value = false;
+  update();
+}
+
+// Helper function to show session expired dialog
+void showSessionExpiredDialog(SharedPreferences prefs) {
+  Get.dialog(
+    barrierDismissible: false,
+    Dialog(
+      child: SizedBox(
+        height: 300,
+        width: 400,
+        child: Center(
+          child: Cardonly(
+            margin: EdgeInsets.zero,
+            color: Colors.grey[900],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                const HeadingText("Session Expired"),
+                const SizedBox(height: 20),
+                const Expanded(
                   child: Center(
-                    child: CardwithShadow(
-                      margin: EdgeInsets.zero,
-                      color: Colors.grey[900],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const HeadingText("Session Expired"),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Expanded(
-                              child: Center(
-                                  child: Text(
-                            "The session has expired or you may not be logged in.",
-                            textAlign: TextAlign.center,
-                          ))),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CardwithShadow(
-                              onpress: () {
-                                prefs.remove('key1');
-                                prefs.remove('key2');
-                                Get.offAllNamed('/home');
-                                Get.dialog(const LoginDialog(
-                                  signupdialog: false,
-                                ));
-                              },
-                              child: const Text("Log In Again")),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
+                    child: Text(
+                      "The session has expired or you may not be logged in.",
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
-              ));
-        } else {
-          isauthloading.value = false;
-          Get.offAllNamed('/home');
-        }
-      } else {
-        isauthloading.value = false;
-        if (!prefs.containsKey('key1')) {
-          Get.offAllNamed('/home');
-        }
-      }
-    }
-  }
-
-  void authenticationsforsession() async {
-    //print("in authentications");
-
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
-    //print("${request.status}");
-    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (request.entries.first.value >= 200 &&
-        request.entries.first.value < 300) {
-      _authentication = true;
-      // print("in authentication sharedpreferences res");
-
-      // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
-
-      //   setdataforsession(
-      //  prefs.getString('key1')!, prefs.getBool('key2')!);
-      // } else {
-      //   Get.offAllNamed('/home');
-
-      // }
-    } else {
-      if (request.entries.first.value == 401 ||
-          request.entries.first.value == 0) {
-        _authentication = false;
-        loginloading = false;
-        _user = null;
-        // ismember = true;
-        signupclose();
-        disposelogin();
-        disposeforgotpass();
-        if (prefs.containsKey('key1')) {
-          Get.dialog(
-              barrierDismissible: false,
-              Dialog(
-                child: SizedBox(
-                  height: 300,
-                  width: 400,
-                  child: Center(
-                    child: Cardonly(
-                      color: Colors.grey[900],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const HeadingText("Session Expired"),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Expanded(
-                              child: Center(
-                                  child: Text(
-                            "The session has expired or you may not be logged in.",
-                            textAlign: TextAlign.center,
-                          ))),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CardwithShadow(
-                              onpress: () {
-                                prefs.remove('key1');
-                                prefs.remove('key2');
-                                Get.offAllNamed('/home');
-                                Get.dialog(const LoginDialog(
-                                  signupdialog: false,
-                                ));
-                              },
-                              child: const Text("Log In Again")),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                const SizedBox(height: 30),
+                CardwithShadow(
+                  onpress: () {
+                    prefs.remove('key1');
+                    Get.offAllNamed('/home');
+                    Get.dialog(const LoginDialog(signupdialog: false));
+                  },
+                  child: const Text("Log In Again"),
                 ),
-              ));
-        }
-        // else {
-        //   Get.offAllNamed('/home');
-        // }
-      } else {
-        if (!prefs.containsKey('key1')) {
-          Get.offAllNamed('/home');
-        }
-      }
-    }
-  }
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
-  Future<void> authenticationsforReload() async {
-    isauthloading.value = true;
 
-    //print("in authentications");
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
-    //print("${request.status}");
-    //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-    if (request.entries.first.value >= 200 &&
-        request.entries.first.value < 300) {
-      _authentication = true;
-      // print("in authentication sharedpreferences res");
 
-      if (prefs.containsKey('key1')) {
-        setdataforsession(prefs.getString('key1')!);
-      } else {
-        Get.offAllNamed('/home');
-        isauthloading.value = false;
-        update();
-      }
-    } else {
-      if (request.entries.first.value == 401 ||
-          request.entries.first.value == 0) {
-        _authentication = false;
-        loginloading = false;
-        isauthloading.value = false;
 
-        _user = null;
-        // ismember = true;
-        signupclose();
-        disposelogin();
-        disposeforgotpass();
-        if (prefs.containsKey('key1')) {
-          Get.dialog(
-              barrierDismissible: false,
-              Dialog(
-                child: SizedBox(
-                  height: 300,
-                  width: 400,
-                  child: Center(
-                    child: Cardonly(
-                      color: Colors.grey[900],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const HeadingText("Session Expired"),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Expanded(
-                              child: Center(
-                                  child: Text(
-                            "The session has expired or you may not be logged in.",
-                            textAlign: TextAlign.center,
-                          ))),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CardwithShadow(
-                              onpress: () {
-                                prefs.remove('key1');
-                                prefs.remove('key2');
-                                Get.offAllNamed('/home');
-                                Get.dialog(const LoginDialog(
-                                  signupdialog: false,
-                                ));
-                              },
-                              child: const Text("Log In Again")),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ));
-        }
-        // else {
-        //   Get.offAllNamed('/home');
-        // }
-      } else {
-        isauthloading.value = false;
-        update();
-        if (!prefs.containsKey('key1')) {
-          Get.offAllNamed('/home');
-        }
-      }
-    }
-  }
+
 
   void signup(String phone) async {
     signuperror = null;

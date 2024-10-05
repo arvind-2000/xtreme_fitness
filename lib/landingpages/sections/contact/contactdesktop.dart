@@ -182,7 +182,7 @@ class ContactDesktop extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      contactctrl.contact!.phoneNumber!,
+                                      contactctrl.contact?.phoneNumber??"",
                                       style: const TextStyle(
                                           fontSize: 16, color: Colors.white60),
                                     ),
@@ -202,7 +202,7 @@ class ContactDesktop extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      "${contactctrl.contact!.email}",
+                                      "${contactctrl.contact?.email}",
                                       style: const TextStyle(
                                           fontSize: 16, color: Colors.white60),
                                     ),
@@ -222,7 +222,7 @@ class ContactDesktop extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      "${contactctrl.contact!.address!}, ${contactctrl.contact!.pinCode}",
+                                      "${contactctrl.contact?.address}, ${contactctrl.contact?.pinCode}",
                                       style: const TextStyle(
                                           fontSize: 16, color: Colors.white60),
                                     ),
@@ -515,7 +515,7 @@ class ContactDesktop extends StatelessWidget {
                                               width: 10,
                                             ),
                                             Text(
-                                              contactctrl.contact!.phoneNumber!,
+                                              contactctrl.contact?.phoneNumber??"",
                                               style: const TextStyle(
                                                   color: Colors.white60),
                                             ),
@@ -535,7 +535,7 @@ class ContactDesktop extends StatelessWidget {
                                               width: 10,
                                             ),
                                             Text(
-                                              '${contactctrl.contact!.email}',
+                                              '${contactctrl.contact?.email}',
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.white60),
@@ -556,7 +556,7 @@ class ContactDesktop extends StatelessWidget {
                                               width: 10,
                                             ),
                                             Text(
-                                              '${contactctrl.contact!.address!}, ${contactctrl.contact!.pinCode!}',
+                                              '${contactctrl.contact?.address}, ${contactctrl.contact?.pinCode}',
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.white60),

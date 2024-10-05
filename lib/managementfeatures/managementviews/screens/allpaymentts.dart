@@ -1071,6 +1071,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
   }
 }
 
+
 class ListCard extends StatefulWidget {
   const ListCard({
     super.key,
@@ -1089,47 +1090,51 @@ class ListCard extends StatefulWidget {
 
 class _ListCardState extends State<ListCard> {
   bool onhover = false;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxPageController>(builder: (pagectrl) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: InkWell(
-          mouseCursor: MouseCursor.uncontrolled,
           onTap: () {},
-          onHover: (v) {
+          onHover: (hovering) {
             setState(() {
-              onhover = v;
+              onhover = hovering;
             });
           },
-          child: Column(
-            children: [
-              Container(
-                //  color: onhover?Colors.blueGrey.withOpacity(0.2):null,
-                child: Row(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: onhover ? Colors.grey.withOpacity(0.1): Colors.transparent, // Subtle light grey on hover
+              borderRadius: BorderRadius.circular(10),
+           
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Receipt#",style:TextStyle(color:Colors.grey[700])),
+                          Text("Receipt#"),
                           TitleText(
                             "${widget.payment.transactionId}",
                             size: 14,
+                            color: Colors.grey[700]
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text("Payment Type",style:TextStyle(color:Colors.grey[700])),
+                          const SizedBox(height: 10),
+                          Text("Payment Type"),
                           Text(
-                              widget.payment.paymentType != null
-                                  ? widget.payment.paymentType!
-                                  : "",
-                              style:
-                                  const TextStyle()),
-                          const SizedBox(
-                            height: 6,
+                            widget.payment.paymentType != null
+                                ? widget.payment.paymentType!
+                                : "",
+                            style: TextStyle(color: Colors.grey[700]),
                           ),
+                          const SizedBox(height: 6),
                         ],
                       ),
                     ),
@@ -1137,37 +1142,142 @@ class _ListCardState extends State<ListCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        // Redesigned Edit Button
                         IconButton(
-                            onPressed: widget.edit,
-                            icon: const Icon(
-                              Icons.edit,
-                              size: 14,
-                            )),
-                        CardBorder(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 32),
-                            margin: EdgeInsets.zero,
-                            onpress: widget.userss,
-                            color: Colors.blue,
-                            child: const Text("View")),
-                        const SizedBox(
-                          height: 8,
+                          onPressed: widget.edit,
+                          icon: const Icon(Icons.edit, size: 20, color: Colors.blueGrey),
+                          tooltip: "Edit Payment",
                         ),
+                        const SizedBox(height: 8),
+                        // Redesigned View Button
+                        ElevatedButton(
+                          onPressed: widget.userss,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text("View", style: TextStyle(color: Colors.white)),
+                        ),
+                        const SizedBox(height: 8),
                         Text(
-                            '${widget.payment.paymentDate.day}/${widget.payment.paymentDate.month}/${widget.payment.paymentDate.year}',
-                            style: const TextStyle(fontSize: 14)),
+                          '${widget.payment.paymentDate.day}/${widget.payment.paymentDate.month}/${widget.payment.paymentDate.year}',
+                          style: const TextStyle(fontSize: 14),
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
-              ),
-              Divider(
-                color: Colors.white.withOpacity(0.4),
-              )
-            ],
+                const Divider(),
+              ],
+            ),
           ),
         ),
       );
     });
   }
 }
+
+
+// class ListCard extends StatefulWidget {
+//   const ListCard({
+//     super.key,
+//     required this.payment,
+//     required this.userss,
+//     this.edit,
+//   });
+
+//   final Alluserpaymentmodel payment;
+//   final VoidCallback userss;
+//   final VoidCallback? edit;
+
+//   @override
+//   State<ListCard> createState() => _ListCardState();
+// }
+
+// class _ListCardState extends State<ListCard> {
+//   bool onhover = false;
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<GetxPageController>(builder: (pagectrl) {
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 16),
+//         child: InkWell(
+//           mouseCursor: MouseCursor.uncontrolled,
+//           onTap: () {},
+//           onHover: (v) {
+//             setState(() {
+//               onhover = v;
+//             });
+//           },
+//           child: Column(
+//             children: [
+//               Container(
+//                 //  color: onhover?Colors.blueGrey.withOpacity(0.2):null,
+//                 child: Row(
+//                   children: [
+//                     Expanded(
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text("Receipt#",style:TextStyle(color:Colors.grey[700])),
+//                           TitleText(
+//                             "${widget.payment.transactionId}",
+//                             size: 14,
+//                           ),
+//                           const SizedBox(
+//                             height: 10,
+//                           ),
+//                           Text("Payment Type",style:TextStyle(color:Colors.grey[700])),
+//                           Text(
+//                               widget.payment.paymentType != null
+//                                   ? widget.payment.paymentType!
+//                                   : "",
+//                               style:
+//                                   const TextStyle()),
+//                           const SizedBox(
+//                             height: 6,
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     Column(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       crossAxisAlignment: CrossAxisAlignment.end,
+//                       children: [
+//                         IconButton(
+//                             onPressed: widget.edit,
+//                             icon: const Icon(
+//                               Icons.edit,
+//                               size: 14,
+//                             )),
+//                         CardBorder(
+//                             padding: const EdgeInsets.symmetric(
+//                                 vertical: 8, horizontal: 32),
+//                             margin: EdgeInsets.zero,
+//                             onpress: widget.userss,
+//                             color: Colors.blue,
+//                             child: const Text("View")),
+//                         const SizedBox(
+//                           height: 8,
+//                         ),
+//                         Text(
+//                             '${widget.payment.paymentDate.day}/${widget.payment.paymentDate.month}/${widget.payment.paymentDate.year}',
+//                             style: const TextStyle(fontSize: 14)),
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//               Divider(
+//                 color: Colors.white.withOpacity(0.4),
+//               )
+//             ],
+//           ),
+//         ),
+//       );
+//     });
+//   }
+// }
