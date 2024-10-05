@@ -167,66 +167,52 @@ class NavBarMember extends StatelessWidget {
                     Responsive.isTablet(context)) {
                   drawers(context);
                 }
-                Get.dialog(StatefulBuilder (
+                Get.dialog(StatefulBuilder(
                   builder: (context,s) {
-                    return GetBuilder<GetxAuthController>(
-                      builder: (auth) {
-                        return PageDialog(
-                            // heights: 300,
-                            no: () {
-                              Get.back();
-                            },
-                            yes: () {
-                              // Get.back();
-                        
-                              authctrl.logout();
-                                          
-                            
-                              
-                            },
-                            allignToCenter: true,
-                            child:  authctrl.loginloading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
-                        : Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                    return PageDialog(
+                    
+                        // heights: 300,
+                        no: () {
+                          Get.back();
+                        },
+                        yes: () {
+                          authctrl.logout();
+                        },
+                        allignToCenter: true,
+                        child: authctrl.loginloading
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      const Row(
-                                        children: [
-                                          Icon(Icons.logout),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          HeadingText(
-                                            "Log Out",
-                                            size: 20,
-                                          ),
-                                        ],
+                                      Icon(Icons.logout),
+                                      SizedBox(
+                                        width: 5,
                                       ),
-                                      const SizedBox(
-                                        height: 30,
+                                      HeadingText(
+                                        "Log Out",
+                                        size: 20,
                                       ),
-                                     auth.loginloading
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Center(
-                                          child: Text(
-                                        "Are you sure you want to logout?\nPress yes to confirm",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ))
                                     ],
-                                  ));
-                      }
-                    );
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Center(
+                                      child: Text(
+                                    "Are you sure you want to logout?\nPress yes to confirm",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ))
+                                ],
+                              ));
                   }
                 ));
               },

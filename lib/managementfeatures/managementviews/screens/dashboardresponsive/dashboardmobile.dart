@@ -49,6 +49,7 @@ class DashboardMobileScreen extends StatelessWidget {
                             TitleText(
                               "${controller.getallXtremer.length} ${controller.getallXtremer.length > 1 ? "Members" : "Member"}",
                               size: 30,
+                              color: Colors.grey[500],
                             ),
                             const SizedBox(
                               height: 20,
@@ -60,7 +61,7 @@ class DashboardMobileScreen extends StatelessWidget {
                                   children: [
                                     TitleText(controller
                                         .allpersonalxtremer.length
-                                        .toString()),
+                                        .toString(),  color: Colors.grey[500],),
                                     const Text("Personal")
                                   ],
                                 ),
@@ -68,7 +69,7 @@ class DashboardMobileScreen extends StatelessWidget {
                                   children: [
                                     TitleText(controller
                                         .allgeneralxtremer.length
-                                        .toString()),
+                                        .toString(),  color: Colors.grey[500],),
                                     const Text("General")
                                   ],
                                 ),
@@ -81,7 +82,7 @@ class DashboardMobileScreen extends StatelessWidget {
                                                     .allgeneralxtremer.length +
                                                 controller
                                                     .allpersonalxtremer.length))
-                                        .toString()),
+                                        .toString(),  color: Colors.grey[500],),
                                     const Text("Others")
                                   ],
                                 ),
@@ -89,7 +90,7 @@ class DashboardMobileScreen extends StatelessWidget {
                                   children: [
                                     TitleText(controller
                                         .allinactivextremer.length
-                                        .toString()),
+                                        .toString(),  color: Colors.grey[500],),
                                     const Text("Inactive")
                                   ],
                                 ),
@@ -114,7 +115,7 @@ class DashboardMobileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const SizedBox(height: 400, child: DashboardChild4()),
+                    const SizedBox( child: DashboardChild4()),
                     const SizedBox(
                       height: 24,
                     ),

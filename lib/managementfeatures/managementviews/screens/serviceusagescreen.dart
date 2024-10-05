@@ -234,14 +234,14 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                                                           DropdownMenu(
                                                               menuStyle:
                                                                   MenuStyle(
-                                                                      backgroundColor:
-                                                                          WidgetStateColor
-                                                                              .resolveWith(
-                                                                (states) => Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .primary,
-                                                              )),
+                                                                                shape: WidgetStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+                              backgroundColor: WidgetStateColor.resolveWith(
+                            (states) => Colors.grey[800]!,
+                          )),
                                                               onSelected:
                                                                   (index) {
                                                                 setState(() {
@@ -359,16 +359,18 @@ class _ListCardState extends State<ListCard2> {
                           children: [
                             TitleText(
                               "Phone: ${widget.name}",
-                              size: 16,
+                              size: 14,
+                              color: Colors.grey[300],
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                          
                            
                                  TitleText(
                               "Service Name: ${widget.servicename}",
-                              size: 16,
+                              size: 14,
+                                color: Colors.grey[300],
                             ),
                             const SizedBox(
                               height: 10,
@@ -376,7 +378,7 @@ class _ListCardState extends State<ListCard2> {
                             const Text("status"),
                             Text(
                                 widget.service.status,
-                                style: const TextStyle(fontWeight: FontWeight.bold)),
+                                style:  TextStyle(  color: Colors.grey[300],)),
                             const SizedBox(
                               height: 6,
                             ),

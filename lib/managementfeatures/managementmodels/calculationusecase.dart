@@ -502,8 +502,12 @@ Future<bool> exportPaymentDataToExcel(List<Alluserpaymentmodel> paymentList,Stri
 
 
 Future<bool> exportXtremerDataToExcel(List<XtremerWithSubscription> xtremerlist,List<Membership> memberlist,String payments) async {
+  if(xtremerlist.isEmpty){
+    return false;
+  }else{
   var excel = Excel.createExcel();
   Sheet sheet = excel["Sheet1"];
+
 
   // Define headers
   List<String> headers = [ 
@@ -561,6 +565,9 @@ Future<bool> exportXtremerDataToExcel(List<XtremerWithSubscription> xtremerlist,
   // TODO
   return false;
 }
+
+  }
+  
 
 
 

@@ -178,7 +178,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                       e.value.category,
                                                       size: 24,
                                                     ),
-                                                authctrl.ismember!=null && authctrl.ismember!
+                                       authctrl.ismember
                                                         ? const SizedBox()
                                                         : Row(
                                                             children: [
@@ -226,13 +226,13 @@ class _PlansScreenState extends State<PlansScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      const Text("Price"),
+                                                       Text("Price",style: TextStyle(color: Colors.grey[500]),),
                                                       Row(
                                                         children: [
                                                           Text(
                                                             e.value.price
                                                                 .toString(),
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
@@ -240,25 +240,25 @@ class _PlansScreenState extends State<PlansScreen> {
                                                           ),
                                                           Text(
                                                             "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
-                                                            style: const TextStyle(
+                                                            style:TextStyle(
                                                                 fontSize: 12,
                                                                 fontStyle:
                                                                     FontStyle
-                                                                        .italic),
+                                                                        .italic,color: Colors.grey[500]),
                                                           )
                                                         ],
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                      const Text("Discount"),
+                                                  Text("Discount",style: TextStyle(color: Colors.grey[500]),),
                                                       Text(
                                                         "${e.value.discountPercentage}%",
-                                                        style: const TextStyle(
+                                                        style:  TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .bold),
+                                                                    .bold,),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
@@ -268,6 +268,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                       HeadingText(
                                                         "${e.value.price - (e.value.price * (e.value.discountPercentage / 100))}",
                                                         size: 24,
+                                                        
                                                       ),
                                                     ],
                                                   ),

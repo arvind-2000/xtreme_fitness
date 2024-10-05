@@ -75,84 +75,122 @@ class _AdmissioncardState extends State<Admissioncard> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return CardwithShadow(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  showadmi?const  HeadingText("Edit Admission Fees",size: 20,) :const  HeadingText("Admission Fees",size: 20,),
-                  IconButton(onPressed: (){
-                      if(showadmi){
-                          //addroles
-                        setState(() {
-                          showadmi = false;
-                        });
-                      }else{
-                        setState((){
-                          showadmi = true;
-                          if(managectrl.getAdmission!=null){
-                            admissionprice.text = managectrl.getAdmission!.price.toString();
-                          }
-                        });
-                          
-                      }
-
-                  }, icon:showadmi?const Icon(Icons.close,size: 14,) : const Icon(Icons.edit,size: 14,),tooltip:showadmi?"Close": "Edit Admission",)
-                ],
-            
-        
-              ),
-                 const SizedBox(height: 20,),
-                 showadmi?ConstrainedBox(
-                   constraints: const BoxConstraints(maxWidth: 500),
-                   child: Form(key: _formkey,child: Column(children: [
-                     TextFieldWidget(hint: "Admission Price", controller: admissionprice,validator: (){
-                      try{
-                          double.tryParse(admissionprice.text);
-                      }on Exception{
-                        return "Enter a valid number";
-                      }
-                     },),
-                   
-                        const SizedBox(height: 6,),
-                        Row(
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return CardwithShadow(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                showadmi
+                    ? const HeadingText(
+                        "Edit Admission Fees",
+                        size: 20,
+                      )
+                    : const HeadingText(
+                        "Admission Fees",
+                        size: 20,
+                      ),
+                IconButton(
+                  onPressed: () {
+                    if (showadmi) {
+                      //addroles
+                      setState(() {
+                        showadmi = false;
+                      });
+                    } else {
+                      setState(() {
+                        showadmi = true;
+                        if (managectrl.getAdmission != null) {
+                          admissionprice.text =
+                              managectrl.getAdmission!.price.toString();
+                        }
+                      });
+                    }
+                  },
+                  icon: showadmi
+                      ? const Icon(Icons.close)
+                      : const Icon(Icons.edit),
+                  tooltip: showadmi ? "Close" : "Edit Admission",
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            showadmi
+                ? ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Form(
+                        key: _formkey,
+                        child: Column(
                           children: [
-                            CardBorder(
-                              margin: EdgeInsets.zero,
-                              onpress: ()async{
-                                    //addd roles
-                                    if(_formkey.currentState!.validate()){
-                                       String v = await managectrl.updateAdmission(Admission(id: managectrl.getAdmission!.id, name: managectrl.getAdmission!.name, price: double.tryParse( admissionprice.text)??0, discountPercentage:  managectrl.getAdmission!.discountPercentage));
-                                      CustomSnackbar(context, v);
-                                      admissionprice.clear();
-                                      setState(() {
-                                        showadmi = false;
-                                      });
-                                    }
-                                               
-                                  
+                            TextFieldWidget(
+                              hint: "Admission Price",
+                              controller: admissionprice,
+                              validator: () {
+                                try {
+                                  double.tryParse(admissionprice.text);
+                                } on Exception {
+                                  return "Enter a valid number";
+                                }
                               },
-                              child: const Center(child: Text("Edit Admission"))),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                CardBorder(
+                                    margin: EdgeInsets.zero,
+                                    onpress: () async {
+                                      //addd roles
+                                      if (_formkey.currentState!.validate()) {
+                                        String v = await managectrl
+                                            .updateAdmission(Admission(
+                                                id: managectrl.getAdmission!.id,
+                                                name: managectrl
+                                                    .getAdmission!.name,
+                                                price: double.tryParse(
+                                                        admissionprice.text) ??
+                                                    0,
+                                                discountPercentage: managectrl
+                                                    .getAdmission!
+                                                    .discountPercentage));
+                                        CustomSnackbar(
+                                          context,
+                                          v,
+                                        );
+                                        admissionprice.clear();
+                                        setState(() {
+                                          showadmi = false;
+                                        });
+                                      }
+                                    },
+                                    child: const Center(
+                                        child: Text("Edit Admission"))),
+                              ],
+                            )
                           ],
-                        )
-                   
-                   ],)).animate().fadeIn(),
-                 ) : Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
+                        )).animate().fadeIn(),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       const Text("Admission Price"),
-                      const SizedBox(height: 10,),
-                      managectrl.getAdmission!=null?Text('Rs. ${managectrl.getAdmission!.price}'):const SizedBox()
-                 ],).animate().fadeIn()
-            ],
-          ),
-        );
-      }
-    );
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      managectrl.getAdmission != null
+                          ? Text('Rs. ${managectrl.getAdmission!.price}')
+                          : const SizedBox()
+                    ],
+                  ).animate().fadeIn()
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -216,7 +254,7 @@ class _RolesState extends State<Roles> {
                        return useCases.nameAuth(rolenamecontroller.text, "Role Name");
                      },),
                    
-                        const SizedBox(height: 6,),
+                          const SizedBox(height: 6,),
                         Row(
                           children: [
                             CardBorder(
@@ -236,8 +274,10 @@ class _RolesState extends State<Roles> {
                               },
                               child: const Center(child: Text("Add Role"))),
                           ],
-                        )]).animate().fadeIn(),
-                  ))
+                        )
+                          ],
+                        )).animate().fadeIn(),
+                  )
                 : GridView.builder(
                     shrinkWrap: true,
                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -277,8 +317,9 @@ class _RolesState extends State<Roles> {
                                       Get.back();
                                   }, yes: ()async{
                                    String v = await  managectrl.deleteRole(managectrl.getallRoles[index]);
-                                    CustomSnackbar(context, v);
                                     Get.back();
+                                    CustomSnackbar(context, v);
+                                   
                                   }));
                               
                               }, child: const Center(child: Icon(Icons.delete,size: 12,)))
@@ -390,25 +431,25 @@ class _EditContactsState extends State<EditContacts> {
                   ),
                   const TitleText("Address",size:16),
                    const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.address??"",style:const TextStyle(fontSize: 14)),
+                  Text(widget.cntrl.contact?.address??"",style: TextStyle(fontSize: 14,color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
                           const TitleText("PinCode",size:16),
                    const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.pinCode??"",style:const TextStyle(fontSize: 14)),
+                  Text(widget.cntrl.contact?.pinCode??"",style:TextStyle(fontSize: 14,color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
                          const TitleText("Phone Number",size:16),
                    const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.phoneNumber??"",style:const TextStyle(fontSize: 14)),
+                  Text(widget.cntrl.contact?.phoneNumber??"",style:TextStyle(fontSize: 14,color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
                          const TitleText("Email",size:16),
                    const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.email??"",style:const TextStyle(fontSize: 14)),
+                  Text(widget.cntrl.contact?.email??"",style: TextStyle(fontSize: 14,color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),

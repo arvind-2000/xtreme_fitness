@@ -42,7 +42,7 @@ class GetxAuthController extends GetxController {
   int? otp;
   bool otploading = false;
   bool? forgotpass;
-  // bool isauthloading = true;
+  // bool isauthloading.obx = true;
   ///change between login signup forgot password page [0] [1] [2]
   void changeAuthPage(int index) {
     // changeAuthindex = index;

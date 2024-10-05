@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
@@ -44,8 +45,10 @@ class _MainPageState extends State<MainPage> {
             extendBodyBehindAppBar: true,
             body: RefreshIndicator(
               triggerMode: RefreshIndicatorTriggerMode.onEdge,
+              color: Theme.of(context).colorScheme.secondary,
               onRefresh: () async {
                 GetxLandingcontroller().onInit();
+              
               },
               child: SafeArea(
                 child: Stack(

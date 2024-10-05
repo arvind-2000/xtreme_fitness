@@ -41,7 +41,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
   }
 
   final TextEditingController _phonenumber = TextEditingController();
-  final TextEditingController _name = TextEditingController();
+  final TextEditingController _firstname = TextEditingController();
+  final TextEditingController _lastname = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey();
   final AuthUseCases _authusecase = AuthenticateUseCases();
   @override
@@ -58,6 +59,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                   ? PaymentStatusCard(
                       callback: (){
                         addmemberctrl.changepaymentstatus(0);
+                        Get.back();
                       },
                     )
                   : Form(
@@ -268,170 +270,183 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                               Get.dialog(StatefulBuilder(
                                                   builder: (context, state) {
                                                 return PageDialog(
-                                                  child: SingleChildScrollView(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const TitleText(
-                                                                "Payment Method"),
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                icon: const Icon(
-                                                                    Icons.close))
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 30,
-                                                        ),
-                                                        const NormalText(
-                                                          text: "Bill Details",
-                                                          size: 16,
-                                                        ),
-                                                        Text(addmemberctrl
-                                                            .selectedservice!
-                                                            .name),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const Text("Amount"),
-                                                             authctrl.getuser!=null && authctrl.ismember?Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        Divider(
-                                                          color: Colors.grey[600],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const Text(
-                                                                "Total Amount"),
-                                                          authctrl.getuser!=null && authctrl.ismember?Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        addmemberctrl.authctrl.ismember
-                                                            ? const SizedBox()
-                                                            : const Text(
-                                                                "Choose Payment Method"),
-                                                        addmemberctrl.authctrl.ismember
-                                                            ? const SizedBox()
-                                                            : Row(
+                                                  allignToCenter: true,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const TitleText(
+                                                              "Payment Method"),
+                                                          IconButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.close))
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                      const NormalText(
+                                                        text: "Bill Details",
+                                                        size: 16,
+                                                      ),
+                                                      Text(addmemberctrl
+                                                          .selectedservice!
+                                                          .name),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text("Amount"),
+                                                           authctrl.getuser!=null && authctrl.ismember?Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Divider(
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                              "Total Amount"),
+                                                        authctrl.getuser!=null && authctrl.ismember?Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      addmemberctrl.authctrl.ismember
+                                                          ? const SizedBox()
+                                                          : const Text(
+                                                              "Choose Payment Method"),
+                                                      addmemberctrl.authctrl.ismember
+                                                          ? const SizedBox()
+                                                          : Row(
+                                                              children: [
+                                                                Radio(
+                                                                    activeColor:
+                                                                        Colors
+                                                                            .blue,
+                                                                    value: true,
+                                                                    groupValue:
+                                                                        addmemberctrl
+                                                                            .ispaymentcash,
+                                                                    onChanged:
+                                                                        (v) {
+                                                                      state(() {
+                                                                        addmemberctrl
+                                                                            .setpaymentmethod(v!);
+                                                                      });
+                                                                    }),
+                                                                const SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                const Text(
+                                                                    "Cash"),
+                                                                const SizedBox(
+                                                                  width: 16,
+                                                                ),
+                                                                Radio(
+                                                                    activeColor:
+                                                                        Colors
+                                                                            .blue,
+                                                                    value:
+                                                                        false,
+                                                                    groupValue:
+                                                                        addmemberctrl
+                                                                            .ispaymentcash,
+                                                                    onChanged:
+                                                                        (v) {
+                                                                      state(() {
+                                                                        addmemberctrl
+                                                                            .setpaymentmethod(v!);
+                                                                      });
+                                                                    }),
+                                                                const SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                const Text(
+                                                                    "Online"),
+                                                                const SizedBox(
+                                                                  width: 16,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      authctrl.getuser == null ||
+                                                              authctrl.ismember ==
+                                                                  false
+                                                          ? Form(
+                                                              key: _formkey,
+                                                              child: Column(
                                                                 children: [
-                                                                  Radio(
-                                                                      activeColor:
-                                                                          Colors
-                                                                              .blue,
-                                                                      value: true,
-                                                                      groupValue:
-                                                                          addmemberctrl
-                                                                              .ispaymentcash,
-                                                                      onChanged:
-                                                                          (v) {
-                                                                        state(() {
-                                                                          addmemberctrl
-                                                                              .setpaymentmethod(v!);
-                                                                        });
+                                                     
+                                                                  TextFieldWidget(
+                                                                    hint:
+                                                                        "Phone Number",
+                                                                    controller:
+                                                                        _phonenumber,
+                                                                    validator:
+                                                                        () {
+                                                                      return _authusecase.phoneAuth(
+                                                                          _phonenumber
+                                                                              .text,
+                                                                          "Enter a valid number");
+                                                                    },
+                                                                  ),
+                                                                  TextFieldWidget(
+                                                                      hint:
+                                                                          "First Name",
+                                                                      controller:
+                                                                          _firstname,
+                                                                      validator:
+                                                                          () {
+                                                                        return _authusecase.nameAuth(
+                                                                            _firstname.text,
+                                                                            "Enter a valid name");
                                                                       }),
-                                                                  const SizedBox(
-                                                                    width: 5,
-                                                                  ),
-                                                                  const Text(
-                                                                      "Cash"),
-                                                                  const SizedBox(
-                                                                    width: 16,
-                                                                  ),
-                                                                  Radio(
-                                                                      activeColor:
-                                                                          Colors
-                                                                              .blue,
-                                                                      value:
-                                                                          false,
-                                                                      groupValue:
-                                                                          addmemberctrl
-                                                                              .ispaymentcash,
-                                                                      onChanged:
-                                                                          (v) {
-                                                                        state(() {
-                                                                          addmemberctrl
-                                                                              .setpaymentmethod(v!);
-                                                                        });
-                                                                      }),
-                                                                  const SizedBox(
-                                                                    width: 5,
-                                                                  ),
-                                                                  const Text(
-                                                                      "Online"),
-                                                                  const SizedBox(
-                                                                    width: 16,
+                                                                                    TextFieldWidget(
+                                                                    hint:
+                                                                        "Last Name",
+                                                                    controller:
+                                                                        _lastname,
+                                                                    validator:
+                                                                        () {
+                                                                      return _authusecase.nameAuth(
+                                                                          _lastname
+                                                                              .text,
+                                                                          "Enter a valid name");
+                                                                    },
                                                                   ),
                                                                 ],
                                                               ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        authctrl.getuser == null ||
-                                                                authctrl.ismember ==
-                                                                    false
-                                                            ? Form(
-                                                                key: _formkey,
-                                                                child: Column(
-                                                                  children: [
-                                                                    TextFieldWidget(
-                                                                      hint:
-                                                                          "Phone Number",
-                                                                      controller:
-                                                                          _phonenumber,
-                                                                      validator:
-                                                                          () {
-                                                                        return _authusecase.phoneAuth(
-                                                                            _phonenumber
-                                                                                .text,
-                                                                            "Enter a valid number");
-                                                                      },
-                                                                    ),
-                                                                    TextFieldWidget(
-                                                                        hint:
-                                                                            "Name",
-                                                                        controller:
-                                                                            _name,
-                                                                        validator:
-                                                                            () {
-                                                                          return _authusecase.nameAuth(
-                                                                              _name.text,
-                                                                              "Enter a valid name");
-                                                                        }),
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            : const SizedBox(),
-                                                      ],
-                                                    ),
+                                                            )
+                                                          : const SizedBox(),
+                                                    ],
                                                   ),
                                                   no: () {
                                                     Navigator.pop(context);
@@ -456,7 +471,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                             v = await addmemberctrl.createuser(
                                                                 _phonenumber.text
                                                                     .trim(),
-                                                                _name.text.trim(),
+                                                                '${_firstname.text.trim()} ${_lastname.text.trim()}',
                                                                 _phonenumber.text
                                                                     .trim(),
                                                                 role: authctrl.getuser ==
