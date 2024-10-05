@@ -37,6 +37,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
       if (widget.serviceEntity != null) {
         Get.put(AddMemberController()).addservices(widget.serviceEntity!);
       }
+      if(widget.phonenumber!=null){
+        _phonenumber.text = widget.phonenumber!;
+      }
     });
   }
 
@@ -59,6 +62,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                   ? PaymentStatusCard(
                       callback: (){
                         addmemberctrl.changepaymentstatus(0);
+                        addmemberctrl.changeServiceUsage(ispage: false);
                         Get.back();
                       },
                     )
@@ -471,7 +475,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                             v = await addmemberctrl.createuser(
                                                                 _phonenumber.text
                                                                     .trim(),
-                                                                '${_firstname.text.trim()} ${_lastname.text.trim()}',
+                                                                '${_firstname.text.trim()}',
                                                                 _phonenumber.text
                                                                     .trim(),
                                                                 role: authctrl.getuser ==

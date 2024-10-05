@@ -119,7 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: authctrl.numberexists != null &&
                           authctrl.numberexists == false
                       ? const HeadingText('OTP Verification', size: 20)
-                      : const HeadingText('Membership Registration', size: 20),
+                      : HeadingText(landingcontroller.services!=null?'Service Registration':'Membership Registration', size: 20),
                 ),
                 Form(
                     key: widget.formkey,
@@ -237,7 +237,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                         if (authctrl.otp != null) {
                                           if (authctrl
                                               .confirmotp(_confirmotp.text)) {
+                                                   authctrl.signupclose();
                                             print('otp confirm here page');
+                                              Navigator.pop(context);
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -269,7 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           }
                                           //confirm otp
                                         } else {
-                                          print("authctrl.otp false");
+                                        
                                           //send otp
                                           authctrl
                                               .signup(_phonecontroller.text);

@@ -64,7 +64,10 @@ class GetxAuthController extends GetxController {
     update();
   }
 
-
+  void homepage(){
+    ismember = true;
+    _user = null;
+  }
 
 
 
@@ -145,7 +148,7 @@ class GetxAuthController extends GetxController {
 
   void authentications() async {
     isauthloading.value = true;
-
+    ismember = true;
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
