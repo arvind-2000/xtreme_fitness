@@ -301,12 +301,10 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                         : const SizedBox(),
                                     authctrl.otp != null
                                         ? PinPutForm(
-                                            onsubmit: (vad) {
+                                            oncomplete: (otpe) {
+                                              authctrl.getonfirmotp(otpe);
                                               if (authctrl.otp != null) {
                                                 if (authctrl.confirmotp()) {
-                                                  Get.to(() =>
-                                                      const LoginDialog());
-
                                                   setState(() {
                                                     _otpcorrect = true;
                                                   });
@@ -318,6 +316,7 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                               }
                                             },
                                           )
+
                                         // ? Center(
                                         //     child: ConstrainedBox(
                                         //       constraints: const BoxConstraints(

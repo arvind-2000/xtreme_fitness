@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -203,9 +205,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           authctrl.numberexists != null &&
                                   authctrl.numberexists == false
                               ? PinPutForm(
-                                  onsubmit: (val) {
+                                  oncomplete: (p0) {
+                                    authctrl.getonfirmotp(p0);
+                                    log('on submit field');
                                     if (authctrl.otp != null) {
                                       if (authctrl.confirmotp()) {
+                                        authctrl.signupclose();
+                                        print('otp confirm here page');
+                                        Navigator.pop(context);
                                         print('otp confirm here page');
 
                                         Get.to(() => CreateXtremers(

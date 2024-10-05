@@ -4,8 +4,8 @@ import 'package:pinput/pinput.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 
 class PinPutForm extends StatelessWidget {
-  final Function(String)? onsubmit;
-  const PinPutForm({super.key, required this.onsubmit});
+  final Function(String)? oncomplete;
+  const PinPutForm({super.key, required this.oncomplete});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,8 @@ class PinPutForm extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 10),
         child: Pinput(
-          onSubmitted: onsubmit,
+          closeKeyboardWhenCompleted: true, keyboardType: TextInputType.number,
+
           length: 4, // Number of digits for the OTP
           defaultPinTheme: defaultPinTheme, // Default styling for the boxes
           focusedPinTheme: defaultPinTheme.copyWith(
@@ -35,6 +36,7 @@ class PinPutForm extends StatelessWidget {
               border: Border.all(color: Colors.blue), // Border when focused
             ),
           ),
+          textInputAction: TextInputAction.done,
           submittedPinTheme: defaultPinTheme.copyWith(
             decoration: BoxDecoration(
               color: Colors.grey.shade200, // Background when submitted
@@ -42,11 +44,7 @@ class PinPutForm extends StatelessWidget {
               border: Border.all(color: Colors.grey.shade400),
             ),
           ),
-          onCompleted: (pin) {
-            authctrl.getonfirmotp(pin);
-            // You can handle the OTP code here
-            print('OTP Entered: $pin');
-          },
+          onCompleted: oncomplete,
           showCursor: true,
           cursor: Column(
             mainAxisAlignment: MainAxisAlignment.end,
