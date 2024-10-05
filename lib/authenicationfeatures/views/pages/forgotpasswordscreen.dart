@@ -6,6 +6,7 @@ import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontro
 import '../../../authentifeatures/models/usecasesimpl.dart';
 import '../../../config/const.dart';
 import '../../../widgets/card.dart';
+import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import 'createmembers.dart';
@@ -116,18 +117,19 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   ),
                   authctrl.forgotpass != null
                       ? Center(
-                          child: Cardonly(
+                          child: CardwithShadow(
+                            color: Colors.transparent,
                               child: Column(children: [
                             Icon(
                               authctrl.forgotpass! ? Icons.check : Icons.error,
-                              size: 40,
+                              size: 16,
                             ),
                             const SizedBox(
                               height: 20,
                             ),
                             Text(
                               authctrl.forgotpasserrormessage ?? "Error",
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 16),textAlign: TextAlign.center,
                             ),
                             const SizedBox(
                               height: 30,
@@ -313,24 +315,27 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                                     enabletext:
                                                         !authctrl.otploading,
                                                     fieldsubmitted: () {
-                                                      if (authctrl.otp !=
-                                                          null) {
-                                                        if (authctrl.confirmotp(
-                                                            _otpcontroller
-                                                                .text)) {
-                                                          Get.to(() =>
-                                                              const CreateXtremers());
-
-                                                          setState(() {
-                                                            _otpcorrect = true;
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            _otpcorrect = false;
-                                                          });
-                                                        }
-                                                      }
-                                                    }),
+                                                       if (widget.formkey.currentState!
+                                                    .validate()) {
+                                                  if (authctrl.otp != null) {
+                                                    if (authctrl.confirmotp(
+                                                        _otpcontroller.text)) {
+                                                      setState(() {
+                                                        _otpcorrect = true;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        _otpcorrect = false;
+                                                      });
+                                                    }
+                                                    //confirm otp
+                                                  } else {
+                                                    //send otp
+                                                    authctrl.passwordrenew(
+                                                        _phonecontroller.text);
+                                                  }
+                                                }
+                                                }),
                                               ),
                                             ),
                                           )

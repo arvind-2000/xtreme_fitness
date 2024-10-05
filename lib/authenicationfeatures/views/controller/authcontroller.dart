@@ -568,7 +568,7 @@ class GetxAuthController extends GetxController {
     otp = null;
     otploading = false;
     forgotpasserrormessage = null;
-    update();
+
   }
 
   void disposelogin() {

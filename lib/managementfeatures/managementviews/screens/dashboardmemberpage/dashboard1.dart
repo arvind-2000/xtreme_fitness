@@ -41,7 +41,7 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
 
       Get.find<ManagementController>().getmemberxtreme();
       Get.find<ManagementController>().checkmemberships();
-      
+    
     });
   }
 
