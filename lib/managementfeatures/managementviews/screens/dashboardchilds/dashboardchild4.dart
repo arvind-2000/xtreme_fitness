@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/widgets/cardborder.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../../config/const.dart';
 import '../../../../widgets/titletext.dart';
 import '../../widgets/scaffolds.dart';
 
@@ -26,7 +27,7 @@ class DashboardChild4 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-           Padding(
+           const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0,horizontal: 16),
                 child: TitleText("Payments"),
               ),
@@ -35,11 +36,11 @@ class DashboardChild4 extends StatelessWidget {
       child: Text("Last ${managectrl.latestpayment10.length}",style: TextStyle(color: Colors.grey[400]!,fontSize: 14),),
       
     ),
-      SizedBox(height: 10,),
+      const SizedBox(height: 10,),
               //header for table
-            managectrl.latestpayment10.isEmpty?SizedBox():  Container(
+            managectrl.latestpayment10.isEmpty?const SizedBox():  Container(
         
-                child:  Padding(
+                child:  const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
                   child: Row(
                     children: [
@@ -118,7 +119,7 @@ class _ListViewCardState extends State<ListViewCard> {
           },
           onTap: () {
             Get.dialog(Dialog(
-              insetPadding: EdgeInsets.all(16),
+              insetPadding: const EdgeInsets.all(16),
               child: SizedBox(
                 width: 500,
                 height: 600,
@@ -137,7 +138,7 @@ class _ListViewCardState extends State<ListViewCard> {
                           mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,
                           children: [
-                            const HeadingText("Payment Details"),
+                     HeadingText("Payment Details",size:MediaQuery.sizeOf(context).width<mobilescreen?16:null),
                             IconButton(
                                 onPressed: () {
                                   Get.back();
@@ -156,9 +157,9 @@ class _ListViewCardState extends State<ListViewCard> {
                             crossAxisAlignment:
                                 CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                               Text(
                                 "Name",
-                                style: TextStyle(fontSize: 14,),
+                                style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                               ),
                               Text(
                                 "${widget.e.name}",
@@ -167,9 +168,9 @@ class _ListViewCardState extends State<ListViewCard> {
                               const SizedBox(
                                 height: 16,
                               ),
-                              const Text(
+                              Text(
                                 "Payment Method",
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                               ),
                               Text(
                                   "${widget.e.paymentMethod}"),
@@ -178,9 +179,9 @@ class _ListViewCardState extends State<ListViewCard> {
                               ),
                               Row(
                                 children: [
-                                  const Text(
+                              Text(
                                     "Transaction Id",
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -205,9 +206,9 @@ class _ListViewCardState extends State<ListViewCard> {
                               const SizedBox(
                                 height: 16,
                               ),
-                              const Text(
+                               Text(
                                 "Amount",
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                               ),
                               Text(
                                 "${widget.e.receivedAmount}",
@@ -216,9 +217,9 @@ class _ListViewCardState extends State<ListViewCard> {
                               const SizedBox(
                                 height: 16,
                               ),
-                              const Text(
+                            Text(
                                 "Date",
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                               ),
                               Text(
                                 "${widget.e.paymentDate.day}/${widget.e.paymentDate.month}/${widget.e.paymentDate.year}",
@@ -227,13 +228,13 @@ class _ListViewCardState extends State<ListViewCard> {
                               const SizedBox(
                                 height: 16,
                               ),
-                              const Text(
+                             Text(
                                 "Status",
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: 14,color: Colors.grey[500]),
                               ),
-                              const Text(
+                              Text(
                                 "Paid",
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16,color: Colors.grey[500]),
                               ),
                             ],
                           ),
@@ -303,7 +304,7 @@ class _ListViewCardState extends State<ListViewCard> {
             //     : Colors.grey[600]!.withOpacity(0.1),
             child: Column(
               children: [
-                        widget.i==0?SizedBox():Divider(
+                        widget.i==0?const SizedBox():Divider(
                  indent: 0
                  ,color: Colors.grey[800],),
                 Padding(

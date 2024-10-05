@@ -285,8 +285,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          const TitleText(
-                                                              "Payment Method"),
+                                                           TitleText(
+                                                              "Payment Method",size:MediaQuery.sizeOf(context).width<mobilescreen?16:null),
                                                           IconButton(
                                                               onPressed: () {
                                                                 Navigator.pop(

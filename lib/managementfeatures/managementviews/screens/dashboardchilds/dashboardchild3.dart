@@ -26,13 +26,13 @@ class DashboardChild3 extends StatelessWidget {
           child: Column(
             children: [
          Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0,horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 32.0,horizontal: 16),
                 child:Row(
 
                   
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TitleText("Analytics"),
+                    const TitleText("Analytics"),
                  
                       Text("This Year",style: TextStyle(color: Colors.grey[500],fontSize: 12)),
                 

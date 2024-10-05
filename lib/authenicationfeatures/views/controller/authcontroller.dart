@@ -118,7 +118,7 @@ class GetxAuthController extends GetxController {
 
       d = await authrepo.emailAuthentication(email: email, pass: pass);
 
-      debugPrint(d.toString());
+      // debugPrint(d.toString());
       loginerrortext = d.entries.first.value;
       if (d.isNotEmpty) {
         if (d.entries.first.key != null) {
@@ -189,7 +189,7 @@ class GetxAuthController extends GetxController {
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
       _authentication = true;
-      print("in authentication sharedpreferences res");
+      // print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
@@ -286,7 +286,7 @@ class GetxAuthController extends GetxController {
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
       _authentication = true;
-      print("in authentication sharedpreferences res");
+      // print("in authentication sharedpreferences res");
 
       // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
 
@@ -377,7 +377,7 @@ class GetxAuthController extends GetxController {
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
       _authentication = true;
-      print("in authentication sharedpreferences res");
+      // print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
@@ -533,7 +533,7 @@ class GetxAuthController extends GetxController {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    print(otp.toString());
+    // print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
@@ -596,7 +596,8 @@ class GetxAuthController extends GetxController {
     otp = null;
     otploading = false;
     forgotpasserrormessage = null;
-    update();
+    _timer?.cancel();
+    signuperror = null;
   }
 
   void disposelogin() {

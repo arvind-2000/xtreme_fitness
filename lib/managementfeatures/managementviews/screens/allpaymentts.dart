@@ -95,9 +95,9 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const HeadingText(
+                                                      HeadingText(
                                                         "Payment Reports",
-                                                        size: 20,
+                                                        size:MediaQuery.sizeOf(context).width<mobilescreen?16:20,
                                                       ),
                                                       IconButton(
                                                           onPressed: () {
@@ -597,8 +597,8 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const HeadingText(
-                                                  "Edit Payments"),
+                                            HeadingText(
+                                                  "Edit Payments",size:MediaQuery.sizeOf(context).width<mobilescreen?16:null),
                                               IconButton(
                                                   onPressed: () {
                                                     Navigator.pop(context);

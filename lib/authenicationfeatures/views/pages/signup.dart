@@ -128,6 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               : 'Membership Registration',
                           size: 20),
                 ),
+                SizedBox(height: 20,),
                 Form(
                     key: widget.formkey,
                     child: Center(
@@ -189,8 +190,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   authctrl.numberexists == false
                               ? Column(
                                   children: [
-                                    const Text(
-                                            "We have send an OTP to your number")
+                                 Text(
+                                            "We have send an OTP to your number",style: TextStyle(color: Colors.grey[400]),)
                                         .animate()
                                         .slideY(begin: 1, end: 0),
                                     const SizedBox(
@@ -202,6 +203,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ],
                                 )
                               : const SizedBox(),
+                              const SizedBox(height: 10,),
                           authctrl.numberexists != null &&
                                   authctrl.numberexists == false
                               ? PinPutForm(
@@ -214,7 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         print('otp confirm here page');
                                         Navigator.pop(context);
                                         print('otp confirm here page');
-
+                                      authctrl.signupclose();
                                         Get.to(() => CreateXtremers(
                                               phonenumber:
                                                   _phonecontroller.text,
@@ -264,11 +266,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                   authctrl.numberexists == false
                               ? Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                   authctrl.timertext>0?Text(
                                       "Time Remaining : ${authctrl.getFormattedTime(authctrl.timertext)}",
-                                    ),
+                                   style: TextStyle(color: Colors.grey[500]), ):
                                     TextButton(
                                       onPressed: authctrl.isButtonActive
                                           ? () {
@@ -280,8 +282,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                               authctrl.startTimer();
                                             }
                                           : null,
-                                      child: const HeadingText('Resend OTP',
-                                          size: 12),
+                                      child:  Row(
+                                        children: [
+                                          const HeadingText('Resend OTP',
+                                              size: 12),
+                                              SizedBox(width:5),
+                                              Icon(Icons.replay_outlined,size: 12,color: Colors.grey[400]!,)
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 )
