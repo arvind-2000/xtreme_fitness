@@ -8,12 +8,11 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindi
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
-import 'package:universal_html/html.dart' as html;
+
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
-
 import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
 
@@ -31,6 +30,11 @@ class GetxAuthController extends GetxController {
   UserEntity? _user;
   UserEntity? get getuser => _user;
   String? userid;
+  int _timertext = 120; // Timer starts at 120 seconds (2 minutes)
+  int get timertext => _timertext;
+  Timer? _timer;
+  bool _isButtonActive = false;
+  bool get isButtonActive => _isButtonActive;
 
   var isauthloading = false.obs;
 
@@ -38,7 +42,8 @@ class GetxAuthController extends GetxController {
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = true;
-
+  String _confirmotp = '';
+  String get confirmotptext => _confirmotp;
   int? otp;
   bool otploading = false;
   bool? forgotpass;
@@ -47,6 +52,38 @@ class GetxAuthController extends GetxController {
   void changeAuthPage(int index) {
     // changeAuthindex = index;
     // update();
+  }
+
+  void getonfirmotp(String conotp) {
+    _confirmotp = conotp;
+    update();
+  }
+
+  void startTimer() {
+    _isButtonActive = false;
+    _timertext = 120; // Reset timer to 2 minutes
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timertext == 0) {
+        _isButtonActive = true; // Activate the "Resend" button
+        update();
+        _timer!.cancel();
+      } else {
+        _timertext--;
+        update();
+      }
+    });
+  }
+
+  String getFormattedTime(int seconds) {
+    if (seconds >= 60) {
+      // Display mm:ss format when more than 60 seconds remain
+      int minutes = seconds ~/ 60;
+      int remainingSeconds = seconds % 60;
+      return '${minutes.toString().padLeft(2, '0')} min:${remainingSeconds.toString().padLeft(2, '0')} sec';
+    } else {
+      // Display only seconds when less than 60 seconds remain
+      return '$seconds sec';
+    }
   }
 
   void setdataforsession(String userid) async {
@@ -494,14 +531,14 @@ class GetxAuthController extends GetxController {
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
-  bool confirmotp(String confirmotp) {
+  bool confirmotp() {
     otploading = true;
     update();
     Timer(const Duration(seconds: 2), () {
       otploading = false;
       update();
     });
-    return confirmotp == otp.toString();
+    return _confirmotp == otp.toString();
   }
 
   void signupclose() {
@@ -509,6 +546,7 @@ class GetxAuthController extends GetxController {
     otp = null;
     numberexists = null;
     signuperror = null;
+    _timer?.cancel();
     update();
   }
 

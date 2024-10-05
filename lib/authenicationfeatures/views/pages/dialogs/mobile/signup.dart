@@ -208,8 +208,7 @@ class _SignUpPageMobileState extends State<SignUpPageMobile> {
                               : () async {
                                   if (_formkey.currentState!.validate()) {
                                     if (authctrl.otp != null) {
-                                      if (authctrl
-                                          .confirmotp(_confirmotp.text)) {
+                                      if (authctrl.confirmotp()) {
                                         Get.to(() => CreateXtremers(
                                               phonenumber:
                                                   _phonecontroller.text,
