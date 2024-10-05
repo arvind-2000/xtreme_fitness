@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/pages/createmembers.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/pinputotpform.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 
@@ -119,7 +120,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: authctrl.numberexists != null &&
                           authctrl.numberexists == false
                       ? const HeadingText('OTP Verification', size: 20)
-                      : HeadingText(landingcontroller.services!=null?'Service Registration':'Membership Registration', size: 20),
+                      : HeadingText(
+                          landingcontroller.services != null
+                              ? 'Service Registration'
+                              : 'Membership Registration',
+                          size: 20),
                 ),
                 Form(
                     key: widget.formkey,
@@ -138,6 +143,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ? const SizedBox()
                               : TextFieldWidget(
                                   counter: 10,
+
                                   hint: "Phone",
                                   icon: const Icon(Icons.phone),
                                   controller: _phonecontroller,
@@ -151,6 +157,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   },
                                   fieldsubmitted: () {
                                     authctrl.signup(_phonecontroller.text);
+                                    setState(() {
+                                      otpshow = true;
+                                    });
+                                    authctrl.startTimer();
                                   },
                                 ),
                           authctrl.numberexists != null &&
@@ -192,24 +202,84 @@ class _SignUpPageState extends State<SignUpPage> {
                               : const SizedBox(),
                           authctrl.numberexists != null &&
                                   authctrl.numberexists == false
-                              ? Center(
-                                  child: ConstrainedBox(
-                                    constraints:
-                                        const BoxConstraints(maxWidth: 300),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: TextFieldWidget(
-                                        hint: 'OTP',
-                                        textalign: TextAlign.center,
-                                        showhint: false,
-                                        controller: _confirmotp,
-                                        enabletext: !authctrl.otploading,
-                                      ),
+                              ? PinPutForm(
+                                  onsubmit: (val) {
+                                    if (authctrl.otp != null) {
+                                      if (authctrl.confirmotp()) {
+                                        print('otp confirm here page');
+
+                                        Get.to(() => CreateXtremers(
+                                              phonenumber:
+                                                  _phonecontroller.text,
+                                              services:
+                                                  landingcontroller.services,
+                                            ));
+
+                                        setState(() {
+                                          otpcorrect = true;
+                                        });
+                                      } else {
+                                        print("otpcorrect false");
+                                        setState(() {
+                                          otpcorrect = false;
+                                        });
+                                      }
+                                      //confirm otp
+                                    } else {
+                                      print("authctrl.otp false");
+                                      //send otp
+                                      authctrl.signup(_phonecontroller.text);
+                                      setState(() {
+                                        otpshow = true;
+                                      });
+                                      authctrl.startTimer();
+                                    }
+                                  },
+                                )
+                              // ? Center(
+                              //     child: ConstrainedBox(
+                              //       constraints:
+                              //           const BoxConstraints(maxWidth: 300),
+                              //       child: Padding(
+                              //         padding: const EdgeInsets.all(16.0),
+                              //         child: TextFieldWidget(
+                              //           hint: 'OTP',
+                              //           textalign: TextAlign.center,
+                              //           showhint: false,
+                              //           controller: _confirmotp,
+                              //           enabletext: !authctrl.otploading,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   )
+                              : const SizedBox(),
+                          authctrl.numberexists != null &&
+                                  authctrl.numberexists == false
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Time Remaining : ${authctrl.getFormattedTime(authctrl.timertext)}",
                                     ),
-                                  ),
+                                    TextButton(
+                                      onPressed: authctrl.isButtonActive
+                                          ? () {
+                                              authctrl.signup(
+                                                  _phonecontroller.text);
+                                              setState(() {
+                                                otpshow = true;
+                                              });
+                                              authctrl.startTimer();
+                                            }
+                                          : null,
+                                      child: const HeadingText('Resend OTP',
+                                          size: 12),
+                                    ),
+                                  ],
                                 )
                               : const SizedBox(),
-                          !authctrl.otploading &&
+                          authctrl.otploading &&
                                   otpcorrect != null &&
                                   otpcorrect == false
                               ? Center(
@@ -232,53 +302,37 @@ class _SignUpPageState extends State<SignUpPage> {
                               onpress: authctrl.otploading
                                   ? null
                                   : () async {
-                                      if (widget.formkey.currentState!
-                                          .validate()) {
-                                        if (authctrl.otp != null) {
-                                          if (authctrl
-                                              .confirmotp(_confirmotp.text)) {
-                                                   authctrl.signupclose();
-                                            print('otp confirm here page');
-                                              Navigator.pop(context);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CreateXtremers(
-                                                        phonenumber:
-                                                            _phonecontroller
-                                                                .text,
-                                                        services:
-                                                            landingcontroller
-                                                                .services,
-                                                      )),
-                                            );
-                                            // Get.to(() => CreateXtremers(
-                                            //       phonenumber:
-                                            //           _phonecontroller.text,
-                                            //       services: landingcontroller
-                                            //           .services,
-                                            //     ));
+                                      if (authctrl.otp != null) {
+                                        if (authctrl.confirmotp()) {
+                                          authctrl.signupclose();
+                                          print('otp confirm here page');
+                                          Navigator.pop(context);
 
-                                            setState(() {
-                                              otpcorrect = true;
-                                            });
-                                          } else {
-                                            print("otpcorrect false");
-                                            setState(() {
-                                              otpcorrect = false;
-                                            });
-                                          }
-                                          //confirm otp
-                                        } else {
-                                        
-                                          //send otp
-                                          authctrl
-                                              .signup(_phonecontroller.text);
+                                          Get.to(() => CreateXtremers(
+                                                phonenumber:
+                                                    _phonecontroller.text,
+                                                services:
+                                                    landingcontroller.services,
+                                              ));
+
                                           setState(() {
-                                            otpshow = true;
+                                            otpcorrect = true;
+                                          });
+                                        } else {
+                                          print("otpcorrect false");
+                                          setState(() {
+                                            otpcorrect = false;
                                           });
                                         }
+                                        //confirm otp
+                                      } else {
+                                        print("authctrl.otp false");
+                                        //send otp
+                                        authctrl.signup(_phonecontroller.text);
+                                        setState(() {
+                                          otpshow = true;
+                                        });
+                                        authctrl.startTimer();
                                       }
                                     },
                               color: Theme.of(context).colorScheme.secondary,

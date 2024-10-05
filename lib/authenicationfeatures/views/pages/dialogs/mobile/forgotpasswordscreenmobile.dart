@@ -295,9 +295,8 @@ class _ForgotPassWordScreenMobileState
                                                       !authctrl.otploading,
                                                   fieldsubmitted: () {
                                                     if (authctrl.otp != null) {
-                                                      if (authctrl.confirmotp(
-                                                          _otpcontroller
-                                                              .text)) {
+                                                      if (authctrl
+                                                          .confirmotp()) {
                                                         Get.to(() =>
                                                             const CreateXtremers());
 
@@ -342,8 +341,7 @@ class _ForgotPassWordScreenMobileState
                                               if (_formkey.currentState!
                                                   .validate()) {
                                                 if (authctrl.otp != null) {
-                                                  if (authctrl.confirmotp(
-                                                      _otpcontroller.text)) {
+                                                  if (authctrl.confirmotp()) {
                                                     setState(() {
                                                       _otpcorrect = true;
                                                     });

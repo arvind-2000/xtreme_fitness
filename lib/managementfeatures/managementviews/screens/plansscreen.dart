@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
@@ -48,7 +46,7 @@ class _PlansScreenState extends State<PlansScreen> {
       return GetBuilder<AddMemberController>(builder: (_) {
         return GetBuilder<GetxPageController>(builder: (_) {
           return GetBuilder<ManagementController>(builder: (_) {
-            return authctrl.ismember!=null && authctrl.ismember! && pagecotrl.isrenewalforms
+            return authctrl.ismember && pagecotrl.isrenewalforms
                 ? RenewalForms(
                     callback: () {
                       pagecotrl.changerenewal(false);
@@ -66,7 +64,7 @@ class _PlansScreenState extends State<PlansScreen> {
                               "Plans",
                               size: 30,
                             ),
-                           authctrl.ismember!=null && authctrl.ismember!
+                            authctrl.ismember
                                 ? const SizedBox()
                                 : CardBorder(
                                     onpress: () {
@@ -178,7 +176,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                       e.value.category,
                                                       size: 24,
                                                     ),
-                                       authctrl.ismember
+                                                    authctrl.ismember
                                                         ? const SizedBox()
                                                         : Row(
                                                             children: [
@@ -226,13 +224,18 @@ class _PlansScreenState extends State<PlansScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                       Text("Price",style: TextStyle(color: Colors.grey[500]),),
+                                                      Text(
+                                                        "Price",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .grey[500]),
+                                                      ),
                                                       Row(
                                                         children: [
                                                           Text(
                                                             e.value.price
                                                                 .toString(),
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
@@ -240,25 +243,32 @@ class _PlansScreenState extends State<PlansScreen> {
                                                           ),
                                                           Text(
                                                             "/${e.value.durationInMonths} ${e.value.durationInMonths <= 1 ? "month" : "months"}",
-                                                            style:TextStyle(
+                                                            style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontStyle:
                                                                     FontStyle
-                                                                        .italic,color: Colors.grey[500]),
+                                                                        .italic,
+                                                                color: Colors
+                                                                    .grey[500]),
                                                           )
                                                         ],
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                  Text("Discount",style: TextStyle(color: Colors.grey[500]),),
+                                                      Text(
+                                                        "Discount",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .grey[500]),
+                                                      ),
                                                       Text(
                                                         "${e.value.discountPercentage}%",
-                                                        style:  TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold,),
+                                                        style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
@@ -268,7 +278,6 @@ class _PlansScreenState extends State<PlansScreen> {
                                                       HeadingText(
                                                         "${e.value.price - (e.value.price * (e.value.discountPercentage / 100))}",
                                                         size: 24,
-                                                        
                                                       ),
                                                     ],
                                                   ),
@@ -276,7 +285,8 @@ class _PlansScreenState extends State<PlansScreen> {
                                                 e.value.isActive!
                                                     ? CardBorder(
                                                         onpress: () {
-                                                          if (authctrl.ismember!=null && authctrl.ismember!) {
+                                                          if (authctrl
+                                                              .ismember) {
                                                             //print(   "change plan screen to renewal");
                                                             pagecotrl
                                                                 .changerenewal(

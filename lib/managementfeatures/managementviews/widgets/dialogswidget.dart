@@ -28,7 +28,8 @@ class _PageDialogState extends State<PageDialog> {
     return Dialog(
       insetPadding: const EdgeInsets.all(16),
       backgroundColor: Colors.grey[800],
-      alignment: widget.allignToCenter != null ? null : const Alignment(0.25, -0.5),
+      alignment:
+          widget.allignToCenter != null ? null : const Alignment(0.25, -0.5),
       child: Container(
         padding: const EdgeInsets.all(16),
         width: 400,

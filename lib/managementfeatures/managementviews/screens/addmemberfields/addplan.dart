@@ -158,7 +158,11 @@ class PlanSelectionField extends StatelessWidget {
                               ? 1
                               : size < 700
                                   ? 4 / 7.2
-                                  :size < 1300? 3 / 5:size < 1500?3/4:3/3.5,
+                                  : size < 1300
+                                      ? 3 / 5
+                                      : size < 1500
+                                          ? 3 / 4
+                                          : 3 / 3.5,
                         ),
                         children: managectrl.getallactiveplans
                             .asMap()
@@ -248,7 +252,8 @@ class PlanSelectionField extends StatelessWidget {
                                               addmemberctrl.selectedplan !=
                                                           null &&
                                                       addmemberctrl
-                                                              .selectedplan!.id ==
+                                                              .selectedplan!
+                                                              .id ==
                                                           e.value.id
                                                   ? const Text("Plan Added",
                                                       style: TextStyle(
@@ -288,7 +293,10 @@ class PlanSelectionField extends StatelessWidget {
                             onSelected: (index) {
                               addmemberctrl.addTrainer(index!);
                             },
-                            dropdownMenuEntries: managectrl.getalltrainer.where((element) => element.isActive,)
+                            dropdownMenuEntries: managectrl.getalltrainer
+                                .where(
+                                  (element) => element.isActive,
+                                )
                                 .map((e) => DropdownMenuEntry(
                                     value: e,
                                     label: e.name,

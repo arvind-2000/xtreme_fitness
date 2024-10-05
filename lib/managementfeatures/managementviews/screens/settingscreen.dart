@@ -29,14 +29,18 @@ class SettingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HeadingText('Settings'),    
-              const SizedBox(height: 20,),
+              const HeadingText('Settings'),
+              const SizedBox(
+                height: 20,
+              ),
               const Roles(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Admissioncard(),
-              const SizedBox(height:10),
-              CardwithShadow(child: EditContacts(formKey: _formKey, cntrl: cntrl)),
-          
+              const SizedBox(height: 10),
+              CardwithShadow(
+                  child: EditContacts(formKey: _formKey, cntrl: cntrl)),
             ],
           ),
         ),
@@ -218,118 +222,175 @@ class _RolesState extends State<Roles> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ManagementController>(
-      builder: (managectrl) {
-        return CardwithShadow(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  showroles?const  HeadingText("Add Roles",size: 20,) :const  HeadingText("Roles",size: 20,),
-                  IconButton(onPressed: (){
-                      if(showroles){
-                          //addroles
-                        setState(() {
-                          showroles = false;
-                        });
-                      }else{
-                        setState((){
-                          showroles = true;
-                        });
-                          
-                      }
-
-                  }, icon:showroles?const Icon(Icons.close,size: 14,) : const Icon(Icons.add,size: 14,),tooltip:showroles?"Close": "Add roles",)
-                ],
-            
-        
-              ),
-                 const SizedBox(height: 20,),
-                 showroles?ConstrainedBox(
-                   constraints: const BoxConstraints(maxWidth: 500),
-                   child: Form(key: _formkey,child: Column(children: [
-                     TextFieldWidget(hint: "RoleName", controller: rolenamecontroller,validator: (){
-                       return useCases.nameAuth(rolenamecontroller.text, "Role Name");
-                     },),
-                   
-                          const SizedBox(height: 6,),
-                        Row(
-                          children: [
-                            CardBorder(
-                              margin: EdgeInsets.zero,
-                              onpress: ()async{
-                                    //addd roles
-                                    if(_formkey.currentState!.validate()){
-                                       String v = await managectrl.addroles(Role(id: 0, roleName: rolenamecontroller.text));
-                                      CustomSnackbar(context, v);
-                                      rolenamecontroller.clear();
-                                      setState(() {
-                                        showroles = false;
-                                      });
-                                    }
-                                               
-                                  
-                              },
-                              child: const Center(child: Text("Add Role"))),
-                          ],
+    return GetBuilder<ManagementController>(builder: (managectrl) {
+      return CardwithShadow(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                showroles
+                    ? const HeadingText(
+                        "Add Roles",
+                        size: 20,
+                      )
+                    : const HeadingText(
+                        "Roles",
+                        size: 20,
+                      ),
+                IconButton(
+                  onPressed: () {
+                    if (showroles) {
+                      //addroles
+                      setState(() {
+                        showroles = false;
+                      });
+                    } else {
+                      setState(() {
+                        showroles = true;
+                      });
+                    }
+                  },
+                  icon: showroles
+                      ? const Icon(
+                          Icons.close,
+                          size: 14,
                         )
+                      : const Icon(
+                          Icons.add,
+                          size: 14,
+                        ),
+                  tooltip: showroles ? "Close" : "Add roles",
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            showroles
+                ? ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Form(
+                        key: _formkey,
+                        child: Column(
+                          children: [
+                            TextFieldWidget(
+                              hint: "RoleName",
+                              controller: rolenamecontroller,
+                              validator: () {
+                                return useCases.nameAuth(
+                                    rolenamecontroller.text, "Role Name");
+                              },
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                CardBorder(
+                                    margin: EdgeInsets.zero,
+                                    onpress: () async {
+                                      //addd roles
+                                      if (_formkey.currentState!.validate()) {
+                                        String v = await managectrl.addroles(
+                                            Role(
+                                                id: 0,
+                                                roleName:
+                                                    rolenamecontroller.text));
+                                        CustomSnackbar(context, v);
+                                        rolenamecontroller.clear();
+                                        setState(() {
+                                          showroles = false;
+                                        });
+                                      }
+                                    },
+                                    child:
+                                        const Center(child: Text("Add Role"))),
+                              ],
+                            )
                           ],
                         )).animate().fadeIn(),
                   )
                 : GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      
-                      mainAxisSpacing: 4,
-                      crossAxisSpacing: 4,
-                      maxCrossAxisExtent: 160,childAspectRatio: 1/0.4), itemBuilder: (context, index) => CardwithShadow(
-                                      
-                        onpress: (){},
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            mainAxisSpacing: 4,
+                            crossAxisSpacing: 4,
+                            maxCrossAxisExtent: 160,
+                            childAspectRatio: 1 / 0.4),
+                    itemBuilder: (context, index) => CardwithShadow(
+                        onpress: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text( managectrl.getallRoles[index].roleName,style: const TextStyle(fontSize: 12),),
-                              managectrl.getallRoles[index].roleName.toLowerCase()=="superadmin" ||  managectrl.getallRoles[index].roleName.toLowerCase()=="member" ||managectrl.getallRoles[index].roleName.toLowerCase()=="servicemember" ?const SizedBox() :    Cardonly(
-                                
-                              
-                                margin: EdgeInsets.symmetric(horizontal: 8),
-                                padding: EdgeInsets.all(4),
-                              
-                                onpress: (){
-                                  Get.dialog(PageDialog(child: Row(
-                                    children: [
-                                      Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const HeadingText("Delete Role"),
-                                            const SizedBox(height: 20,),
-                                            const Text("Role Name"),
-                                            const SizedBox(height: 10,),
-                                            Text(managectrl.getallRoles[index].roleName)
-                                      
-                                          ],
-                                      
-                                      ),
-                                    ],
-                                  ), no:(){
-                                      Get.back();
-                                  }, yes: ()async{
-                                   String v = await  managectrl.deleteRole(managectrl.getallRoles[index]);
-                                    Get.back();
-                                    CustomSnackbar(context, v);
-                                   
-                                  }));
-                              
-                              }, child: const Center(child: Icon(Icons.delete,size: 12,)))
+                            Text(
+                              managectrl.getallRoles[index].roleName,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "superadmin" ||
+                                    managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "member" ||
+                                    managectrl.getallRoles[index].roleName
+                                            .toLowerCase() ==
+                                        "servicemember"
+                                ? const SizedBox()
+                                : Cardonly(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    padding: const EdgeInsets.all(4),
+                                    onpress: () {
+                                      Get.dialog(PageDialog(
+                                          child: Row(
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const HeadingText(
+                                                      "Delete Role"),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  const Text("Role Name"),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(managectrl
+                                                      .getallRoles[index]
+                                                      .roleName)
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          no: () {
+                                            Get.back();
+                                          },
+                                          yes: () async {
+                                            String v = await managectrl
+                                                .deleteRole(managectrl
+                                                    .getallRoles[index]);
+                                            Get.back();
+                                            CustomSnackbar(context, v);
+                                          }));
+                                    },
+                                    child: const Center(
+                                        child: Icon(
+                                      Icons.delete,
+                                      size: 12,
+                                    )))
                           ],
-                        )),itemCount: managectrl.getallRoles.length,).animate().fadeIn()
-            ],
-          ),
-        );
-      }
-    );
+                        )),
+                    itemCount: managectrl.getallRoles.length,
+                  ).animate().fadeIn()
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -356,128 +417,149 @@ class _EditContactsState extends State<EditContacts> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           children: [
-             isEdit?const HeadingText('Edit Contact Info',size: 20,): const HeadingText('Contact Info',size: 20,),
-             IconButton(onPressed: (){
-                      if(isEdit){
-                          //addroles
-                        setState(() {
-                          isEdit = false;
-                        });
-                      }else{
-                        setState((){
-                          isEdit = true;
-                        });
-                          
-                      }
-
-                  }, icon:isEdit?const Icon(Icons.close,size: 14,) : const Icon(Icons.edit,size: 14,),tooltip:isEdit?"Close": "Edit Contact Info",)
-                
-           ],
-         ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isEdit
+                  ? const HeadingText(
+                      'Edit Contact Info',
+                      size: 20,
+                    )
+                  : const HeadingText(
+                      'Contact Info',
+                      size: 20,
+                    ),
+              IconButton(
+                onPressed: () {
+                  if (isEdit) {
+                    //addroles
+                    setState(() {
+                      isEdit = false;
+                    });
+                  } else {
+                    setState(() {
+                      isEdit = true;
+                    });
+                  }
+                },
+                icon: isEdit
+                    ? const Icon(
+                        Icons.close,
+                        size: 14,
+                      )
+                    : const Icon(
+                        Icons.edit,
+                        size: 14,
+                      ),
+                tooltip: isEdit ? "Close" : "Edit Contact Info",
+              )
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
-       isEdit?Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          isEdit
+              ? Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        TextFieldWidget(
+                          enabletext: isEdit,
+                          hint: "Address",
+                          controller: widget.cntrl.addresscon,
+                          counter: 100,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                          enabletext: isEdit,
+                          hint: "Pin Code",
+                          controller: widget.cntrl.pincodecon,
+                          counter: 50,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                            enabletext: isEdit,
+                            hint: "Phone Number",
+                            controller: widget.cntrl.phonecon,
+                            counter: 50),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                            enabletext: isEdit,
+                            hint: "Email",
+                            controller: widget.cntrl.mailcon,
+                            counter: 50),
+                      ],
+                    ),
+                  ),
+                ).animate().fadeIn()
+              : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(
                     height: 16,
                   ),
-                  TextFieldWidget(
-                    enabletext: isEdit,
-                    hint: "Address",
-                    controller: widget.cntrl.addresscon,
-                    counter: 100,
-                  ),
+                  const TitleText("Address", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.address ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                    enabletext: isEdit,
-                    hint: "Pin Code",
-                    controller: widget.cntrl.pincodecon,
-                    counter: 50,
-                  ),
+                  const TitleText("PinCode", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.pinCode ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                      enabletext: isEdit,
-                      hint: "Phone Number",
-                      controller: widget.cntrl.phonecon,
-                      counter: 50),
+                  const TitleText("Phone Number", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.phoneNumber ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFieldWidget(
-                      enabletext: isEdit,
-                      hint: "Email",
-                      controller: widget.cntrl.mailcon,
-                      counter: 50),
-                ],
-              ),
-            ),
-          ).animate().fadeIn():Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children:[
-               const SizedBox(
-                    height: 16,
-                  ),
-                  const TitleText("Address",size:16),
-                   const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.address??"",style: TextStyle(fontSize: 14,color: Colors.grey[500]!)),
+                  const TitleText("Email", size: 16),
+                  const SizedBox(height: 5),
+                  Text(widget.cntrl.contact?.email ?? "",
+                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
                   const SizedBox(
                     height: 10,
                   ),
-                          const TitleText("PinCode",size:16),
-                   const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.pinCode??"",style:TextStyle(fontSize: 14,color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                         const TitleText("Phone Number",size:16),
-                   const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.phoneNumber??"",style:TextStyle(fontSize: 14,color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                         const TitleText("Email",size:16),
-                   const SizedBox(height:5),
-                  Text(widget.cntrl.contact?.email??"",style: TextStyle(fontSize: 14,color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                
-            ]
-          ).animate().fadeIn(),
+                ]).animate().fadeIn(),
           const SizedBox(height: 20),
-          isEdit?Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CardwithShadow(
-                isShadow: true,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'Save',
-                  ),
-                ),
-                onpress: () {
-                  widget.cntrl.showDialogforupdate(context);
-                  widget.cntrl.updatecontactinfo();
-                  setState(() {
-                    isEdit = false;
-                  });
-                },
-              )
-            ],
-          ):const SizedBox()
+          isEdit
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CardwithShadow(
+                      isShadow: true,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'Save',
+                        ),
+                      ),
+                      onpress: () {
+                        widget.cntrl.showDialogforupdate(context);
+                        widget.cntrl.updatecontactinfo();
+                        setState(() {
+                          isEdit = false;
+                        });
+                      },
+                    )
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );

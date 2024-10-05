@@ -8,12 +8,11 @@ import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindi
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
-import 'package:universal_html/html.dart' as html;
+
 import '../../../authentifeatures/domain/domainrepositories.dart';
 import '../../../authentifeatures/domain/userentity.dart';
 import '../../../authentifeatures/models/repositoriesimpl.dart';
 import '../../../config/coreusecase.dart';
-
 import '../../../managementfeatures/managementdomain/entities.dart/roles.dart';
 import '../../../widgets/card.dart';
 
@@ -31,6 +30,11 @@ class GetxAuthController extends GetxController {
   UserEntity? _user;
   UserEntity? get getuser => _user;
   String? userid;
+  int _timertext = 120; // Timer starts at 120 seconds (2 minutes)
+  int get timertext => _timertext;
+  Timer? _timer;
+  bool _isButtonActive = false;
+  bool get isButtonActive => _isButtonActive;
 
   var isauthloading = false.obs;
 
@@ -38,7 +42,8 @@ class GetxAuthController extends GetxController {
   int? foruserId;
   AuthenticationRepository authrepo = AuthenticationRepositoryImpl();
   bool ismember = true;
-
+  String _confirmotp = '';
+  String get confirmotptext => _confirmotp;
   int? otp;
   bool otploading = false;
   bool? forgotpass;
@@ -47,6 +52,38 @@ class GetxAuthController extends GetxController {
   void changeAuthPage(int index) {
     // changeAuthindex = index;
     // update();
+  }
+
+  void getonfirmotp(String conotp) {
+    _confirmotp = conotp;
+    update();
+  }
+
+  void startTimer() {
+    _isButtonActive = false;
+    _timertext = 120; // Reset timer to 2 minutes
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timertext == 0) {
+        _isButtonActive = true; // Activate the "Resend" button
+        update();
+        _timer!.cancel();
+      } else {
+        _timertext--;
+        update();
+      }
+    });
+  }
+
+  String getFormattedTime(int seconds) {
+    if (seconds >= 60) {
+      // Display mm:ss format when more than 60 seconds remain
+      int minutes = seconds ~/ 60;
+      int remainingSeconds = seconds % 60;
+      return '${minutes.toString().padLeft(2, '0')} min:${remainingSeconds.toString().padLeft(2, '0')} sec';
+    } else {
+      // Display only seconds when less than 60 seconds remain
+      return '$seconds sec';
+    }
   }
 
   void setdataforsession(String userid) async {
@@ -58,18 +95,16 @@ class GetxAuthController extends GetxController {
     _user = v.entries.first.key;
     ismember = _user!.roleName!.trim().toLowerCase() == "member";
     _authentication = true;
-         isauthloading.value = false;
-    
+    isauthloading.value = false;
+
     //print('${ismem} ${userid}');
     update();
   }
 
-  void homepage(){
+  void homepage() {
     ismember = true;
     _user = null;
   }
-
-
 
   Future<Map<bool, String>> authenticate(String email, String pass) async {
     loginloading = true;
@@ -89,17 +124,15 @@ class GetxAuthController extends GetxController {
         if (d.entries.first.key != null) {
           _authentication = true;
           userid = d.entries.first.key;
-        
+
           if (userid != null) {
-              pref.setString('key1', userid!);
-              // pref.setBool('key2', ismember!);
-         
-               loginerrortext = d.entries.first.value;
-              loginloading = false;
-              update();
-              Get.offAllNamed('/dashboard');    
-              
-         
+            pref.setString('key1', userid!);
+            // pref.setBool('key2', ismember!);
+
+            loginerrortext = d.entries.first.value;
+            loginloading = false;
+            update();
+            Get.offAllNamed('/dashboard');
           }
         } else {
           _authentication = false;
@@ -135,15 +168,14 @@ class GetxAuthController extends GetxController {
     update();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-  await authrepo.logout();
-} on Exception catch (e) {
-  // TODO
-}
+      await authrepo.logout();
+    } on Exception catch (e) {
+      // TODO
+    }
     authentications();
 
     prefs.remove('key1');
     prefs.remove('key2');
-
   }
 
   void authentications() async {
@@ -156,12 +188,13 @@ class GetxAuthController extends GetxController {
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
-           _authentication = true;
+      _authentication = true;
       print("in authentication sharedpreferences res");
 
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
-          isauthloading.value = false;
+        isauthloading.value = false;
+
         update();
         Get.offAllNamed('/dashboard');
       } else {
@@ -252,7 +285,7 @@ class GetxAuthController extends GetxController {
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
-           _authentication = true;
+      _authentication = true;
       print("in authentication sharedpreferences res");
 
       // if (prefs.containsKey('key1') && prefs.containsKey('key2')) {
@@ -333,10 +366,9 @@ class GetxAuthController extends GetxController {
     }
   }
 
+  Future<void> authenticationsforReload() async {
+    isauthloading.value = true;
 
- Future<void> authenticationsforReload() async {
-       isauthloading.value = true;
- 
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
@@ -344,25 +376,23 @@ class GetxAuthController extends GetxController {
     //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
     if (request.entries.first.value >= 200 &&
         request.entries.first.value < 300) {
-           _authentication = true;
+      _authentication = true;
       print("in authentication sharedpreferences res");
 
-      if (prefs.containsKey('key1') ) {
-
-        setdataforsession(
-       prefs.getString('key1')!);
+      if (prefs.containsKey('key1')) {
+        setdataforsession(prefs.getString('key1')!);
       } else {
         Get.offAllNamed('/home');
-     isauthloading.value = false;
-    update();
+        isauthloading.value = false;
+        update();
       }
     } else {
       if (request.entries.first.value == 401 ||
           request.entries.first.value == 0) {
         _authentication = false;
         loginloading = false;
-             isauthloading.value = false;
-  
+        isauthloading.value = false;
+
         _user = null;
         // ismember = true;
         signupclose();
@@ -421,17 +451,14 @@ class GetxAuthController extends GetxController {
         //   Get.offAllNamed('/home');
         // }
       } else {
-             isauthloading.value = false;
-    update();
+        isauthloading.value = false;
+        update();
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
         }
       }
     }
   }
-
-
-
 
   void signup(String phone) async {
     signuperror = null;
@@ -510,14 +537,14 @@ class GetxAuthController extends GetxController {
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
-  bool confirmotp(String confirmotp) {
+  bool confirmotp() {
     otploading = true;
     update();
     Timer(const Duration(seconds: 2), () {
       otploading = false;
       update();
     });
-    return confirmotp == otp.toString();
+    return _confirmotp == otp.toString();
   }
 
   void signupclose() {
@@ -525,6 +552,7 @@ class GetxAuthController extends GetxController {
     otp = null;
     numberexists = null;
     signuperror = null;
+    _timer?.cancel();
     update();
   }
 

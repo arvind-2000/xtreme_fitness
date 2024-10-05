@@ -49,7 +49,6 @@ class _MainPageState extends State<MainPage> {
               color: Theme.of(context).colorScheme.secondary,
               onRefresh: () async {
                 GetxLandingcontroller().onInit();
-              
               },
               child: SafeArea(
                 child: Stack(

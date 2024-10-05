@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import 'package:xtreme_fitness/authenicationfeatures/views/pages/pinputotpform.dart';
 
 import '../../../authentifeatures/models/usecasesimpl.dart';
 import '../../../config/const.dart';
@@ -9,10 +11,10 @@ import '../../../widgets/card.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
-import 'createmembers.dart';
 
 class ForgotPassWordScreen extends StatefulWidget {
-  const ForgotPassWordScreen({super.key, this.changelogin, required this.formkey});
+  const ForgotPassWordScreen(
+      {super.key, this.changelogin, required this.formkey});
   final Function(bool)? changelogin;
   final GlobalKey<FormState> formkey;
   @override
@@ -20,7 +22,6 @@ class ForgotPassWordScreen extends StatefulWidget {
 }
 
 class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
-
   final _formkeyrenewpass = GlobalKey<FormState>();
   bool? _otpcorrect;
 
@@ -60,7 +61,8 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return Container(
-             padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
+        padding: EdgeInsets.all(
+            MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 32),
         // color: Theme.of(context).colorScheme.primary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,22 +76,21 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                          const Row(
-                    
-                    children: [
-                      Icon(
-                        Icons.lock,
-                        size: 16,
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.lock,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          HeadingText(
+                            'Forgot Password',
+                            size: 20,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      HeadingText(
-                        'Forgot Password',
-                        size: 20,
-                      ),
-                    ],
-                  ),
                       IconButton(
                           onPressed: authctrl.otploading
                               ? null
@@ -111,7 +112,6 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-              
                   const SizedBox(
                     height: 10,
                   ),
@@ -302,43 +302,58 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                           )
                                         : const SizedBox(),
                                     authctrl.otp != null
-                                        ? Center(
-                                            child: ConstrainedBox(
-                                              constraints: const BoxConstraints(
-                                                  maxWidth: 300),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                child: TextFieldWidget(
-                                                    hint: 'OTP',
-                                                    controller: _otpcontroller,
-                                                    enabletext:
-                                                        !authctrl.otploading,
-                                                    fieldsubmitted: () {
-                                                       if (widget.formkey.currentState!
-                                                    .validate()) {
-                                                  if (authctrl.otp != null) {
-                                                    if (authctrl.confirmotp(
-                                                        _otpcontroller.text)) {
-                                                      setState(() {
-                                                        _otpcorrect = true;
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        _otpcorrect = false;
-                                                      });
-                                                    }
-                                                    //confirm otp
-                                                  } else {
-                                                    //send otp
-                                                    authctrl.passwordrenew(
-                                                        _phonecontroller.text);
-                                                  }
+                                        ? PinPutForm(
+                                            onsubmit: (vad) {
+                                              if (authctrl.otp != null) {
+                                                if (authctrl.confirmotp()) {
+                                                  Get.to(() =>
+                                                      const LoginDialog());
+
+                                                  setState(() {
+                                                    _otpcorrect = true;
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    _otpcorrect = false;
+                                                  });
                                                 }
-                                                }),
-                                              ),
-                                            ),
+                                              }
+                                            },
                                           )
+                                        // ? Center(
+                                        //     child: ConstrainedBox(
+                                        //       constraints: const BoxConstraints(
+                                        //           maxWidth: 300),
+                                        //       child: Padding(
+                                        //         padding:
+                                        //             const EdgeInsets.all(16.0),
+                                        //         child: TextFieldWidget(
+                                        //             hint: 'OTP',
+                                        //             controller: _otpcontroller,
+                                        //             enabletext:
+                                        //                 !authctrl.otploading,
+                                        //             fieldsubmitted: () {
+                                        //               if (authctrl.otp !=
+                                        //                   null) {
+                                        //                 if (authctrl.confirmotp(
+
+                                        //                         )) {
+                                        //                   Get.to(() =>
+                                        //                       const CreateXtremers());
+
+                                        //                   setState(() {
+                                        //                     _otpcorrect = true;
+                                        //                   });
+                                        //                 } else {
+                                        //                   setState(() {
+                                        //                     _otpcorrect = false;
+                                        //                   });
+                                        //                 }
+                                        //               }
+                                        //             }),
+                                        //       ),
+                                        //     ),
+                                        //   )
                                         : const SizedBox(),
                                     !authctrl.otploading &&
                                             _otpcorrect != null &&
@@ -367,8 +382,9 @@ class _ForgotPassWordScreenState extends State<ForgotPassWordScreen> {
                                                 if (widget.formkey.currentState!
                                                     .validate()) {
                                                   if (authctrl.otp != null) {
-                                                    if (authctrl.confirmotp(
-                                                        _otpcontroller.text)) {
+                                                    if (authctrl.confirmotp()) {
+                                                      Get.to(() =>
+                                                          const LoginDialog());
                                                       setState(() {
                                                         _otpcorrect = true;
                                                       });
