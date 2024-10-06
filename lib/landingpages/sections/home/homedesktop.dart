@@ -165,12 +165,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                                               color: Colors.white60,
                                               size: 16,
                                             ),
-                                            Text(
-                                              "5:00 AM - 11:00 AM",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                            UnderLineText(text:"5:00 AM - 11:00 AM"),
                                           ],
                                         ),
                                         const SizedBox(
@@ -195,11 +190,8 @@ class _HomeDesktopState extends State<HomeDesktop> {
                                               color: Colors.white60,
                                               size: 16,
                                             ),
-                                            Text("3:00 PM - 8:00 PM",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                                UnderLineText(text:"3:00 PM - 8:00 PM"),
+                                       
                                           ],
                                         ),
                                       ],
@@ -217,12 +209,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                                               color: Colors.white60,
                                               size: 16,
                                             ),
-                                            Text(
-                                              "5:00 AM - 11:00 AM",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                          UnderLineText(text:"5:00 AM - 11:00 AM"),
                                           ],
                                         ),
                                         const SizedBox(
@@ -250,11 +237,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                                               color: Colors.white60,
                                               size: 16,
                                             ),
-                                            Text("3:00 PM - 8:00 PM",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                              UnderLineText(text:"3:00 PM - 8:00 PM"),
                                           ],
                                         ),
                                       ],
@@ -271,6 +254,46 @@ class _HomeDesktopState extends State<HomeDesktop> {
             ),
             child2: const SizedBox()),
       ],
+    );
+  }
+}
+
+class UnderLineText extends StatefulWidget {
+  const UnderLineText({
+    super.key, required this.text,
+  });
+  final String text;
+  @override
+  State<UnderLineText> createState() => _UnderLineTextState();
+}
+
+class _UnderLineTextState extends State<UnderLineText> {
+  bool hover = false;
+  
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+
+        onEnter: (e){
+          setState(() {
+            hover = true;
+          });
+        },
+        onExit: (v){
+              setState(() {
+                hover = false;
+              });
+        },  
+   
+      child: Text(
+       widget.text,
+        style: TextStyle(
+            fontSize: 16,
+            color: hover?null:Colors.grey[500],
+            fontWeight: FontWeight.bold,
+            decoration: hover?TextDecoration.underline:null
+            ),
+      ),
     );
   }
 }

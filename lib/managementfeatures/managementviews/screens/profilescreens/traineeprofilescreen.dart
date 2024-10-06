@@ -7,6 +7,8 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
+import '../../../../widgets/titletext.dart';
+
 
 
 class TraineeProfile extends StatelessWidget {
@@ -52,13 +54,15 @@ class TraineeProfile extends StatelessWidget {
                     ? const Center(
                         child: Text("No User"),
                       )
-                    :size<=mobilescreen?Expanded(child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TrainerProfile(user: user),
-                        SizedBox(height: 10,),
-                            TrainerList(),
-                      ],
+                    :size<=mobilescreen?Expanded(child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TrainerProfile(user: user),
+                          SizedBox(height: 10,),
+                              TrainerList(),
+                        ],
+                      ),
                     )) :Expanded(
                         child: Row(
                           children: [
@@ -88,126 +92,133 @@ class TrainerList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ManagementController>(
       builder: (managectrl) {
-        return Expanded(
-            child: CardwithShadow(
-                color: Colors.transparent,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const HeadingText("Trainees List"),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                     
-                            mainAxisSpacing: 10,
-                            childAspectRatio:MediaQuery.sizeOf(context).width<=mobilescreen?4/3:4/4, maxCrossAxisExtent:MediaQuery.sizeOf(context).width<=mobilescreen?500:300,
-                          ),
-                          shrinkWrap: true,
-                          itemCount: managectrl.getallTrainee.length,
-                          itemBuilder: (c, i) {
-                            return CardwithShadow(
-                                margin:
-                                    const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 8),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    //name
-                                    Row(
-                                      children: [
-                                        const Text("Name : "),
-                                        Text(
-                                          managectrl.getallTrainee[i].firstName??"",
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight:
-                                                  FontWeight
-                                                      .bold),
-                                        ),
-                                      ],
-                                    ),
-                
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                
-                                    //phone
-                                    Row(
-                                      children: [
-                                        const Text("Phone : "),
-                                        Text(managectrl.getallTrainee[i].mobileNumber??""),
-                                      ],
-                                    ),
-                
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                                    //time schedule
-                                    Expanded(
-                                      child: SizedBox(
-                                        width: double.maxFinite,
-                                        child: CardwithShadow(
-                                          
-                                            color: Theme.of(
-                                                    context)
-                                                .colorScheme
-                                                .secondary,
-                                            child:
-                                                 Column(
-                                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                                   mainAxisAlignment:
-                                                       MainAxisAlignment
-                                                           .start,
-                                                   children: [
-                                                     const Row(
-                                                       children: [
-                                                         Icon(
-                                                           Icons
-                                                               .alarm,
-                                                           size:
-                                                               14,
-                                                           color:
-                                                               Colors.grey,
-                                                         ),
-                                                         SizedBox(
-                                                           width:
-                                                               6,
-                                                         ),
-                                                         Text(
-                                                           "Schedule Time",
-                                                           style:
-                                                               TextStyle(color: Colors.white),
-                                                         ),
-                                                       ],
-                                                     ),
-                                                     const SizedBox(
-                                                       height:
-                                                           10,
-                                                     ),
-                                                     Text(
-                                                       managectrl.getallTrainee[i].preferTiming??"morning",
-                                                       style: const TextStyle(
-                                                           fontWeight: FontWeight
-                                                               .bold,
-                                                           color:
-                                                               Colors.white),
-                                                     )
-                                                   ],
-                                                 )),
-                                      ),
-                                    )
-                                  ],
-                                ));
-                          }),
-                    )
-                  ],
-                )));
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const HeadingText("Trainees List"),
+            const SizedBox(
+              height: 20,
+            ),
+            managectrl.getallTrainee.isEmpty?Column(children:[TitleText("No Trainees to show")])  : Expanded(
+              flex:MediaQuery.sizeOf(context).width<=mobilescreen?0:1,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth:500),
+                child: ListView.builder(
+                  physics: MediaQuery.sizeOf(context).width<=mobilescreen?NeverScrollableScrollPhysics():null,
+                    // gridDelegate:
+                    //     SliverGridDelegateWithMaxCrossAxisExtent(
+                             
+                    //   mainAxisSpacing: 10,
+                    //   childAspectRatio:MediaQuery.sizeOf(context).width<=mobilescreen?4/3:4/3, maxCrossAxisExtent:MediaQuery.sizeOf(context).width<=mobilescreen?500:300,
+                    // ),
+                    shrinkWrap: true,
+                    itemCount: managectrl.getallTrainee.length,
+               
+                    itemBuilder: (c, i) {
+                      return CardwithShadow(
+                          margin:
+                              const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8),
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              //name
+                              Row(
+                                children: [
+                                  Icon(Icons.person,size:14,color:Colors.grey[400]),
+                                  SizedBox(width:5),
+                                  Text(
+                                    managectrl.getallTrainee[i].firstName??"",
+                                  
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight:
+                                            FontWeight
+                                                .bold),
+                                  ),
+                                ],
+                              ),
+                        
+                              const SizedBox(
+                                height: 16,
+                              ),
+                        
+                              //phone
+                              Row(
+                                children: [
+                                  Icon(Icons.phone,size:14,color:Colors.grey[400]),
+                                  SizedBox(width:5),
+                                  Text(
+                                    managectrl.getallTrainee[i].mobileNumber??"",
+                                  
+                                  style:TextStyle(color:Colors.grey[400])),
+                                ],
+                              ),
+                        
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              //time schedule
+                              // SizedBox(
+                              //   width: double.maxFinite,
+                              //   child: CardwithShadow(
+                                  
+                              //       color: Theme.of(
+                              //               context)
+                              //           .colorScheme
+                              //           .secondary,
+                              //       child:
+                              //            Column(
+                              //              crossAxisAlignment: CrossAxisAlignment.start,
+                              //              mainAxisAlignment:
+                              //                  MainAxisAlignment
+                              //                      .start,
+                              //              children: [
+                              //                const Row(
+                              //                  children: [
+                              //                    Icon(
+                              //                      Icons
+                              //                          .alarm,
+                              //                      size:
+                              //                          14,
+                              //                      color:
+                              //                          Colors.grey,
+                              //                    ),
+                              //                    SizedBox(
+                              //                      width:
+                              //                          6,
+                              //                    ),
+                              //                    Text(
+                              //                      "Schedule Time",
+                              //                      style:
+                              //                          TextStyle(color: Colors.white),
+                              //                    ),
+                              //                  ],
+                              //                ),
+                              //                const SizedBox(
+                              //                  height:
+                              //                      10,
+                              //                ),
+                              //                Text(
+                              //                  managectrl.getallTrainee[i].preferTiming??"morning",
+                              //                  style: const TextStyle(
+                              //                      fontWeight: FontWeight
+                              //                          .bold,
+                              //                      color:
+                              //                          Colors.white),
+                              //                )
+                              //              ],
+                              //            )),
+                              // )
+                            ],
+                          ));
+                    }),
+              ),
+            )
+          ],
+        );
       }
     );
   }
@@ -224,7 +235,7 @@ class TrainerProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 300,
+        width:MediaQuery.sizeOf(context).width<=mobilescreen?double.maxFinite:300,
         child: CardwithShadow(
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(16),

@@ -315,37 +315,34 @@ class PlanSelectionField extends StatelessWidget {
               height: 10,
             ),
             addmemberctrl.gettrainer != null
-                ? CardwithShadow(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TitleText(addmemberctrl.gettrainer!.name),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text("phone"),
-                              Text(addmemberctrl.gettrainer!.phone,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              const Text("Designation"),
-                              Text(
-                                addmemberctrl.gettrainer!.roleid.roleName,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                ? ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 400),
+                  child: CardwithShadow(
+                      margin:
+                          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TitleText(addmemberctrl.gettrainer?.name??""),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                        
+                          
+                                Text(
+                                  addmemberctrl.gettrainer?.roleid.roleName??"",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,color:Colors.grey[400]),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )).animate().slideX(begin: 1, end: 0)
+                        ],
+                      )).animate().slideX(begin: 1, end: 0),
+                )
                 : const SizedBox(),
             const SizedBox(
               height: 10,

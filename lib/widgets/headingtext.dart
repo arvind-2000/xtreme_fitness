@@ -20,10 +20,10 @@ class HeadingText extends StatelessWidget {
           fontSize: size ?? 26,
           fontWeight: isbold ? FontWeight.bold : null,
           foreground: Paint()
-            ..shader = const LinearGradient(
+            ..shader = LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.bottomRight,
-              colors: [Color.fromARGB(193, 255, 255, 255), Colors.red],
+              colors:[Color.fromARGB(193, 255, 255, 255), Colors.red],
             ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
     ).animate().slideY(begin: 0.5, end: 0).fadeIn();
   }

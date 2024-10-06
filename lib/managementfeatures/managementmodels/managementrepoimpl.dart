@@ -1726,7 +1726,7 @@ class ManagementrepoImpl implements ManagementRepo {
       if (request.status! >= 200 && request.status! < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(request.responseText!);
-        print("In Role list : ${jsonList.length}");
+      
         List<Role> rolelist =
             jsonList.map((json) => Role.fromMap(json)).toList();
 

@@ -227,8 +227,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                                         : const Text(
                                                             "Discount",
                                                             style: TextStyle(
-                                                              color: Colors
-                                                                  .white60,
+                                                            
                                                             ),
                                                           ),
                                                     e.value.discountPercentage <=
@@ -236,11 +235,13 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                                         ? const SizedBox()
                                                         : Text(
                                                             "${e.value.discountPercentage}%",
-                                                            style: const TextStyle(
+                                                            style:  TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold),
+                                                                        .bold,
+                                                                        color: Colors.grey[500]
+                                                                        ),
                                                           ),
                                                     const SizedBox(
                                                       height: 30,
@@ -248,7 +249,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                                     const Text(
                                                       "Features",
                                                       style: TextStyle(
-                                                        color: Colors.white60,
+                                                      
                                                       ),
                                                     ),
                                                     const SizedBox(

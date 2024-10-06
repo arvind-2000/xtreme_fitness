@@ -217,13 +217,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                         Navigator.pop(context);
                                         print('otp confirm here page');
                                       authctrl.signupclose();
-                                        Get.to(() => CreateXtremers(
-                                              phonenumber:
-                                                  _phonecontroller.text,
-                                              services:
-                                                  landingcontroller.services,
-                                            ));
-
+                                        // Get.toNamed(() => CreateXtremers(
+                                        //       phonenumber:
+                                        //           _phonecontroller.text,
+                                        //       services:
+                                        //           landingcontroller.services,
+                                        //     ));
+                                        Get.toNamed('/Registration',arguments: {'phonenumber': _phonecontroller.text, 'services': landingcontroller.services});
                                         setState(() {
                                           otpcorrect = true;
                                         });
@@ -323,13 +323,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                           print('otp confirm here page');
                                           Navigator.pop(context);
 
-                                          Get.to(() => CreateXtremers(
-                                                phonenumber:
-                                                    _phonecontroller.text,
-                                                services:
-                                                    landingcontroller.services,
-                                              ));
-
+                                          // Get.to(() => CreateXtremers(
+                                          //       phonenumber:
+                                          //           _phonecontroller.text,
+                                          //       services:
+                                          //           landingcontroller.services,
+                                          //     ));
+       Get.toNamed('/Registration',arguments: {'phonenumber': _phonecontroller.text, 'services': landingcontroller.services});
                                           setState(() {
                                             otpcorrect = true;
                                           });

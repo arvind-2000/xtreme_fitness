@@ -546,7 +546,6 @@ class AddMemberController extends GetxController {
     }
 
     selectedplan = plan;
-    print('Plan Selected');
     if(xtremer!=null){
       xtremer!.category = selectedplan!.category;
     }

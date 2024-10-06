@@ -18,9 +18,8 @@ import '../../../widgets/normaltext.dart';
 import '../controller/authcontroller.dart';
 
 class CreateXtremers extends StatefulWidget {
-  const CreateXtremers({super.key, this.phonenumber, this.services});
-  final String? phonenumber;
-  final ServiceEntity? services;
+  const CreateXtremers({super.key});
+
   @override
   State<CreateXtremers> createState() => _CreateXtremersState();
 }
@@ -28,20 +27,29 @@ class CreateXtremers extends StatefulWidget {
 class _CreateXtremersState extends State<CreateXtremers> {
   bool isLoading = true;
   bool canpos = false;
+  Map? arguments;
   @override
   void initState() {
     super.initState();
-    Get.put(ManagementController());
+
+    // Get.put(ManagementController());
     Get.put(AddMemberController());
     Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {
           isLoading = false;
         }));
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp){
+            arguments = Get.arguments as Map?;
+  if(arguments==null){
+    Get.offAllNamed('/home');
+  }
+        },);
 
     // Listen for the 'beforeunload' event to show a warning when the user tries to navigate awa
   }
 
   // Function to show a custom warning dialog
   Future<bool> _showExitWarningDialog(BuildContext context) async {
+ 
     return await showDialog(
             context: context,
             builder: (context) => PageDialog(
@@ -98,6 +106,8 @@ class _CreateXtremersState extends State<CreateXtremers> {
 
   @override
   Widget build(BuildContext context) {
+      final String? phonenumber = arguments?['phonenumber']??"";
+    final ServiceEntity? services = arguments?['services'] as ServiceEntity?;
     final AddMemberController addMemberController =
         Get.put(AddMemberController());
     GetxAuthController authctrl = Get.find<GetxAuthController>();
@@ -156,9 +166,9 @@ class _CreateXtremersState extends State<CreateXtremers> {
                                                 serviceEntity:
                                                     addMemberController
                                                         .selectedservice,
-                                                phonenumber: widget.phonenumber)
+                                                phonenumber: phonenumber)
                                             : AddMemberScreen(
-                                                phonenumber: widget.phonenumber,
+                                                phonenumber: phonenumber,
                                               ))),
                               ],
                             )),

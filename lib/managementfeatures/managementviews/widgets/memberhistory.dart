@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
+import '../../../landingpages/sections/home/homedesktop.dart';
 import '../../../widgets/cardborder.dart';
 import '../../managementdomain/entities.dart/paymententity.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
@@ -79,23 +80,23 @@ class MemberServiceHistory extends StatelessWidget {
                                                 )
                                               ],
                                             ),
-                                            Text(
-                                              "${e.transactionId}",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.grey[500]),
+                                            UnderLineText(
+                                             text: "${e.transactionId}",
+                                              // style: TextStyle(
+                                              //     fontSize: 16,
+                                              //     color: Colors.grey[500]),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: 5),
-                                    const Text("Payment Method"),
+                                    const Text("Payment Type"),
                                     Text(
-                                      "${e.paymentMethod}",
+                                      "${e.paymentType?.split("+").join()}",
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.grey[300]),
+                                          color: Colors.grey[400]),
                                     ),
                                     const SizedBox(height: 10),
                                   ],
@@ -105,7 +106,8 @@ class MemberServiceHistory extends StatelessWidget {
                                   children: [
                                     CardBorder(
                                         margin: EdgeInsets.zero,
-                                        color: Colors.green,
+                                        padding:EdgeInsets.symmetric(vertical:8,horizontal:16),
+                                        color: Colors.grey[500],
                                         onpress: () {
                                           createAndprintPdf(
                                             Paymententity(
@@ -132,17 +134,15 @@ class MemberServiceHistory extends StatelessWidget {
                                         },
                                         child: const Text(
                                           "Download PDF",
-                                          style: TextStyle(fontSize: 14),
+                                          style: TextStyle(fontSize: 12),
                                         )),
                                     const SizedBox(
-                                      height: 16,
+                                      height: 8,
                                     ),
                                     Text(
                                       "${e.paymentDate.day} / ${e.paymentDate.month} /${e.paymentDate.year}",
                                       style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary),
+                                          color: Colors.grey[500]),
                                     )
                                   ],
                                 ),

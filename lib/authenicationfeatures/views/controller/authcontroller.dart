@@ -93,7 +93,7 @@ class GetxAuthController extends GetxController {
     Map<UserEntity?, String> v =
         await authrepo.getUserbyId(int.tryParse(userid) ?? 0);
     _user = v.entries.first.key;
-    ismember = _user!.roleName!.trim().toLowerCase() == "member";
+    ismember = _user!.roleName!.trim().toLowerCase() == "member" || _user!.roleName!.trim().toLowerCase() == "servicemember";
     _authentication = true;
     isauthloading.value = false;
 
@@ -339,8 +339,8 @@ void navigateToDashboard() {
     _authentication = true;
 
     // Check if session data exists and set it
-    if (prefs.containsKey('key1')) {
-      setdataforsession(prefs.getString('key1')!);
+    if (_user!=null) {
+      // setdataforsession(prefs.getString('key1')!);
     } else {
       handleSessionInvalid(prefs);
     }
@@ -543,7 +543,7 @@ void showSessionExpiredDialog(SharedPreferences prefs) {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    // print(otp.toString());
+    print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 

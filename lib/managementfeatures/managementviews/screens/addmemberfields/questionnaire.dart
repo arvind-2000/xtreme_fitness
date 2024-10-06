@@ -90,7 +90,7 @@ class Questionnare extends StatelessWidget {
                 const SizedBox(height: 10,),
                   RadiobuttonWidget(question: "Have you, ever been suffered from fainting, migraines or loss of balance?",groupValue:addmemberctrl.healthQuestions['faintingQ']??false, onChanged: (v){addmemberctrl.updatequestion('faintingQ', v!);} ,),
                 const SizedBox(height: 10,),
-               RadiobuttonWidget(question: "Is there any history of heat disease in your family?",groupValue:addmemberctrl.healthQuestions['heartQ']??false, onChanged: (v){addmemberctrl.updatequestion('heartQ', v!);} ,),
+               RadiobuttonWidget(question: "Is there any history of heart disease in your family?",groupValue:addmemberctrl.healthQuestions['heartQ']??false, onChanged: (v){addmemberctrl.updatequestion('heartQ', v!);} ,),
                 const SizedBox(height: 10,),
                  ],),
                 
