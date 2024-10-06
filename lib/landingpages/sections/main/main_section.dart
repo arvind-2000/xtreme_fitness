@@ -32,8 +32,8 @@ class _MainPageState extends State<MainPage> {
     final NetworkController networkController = Get.find<NetworkController>();
 
     return StreamBuilder<NetworkState>(
-      stream:
-          networkController.networkStateStream, // Stream from NetworkController
+      stream: networkController
+          .networkStateStream.stream, // Stream from NetworkController
       builder: (context, snapshot) {
         // Handle loading state if needed
         if (snapshot.connectionState == ConnectionState.waiting) {

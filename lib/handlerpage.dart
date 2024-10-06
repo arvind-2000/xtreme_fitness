@@ -54,50 +54,62 @@ class _HandlerPageState extends State<HandlerPage> {
     final NetworkController networkController = Get.find<NetworkController>();
     final GetxAuthController authController = Get.find<GetxAuthController>();
 
-    return StreamBuilder<NetworkState>(
-      stream:
-          networkController.networkStateStream, // Stream from NetworkController
-      builder: (context, snapshot) {
-        // Handle loading state if needed
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.white70,
-            ),
-          );
-        }
-
-        // Check if the stream has data
-        if (!snapshot.hasData) {
-          return const Center(child: Text('Unexpected error occurred.'));
-        }
-
-        // Handle different network states
-        switch (snapshot.data!) {
-          case NetworkState.noInternet:
-            return const NoInternetPage(); // Show no internet page
-
-          case NetworkState.serverError:
-            return const ServerErrorPage(); // Show server error page
-
-          case NetworkState.dataFetched:
-            // Check if auth is loading
-            if (authController.isauthloading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white70,
-                ),
-              );
-            } else {
-              return HandlerToDashboard(
-                  refresh: authenticates); // Proceed to dashboard
-            }
-
-          default:
+    return Scaffold(
+      body: StreamBuilder<NetworkState>(
+        stream: networkController
+            .networkStateStream.stream, // Stream from NetworkController
+        builder: (context, snapshot) {
+          // Display CircularProgressIndicator if the network call is in progress
+          if (networkController.isWaiting.value) {
             return const Center(
-                child: Text('Unknown state')); // Fallback for unknown states
-        }
-      },
+              child: CircularProgressIndicator(
+                color: Colors.white70,
+              ),
+            );
+          }
+
+          // Handle waiting state of the StreamBuilder itself
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white70,
+              ),
+            );
+          }
+
+          // Handle case where there is no data from the stream
+          if (!snapshot.hasData) {
+            return const Center(child: Text('Unexpected error occurred.'));
+          }
+
+          // Handle different network states
+          switch (snapshot.data!) {
+            case NetworkState.noInternet:
+              return const NoInternetPage(); // Show no internet page
+
+            case NetworkState.serverError:
+              return const ServerErrorPage(); // Show server error page
+
+            case NetworkState.dataFetched:
+              // Check if the authentication process is loading
+              if (authController.isauthloading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white70,
+                  ),
+                );
+              } else {
+                // Proceed to dashboard once auth is done loading
+                return HandlerToDashboard(refresh: authenticates);
+              }
+
+            default:
+              return const Center(
+                child: Text('Unknown state'),
+              ); // Fallback for unknown states
+          }
+        },
+      ),
     );
   }
 }

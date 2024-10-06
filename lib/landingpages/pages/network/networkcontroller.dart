@@ -1,103 +1,105 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/config/apis.dart';
-import 'dart:async';
 
 class NetworkController extends GetxController {
-  final StreamController<NetworkState> _networkStateController =
-      StreamController<NetworkState>();
-
-  Stream<NetworkState> get networkStateStream => _networkStateController.stream;
-
+  var connectionStatus = ConnectivityResult.none.obs;
   final Connectivity _connectivity = Connectivity();
+  var hasServerError = false.obs;
+  var isWaiting = false.obs; // Add isWaiting
+
   bool _isinternetok = true;
+  bool get isinternetok => _isinternetok;
+
   bool _isserverok = true;
+  bool get isserverok => _isserverok;
+
+  final networkStateStream = StreamController<NetworkState>();
+
+  StreamController<NetworkState>? networkStateController;
+
+  // Stream getter
+
+  void _initializeStream() {
+    networkStateController =
+        StreamController<NetworkState>.broadcast(); // Reset stream
+    getContactDetails();
+  }
 
   @override
   void onInit() {
     super.onInit();
+    _initializeStream();
     _checkInitialConnection();
-    getContactDetails(); // Fetch initial contact details
 
-    // Listen to connectivity changes
-    _connectivity.onConnectivityChanged
-        .listen((List<ConnectivityResult> result) {
-      updateConnectionStatus(result);
-    });
+    getContactDetails();
+    _connectivity.onConnectivityChanged.listen(updateConnectionStatus);
   }
 
-  // Check the initial internet connection status
   Future<void> _checkInitialConnection() async {
     var status = await _connectivity.checkConnectivity();
-    _isinternetok =
-        status != ConnectivityResult.none; // Update internet availability
-    _emitNetworkState();
+    connectionStatus.value = status[0];
+    updateConnectionStatus(status);
   }
 
-  // Update connection status based on internet connectivity
   void updateConnectionStatus(List<ConnectivityResult> result) {
-    _isinternetok = result != ConnectivityResult.none;
-
-    // If internet is available, fetch contact details again
-    if (_isinternetok) {
+    connectionStatus.value = result[0];
+    if (connectionStatus.value == ConnectivityResult.none) {
+      _isinternetok = false;
+      networkStateStream.add(NetworkState.noInternet); // Emit no internet state
+      isWaiting.value = false; // Stop waiting
+    } else {
+      _isinternetok = true;
       getContactDetails();
-    } else {
-      _emitNetworkState(); // Emit no internet state
     }
+    update();
   }
 
-  // Emit the current network and server status to the stream
-  void _emitNetworkState() {
-    if (!_isinternetok) {
-      _networkStateController.add(NetworkState.noInternet);
-    } else if (!_isserverok) {
-      _networkStateController.add(NetworkState.serverError);
-    } else {
-      _networkStateController.add(NetworkState.dataFetched);
-    }
-  }
-
-  // Fetch contact details from the server
   void getContactDetails() async {
-    log('Fetching contact details...');
-
+    log('get contacts');
+    isWaiting.value = true; // Start waiting
+    update();
     try {
       var response = await html.HttpRequest.request(
         '$api/api/Contacts',
         method: 'GET',
       );
 
-      print("Response from network controller: ${response.status}");
-
       if (response.status == 200) {
-        _isserverok = true; // Server responded successfully
+        _isserverok = true;
+        networkStateStream.add(NetworkState.dataFetched); // Emit data fetched
       } else {
-        _isserverok = false; // Server returned an error
+        _isserverok = false;
+        networkStateStream.add(NetworkState.serverError); // Emit server error
       }
-
-      _emitNetworkState(); // Emit the updated network state
     } on html.ProgressEvent catch (e) {
-      print('ProgressEvent error: $e');
-      _isserverok = false;
-      _emitNetworkState(); // Emit server error due to network issue
+      _isinternetok = false;
+      networkStateStream.add(NetworkState.serverError); // Emit no internet
     } catch (e) {
-      print('Error occurred while fetching contact details: $e');
-      _isserverok = false; // General error
-      _emitNetworkState();
+      _isserverok = false;
+      networkStateStream.add(NetworkState.serverError); // Emit server error
+    } finally {
+      isWaiting.value = false; // Stop waiting after fetching
     }
+    update();
+  }
+
+  void resetStream() {
+    // Close the old stream and initialize a new one when navigating back to the page
+
+    Get.offAllNamed('/');
   }
 
   @override
   void onClose() {
-    _networkStateController
-        .close(); // Close the stream when the controller is disposed
+    networkStateController?.close();
     super.onClose();
   }
 }
 
-// Enum to represent the various network states
 enum NetworkState {
   noInternet,
   serverError,
