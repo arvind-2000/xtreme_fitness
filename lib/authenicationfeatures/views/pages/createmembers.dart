@@ -107,64 +107,65 @@ class _CreateXtremersState extends State<CreateXtremers> {
         _showExitWarningDialog(context);
       },
       child: Scaffold(
-        body: isLoading
-            ? const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    HeadingText("Creating Xtremer Account ...")
-                  ],
-                ),
-              )
-            : Obx(() {
-                return authctrl.isauthloading.value
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    : Center(
-                        child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 1400),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 100,
-                                  child: Center(
-                                    child: InkWell(
-                                        onTap: () {
-                                          _showExitWarningDialog(context);
-                                        },
-                                        child: Image.asset(
-                                            height: 60,
-                                            width: 60,
-                                            "assets/logo1.png")),
+          body: isLoading
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      HeadingText("Creating Xtremer Account ...")
+                    ],
+                  ),
+                )
+              : GetBuilder<GetxAuthController>(builder: (_) {
+                  return authctrl.isauthloading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : Center(
+                          child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 1400),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                      child: InkWell(
+                                          onTap: () {
+                                            _showExitWarningDialog(context);
+                                          },
+                                          child: Image.asset(
+                                              height: 60,
+                                              width: 60,
+                                              "assets/logo1.png")),
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                    child: CardBorderHover(
-                                        child: addMemberController
-                                                    .selectedservice !=
-                                                null
-                                            ? AddServiceUsage(
-                                                serviceEntity:
-                                                    addMemberController
-                                                        .selectedservice,
-                                                phonenumber: widget.phonenumber)
-                                            : AddMemberScreen(
-                                                phonenumber: widget.phonenumber,
-                                              ))),
-                              ],
-                            )),
-                      );
-              }),
-      ),
+                                  Expanded(
+                                      child: CardBorderHover(
+                                          child: addMemberController
+                                                      .selectedservice !=
+                                                  null
+                                              ? AddServiceUsage(
+                                                  serviceEntity:
+                                                      addMemberController
+                                                          .selectedservice,
+                                                  phonenumber:
+                                                      widget.phonenumber)
+                                              : AddMemberScreen(
+                                                  phonenumber:
+                                                      widget.phonenumber,
+                                                ))),
+                                ],
+                              )),
+                        );
+                })),
     );
   }
 }

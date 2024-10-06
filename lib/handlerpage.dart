@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,22 +28,19 @@ class HandlerPage extends StatefulWidget {
 
 class _HandlerPageState extends State<HandlerPage> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    
-    Get.put(GetxPageController());
+    Get.find<GetxAuthController>().authentications();
+
     authenticates();
   }
 
-  void authenticates()async{
-  
-        await Get.find<GetxAuthController>().authenticationsforReload();
-         Get.put(AddMemberController());
-        Get.put(ManagementController());
-        Get.put(ContactController()).getallmessage();
+  void authenticates() async {
+    await Get.find<GetxAuthController>().authenticationsforReload();
+    Get.put(AddMemberController());
+    Get.put(ManagementController());
+    Get.find<ContactController>().getallmessage();
   }
-
-
 
   @override
   void dispose() {
@@ -53,118 +52,139 @@ class _HandlerPageState extends State<HandlerPage> {
   @override
   Widget build(BuildContext context) {
     final NetworkController networkController = Get.find<NetworkController>();
- 
-            return GetBuilder<GetxAuthController>(
-              builder: (authctrl) {
-                return Obx(() {
-                  if (networkController.connectionStatus.value ==
-                      ConnectivityResult.none) {
-                    return const NoInternetPage();
-                  } else {
-                    if (networkController.hasServerError.value) {
-                      return const ServerErrorPage();
-                    } else {
-                      return authctrl.isauthloading.value?const Center(child: CircularProgressIndicator(color: Colors.white70,)) : HandlerToDashboard(refresh: authenticates,);
-                    }
-                  }
-                });
-              }
-            );
+    final GetxAuthController authController = Get.find<GetxAuthController>();
+
+    return StreamBuilder<NetworkState>(
+      stream:
+          networkController.networkStateStream, // Stream from NetworkController
+      builder: (context, snapshot) {
+        // Handle loading state if needed
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white70,
+            ),
+          );
+        }
+
+        // Check if the stream has data
+        if (!snapshot.hasData) {
+          return const Center(child: Text('Unexpected error occurred.'));
+        }
+
+        // Handle different network states
+        switch (snapshot.data!) {
+          case NetworkState.noInternet:
+            return const NoInternetPage(); // Show no internet page
+
+          case NetworkState.serverError:
+            return const ServerErrorPage(); // Show server error page
+
+          case NetworkState.dataFetched:
+            // Check if auth is loading
+            if (authController.isauthloading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white70,
+                ),
+              );
+            } else {
+              return HandlerToDashboard(
+                  refresh: authenticates); // Proceed to dashboard
+            }
+
+          default:
+            return const Center(
+                child: Text('Unknown state')); // Fallback for unknown states
+        }
+      },
+    );
   }
 }
 
 class HandlerToDashboard extends StatelessWidget {
   const HandlerToDashboard({
-    super.key, required this.refresh,
+    super.key,
+    required this.refresh,
   });
   final ui.VoidCallback refresh;
   @override
   Widget build(BuildContext context) {
-     final GetxPageController pagectrl = Get.find<GetxPageController>();
-    return GetBuilder<ContactController>(
-      builder: (conctrl) {
-        return GetBuilder<GetxAuthController>(
-          builder: (authctrl) {
-            return GetBuilder<GetxPageController>(
-              builder: (_) {
-                return GetBuilder<ManagementController>(
-                  builder: (managectrl) {
-                    return RefreshIndicator(
-                      color: Theme.of(context).colorScheme.secondary,
-                      onRefresh: ()async{
-                          managectrl.onInit();
-                          refresh();
-                      },
-                      child: Scaffold(
-                        appBar: Responsive.isMobile(context) ||
-                                Responsive.isTablet(context)
-                            ? AppBar(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.surface,
-                                // title: TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
-                                centerTitle: true,
-                                actions: [
-                              authctrl.ismember?const SizedBox():Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 10),
-                                    child: badges.Badge(
-                                      position:
-                                          badges.BadgePosition.topEnd(end: -13),
-                                      showBadge:
-                                          conctrl.unreadmessagelist.isNotEmpty
-                                              ? true
-                                              : false,
-                                      onTap: () {
-                                        // cntrl.onBadgeTap();
-                                        pagectrl.changeNavPage(9);
-                                      },
-                                      badgeContent: Text(conctrl
-                                          .unreadmessagelist.length
-                                          .toString()),
-                                      child: MaterialButton(
-                                          minWidth: 0,
-                                          padding: EdgeInsets.zero,
-                                          hoverColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          onPressed: () {
-                                            // cntrl.onBadgeTap();
-                                            pagectrl.changeNavPage(9);
-                                          },
-                                          child: const Icon(Icons.message)),
-                                    ),
+    final GetxPageController pagectrl = Get.find<GetxPageController>();
+    return GetBuilder<ContactController>(builder: (conctrl) {
+      return GetBuilder<GetxAuthController>(builder: (authctrl) {
+        return GetBuilder<GetxPageController>(builder: (_) {
+          return GetBuilder<ManagementController>(builder: (managectrl) {
+            return RefreshIndicator(
+              color: Theme.of(context).colorScheme.secondary,
+              onRefresh: () async {
+                managectrl.onInit();
+                refresh();
+              },
+              child: Scaffold(
+                appBar: Responsive.isMobile(context) ||
+                        Responsive.isTablet(context)
+                    ? AppBar(
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        // title: TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
+                        centerTitle: true,
+                        actions: [
+                          authctrl.ismember
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: badges.Badge(
+                                    position:
+                                        badges.BadgePosition.topEnd(end: -13),
+                                    showBadge:
+                                        conctrl.unreadmessagelist.isNotEmpty
+                                            ? true
+                                            : false,
+                                    onTap: () {
+                                      // cntrl.onBadgeTap();
+                                      pagectrl.changeNavPage(9);
+                                    },
+                                    badgeContent: Text(conctrl
+                                        .unreadmessagelist.length
+                                        .toString()),
+                                    child: MaterialButton(
+                                        minWidth: 0,
+                                        padding: EdgeInsets.zero,
+                                        hoverColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        onPressed: () {
+                                          // cntrl.onBadgeTap();
+                                          pagectrl.changeNavPage(9);
+                                        },
+                                        child: const Icon(Icons.message)),
                                   ),
-                                ],
-                              )
-                            : null,
-                        drawer: Responsive.isMobile(context) ||
-                                Responsive.isTablet(context)
-                            ? Drawer(
-                                surfaceTintColor: Colors.transparent,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                child:authctrl.ismember
-                                    ? NavBarMember(
-                                     authctrl: authctrl)
-                                    : NavBar(
-                                    
-                                        authctrl: authctrl,
-                                      ),
-                              )
-                            : null,
-                        body: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 1900),
-                            // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-                            // child: SafeArea(child: PaymentStatusCard(callback: (){}))),
-                            child: SafeArea(child: const DashBoardScreen())),
-                      ),
-                    );
-                  }
-                );
-              }
+                                ),
+                        ],
+                      )
+                    : null,
+                drawer: Responsive.isMobile(context) ||
+                        Responsive.isTablet(context)
+                    ? Drawer(
+                        surfaceTintColor: Colors.transparent,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: authctrl.ismember
+                            ? NavBarMember(authctrl: authctrl)
+                            : NavBar(
+                                authctrl: authctrl,
+                              ),
+                      )
+                    : null,
+                body: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1900),
+                    // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
+                    // child: SafeArea(child: PaymentStatusCard(callback: (){}))),
+                    child: const SafeArea(child: DashBoardScreen())),
+              ),
             );
-          }
-        );
-      }
-    );
+          });
+        });
+      });
+    });
   }
 }

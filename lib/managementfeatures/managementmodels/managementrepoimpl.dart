@@ -395,7 +395,6 @@ class ManagementrepoImpl implements ManagementRepo {
     return [];
   }
 
-
   @override
   Future<List<XtremerWithSubscription>> viewMemberwithSubs() async {
     try {
@@ -403,7 +402,8 @@ class ManagementrepoImpl implements ManagementRepo {
       final xhr = html.HttpRequest();
 
       // Open the request
-      xhr.open('GET', '$api/api/Xtremers/GetXtremerWithSubscription', async: true);
+      xhr.open('GET', '$api/api/Xtremers/GetXtremerWithSubscription',
+          async: true);
       xhr.withCredentials = true; // Set withCredentials to true
 
       // Send the request
@@ -416,8 +416,9 @@ class ManagementrepoImpl implements ManagementRepo {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(xhr.responseText!);
         //print("In Xtremer list: ${jsonList.length}");
-        List<XtremerWithSubscription> xtremelist =
-            jsonList.map((json) => XtremerWithSubscription.fromJson(json)).toList();
+        List<XtremerWithSubscription> xtremelist = jsonList
+            .map((json) => XtremerWithSubscription.fromJson(json))
+            .toList();
 
         return xtremelist;
       } else {
@@ -429,7 +430,6 @@ class ManagementrepoImpl implements ManagementRepo {
 
     return [];
   }
-
 
   @override
   Future<List<Xtremer>> viewPersonalTrainer() async {
@@ -605,7 +605,7 @@ class ManagementrepoImpl implements ManagementRepo {
         "durationInMonths": plan.durationInMonths,
         "discountPercentage": plan.discountPercentage,
         "category": plan.category,
-        "isActive":plan.isActive
+        "isActive": plan.isActive
       });
 
       // Send the request with the JSON body
@@ -908,6 +908,7 @@ class ManagementrepoImpl implements ManagementRepo {
 
         // Check the response status
         if (xhr.status! >= 200 && xhr.status! < 300) {
+          print('payment okkkkkkkkk');
           var url = xhr.responseText; // Get the response URL
           if (await canLaunchUrl(Uri.parse(url!))) {
             await launchUrl(

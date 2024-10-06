@@ -27,7 +27,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetxPageController pagectrl = Get.put(GetxPageController());
-    ContactController contrl = Get.put(ContactController());
+    ContactController contrl = Get.find<ContactController>();
     return Container(
       // color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
       color: Theme.of(context).colorScheme.primary,

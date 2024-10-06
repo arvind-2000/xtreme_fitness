@@ -21,7 +21,7 @@ class SettingPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    ContactController cntrl = Get.put(ContactController());
+    ContactController contactctrl = Get.find<ContactController>();
     return GetBuilder<ManagementController>(builder: (_) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,7 +40,7 @@ class SettingPage extends StatelessWidget {
               const Admissioncard(),
               const SizedBox(height: 10),
               CardwithShadow(
-                  child: EditContacts(formKey: _formKey, cntrl: cntrl)),
+                  child: EditContacts(formKey: _formKey, cntrl: contactctrl)),
             ],
           ),
         ),

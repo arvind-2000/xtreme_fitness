@@ -211,7 +211,7 @@ class ContactWdget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ContactController conctrl = Get.put(ContactController());
+    ContactController conctrl = Get.find<ContactController>();
     return conctrl.contact == null
         ? const Column(
             children: [
