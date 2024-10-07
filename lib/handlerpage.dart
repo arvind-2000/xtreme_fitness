@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,8 +28,8 @@ class _HandlerPageState extends State<HandlerPage> {
   @override
   void initState() {
     super.initState();
-    Get.find<GetxAuthController>().authentications();
 
+    Get.put(GetxPageController());
     authenticates();
   }
 
@@ -39,7 +37,7 @@ class _HandlerPageState extends State<HandlerPage> {
     await Get.find<GetxAuthController>().authenticationsforReload();
     Get.put(AddMemberController());
     Get.put(ManagementController());
-    Get.find<ContactController>().getallmessage();
+    Get.put(ContactController()).getallmessage();
   }
 
   @override
@@ -52,65 +50,28 @@ class _HandlerPageState extends State<HandlerPage> {
   @override
   Widget build(BuildContext context) {
     final NetworkController networkController = Get.find<NetworkController>();
-    final GetxAuthController authController = Get.find<GetxAuthController>();
 
-    return Scaffold(
-      body: StreamBuilder<NetworkState>(
-        stream: networkController
-            .networkStateStream.stream, // Stream from NetworkController
-        builder: (context, snapshot) {
-          // Display CircularProgressIndicator if the network call is in progress
-          if (networkController.isWaiting.value) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white70,
-              ),
-            );
-          }
-
-          // Handle waiting state of the StreamBuilder itself
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white70,
-              ),
-            );
-          }
-
-          // Handle case where there is no data from the stream
-          if (!snapshot.hasData) {
-            return const Center(child: Text('Unexpected error occurred.'));
-          }
-
-          // Handle different network states
-          switch (snapshot.data!) {
-            case NetworkState.noInternet:
-              return const NoInternetPage(); // Show no internet page
-
-            case NetworkState.serverError:
-              return const ServerErrorPage(); // Show server error page
-
-            case NetworkState.dataFetched:
-              // Check if the authentication process is loading
-              if (authController.isauthloading) {
-                return const Center(
-                  child: CircularProgressIndicator(
+    return GetBuilder<GetxAuthController>(builder: (authctrl) {
+      return Obx(() {
+        if (networkController.connectionStatus.value ==
+            ConnectivityResult.none) {
+          return const NoInternetPage();
+        } else {
+          if (networkController.hasServerError.value) {
+            return const ServerErrorPage();
+          } else {
+            return authctrl.isauthloading.value
+                ? const Center(
+                    child: CircularProgressIndicator(
                     color: Colors.white70,
-                  ),
-                );
-              } else {
-                // Proceed to dashboard once auth is done loading
-                return HandlerToDashboard(refresh: authenticates);
-              }
-
-            default:
-              return const Center(
-                child: Text('Unknown state'),
-              ); // Fallback for unknown states
+                  ))
+                : HandlerToDashboard(
+                    refresh: authenticates,
+                  );
           }
-        },
-      ),
-    );
+        }
+      });
+    });
   }
 }
 

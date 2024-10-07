@@ -12,8 +12,8 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({
     super.key,
     this.changepass,
-    this.changesignup, required this.formkey,
-
+    this.changesignup,
+    required this.formkey,
   });
   final Function(bool)? changepass;
   final Function(bool)? changesignup;
@@ -23,7 +23,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
   final FocusNode _passwordfocus = FocusNode();
@@ -55,7 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return Padding(
-        padding: EdgeInsets.all(  MediaQuery.sizeOf(context).width<=mobilescreen?16:32),
+        padding: EdgeInsets.all(
+            MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .then(
                                     (value) {
                                       if (!value.entries.first.key) {
-                                          CustomSnackbar(context, "Log in Error");
+                                        CustomSnackbar(context, "Log in Error");
                                       }
                                     },
                                   );

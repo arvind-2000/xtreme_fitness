@@ -33,7 +33,7 @@ class NavbarDesktop extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Get.offAllNamed('/home');
+                                  Get.toNamed('/');
                                   landingctrl.setnavindex(0);
                                   landingctrl.changeScrolltoScreen(0);
                                 },

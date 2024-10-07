@@ -36,8 +36,7 @@ class GetxAuthController extends GetxController {
   bool _isButtonActive = false;
   bool get isButtonActive => _isButtonActive;
 
-  bool _isauthloading = false;
-  bool get isauthloading => _isauthloading;
+  var isauthloading = false.obs;
 
   bool? numberexists;
   int? foruserId;
@@ -96,7 +95,7 @@ class GetxAuthController extends GetxController {
     _user = v.entries.first.key;
     ismember = _user!.roleName!.trim().toLowerCase() == "member";
     _authentication = true;
-    _isauthloading = false;
+    isauthloading.value = false;
 
     //print('${ismem} ${userid}');
     update();
@@ -180,8 +179,7 @@ class GetxAuthController extends GetxController {
   }
 
   void authentications() async {
-    _isauthloading = true;
-    update();
+    isauthloading.value = true;
     ismember = true;
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -192,19 +190,21 @@ class GetxAuthController extends GetxController {
         request.entries.first.value < 300) {
       _authentication = true;
       // print("in authentication sharedpreferences res");
-      _isauthloading = false;
-      update();
 
       if (prefs.containsKey('key1')) {
         setdataforsession(prefs.getString('key1')!);
+        isauthloading.value = false;
 
+        update();
         Get.offAllNamed('/dashboard');
       } else {
-        ismember = false;
+        isauthloading.value = false;
 
         Get.offAllNamed('/home');
       }
     } else {
+      isauthloading.value = false;
+
       _authentication = false;
       loginloading = false;
       _user = null;
@@ -264,15 +264,11 @@ class GetxAuthController extends GetxController {
                 ),
               ));
         } else {
-          print('coming hommmmm');
-
+          isauthloading.value = false;
           Get.offAllNamed('/home');
-          _isauthloading = false;
-          update();
         }
       } else {
-        _isauthloading = false;
-        update();
+        isauthloading.value = false;
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
         }
@@ -371,8 +367,7 @@ class GetxAuthController extends GetxController {
   }
 
   Future<void> authenticationsforReload() async {
-    _isauthloading = true;
-    update();
+    isauthloading.value = true;
 
     //print("in authentications");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -388,7 +383,7 @@ class GetxAuthController extends GetxController {
         setdataforsession(prefs.getString('key1')!);
       } else {
         Get.offAllNamed('/home');
-        _isauthloading = false;
+        isauthloading.value = false;
         update();
       }
     } else {
@@ -396,8 +391,7 @@ class GetxAuthController extends GetxController {
           request.entries.first.value == 0) {
         _authentication = false;
         loginloading = false;
-        _isauthloading = false;
-        update();
+        isauthloading.value = false;
 
         _user = null;
         // ismember = true;
@@ -457,9 +451,8 @@ class GetxAuthController extends GetxController {
         //   Get.offAllNamed('/home');
         // }
       } else {
-        _isauthloading = false;
+        isauthloading.value = false;
         update();
-
         if (!prefs.containsKey('key1')) {
           Get.offAllNamed('/home');
         }
@@ -540,7 +533,7 @@ class GetxAuthController extends GetxController {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    print(otp.toString());
+    // print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 
