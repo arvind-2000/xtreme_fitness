@@ -52,12 +52,18 @@ class ContactUsPage extends StatelessWidget {
   }
 }
 
-class SendMessageWidget extends StatelessWidget {
-  // Add a GlobalKey to access the Form
-
-  final _formKey = GlobalKey<FormState>();
+class SendMessageWidget extends StatefulWidget {
 
   SendMessageWidget({super.key});
+
+  @override
+  State<SendMessageWidget> createState() => _SendMessageWidgetState();
+}
+
+class _SendMessageWidgetState extends State<SendMessageWidget> {
+  // Add a GlobalKey to access the Form
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     GetxLandingcontroller landingcontroller = Get.find<GetxLandingcontroller>();

@@ -33,7 +33,6 @@ class _RenewalFormsState extends State<RenewalForms> {
   @override
   void dispose() {
     Get.find<AddMemberController>().onClose();
-    Get.find<GetxPageController>().disposes();
     super.dispose();
   }
 
