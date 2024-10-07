@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/sections/contact/contactwidget.dart';
+import 'package:xtreme_fitness/landingpages/sections/contact/thankyoudialog.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
@@ -101,7 +102,9 @@ class SendMessageWidget extends StatelessWidget {
 
             // Phone Number Field with Validation
             TextFormField(
+              maxLength: 10,
               autovalidateMode: AutovalidateMode.onUserInteraction,
+
               controller: landingcontroller.phonecontroller,
               cursorColor: Colors.white,
               decoration: const InputDecoration(
@@ -155,6 +158,7 @@ class SendMessageWidget extends StatelessWidget {
             // Message Field with Validation
             TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
+
               controller: landingcontroller.messagecontroller,
               cursorColor: Colors.white,
               maxLines: 5, // Allow more lines for the message
@@ -181,10 +185,13 @@ class SendMessageWidget extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // If all fields are valid, show the Thank You dialog
-                  landingcontroller.showThankYouDialog(context);
+                  Get.dialog(ThankuDialog(
+                    formkey: _formKey,
+                  ));
                   landingcontroller.sendmessage();
                   _formKey.currentState!.reset();
+
+                  // If all fields are valid, show the Thank You dialog
                 }
               },
               style: ElevatedButton.styleFrom(

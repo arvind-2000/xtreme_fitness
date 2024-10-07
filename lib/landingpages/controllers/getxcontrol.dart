@@ -9,7 +9,6 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
-import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../managementfeatures/managementdomain/entities.dart/planentity.dart';
 
@@ -225,7 +224,16 @@ class GetxLandingcontroller extends GetxController {
 
   void getServices() async {
     _services = await managementrepoImpl.getServices();
-    _activeservices = _services.where((element) => element.isactive,).toList();
+    _activeservices = _services
+        .where(
+          (element) => element.isactive,
+        )
+        .toList();
+    update();
+  }
+
+  void changeisloading() {
+    _isloading = true;
     update();
   }
 
@@ -261,76 +269,9 @@ class GetxLandingcontroller extends GetxController {
       log('Successfuly send message');
       //print(await response.stream.bytesToString());
     } else {
+      _isloading = false;
+      update();
       //print(response.reasonPhrase);
     }
-  }
-
-  void showThankYouDialog(BuildContext context) {
-    Get.dialog(AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 10),
-          CircleAvatar(
-            radius: _isloading ? 25 : 35,
-            backgroundColor: _isloading ? Colors.orange : Colors.green,
-            child: _isloading
-                ? const CircularProgressIndicator()
-                : const Icon(
-                    Icons.check,
-                    weight: 20,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-          ),
-          const SizedBox(height: 16),
-          _isloading
-              ? const HeadingText(
-                  'Please Wait..',
-                  size: 18,
-                )
-              : const HeadingText(
-                  'Thank you for contacting us',
-                  size: 25,
-                ),
-          const SizedBox(height: 10),
-          _isloading
-              ? const SizedBox()
-              : Column(
-                  children: [
-                    const Text(
-                      'We appreciate that you\'ve taken the time to write us. '
-                      'We\'ll get back to you very soon.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromARGB(255, 139, 138, 138)),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        namecontroller.clear();
-                        phonecontroller.clear();
-                        subjectcontroller.clear();
-                        messagecontroller.clear();
-
-                        Navigator.of(context).pop();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)),
-                        backgroundColor: Colors.red,
-                      ),
-                      child: const Text(
-                        'OK',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-        ],
-      ),
-    ));
   }
 }
