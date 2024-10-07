@@ -54,7 +54,7 @@ class ThankuDialog extends StatelessWidget {
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          // formkey.currentState!.reset();
+                          formkey.currentState!.reset();
 
                           lnd.namecontroller.clear();
                           lnd.phonecontroller.clear();
