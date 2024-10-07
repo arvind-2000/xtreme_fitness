@@ -582,6 +582,7 @@ class NavBar extends StatelessWidget {
         Get.dialog(
           StatefulBuilder(builder: (context, setState) {
             return PageDialog(
+              iscancelreg: true,
               no: () {
                 Get.back();
               },

@@ -70,18 +70,19 @@ class _HandlerPageState extends State<HandlerPage> {
               callback: networkController.getContactDetails,
             );
           } else {
-            return authctrl.isauthloading.value
-                ? const Center(
-                    child: CircularProgressIndicator(
-                    color: Colors.white70,
-                  ))
-                : HandlerToDashboard(
-                    refresh: authenticates,
-                  );
+            return _buildMainContent(context);
           }
         }
       });
     });
+  }
+
+  Widget _buildMainContent(BuildContext context) {
+    final authCtrl = Get.find<GetxAuthController>();
+
+    return authCtrl.isauthloading.value
+        ? const Center(child: CircularProgressIndicator(color: Colors.white70))
+        : HandlerToDashboard(refresh: authenticates);
   }
 }
 
@@ -95,81 +96,79 @@ class HandlerToDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GetxPageController pagectrl = Get.find<GetxPageController>();
-    return GetBuilder<ContactController>(builder: (conctrl) {
-      return GetBuilder<GetxAuthController>(builder: (authctrl) {
-        return GetBuilder<GetxPageController>(builder: (_) {
-          return GetBuilder<ManagementController>(builder: (managectrl) {
-            return RefreshIndicator(
-              color: Theme.of(context).colorScheme.secondary,
-              onRefresh: () async {
-                managectrl.onInit();
-                refresh();
-              },
-              child: Scaffold(
-                appBar: Responsive.isMobile(context) ||
-                        Responsive.isTablet(context)
-                    ? AppBar(
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        // title: TitleText(pagectrl.navpage==0?"Overview":pagectrl.navpage==3?"Services":pagectrl.navpage==5?"Plans":pagectrl.navpage==10?"Trainer":pagectrl.navpage==4?"Staff":pagectrl.navpage==2?"Add Member":pagectrl.navpage==6?"Xtremers":pagectrl.navpage==7?"Payments":""),
-                        centerTitle: true,
-                        actions: [
-                          authctrl.ismember
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: badges.Badge(
-                                    position:
-                                        badges.BadgePosition.topEnd(end: -13),
-                                    showBadge:
-                                        conctrl.unreadmessagelist.isNotEmpty
-                                            ? true
-                                            : false,
-                                    onTap: () {
-                                      // cntrl.onBadgeTap();
-                                      pagectrl.changeNavPage(9);
-                                    },
-                                    badgeContent: Text(conctrl
-                                        .unreadmessagelist.length
-                                        .toString()),
-                                    child: MaterialButton(
-                                        minWidth: 0,
-                                        padding: EdgeInsets.zero,
-                                        hoverColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        onPressed: () {
-                                          // cntrl.onBadgeTap();
-                                          pagectrl.changeNavPage(9);
-                                        },
-                                        child: const Icon(Icons.message)),
-                                  ),
-                                ),
-                        ],
-                      )
-                    : null,
-                drawer: Responsive.isMobile(context) ||
-                        Responsive.isTablet(context)
-                    ? Drawer(
-                        surfaceTintColor: Colors.transparent,
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        child: authctrl.ismember
-                            ? NavBarMember(authctrl: authctrl)
-                            : NavBar(
-                                authctrl: authctrl,
-                              ),
-                      )
-                    : null,
-                body: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1900),
-                    // authctrl.getuser==null? Center(child: CircularProgressIndicator(color: Colors.white,),):
-                    // child: SafeArea(child: PaymentStatusCard(callback: (){}))),
-                    child: const SafeArea(child: DashBoardScreen())),
+    final GetxPageController pageCtrl = Get.find<GetxPageController>();
+    final GetxAuthController authCtrl = Get.find<GetxAuthController>();
+
+    return RefreshIndicator(
+      color: Theme.of(context).colorScheme.secondary,
+      onRefresh: () async {
+        final manageCtrl = Get.find<ManagementController>();
+        manageCtrl.onInit();
+        refresh();
+      },
+      child: Scaffold(
+        appBar: _buildAppBar(context, authCtrl, pageCtrl),
+        drawer: _buildDrawer(context, authCtrl),
+        body: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1900),
+          child: const SafeArea(child: DashBoardScreen()),
+        ),
+      ),
+    );
+  }
+
+  // Build the AppBar for mobile or tablet view
+  AppBar? _buildAppBar(BuildContext context, GetxAuthController authCtrl,
+      GetxPageController pageCtrl) {
+    if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
+      return AppBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        centerTitle: true,
+        actions: [
+          _buildUnreadMessagesBadge(authCtrl, pageCtrl),
+        ],
+      );
+    }
+    return null; // No app bar for large screens (desktop)
+  }
+
+  // Build unread messages badge if applicable
+  Widget _buildUnreadMessagesBadge(
+      GetxAuthController authCtrl, GetxPageController pageCtrl) {
+    final ContactController contactCtrl = Get.find<ContactController>();
+
+    return authCtrl.ismember
+        ? const SizedBox()
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: badges.Badge(
+              position: badges.BadgePosition.topEnd(end: -13),
+              showBadge: contactCtrl.unreadmessagelist.isNotEmpty,
+              badgeContent:
+                  Text(contactCtrl.unreadmessagelist.length.toString()),
+              child: MaterialButton(
+                minWidth: 0,
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  pageCtrl.changeNavPage(9);
+                },
+                child: const Icon(Icons.message),
               ),
-            );
-          });
-        });
-      });
-    });
+            ),
+          );
+  }
+
+  // Build the drawer for mobile or tablet view
+  Drawer? _buildDrawer(BuildContext context, GetxAuthController authCtrl) {
+    if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
+      return Drawer(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: authCtrl.ismember
+            ? NavBarMember(authctrl: authCtrl)
+            : NavBar(authctrl: authCtrl),
+      );
+    }
+    return null; // No drawer for desktop view
   }
 }
