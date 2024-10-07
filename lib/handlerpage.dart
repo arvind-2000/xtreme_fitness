@@ -52,12 +52,17 @@ class _HandlerPageState extends State<HandlerPage> {
     final NetworkController networkController = Get.find<NetworkController>();
 
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
-      return Obx(() {
-        if (networkController.connectionStatus.value ==
-            ConnectivityResult.none) {
+      return GetBuilder<NetworkController>(builder: (_) {
+        if (networkController.isWaiting.value) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white54,
+            ),
+          );
+        } else if (!networkController.isinternetok) {
           return const NoInternetPage();
         } else {
-          if (networkController.hasServerError.value) {
+          if (!networkController.isserverok) {
             return const ServerErrorPage();
           } else {
             return authctrl.isauthloading.value

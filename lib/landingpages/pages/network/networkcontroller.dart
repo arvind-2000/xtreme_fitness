@@ -8,7 +8,13 @@ import 'package:xtreme_fitness/config/apis.dart';
 class NetworkController extends GetxController {
   var connectionStatus = ConnectivityResult.none.obs;
   final Connectivity _connectivity = Connectivity();
-  var hasServerError = false.obs;
+  var isWaiting = false.obs; // Add isWaiting
+
+  bool _isinternetok = true;
+  bool get isinternetok => _isinternetok;
+
+  bool _isserverok = true;
+  bool get isserverok => _isserverok;
   @override
   void onInit() {
     super.onInit();
@@ -25,24 +31,55 @@ class NetworkController extends GetxController {
 
   void updateConnectionStatus(List<ConnectivityResult> result) {
     connectionStatus.value = result[0];
-    getContactDetails();
+    if (connectionStatus.value == ConnectivityResult.none) {
+      _isinternetok = false;
+
+      // Emit no internet state
+      isWaiting.value = false; // Stop waiting
+      update();
+    } else {
+      _isinternetok = true;
+      update();
+      getContactDetails();
+    }
+    update();
   }
+  // void updateConnectionStatus(List<ConnectivityResult> result) {
+  //   connectionStatus.value = result[0];
+  //   getContactDetails();
+  // }
 
   void getContactDetails() async {
     log('get contacts');
-    // Make the request using universal_html's HttpRequest with withCredentials set to true
-    var response = await html.HttpRequest.request(
-      '$api/api/Contacts',
-      method: 'GET',
-    );
-    log(response.status.toString());
-    if (response.status == 200) {
-      hasServerError.value = false;
+    isWaiting.value = true; // Start waiting
+    update();
+    try {
+      var response = await html.HttpRequest.request(
+        '$api/api/Contacts',
+        method: 'GET',
+      );
 
+      if (response.status == 200) {
+        _isserverok = true;
+        update();
+        // Emit data fetched
+      } else {
+        _isserverok = false;
+        update();
+        // Emit server error
+      }
+    } on html.ProgressEvent catch (e) {
+      _isserverok = false;
       update();
-    } else {
-      hasServerError.value = true;
+      // Emit no internet
+    } catch (e) {
+      _isserverok = false;
       update();
+    } finally {
+      isWaiting.value = false; // Stop waiting after fetching
+      log('FINALLLLLY');
+      log(isWaiting.value.toString());
     }
+    update();
   }
 }
