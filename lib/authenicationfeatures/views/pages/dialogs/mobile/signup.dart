@@ -209,13 +209,13 @@ class _SignUpPageMobileState extends State<SignUpPageMobile> {
                                   if (_formkey.currentState!.validate()) {
                                     if (authctrl.otp != null) {
                                       if (authctrl.confirmotp()) {
-                                        Get.to(() => CreateXtremers(
-                                              phonenumber:
-                                                  _phonecontroller.text,
-                                              services:
-                                                  landingcontroller.services,
-                                            ));
-
+                                        // Get.to(() => CreateXtremers(
+                                        //       phonenumber:
+                                        //           _phonecontroller.text,
+                                        //       services:
+                                        //           landingcontroller.services,
+                                        //     ));
+                                                  Get.toNamed('/Registration',arguments: {'phonenumber': _phonecontroller.text, 'services': landingcontroller.services}); 
                                         setState(() {
                                           otpcorrect = true;
                                         });

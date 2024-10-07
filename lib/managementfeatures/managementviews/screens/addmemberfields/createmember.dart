@@ -168,7 +168,7 @@ class _CreateMemberState extends State<CreateMember> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                widget.renewal == null
+                                widget.renewal != null
                                     ? const SizedBox()
                                     : const Text("Admission Fees"),
                                 addmemberctrl.admissionfees != null

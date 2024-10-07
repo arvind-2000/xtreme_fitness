@@ -223,23 +223,53 @@ class OverviewMembertitle extends StatelessWidget {
             height: 16,
           ),
           FittedBox(
-            child: Row(
-              children: [
-                Text(
-                  "$num",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Text(
-                  "members",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                )
-              ],
+            child: HoverDashboardText(num: num),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class HoverDashboardText extends StatefulWidget {
+  const HoverDashboardText({
+    super.key,
+    required this.num,
+  });
+
+  final int num;
+
+  @override
+  State<HoverDashboardText> createState() => _HoverDashboardTextState();
+}
+
+class _HoverDashboardTextState extends State<HoverDashboardText> {
+  bool hover = false;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onHover: (v){
+        setState(() {
+         hover = v; 
+        });
+      },
+      onTap:(){},
+      mouseCursor: MouseCursor.uncontrolled,
+      child: Row(
+        children: [
+          Text(
+            "${widget.num}",
+            style:  TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold,color:hover?null:Colors.grey[400]),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+      Text(
+            "members",
+            style: TextStyle(
+              fontSize: 16,
+             color:hover?null:Colors.grey[400]
             ),
           )
         ],

@@ -132,6 +132,12 @@ class ManagementController extends GetxController {
     
   }
 
+
+  void callforAdminDashboard(){
+    
+  }
+
+
   ///for realtime data calls
   void dashboardTimer() {
     Timer.periodic(
@@ -226,16 +232,17 @@ class ManagementController extends GetxController {
   }
 
   void getmemberxtreme(){
-    if(authctrl.ismember){
             if (authctrl.ismember) {
     // print("In get xtremer");
     xtremer = _allxtremer.firstWhereOrNull(
       (element) => element.XtremerId == authctrl.getuser!.id,
     );
-    addmemberctrl.addxtremersrenewaledit(xtremer);
-    update();
-  } 
+    if(xtremer!=null){
+       addmemberctrl.addxtremersrenewaledit(xtremer);
     }
+
+  } 
+    
   }
 
 
@@ -636,7 +643,7 @@ class ManagementController extends GetxController {
     List<XtremerWithSubscription > tobeexpiredlist = [];
     DateTime dateaddSevenDays =
         DateTime.now().add(const Duration(days: 7));
-    for (XtremerWithSubscription e in _allxtremer) {
+    for (XtremerWithSubscription e in _allxtremer.where((element) => element.isActive!,)) {
 
         if(e.endDate!.compareTo(DateTime.now())>-1 && e.endDate!.compareTo(dateaddSevenDays)<1 ){
 

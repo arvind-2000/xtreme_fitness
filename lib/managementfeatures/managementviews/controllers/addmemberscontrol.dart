@@ -103,7 +103,7 @@ class AddMemberController extends GetxController {
   }
 
   void checkmember() {
-    ismember = authctrl.ismember??true;
+    ismember = authctrl.ismember;
     update();
   }
 
@@ -546,7 +546,6 @@ class AddMemberController extends GetxController {
     }
 
     selectedplan = plan;
-    print('Plan Selected');
     if(xtremer!=null){
       xtremer!.category = selectedplan!.category;
     }

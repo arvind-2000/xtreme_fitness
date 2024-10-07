@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-            name: '/registration',
+            name: '/Registration',
             page: () => const CreateXtremers(),
             transition: Transition.noTransition),
         GetPage(

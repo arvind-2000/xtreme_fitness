@@ -99,7 +99,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             }
             return null;
           },
-          maxLength: widget.counter ?? 25,
+          maxLength: widget.counter ?? 50,
           enabled: widget.enabletext,
           enableInteractiveSelection: widget.interactivetext,
           autovalidateMode: widget.autovalidateMode,

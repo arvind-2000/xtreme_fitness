@@ -37,12 +37,11 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((t){
-
+      Get.put(ManagementController());
       Get.find<ManagementController>().getmemberxtreme();
       Get.find<ManagementController>().checkmemberships();
     
-    });
+
   }
 
 
@@ -52,9 +51,6 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
     return  GetBuilder<ManagementController>(
      
       builder: (managectrl) {
-        if(managectrl.xtremer!=null){
-          Get.put(AddMemberController()).addxtremersrenewaledit(managectrl.xtremer);
-        }
        
         return GetBuilder<GetxPageController>(
           builder: (pagectrl) {
@@ -98,7 +94,7 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
                               SizedBox(height: 30,),
                               Text("Remaining",style: TextStyle(fontSize: 16,color: Colors.white60),),
                               SizedBox(height: 6,),
-                              managectrl.xtremer!=null && managectrl.xtremer!.endDate!=null?Text('${daysLeftUntil(managectrl.xtremer!.endDate!)} ${daysLeftUntil(managectrl.xtremer!.endDate!)>1?'days':'day'}',style: TextStyle(fontSize: 28),):SizedBox(),
+                              managectrl.xtremer!=null && managectrl.xtremer?.endDate!=null?Text('${daysLeftUntil(managectrl.xtremer!.endDate!)} ${daysLeftUntil(managectrl.xtremer!.endDate!)>1?'days':'day'}',style: TextStyle(fontSize: 28),):SizedBox(),
                               SizedBox(height: 20,),
                               SizedBox(
                                 width: double.maxFinite,

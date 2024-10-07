@@ -83,6 +83,7 @@ class DashboardChild4 extends StatelessWidget {
                 flex: MediaQuery.sizeOf(context).width < 800? 0:1,
                   child:managectrl.latestpayment10.isEmpty?const Center(child: Column(children: [TitleText("No Recent Payments")],),) : ListView.builder(
                 shrinkWrap: true,
+                physics: MediaQuery.sizeOf(context).width < 800?const NeverScrollableScrollPhysics():null, 
                 itemBuilder: (c, i) {
                   
                   return ListViewCard(e: managectrl.latestpayment10[i],i: i,);

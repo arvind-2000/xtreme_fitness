@@ -14,8 +14,8 @@ class AuthenticateUseCases implements AuthUseCases {
 
   @override
   String? passwordAuth(String data) {
-    if (data.trim().length < 5 || data.trim().length > 10) {
-      return "Password must be between 8  to 10 characters.";
+    if (data.trim().length < 5 || data.trim().length > 20) {
+      return "Password must be between 8  to 20 characters.";
     }
     return null;
     // log(' password auth ${passregex.hasMatch(data)}');
@@ -28,14 +28,13 @@ class AuthenticateUseCases implements AuthUseCases {
       return "$hint is  empty";
     } else {
       if (hint == "Address") {
-        print('addresssss');
         return addressregex.hasMatch(name)
             ? null
             : "Name must be alphabet or must be less than 40 characters";
       } else {
         return nameregex.hasMatch(name)
             ? null
-            : "Name must be alphabet or must be less than 20 characters";
+            : "Name must be alphabet or must be less than 50 characters";
       }
     }
   }

@@ -33,11 +33,14 @@ class _HandlerPageState extends State<HandlerPage> {
     authenticates();
   }
 
+  // Authentication logic refactored for better performance
   void authenticates() async {
-    await Get.find<GetxAuthController>().authenticationsforReload();
-    Get.put(AddMemberController());
-    Get.put(ManagementController());
-    Get.put(ContactController()).getallmessage();
+    bool isAuthenticated =
+        await Get.find<GetxAuthController>().authenticationsForReload();
+    if (isAuthenticated) {
+      Get.put(AddMemberController());
+      Get.put(ManagementController());
+    }
   }
 
   @override
@@ -87,7 +90,9 @@ class HandlerToDashboard extends StatelessWidget {
     super.key,
     required this.refresh,
   });
+
   final ui.VoidCallback refresh;
+
   @override
   Widget build(BuildContext context) {
     final GetxPageController pagectrl = Get.find<GetxPageController>();

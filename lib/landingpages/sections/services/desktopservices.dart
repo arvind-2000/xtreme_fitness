@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../../authenicationfeatures/views/pages/dialogs/logindialog.dart';
+import '../../../widgets/titletext.dart';
 import '../../controllers/getxcontrol.dart';
 
 class ServicesDesktop extends StatelessWidget {
@@ -89,7 +90,7 @@ class ServicesDesktop extends StatelessWidget {
                         width: 300,
                         height: 400,
                         child: CardwithShadow(
-                            onpress: () {},
+                          
                             margin: EdgeInsets.zero,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +102,7 @@ class ServicesDesktop extends StatelessWidget {
                                 const SizedBox(
                                   height: 25,
                                 ),
-                                HeadingText(
+                                TitleText(
                                   e.name,
                                   size: 24,
                                 ),
@@ -119,10 +120,10 @@ class ServicesDesktop extends StatelessWidget {
                                         children: [
                                           TextSpan(
                                             text: "Rs ${e.memberPrice}",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white),
+                                                color: Colors.grey[400]),
                                           ),
                                           TextSpan(
                                             text:
@@ -142,10 +143,10 @@ class ServicesDesktop extends StatelessWidget {
                                         children: [
                                           TextSpan(
                                             text: "Rs ${e.nonMemberPrice}",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white),
+                                                color: Colors.grey[400]),
                                           ),
                                           TextSpan(
                                             text:
