@@ -422,7 +422,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                           "Enter a valid number");
                                                                     },
                                                                   ),
-                                                                  TextFieldWidget(
+                                                          addmemberctrl.checknumberforservice?SizedBox():TextFieldWidget(
                                                                       hint:
                                                                           "First Name",
                                                                       controller:
@@ -433,7 +433,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                             _firstname.text,
                                                                             "Enter a valid name");
                                                                       }),
-                                                                                    TextFieldWidget(
+                                                                           addmemberctrl.checknumberforservice?SizedBox():TextFieldWidget(
                                                                     hint:
                                                                         "Last Name",
                                                                     controller:
@@ -464,15 +464,26 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                             false) {
                                                       if (_formkey.currentState!
                                                           .validate()) {
-                                                        Navigator.pop(context);
-                                                        addmemberctrl
-                                                            .changepaymentstatus(
-                                                                3);
+                                                      
                                                         Future.delayed(
                                                           const Duration(
                                                               seconds: 3),
                                                           () async {
-                                                            v = await addmemberctrl.createuser(
+                                                         bool d =  await addmemberctrl.checknumber(_phonenumber.text.trim());
+                                                          if(d){
+                                                                           
+                                                            Navigator.pop(context);
+                                                              addmemberctrl
+                                                            .changepaymentstatus(
+                                                                3);
+                                                              addmemberctrl.addServiceusage(
+                                                                  paymentonline:
+                                                                      !addmemberctrl
+                                                                          .ispaymentcash);
+
+                                                          }else{
+
+                                                                      v = await addmemberctrl.createuser(
                                                                 _phonenumber.text
                                                                     .trim(),
                                                                 '${_firstname.text.trim()}',
@@ -486,6 +497,10 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                     : "Member");
                           
                                                             if (v) {
+                                                                Navigator.pop(context);
+                                                              addmemberctrl
+                                                            .changepaymentstatus(
+                                                                3);
                                                               addmemberctrl.addServiceusage(
                                                                   paymentonline:
                                                                       !addmemberctrl
@@ -501,6 +516,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                       "Error creating payement");
                                                               //print("${addmemberctrl.usererrormessage}");
                                                             }
+
+                                                          }
+                                                          
                                                           },
                                                         );
                                                       }

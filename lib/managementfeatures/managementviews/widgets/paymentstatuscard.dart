@@ -140,11 +140,11 @@ class PaymentStatusCard extends StatelessWidget {
                         child: CardBorder(
                             onpress: () async {
                               // Navigator.pop(context);
-                              Map<UserEntity?, String> v =
-                                  await AuthenticationRepositoryImpl()
-                                      .getUserbyId(addmemberctrl
-                                              .paymentdetails?.userId ??
-                                          0);
+                              // Map<UserEntity?, String> v =
+                              //     await AuthenticationRepositoryImpl()
+                              //         .getUserbyId(addmemberctrl
+                              //                 .paymentdetails?.userId ??
+                              //             0);
                               createAndprintPdf(
                                 addmemberctrl.paymentsdetails!,
                                 //  name:v.entries.first.key?.userName??""

@@ -1,10 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import 'package:xtreme_fitness/config/themes/app_theme.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/widgets/normaltext.dart';
 

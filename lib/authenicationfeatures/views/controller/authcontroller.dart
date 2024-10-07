@@ -95,7 +95,7 @@ class GetxAuthController extends GetxController {
     _user = v.entries.first.key;
     ismember = _user!.roleName!.trim().toLowerCase() == "member" || _user!.roleName!.trim().toLowerCase() == "servicemember";
     _authentication = true;
-    isauthloading.value = false;
+    // isauthloading.value = false;
 
     //print('${ismem} ${userid}');
     update();
@@ -293,6 +293,7 @@ void authentications() async {
     if (prefs.containsKey('key1')) {
       await setdataforsession(prefs.getString('key1')!);
       navigateToDashboard();
+      
     } else {
       handleSessionInvalid(prefs);
     }
@@ -317,13 +318,16 @@ void authentications() async {
       handleSessionInvalid(prefs);
     }
   }
+
+ 
 }
 
 // Helper function to navigate to the dashboard
 void navigateToDashboard() {
-  isauthloading.value = false;
+
   update();
   Get.offAllNamed('/dashboard');
+  isauthloading.value = false;
 }
 
 
@@ -377,6 +381,7 @@ Future<bool> authenticationsForReload() async {
       if (_user == null) {
         handleSessionInvalid(prefs);
       }
+      isauthloading.value = false;
       return _user != null;
     } else {
       handleSessionInvalid(prefs);
@@ -390,7 +395,7 @@ Future<bool> authenticationsForReload() async {
   else {
     handleSessionInvalid(prefs);
   }
-
+isauthloading.value = false;
   return false;
 }
 

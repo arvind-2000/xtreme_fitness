@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authentifeatures/models/usecasesimpl.dart';
@@ -85,7 +84,6 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
     _emergencynamecontroller.dispose();
     _disabilitycontroller.dispose();
     _othercontroller.dispose();
-
     // Dispose FocusNode instances
     _firstnameFocusNode.dispose();
     _surnameFocusNode.dispose();

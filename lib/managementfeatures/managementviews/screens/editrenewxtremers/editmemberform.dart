@@ -34,12 +34,6 @@ class _EditmemberFormState extends State<EditmemberForm> {
     Get.put(AddMemberController());
     editphone = Get.find<AddMemberController>().xtremer?.mobileNumber;
   }
-@override
-  void dispose() {
-   
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

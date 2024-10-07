@@ -193,7 +193,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                       size: 24,
                                                     ),
                                                   ),
-                                                  authcrl.ismember!=null&&authcrl.ismember!
+                                                authcrl.ismember
                                                       ? const SizedBox()
                                                       : Row(
                                                           children: [
@@ -278,7 +278,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                             .changeServiceUsage(
                                                                 ispage: true);
                                                       },
-                                                      color: Colors.green[300],
+                                                      color:  Colors.grey[500],
                                                       child: const Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment

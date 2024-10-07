@@ -32,7 +32,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
   Widget build(BuildContext context) {
     AddMemberController addmemberctrl = Get.put(AddMemberController());
     GetxLandingcontroller managectrl = Get.put(GetxLandingcontroller());
-    ManagementController mngctrl = Get.put(ManagementController());
+    // ManagementController mngctrl = Get.put(ManagementController());
     return GetBuilder<AddMemberController>(builder: (_) {
       return GetBuilder<GetxLandingcontroller>(builder: (_) {
         return ResponsivePages(
@@ -132,7 +132,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                       ? null
                       : 470,
                   child: Center(
-                    child: mngctrl.getallactiveplans
+                    child:managectrl.getallplans
                             .where(
                               (element) {
                                 return element.durationInMonths ==
@@ -157,7 +157,7 @@ class _PricesdesktopState extends State<Pricesdesktop> {
                                         mobilescreen
                                     ? Axis.vertical
                                     : Axis.horizontal,
-                            children: mngctrl.getallactiveplans
+                            children: managectrl.getallplans
                                 .where(
                                   (element) {
                                     return element.durationInMonths ==

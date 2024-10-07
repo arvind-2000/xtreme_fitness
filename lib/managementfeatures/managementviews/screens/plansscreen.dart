@@ -301,7 +301,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                               .addplan(e.value);
                                                         },
                                                         color:
-                                                            Colors.green[300],
+                                                            Colors.grey[500],
                                                         child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
