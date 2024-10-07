@@ -59,7 +59,7 @@ class SendMessageWidget extends StatelessWidget {
   SendMessageWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    GetxLandingcontroller landingcontroller = Get.put(GetxLandingcontroller());
+    GetxLandingcontroller landingcontroller = Get.find<GetxLandingcontroller>();
 
     return GetBuilder<GetxLandingcontroller>(builder: (_) {
       return Form(
@@ -211,49 +211,53 @@ class ContactWdget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ContactController conctrl = Get.put(ContactController());
-    return conctrl.contact == null
-        ? const Column(
-            children: [
-              Center(
-                  child: SizedBox(
-                child: HeadingText('Server Error...'),
-              )),
-            ],
-          )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadingText(
-                "Get in Touch",
-                size: 40,
-                isbold: true,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(height: 10),
-              const Divider(color: Colors.red, thickness: 2),
-              const SizedBox(height: 20),
-              buildContactInfo(
-                icon: Icons.location_on,
-                title: 'POSTAL ADDRESS:',
-                content:
-                    '${conctrl.contact!.address}\n${conctrl.contact!.pinCode}',
-              ),
-              const SizedBox(height: 20),
-              buildContactInfo(
-                icon: Icons.phone,
-                title: 'PHONE:',
-                content: conctrl.contact!.phoneNumber!,
-              ),
-              const SizedBox(height: 20),
-              buildContactInfo(
-                icon: Icons.email,
-                title: 'EMAIL:',
-                content: conctrl.contact!.email!,
-              ),
-            ],
-          );
+    ContactController conctrl = Get.find<ContactController>();
+    return GetBuilder<ContactController>(
+      builder: (_) {
+        return conctrl.contact == null
+            ? const Column(
+                children: [
+                  Center(
+                      child: SizedBox(
+                    child: HeadingText('Server Error...'),
+                  )),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const HeadingText(
+                    "Get in Touch",
+                    size: 40,
+                    isbold: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(color: Colors.red, thickness: 2),
+                  const SizedBox(height: 20),
+                  buildContactInfo(
+                    icon: Icons.location_on,
+                    title: 'POSTAL ADDRESS:',
+                    content:
+                        '${conctrl.contact?.address}\n${conctrl.contact?.pinCode}',
+                  ),
+                  const SizedBox(height: 20),
+                  buildContactInfo(
+                    icon: Icons.phone,
+                    title: 'PHONE:',
+                    content: conctrl.contact?.phoneNumber??"",
+                  ),
+                  const SizedBox(height: 20),
+                  buildContactInfo(
+                    icon: Icons.email,
+                    title: 'EMAIL:',
+                    content: conctrl.contact?.email??"",
+                  ),
+                ],
+              );
+      }
+    );
   }
 }

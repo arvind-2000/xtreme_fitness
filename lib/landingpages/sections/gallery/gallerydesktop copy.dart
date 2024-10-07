@@ -9,7 +9,6 @@ import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import 'gallerydesktop.dart';
 
 class GalleryDesktopCopy extends StatefulWidget {
   const GalleryDesktopCopy({super.key});

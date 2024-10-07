@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/landingpages/sections/contact/contact.dart';
-import 'package:xtreme_fitness/landingpages/sections/gallery/gallery.dart';
 import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
-import 'package:xtreme_fitness/landingpages/sections/prices/prices.dart';
-import 'package:xtreme_fitness/landingpages/sections/services/services.dart';
+
 
 double navbarsize = 1000;
 double mobilescreen = 800;
@@ -48,13 +45,13 @@ final List<String> galleryimages = [
   'assets/images/11.jpeg',
 ];
 const String rupee = "₹";
-List<Widget> landingwidgets = [
-  const HomePage(),
-  const Prices(),
-  const Services(),
-  const Gallery(),
-  const Contact()
-];
+// List<Widget> landingwidgets = [
+//   const HomePage(),
+//   const Prices(),
+//   const Services(),
+//   const Gallery(),
+//   const Contact()
+// ];
 
 List<String> months = [
   "Jan",

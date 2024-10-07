@@ -103,7 +103,7 @@ class AddMemberController extends GetxController {
   }
 
   void checkmember() {
-    ismember = authctrl.ismember??true;
+    ismember = authctrl.ismember;
     update();
   }
 
