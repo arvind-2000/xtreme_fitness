@@ -1,7 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
@@ -33,7 +31,7 @@ class _MainPageState extends State<MainPage> {
     final NetworkController networkController = Get.find<NetworkController>();
 
     return GetBuilder<NetworkController>(builder: (_) {
-      if (networkController.isWaiting.value) {
+      if (networkController.isWaiting) {
         return const Center(
           child: CircularProgressIndicator(
             color: Colors.white54,
@@ -43,7 +41,9 @@ class _MainPageState extends State<MainPage> {
         return const NoInternetPage();
       } else {
         if (!networkController.isserverok) {
-          return const ServerErrorPage();
+          return ServerErrorPage(
+            callback: networkController.getContactDetails,
+          );
         }
 
         return Scaffold(

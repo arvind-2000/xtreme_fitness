@@ -1,14 +1,15 @@
 import 'dart:developer';
 
-import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/config/apis.dart';
 
 class NetworkController extends GetxController {
   var connectionStatus = ConnectivityResult.none.obs;
   final Connectivity _connectivity = Connectivity();
-  var isWaiting = false.obs; // Add isWaiting
+  bool _isWaiting = false; // Add isWaiting
+  bool get isWaiting => _isWaiting;
 
   bool _isinternetok = true;
   bool get isinternetok => _isinternetok;
@@ -35,7 +36,7 @@ class NetworkController extends GetxController {
       _isinternetok = false;
 
       // Emit no internet state
-      isWaiting.value = false; // Stop waiting
+      _isWaiting = false; // Stop waiting
       update();
     } else {
       _isinternetok = true;
@@ -51,8 +52,10 @@ class NetworkController extends GetxController {
 
   void getContactDetails() async {
     log('get contacts');
-    isWaiting.value = true; // Start waiting
+    _isWaiting = true; // Start waiting
     update();
+    log("Starting :$_isWaiting");
+    Future.delayed(const Duration(seconds: 3));
     try {
       var response = await html.HttpRequest.request(
         '$api/api/Contacts',
@@ -76,9 +79,9 @@ class NetworkController extends GetxController {
       _isserverok = false;
       update();
     } finally {
-      isWaiting.value = false; // Stop waiting after fetching
+      _isWaiting = false; // Stop waiting after fetching
       log('FINALLLLLY');
-      log(isWaiting.value.toString());
+      log("Ending :$_isWaiting");
     }
     update();
   }

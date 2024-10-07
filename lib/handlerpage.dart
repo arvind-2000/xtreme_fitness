@@ -1,7 +1,8 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:ui' as ui;
+
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/nointernetpage.dart';
@@ -12,8 +13,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
-import 'package:badges/badges.dart' as badges;
-import 'dart:ui' as ui;
+
 import 'widgets/navbar.dart';
 import 'widgets/navbarmember.dart';
 
@@ -53,7 +53,7 @@ class _HandlerPageState extends State<HandlerPage> {
 
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return GetBuilder<NetworkController>(builder: (_) {
-        if (networkController.isWaiting.value) {
+        if (networkController.isWaiting) {
           return const Center(
             child: CircularProgressIndicator(
               color: Colors.white54,
@@ -63,7 +63,9 @@ class _HandlerPageState extends State<HandlerPage> {
           return const NoInternetPage();
         } else {
           if (!networkController.isserverok) {
-            return const ServerErrorPage();
+            return ServerErrorPage(
+              callback: networkController.getContactDetails,
+            );
           } else {
             return authctrl.isauthloading.value
                 ? const Center(
