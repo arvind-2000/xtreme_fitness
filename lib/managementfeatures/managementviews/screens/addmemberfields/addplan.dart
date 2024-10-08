@@ -24,6 +24,7 @@ class PlanSelectionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
+    Get.put(ManagementController());
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
         return Column(
@@ -316,33 +317,34 @@ class PlanSelectionField extends StatelessWidget {
             ),
             addmemberctrl.gettrainer != null
                 ? ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: CardwithShadow(
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TitleText(addmemberctrl.gettrainer?.name??""),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                        
-                          
-                                Text(
-                                  addmemberctrl.gettrainer?.roleid.roleName??"",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,color:Colors.grey[400]),
-                                ),
-                              ],
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: CardwithShadow(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TitleText(
+                                      addmemberctrl.gettrainer?.name ?? ""),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    addmemberctrl.gettrainer?.roleid.roleName ??
+                                        "",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[400]),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )).animate().slideX(begin: 1, end: 0),
-                )
+                          ],
+                        )).animate().slideX(begin: 1, end: 0),
+                  )
                 : const SizedBox(),
             const SizedBox(
               height: 10,
