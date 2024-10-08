@@ -18,7 +18,6 @@ import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
-import '../../managementmodels/dummies.dart';
 import '../widgets/dialogswidget.dart';
 import 'nodatascreen.dart/nodatascreen.dart';
 

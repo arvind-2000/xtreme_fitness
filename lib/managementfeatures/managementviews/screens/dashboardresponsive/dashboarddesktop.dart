@@ -24,7 +24,7 @@ class DashboardDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ManagementController controller = Get.find<ManagementController>();
     GetxPageController pagecontrl = Get.put(GetxPageController());
-    ContactController cntrl = Get.put(ContactController());
+    ContactController cntrl = Get.find<ContactController>();
     return GetBuilder<ContactController>(builder: (_) {
       return GetBuilder<ManagementController>(builder: (_) {
         return controller.managementloadings

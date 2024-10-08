@@ -91,7 +91,7 @@ class AddMemberController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    checkpaymentafterpaid();
+    // checkpaymentafterpaid();
     xtremer = XtremerWithSubscription();
     getadmission();
     selectedplan = null;
@@ -438,9 +438,9 @@ Future<bool> checknumber(String phone)async{
     } else {
       var d = await repo.addPayments(
         payments,
-        userid: authctrl.getuser!= null
-            ? authctrl.getuser!.id.toString()
-            : xtremer!.XtremerId.toString(),
+        userid: authctrl.ismember
+            ? authctrl.getuser?.id.toString()??""
+            :_userid?.id.toString()??"",
         isonline: false,
       );
 
@@ -749,6 +749,7 @@ Future<bool> checknumber(String phone)async{
           });
         }
       }
+         prefs.remove('tranid');
     } else {
       paymentstatus = 0;
       update();
@@ -856,7 +857,6 @@ Future<bool> checknumber(String phone)async{
     paymentdetails = payments;
     // //print("adding payments");
 
-    payments.printPayment();
     //online
     if (!ispaymentcash) {
       var d = await repo.addPayments(payments,

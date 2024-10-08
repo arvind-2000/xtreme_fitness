@@ -270,7 +270,7 @@ Future<bool> authenticationsForReload() async {
   Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
   int statusCode = request.entries.first.value;
   
-  print("In request: $statusCode");
+  // print("In request: $statusCode");
 
   // Check if the request was successful
   if (statusCode >= 200 && statusCode < 300) {
@@ -450,7 +450,7 @@ void showSessionExpiredDialog(SharedPreferences prefs) {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    print(otp.toString());
+    // print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 

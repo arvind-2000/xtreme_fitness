@@ -1,7 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/controllers/getxcontrol.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
@@ -31,38 +29,46 @@ class _MainPageState extends State<MainPage> {
     GetxLandingcontroller landctrl = Get.put(GetxLandingcontroller());
 
     final NetworkController networkController = Get.find<NetworkController>();
-    return Obx(() {
-      if (networkController.connectionStatus.value == ConnectivityResult.none) {
+
+    return GetBuilder<NetworkController>(builder: (_) {
+      if (networkController.isWaiting) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Colors.white54,
+          ),
+        );
+      } else if (!networkController.isinternetok) {
         return const NoInternetPage();
       } else {
-        if (networkController.hasServerError.value) {
-          return const ServerErrorPage();
-        } else {
-          return Scaffold(
-            key: landctrl.key,
-            backgroundColor: const Color.fromARGB(255, 15, 15, 15),
-            drawer:
-                !Responsive.isDesktop(context) ? const MobileDrawer() : null,
-            extendBodyBehindAppBar: true,
-            body: RefreshIndicator(
-              triggerMode: RefreshIndicatorTriggerMode.onEdge,
-              color: Theme.of(context).colorScheme.secondary,
-              onRefresh: () async {
-                GetxLandingcontroller().onInit();
-              },
-              child: SafeArea(
-                child: Stack(
-                  children: [
-                    const Body(),
-                    Responsive.isTablet(context) || Responsive.isMobile(context)
-                        ? const NavBarMobile()
-                        : const NavbarDesktop(),
-                  ],
-                ),
-              ),
-            ),
+        if (!networkController.isserverok) {
+          return ServerErrorPage(
+            callback: networkController.getContactDetails,
           );
         }
+
+        return Scaffold(
+          key: landctrl.key,
+          backgroundColor: const Color.fromARGB(255, 15, 15, 15),
+          drawer: !Responsive.isDesktop(context) ? const MobileDrawer() : null,
+          extendBodyBehindAppBar: true,
+          body: RefreshIndicator(
+            triggerMode: RefreshIndicatorTriggerMode.onEdge,
+            color: Theme.of(context).colorScheme.secondary,
+            onRefresh: () async {
+              GetxLandingcontroller().onInit();
+            },
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  const Body(),
+                  Responsive.isTablet(context) || Responsive.isMobile(context)
+                      ? const NavBarMobile()
+                      : const NavbarDesktop(),
+                ],
+              ),
+            ),
+          ),
+        );
       }
     });
   }

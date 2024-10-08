@@ -47,7 +47,7 @@ class _CardBorderHoverState extends State<CardBorderHover>{
       },
       child: LayoutBuilder(
         builder: (context,c) {
-          // print("check left:${(MediaQuery.sizeOf(context).width - c.maxWidth)} - ${pos.dx} =   ${pos.dx - (MediaQuery.sizeOf(context).width - c.maxWidth)/2 }");
+        
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Stack(

@@ -148,13 +148,22 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
                           ],
                         )),
                       ),)
-                      :const SizedBox()
+                      :const SizedBox(),
+                      
+         
                     ],
                   ),
 
                  managectrl.xtremer==null?const SizedBox() :   Expanded(child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: MemberServiceHistory(xtremers: managectrl.xtremer!),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                    const HeadingText("Records"),
+                    const SizedBox(height: 16,),
+                     MemberServiceHistory(xtremers: managectrl.xtremer!),
+                   ],
+                 ),
                   ))
                 ],
               ),

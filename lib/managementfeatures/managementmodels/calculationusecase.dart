@@ -592,11 +592,11 @@ List<Alluserpaymentmodel> returnexcelpayments(List<Alluserpaymentmodel> paymentl
 
 
 String subscriptiondateStart(List<Subscription> d,int userid){
-  print("in subs start date: ${d.length}");
+  // print("in subs start date: ${d.length}");
 //  int x =  d.lastIndexWhere((element) => element.userId == userid.toString(),);
   DateTime? date;
   for(Subscription k in d ){
-        print(k.startDate);
+        // print(k.startDate);
     if(k.userId == userid.toString()){
       if(date == null){
         date= k.startDate;
@@ -616,9 +616,9 @@ String subscriptiondateStart(List<Subscription> d,int userid){
 
 String subscriptiondateEnd(List<Subscription> d,int userid){
   DateTime? date;
-  print(d.length);
+  // print(d.length);
   for(Subscription k in d ){
-    print(k.endDate);
+    // print(k.endDate);
     if(k.userId == userid.toString()){
       if(date ==null){
         date= k.endDate;

@@ -27,8 +27,6 @@ class PaymentRedirectPage extends StatefulWidget {
 }
 
 class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
-  final GlobalKey<FormState> _formkey = GlobalKey();
-  final GlobalKey<FormState> _formKeys = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool iscash = false;
@@ -39,6 +37,12 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.put(AddMemberController()).checkpaymentafterpaid();
+  }
   @override
   Widget build(BuildContext context) {
     GetxAuthController authctrl = Get.put(GetxAuthController());

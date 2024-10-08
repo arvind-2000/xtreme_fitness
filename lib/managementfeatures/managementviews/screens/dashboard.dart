@@ -5,7 +5,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmem
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addstaffscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addtrainer/addtrainerscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/allpaymentts.dart';
-import 'package:xtreme_fitness/managementfeatures/managementviews/screens/analyticsscreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardmemberpage/dashboard1.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardresponsive/dashboardscreen1.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/message/messagepage.dart';
@@ -68,9 +67,7 @@ class DashBoardScreen extends StatelessWidget {
                                     : const ServicesScreen())
                             : Expanded(
                                 child: pagectrl.navpage == 0
-                                    ? const DashBoardScreen1()
-                                    : pagectrl.navpage == 1
-                                        ? const AnalyticsScreen()
+                                    ? const DashBoardScreen1()      
                                         : pagectrl.navpage == 2
                                             ? AddMemberScreen()
                                             : pagectrl.navpage == 3

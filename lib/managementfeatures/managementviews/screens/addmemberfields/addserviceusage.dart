@@ -474,7 +474,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                        await addmemberctrl.checknumber(_phonenumber.text.trim()); 
                                                             
                                                           if(addmemberctrl.checknumberforservice){
-                                                             print("number check");              
+                                                                       
                                                           Get.back();
                                                               addmemberctrl
                                                             .changepaymentstatus(
@@ -525,7 +525,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                   addmemberctrl
                                                                           .usererrormessage ??
                                                                       "Error creating payement");
-                                                              //print("${addmemberctrl.usererrormessage}");
+                                                           
                                                             }
 
 

@@ -32,8 +32,7 @@ class PaymentStatusCard extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    addmemberctrl.paymentstatus == 3 ||
-                            addmemberctrl.paymentstatus == 0
+                    addmemberctrl.paymentstatus == 3 
                         ? const SizedBox()
                         : Padding(
                             padding: const EdgeInsets.all(16.0),

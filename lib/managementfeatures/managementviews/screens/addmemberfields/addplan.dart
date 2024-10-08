@@ -281,6 +281,9 @@ class PlanSelectionField extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                           const SizedBox(
+                          height: 16,
+                        ),
                         const Text("Choose Trainer"),
                         const SizedBox(
                           height: 6,
@@ -317,33 +320,34 @@ class PlanSelectionField extends StatelessWidget {
             ),
             addmemberctrl.gettrainer != null
                 ? ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: CardwithShadow(
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TitleText(addmemberctrl.gettrainer?.name??""),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                        
-                          
-                                Text(
-                                  addmemberctrl.gettrainer?.roleid.roleName??"",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,color:Colors.grey[400]),
-                                ),
-                              ],
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: CardwithShadow(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TitleText(
+                                      addmemberctrl.gettrainer?.name ?? ""),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    addmemberctrl.gettrainer?.roleid.roleName ??
+                                        "",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[400]),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )).animate().slideX(begin: 1, end: 0),
-                )
+                          ],
+                        )).animate().slideX(begin: 1, end: 0),
+                  )
                 : const SizedBox(),
             const SizedBox(
               height: 10,

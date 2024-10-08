@@ -1,7 +1,8 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:ui' as ui;
+
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart';
 import 'package:xtreme_fitness/landingpages/pages/network/nointernetpage.dart';
@@ -12,8 +13,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/responsive/responsive.dart';
-import 'package:badges/badges.dart' as badges;
-import 'dart:ui' as ui;
+
 import 'widgets/navbar.dart';
 import 'widgets/navbarmember.dart';
 
@@ -43,8 +43,8 @@ class _HandlerPageState extends State<HandlerPage> {
         if (value) {
       Get.put(AddMemberController());
       Get.put(ManagementController());
-  
-   
+
+   Get.find<GetxPageController>().onInit();
     }
   },);
 
@@ -61,18 +61,29 @@ class _HandlerPageState extends State<HandlerPage> {
   Widget build(BuildContext context) {
     final NetworkController networkController = Get.find<NetworkController>();
 
-    return Obx(() {
-      if (networkController.connectionStatus.value == ConnectivityResult.none) {
-        return const NoInternetPage();
-      } else if (networkController.hasServerError.value) {
-        return const ServerErrorPage();
-      } else {
-        return  _buildMainContent(context);
-      }
+    return GetBuilder<GetxAuthController>(builder: (authctrl) {
+      return GetBuilder<NetworkController>(builder: (_) {
+        if (networkController.isWaiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white54,
+            ),
+          );
+        } else if (!networkController.isinternetok) {
+          return const NoInternetPage();
+        } else {
+          if (!networkController.isserverok) {
+            return ServerErrorPage(
+              callback: networkController.getContactDetails,
+            );
+          } else {
+            return _buildMainContent(context);
+          }
+        }
+      });
     });
   }
 
-  // Build the main content of the page based on authentication
   Widget _buildMainContent(BuildContext context) {
     final authCtrl = Get.find<GetxAuthController>();
 
@@ -114,7 +125,8 @@ class HandlerToDashboard extends StatelessWidget {
   }
 
   // Build the AppBar for mobile or tablet view
-  AppBar? _buildAppBar(BuildContext context, GetxAuthController authCtrl, GetxPageController pageCtrl) {
+  AppBar? _buildAppBar(BuildContext context, GetxAuthController authCtrl,
+      GetxPageController pageCtrl) {
     if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
       return AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -128,7 +140,8 @@ class HandlerToDashboard extends StatelessWidget {
   }
 
   // Build unread messages badge if applicable
-  Widget _buildUnreadMessagesBadge(GetxAuthController authCtrl, GetxPageController pageCtrl) {
+  Widget _buildUnreadMessagesBadge(
+      GetxAuthController authCtrl, GetxPageController pageCtrl) {
     final ContactController contactCtrl = Get.find<ContactController>();
 
     return authCtrl.ismember
@@ -138,7 +151,8 @@ class HandlerToDashboard extends StatelessWidget {
             child: badges.Badge(
               position: badges.BadgePosition.topEnd(end: -13),
               showBadge: contactCtrl.unreadmessagelist.isNotEmpty,
-              badgeContent: Text(contactCtrl.unreadmessagelist.length.toString()),
+              badgeContent:
+                  Text(contactCtrl.unreadmessagelist.length.toString()),
               child: MaterialButton(
                 minWidth: 0,
                 padding: EdgeInsets.zero,

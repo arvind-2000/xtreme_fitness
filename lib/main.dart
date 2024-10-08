@@ -17,7 +17,6 @@ import 'handlerpage.dart';
 import 'landingpages/controllers/getxcontrol.dart';
 import 'landingpages/sections/main/main_section.dart';
 import 'managementfeatures/managementviews/controllers/pagecontroller.dart';
-import 'dart:html' as html;
 
 void main() async {
   runApp(const MyApp());

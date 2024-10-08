@@ -213,9 +213,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                     if (authctrl.otp != null) {
                                       if (authctrl.confirmotp()) {
                                         authctrl.signupclose();
-                                        print('otp confirm here page');
+                                        // print('otp confirm here page');
                                         Navigator.pop(context);
-                                        print('otp confirm here page');
+                                     
                                       authctrl.signupclose();
                                         // Get.toNamed(() => CreateXtremers(
                                         //       phonenumber:
@@ -228,14 +228,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                           otpcorrect = true;
                                         });
                                       } else {
-                                        print("otpcorrect false");
+                                        // print("otpcorrect false");
                                         setState(() {
                                           otpcorrect = false;
                                         });
                                       }
                                       //confirm otp
                                     } else {
-                                      print("authctrl.otp false");
+                                      // print("authctrl.otp false");
                                       //send otp
                                       authctrl.signup(_phonecontroller.text);
                                       setState(() {
@@ -320,7 +320,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       if (authctrl.otp != null) {
                                         if (authctrl.confirmotp()) {
                                           authctrl.signupclose();
-                                          print('otp confirm here page');
+                                          // print('otp confirm here page');
                                           Navigator.pop(context);
 
                                           // Get.to(() => CreateXtremers(
@@ -334,14 +334,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                             otpcorrect = true;
                                           });
                                         } else {
-                                          print("otpcorrect false");
+                                          // print("otpcorrect false");
                                           setState(() {
                                             otpcorrect = false;
                                           });
                                         }
                                         //confirm otp
                                       } else {
-                                        print("authctrl.otp false");
+                                        // print("authctrl.otp false");
                                         //send otp
                                         if (widget.formkey.currentState!.validate()) {
   authctrl.signup(_phonecontroller.text);

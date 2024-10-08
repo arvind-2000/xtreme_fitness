@@ -95,7 +95,7 @@ class ContactController extends GetxController {
         phonecon.text = _contact!.phoneNumber!;
         update();
       } else {
-        print(response.statusText);
+        // print(response.statusText);
       }
     } catch (error) {}
   }

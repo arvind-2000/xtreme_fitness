@@ -381,7 +381,7 @@ class ManagementController extends GetxController {
 
     currentmember = _allmembership.firstWhereOrNull(
       (element) =>
-          element.userId == authctrl.getuser!.id,
+          element.userId == authctrl.getuser?.id,
     );
      
   }

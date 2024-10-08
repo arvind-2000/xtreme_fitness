@@ -62,35 +62,35 @@ class _DashBoardMemberScreenmobileState extends State<DashBoardMemberScreenmobil
                            width:MediaQuery.sizeOf(context).width<mobilescreen? MediaQuery.sizeOf(context).width:350,
                           child: CardwithShadow(
                             margin: EdgeInsets.zero,
-                            padding: EdgeInsets.all(32),
-                            child:managectrl.xtremer==null? Center(child: CircularProgressIndicator(color: Colors.blue,),): Column(
+                            padding: const EdgeInsets.all(32),
+                            child:managectrl.xtremer==null? const Center(child: CircularProgressIndicator(color: Colors.blue,),): Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              HeadingText("Current Plan",color: Colors.white60,),
-                              SizedBox(height: 30,),
+                              const HeadingText("Current Plan",color: Colors.white60,),
+                              const SizedBox(height: 30,),
 
-                               Text("Name",style: TextStyle(fontSize: 16,color: Colors.white60)),
+                               const Text("Name",style: TextStyle(fontSize: 16,color: Colors.white60)),
                                
-                                 Text('${managectrl.xtremer?.firstName} ${managectrl.xtremer?.surname}',style: TextStyle(fontSize: 20)),
-                                   SizedBox(height: 20,),
-                                   Text("Plan",style: TextStyle(fontSize: 16,color: Colors.white60)),
-                                 Text('${managectrl.xtremer?.category}',style: TextStyle(fontSize: 20)),
+                                 Text('${managectrl.xtremer?.firstName} ${managectrl.xtremer?.surname}',style: const TextStyle(fontSize: 20)),
+                                   const SizedBox(height: 20,),
+                                   const Text("Plan",style: TextStyle(fontSize: 16,color: Colors.white60)),
+                                 Text('${managectrl.xtremer?.category}',style: const TextStyle(fontSize: 20)),
                               //  SizedBox(height: 10,),
                               //    Text("Trainer",style: TextStyle(fontSize: 16,color: Colors.white60)),
                               //    Text(managectrl.xtremer!.category.toString(),style: TextStyle(fontSize: 20)),
-                                 SizedBox(height: 20,),
-                              Text("Start",style: TextStyle(fontSize: 16,color: Colors.white60)),
-                              SizedBox(height: 6,),
-                              Text('${managectrl.xtremer?.startDate?.day}/${managectrl.xtremer?.startDate?.month}/${managectrl.xtremer?.startDate?.year}',style: TextStyle(fontSize: 20),),
-                              SizedBox(height: 10,),
-                              Text("End",style: TextStyle(fontSize: 16,color: Colors.white60)),
-                              SizedBox(height: 6,),
-                              Text( '${managectrl.xtremer?.endDate?.day}/${managectrl.xtremer?.endDate?.month}/${managectrl.xtremer?.endDate?.year}',style: TextStyle(fontSize: 20),),
-                              SizedBox(height: 30,),
-                              Text("Remaining",style: TextStyle(fontSize: 16,color: Colors.white60),),
-                              SizedBox(height: 6,),
-                              managectrl.xtremer!=null && managectrl.xtremer!.endDate!=null?Text('${daysLeftUntil(managectrl.xtremer!.endDate!)} ${daysLeftUntil(managectrl.xtremer!.endDate!)>1?'days':'day'}',style: TextStyle(fontSize: 28),):SizedBox(),
-                              SizedBox(height: 20,),
+                                 const SizedBox(height: 20,),
+                              const Text("Start",style: TextStyle(fontSize: 16,color: Colors.white60)),
+                              const SizedBox(height: 6,),
+                              Text('${managectrl.xtremer?.startDate?.day}/${managectrl.xtremer?.startDate?.month}/${managectrl.xtremer?.startDate?.year}',style: const TextStyle(fontSize: 20),),
+                              const SizedBox(height: 10,),
+                              const Text("End",style: TextStyle(fontSize: 16,color: Colors.white60)),
+                              const SizedBox(height: 6,),
+                              Text( '${managectrl.xtremer?.endDate?.day}/${managectrl.xtremer?.endDate?.month}/${managectrl.xtremer?.endDate?.year}',style: const TextStyle(fontSize: 20),),
+                              const SizedBox(height: 30,),
+                              const Text("Remaining",style: TextStyle(fontSize: 16,color: Colors.white60),),
+                              const SizedBox(height: 6,),
+                              managectrl.xtremer!=null && managectrl.xtremer!.endDate!=null?Text('${daysLeftUntil(managectrl.xtremer!.endDate!)} ${daysLeftUntil(managectrl.xtremer!.endDate!)>1?'days':'day'}',style: const TextStyle(fontSize: 28),):const SizedBox(),
+                              const SizedBox(height: 20,),
                               SizedBox(
                                 width: double.maxFinite,
                                 child: CardwithShadow(
@@ -146,15 +146,25 @@ class _DashBoardMemberScreenmobileState extends State<DashBoardMemberScreenmobil
               //     ),
               //   )
               //   :SizedBox(),
-              //  managectrl.xtremer!=null?MemberServiceHistory(xtremers: managectrl.xtremer!):SizedBox(),
+               managectrl.xtremer!=null?Padding(
+                 padding: const EdgeInsets.all(16.0),
+                 child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                    const HeadingText("Records"),
+                    const SizedBox(height: 16,),
+                     MemberServiceHistory(xtremers: managectrl.xtremer!),
+                   ],
+                 ),
+               ):const SizedBox(),
 
                 Center(
-                  child: SizedBox(height: 200,
+                  child: SizedBox(height: 100,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Powered By",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       SizedBox(
                         height: 80,
                         width: 80,

@@ -68,11 +68,6 @@ factory Paymententity.fromJson(Map<String, dynamic> json) {
     };
   }
 
-    void printPayment(){
-
-        // print('id : $id  xtremerid: $userId  amount: $amount  discount: $discountPercentage receiveamnt: $receivedAmount transid: $transactionId  paystatus: $paymentStatus subsid: $subscriptionId serviceid: $serviceUsageId  paymentmethod: $paymentMethod date: $paymentDate');
-
-    }
 
 }
 

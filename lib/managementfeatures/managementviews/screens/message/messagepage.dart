@@ -12,8 +12,8 @@ class MessageListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ContactController contactController = Get.put(ContactController());
-    return contactController.allmessage.isEmpty
+    ContactController cntrl = Get.find<ContactController>();
+    return cntrl.allmessage.isEmpty
         ? const NodataScreen(title: "Messages", desc: "No Message Found")
         : GetBuilder<ContactController>(builder: (_) {
             return Padding(
@@ -46,8 +46,8 @@ class MessageListScreen extends StatelessWidget {
                                   FilterChipWidget(
                                       label: 'Unread',
                                       isSelected: false,
-                                      badgeCount: contactController
-                                          .unreadmessagelist.length),
+                                      badgeCount:
+                                          cntrl.unreadmessagelist.length),
                                 ],
                               ),
                             ],
@@ -62,7 +62,7 @@ class MessageListScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: contactController.allmessage.length,
+                      itemCount: cntrl.allmessage.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
