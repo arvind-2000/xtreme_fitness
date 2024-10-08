@@ -205,8 +205,8 @@ class ManagementController extends GetxController {
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
     _allxtremer = await managementRepo.viewMemberwithSubs();
-    if (authctrl.ismember!=null) {
-  if (!authctrl.ismember!) {
+  
+  if (!authctrl.ismember) {
     _searchxtremerlist = _allxtremer;
     _allgeneralxtremer = _allxtremer
         .where(
@@ -225,8 +225,10 @@ class ManagementController extends GetxController {
           (element) => element.isActive == false,
         )
         .toList();
+  }else{
+        getmemberxtreme();
   }
-}
+
 
     update();
   }
@@ -242,7 +244,7 @@ class ManagementController extends GetxController {
     }
 
   } 
-    
+      update();
   }
 
 
@@ -367,6 +369,7 @@ class ManagementController extends GetxController {
 
   void getMemberships() async {
     _allmembership = await managementRepo.viewMembership(); 
+    checkmemberships();
     update();
   }
 

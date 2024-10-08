@@ -33,6 +33,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
   @override
   void initState() {
     super.initState();
+      
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.serviceEntity != null) {
         Get.put(AddMemberController()).addservices(widget.serviceEntity!);
@@ -48,6 +49,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
   final TextEditingController _lastname = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey();
   final AuthUseCases _authusecase = AuthenticateUseCases();
+  bool? showuser;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context).width;
@@ -419,10 +421,10 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                       return _authusecase.phoneAuth(
                                                                           _phonenumber
                                                                               .text,
-                                                                          "Enter a valid number");
+                                                                          "Phone Number");
                                                                     },
                                                                   ),
-                                                          addmemberctrl.checknumberforservice?SizedBox():TextFieldWidget(
+                                                          showuser==null || showuser!?SizedBox():TextFieldWidget(
                                                                       hint:
                                                                           "First Name",
                                                                       controller:
@@ -431,9 +433,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                           () {
                                                                         return _authusecase.nameAuth(
                                                                             _firstname.text,
-                                                                            "Enter a valid name");
+                                                                            "First name");
                                                                       }),
-                                                                           addmemberctrl.checknumberforservice?SizedBox():TextFieldWidget(
+                                                                         showuser==null || showuser!?const SizedBox():TextFieldWidget(
                                                                     hint:
                                                                         "Last Name",
                                                                     controller:
@@ -443,7 +445,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                       return _authusecase.nameAuth(
                                                                           _lastname
                                                                               .text,
-                                                                          "Enter a valid name");
+                                                                          "Last Name");
                                                                     },
                                                                   ),
                                                                 ],
@@ -464,15 +466,16 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                             false) {
                                                       if (_formkey.currentState!
                                                           .validate()) {
-                                                      
-                                                        Future.delayed(
-                                                          const Duration(
-                                                              seconds: 3),
-                                                          () async {
-                                                         bool d =  await addmemberctrl.checknumber(_phonenumber.text.trim());
-                                                          if(d){
-                                                                           
-                                                            Navigator.pop(context);
+
+
+                                                            //checknumber for
+                                                          if(showuser==null){
+                                                                 
+                                                       await addmemberctrl.checknumber(_phonenumber.text.trim()); 
+                                                            
+                                                          if(addmemberctrl.checknumberforservice){
+                                                             print("number check");              
+                                                          Get.back();
                                                               addmemberctrl
                                                             .changepaymentstatus(
                                                                 3);
@@ -482,7 +485,15 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                           .ispaymentcash);
 
                                                           }else{
+                                                            state((){
+                                                          showuser = addmemberctrl.checknumberforservice;
+                                                        });
+                                                          }  
 
+                                                 
+                                                          }else{
+                                                              /// for number with username and password
+                                                              
                                                                       v = await addmemberctrl.createuser(
                                                                 _phonenumber.text
                                                                     .trim(),
@@ -517,15 +528,12 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                               //print("${addmemberctrl.usererrormessage}");
                                                             }
 
-                                                          }
-                                                          
-                                                          },
-                                                        );
+
+                                                          }  
                                                       }
                                                     } else {
                                                      Get.back();
 
-                                                    
                                                       addmemberctrl
                                                           .changepaymentstatus(3);
                                                       Future.delayed(

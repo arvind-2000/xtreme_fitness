@@ -29,17 +29,25 @@ class _HandlerPageState extends State<HandlerPage> {
   void initState() {
     super.initState();
 
-    Get.put(GetxPageController());
+   
     authenticates();
   }
-
+  bool reload = true;
   // Authentication logic refactored for better performance
   void authenticates() async {
-    bool isAuthenticated = await Get.find<GetxAuthController>().authenticationsForReload();
-    if (isAuthenticated) {
+
+  await Get.find<GetxAuthController>().authenticationsForReload().then((value) {
+    setState(() {
+      reload = false;
+    });
+        if (value) {
       Get.put(AddMemberController());
       Get.put(ManagementController());
+  
+   
     }
+  },);
+
   }
 
   @override
@@ -59,7 +67,7 @@ class _HandlerPageState extends State<HandlerPage> {
       } else if (networkController.hasServerError.value) {
         return const ServerErrorPage();
       } else {
-        return _buildMainContent(context);
+        return  _buildMainContent(context);
       }
     });
   }
@@ -68,7 +76,7 @@ class _HandlerPageState extends State<HandlerPage> {
   Widget _buildMainContent(BuildContext context) {
     final authCtrl = Get.find<GetxAuthController>();
 
-    return authCtrl.isauthloading.value
+    return reload || authCtrl.isauthloading.value
         ? const Center(child: CircularProgressIndicator(color: Colors.white70))
         : HandlerToDashboard(refresh: authenticates);
   }

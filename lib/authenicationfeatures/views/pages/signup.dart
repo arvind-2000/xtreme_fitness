@@ -343,11 +343,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                       } else {
                                         print("authctrl.otp false");
                                         //send otp
-                                        authctrl.signup(_phonecontroller.text);
-                                        setState(() {
-                                          otpshow = true;
-                                        });
-                                        authctrl.startTimer();
+                                        if (widget.formkey.currentState!.validate()) {
+  authctrl.signup(_phonecontroller.text);
+  setState(() {
+    otpshow = true;
+  });
+  authctrl.startTimer();
+}
                                       }
                                     },
                               color: Theme.of(context).colorScheme.secondary,

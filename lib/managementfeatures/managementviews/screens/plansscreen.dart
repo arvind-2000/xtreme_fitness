@@ -35,6 +35,13 @@ class _PlansScreenState extends State<PlansScreen> {
       isactive = !isactive;
     });
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+        Get.find<AddMemberController>().changepaymentstatuscall(0);
+
+  }
 
   @override
   Widget build(BuildContext context) {

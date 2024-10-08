@@ -33,7 +33,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
     Get.put(AddMemberController());
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Get.find<AddMemberController>().changepaymentstatus(0);
+           Get.find<AddMemberController>().changepaymentstatuscall(0);
       },
     );
   }

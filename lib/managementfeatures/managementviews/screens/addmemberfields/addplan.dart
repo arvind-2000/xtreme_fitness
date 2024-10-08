@@ -24,6 +24,7 @@ class PlanSelectionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.sizeOf(context).width;
+ Get.put(ManagementController());
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return GetBuilder<AddMemberController>(builder: (addmemberctrl) {
         return Column(

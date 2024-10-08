@@ -178,104 +178,6 @@ class GetxAuthController extends GetxController {
     prefs.remove('key2');
   }
 
-  // void authentications() async {
-  //   isauthloading.value = true;
-  //   ismember = true;
-  //   //print("in authentications");
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   Map<List<Role>, int> request = await ManagementrepoImpl().getRoles();
-  //   //print("${request.status}");
-  //   //print("addmission status code : ${res.entries.first.value}  ${prefs.containsKey('key1')}");
-  //   if (request.entries.first.value >= 200 &&
-  //       request.entries.first.value < 300) {
-  //     _authentication = true;
-  //     // print("in authentication sharedpreferences res");
-
-  //     if (prefs.containsKey('key1')) {
-  //       setdataforsession(prefs.getString('key1')!);
-  //       isauthloading.value = false;
-
-  //       update();
-  //       Get.offAllNamed('/dashboard');
-  //     } else {
-  //       isauthloading.value = false;
-
-  //       Get.offAllNamed('/home');
-  //     }
-  //   } else {
-  //     isauthloading.value = false;
-
-  //     _authentication = false;
-  //     loginloading = false;
-  //     _user = null;
-  //     // ismember = true;
-  //     signupclose();
-  //     disposelogin();
-  //     disposeforgotpass();
-  //     if (request.entries.first.value == 401 ||
-  //         request.entries.first.value == 0) {
-  //       if (prefs.containsKey('key1')) {
-  //         Get.dialog(
-  //             barrierDismissible: false,
-  //             Dialog(
-  //               child: SizedBox(
-  //                 height: 300,
-  //                 width: 400,
-  //                 child: Center(
-  //                   child: CardwithShadow(
-  //                     margin: EdgeInsets.zero,
-  //                     color: Colors.grey[900],
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.center,
-  //                       children: [
-  //                         const SizedBox(
-  //                           height: 20,
-  //                         ),
-  //                         const HeadingText("Session Expired"),
-  //                         const SizedBox(
-  //                           height: 20,
-  //                         ),
-  //                         const Expanded(
-  //                             child: Center(
-  //                                 child: Text(
-  //                           "The session has expired or you may not be logged in.",
-  //                           textAlign: TextAlign.center,
-  //                         ))),
-  //                         const SizedBox(
-  //                           height: 30,
-  //                         ),
-  //                         CardwithShadow(
-  //                             onpress: () {
-  //                               prefs.remove('key1');
-  //                               prefs.remove('key2');
-  //                               Get.offAllNamed('/home');
-  //                               Get.dialog(const LoginDialog(
-  //                                 signupdialog: false,
-  //                               ));
-  //                             },
-  //                             child: const Text("Log In Again")),
-  //                         const SizedBox(
-  //                           height: 20,
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ));
-  //       } else {
-  //         isauthloading.value = false;
-  //         Get.offAllNamed('/home');
-  //       }
-  //     } else {
-  //       isauthloading.value = false;
-  //       if (!prefs.containsKey('key1')) {
-  //         Get.offAllNamed('/home');
-  //       }
-  //     }
-  //   }
-  // }
-
 
 
 void authentications() async {
@@ -395,7 +297,7 @@ Future<bool> authenticationsForReload() async {
   else {
     handleSessionInvalid(prefs);
   }
-isauthloading.value = false;
+
   return false;
 }
 
@@ -414,14 +316,14 @@ void handleSessionExpiry(SharedPreferences prefs) {
 
   _authentication = false;
   loginloading = false;
-  isauthloading.value = false;
+
 }
 
 // Helper function to handle invalid session and navigate to home
 void handleSessionInvalid(SharedPreferences prefs) {
   prefs.remove('key1');
   Get.offAllNamed('/home');
-  isauthloading.value = false;
+  // isauthloading.value = false;
   update();
 }
 

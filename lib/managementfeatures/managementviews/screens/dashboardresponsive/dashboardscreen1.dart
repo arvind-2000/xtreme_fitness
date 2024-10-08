@@ -20,9 +20,10 @@ class _DashBoardScreen1State extends State<DashBoardScreen1> {
     super.initState();
     Get.find<ManagementController>().getxtremer();
     Get.find<ManagementController>().viewpayment();
+      Get.find<ManagementController>().getAllSubscriptions();
     Get.find<ManagementController>().getpaymentlastest10();
     Get.find<ManagementController>().getAllServiceSchedules();
-    Get.find<ManagementController>().getAllSubscriptions();
+  
     Get.find<ManagementController>().getAllusers();
       Get.put(ContactController()).getallmessage();
   }
