@@ -380,7 +380,7 @@ class PaymentDialog extends StatelessWidget {
                 addmemberctrl.changepaymentstatus(3);
                 Future.delayed(const Duration(seconds: 3), () async {
                   bool v =
-                      await addmemberctrl.createuser(username, pass, phone);
+                      await addmemberctrl.createuser(username, pass, phone,'${addmemberctrl.xtremer?.firstName} ${addmemberctrl.xtremer?.surname}');
                   if (v) {
                     addmemberctrl.addXtremer();
                   } else {

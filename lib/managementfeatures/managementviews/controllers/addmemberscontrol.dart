@@ -21,9 +21,9 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/doctordetails.dart';
 
 import '../../managementdomain/entities.dart/admission.dart';
+import '../../managementdomain/entities.dart/paymenttrans.dart';
 import '../../managementdomain/entities.dart/planentity.dart';
 import '../../managementdomain/entities.dart/servicesentity.dart';
-import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/entities.dart/xtremerwithsubs.dart';
 import '../../managementdomain/managementrepo.dart';
 
@@ -48,7 +48,7 @@ class AddMemberController extends GetxController {
   Admission? admissionfees;
   bool checkdeclaration = false;
   String? usererrormessage;
-  Paymententity? paymentsdetails;
+  PaymentByTransaction? paymentsdetails;
   String doctorname = "";
   String surgeryname = "";
   String surgeryno = "";
@@ -65,7 +65,7 @@ class AddMemberController extends GetxController {
   bool isloading = false;
   bool? usercreated;
   bool userexist = false;
-  UserEntity? _userid;
+  UserEntity? userid;
   bool paymentdeclaration = false;
   //questionaire set
   bool checknumberforservice = true;
@@ -118,12 +118,12 @@ class AddMemberController extends GetxController {
 Future<bool> checknumber(String phone)async{
       try{
            Map<int?, String> res = await AuthenticationRepositoryImpl().getUserbyNumber(phone); 
-           print(res.entries.first.key);      
+          //  print(res.entries.first.key);      
             checknumberforservice = res.entries.first.key!=null && res.entries.first.key!>0;
          
             if(res.entries.first.key!=null){
              Map<UserEntity?,String> k =  await AuthenticationRepositoryImpl().getUserbyId(res.entries.first.key??-1);
-                _userid = k.entries.first.key;
+                userid = k.entries.first.key;
             }
       // ignore: empty_catches
       } on Exception{
@@ -137,7 +137,23 @@ Future<bool> checknumber(String phone)async{
   
   }
 
-  Future<bool> createuser(String? username, String? pass, String? phone,
+  
+Future<bool> checknumberonly(String phone)async{
+  bool v = false;
+      try{
+           Map<int?, String> res = await AuthenticationRepositoryImpl().getUserbyNumber(phone); 
+    
+           v= res.entries.first.key!=null && res.entries.first.key!>0;
+      // ignore: empty_catches
+      } on Exception{
+        
+      }
+     
+   return v;
+  
+  }
+
+  Future<bool> createuser(String? username, String? pass, String? phone,String fullname,
       {String role = 'Member'}) async {
     usererrormessage = null;
     isloading = true;
@@ -151,17 +167,17 @@ Future<bool> checknumber(String phone)async{
               (xtremer != null && xtremer!.mobileNumber != null
                   ? xtremer!.mobileNumber!
                   : ""),
-          role);
+          role,fullname);
       if (res.entries.first.key >= 200 && res.entries.first.key < 300) {
         usererrormessage = res.entries.first.value;
           String? s = await repo.viewUser(username, pass);
 
              if(s!=null){
              Map<UserEntity?,String> k =  await AuthenticationRepositoryImpl().getUserbyId(int.tryParse(s)??-1);
-                _userid = k.entries.first.key;
+                userid = k.entries.first.key;
             }
         //print("in user create in create member: ${_userid!}");
-        xtremer!.XtremerId = _userid!.id;
+        xtremer!.XtremerId = userid!.id;
         if (xtremer!.submittedBy == null) {
           xtremer!.submittedBy = xtremer!.XtremerId;
         }
@@ -181,7 +197,7 @@ Future<bool> checknumber(String phone)async{
 
              if(s!=null){
              Map<UserEntity?,String> k =  await AuthenticationRepositoryImpl().getUserbyId(int.tryParse(s)??-1);
-                _userid = k.entries.first.key;
+                userid = k.entries.first.key;
             }
           usererrormessage = "User found";
           return true;
@@ -205,6 +221,11 @@ Future<bool> checknumber(String phone)async{
     update();
   }
 
+
+  void unselectService(){
+    selectedservice=null;
+    update();
+  }
   Future<Subscription?> addsubscription(Subscription subs) async {
     Subscription? subss = await repo.addSubscription(subs);
     return subss;
@@ -392,7 +413,7 @@ Future<bool> checknumber(String phone)async{
         id: 0,
         userId:authctrl.ismember
             ? authctrl.getuser?.id?? 0
-            :_userid?.id??0,
+            :userid?.id??0,
         amount: authctrl.getuser != null
                   ? authctrl.getuser!.roleName!.toLowerCase()=='member'?selectedservice!.memberPrice:selectedservice!.nonMemberPrice
                   : selectedservice!.nonMemberPrice,
@@ -422,11 +443,11 @@ Future<bool> checknumber(String phone)async{
               id: 0,
               userId: authctrl.ismember
             ? int.tryParse(authctrl.userid!) ?? 0
-            : _userid?.id??0,
+            : userid?.id??0,
               serviceId: selectedservice!.id,
               scheduleDate: DateTime.now(),
-             price: authctrl.getuser != null
-                  ? authctrl.getuser!.roleName!.toLowerCase()=='member'?selectedservice!.memberPrice:selectedservice!.nonMemberPrice
+              price: authctrl.getuser != null 
+                  ? authctrl.getuser!.roleName!.toLowerCase()=='member'?selectedservice!.memberPrice:userid!.roleName!.toLowerCase() !='member'? selectedservice!.nonMemberPrice:selectedservice!.memberPrice
                   : selectedservice!.nonMemberPrice,
               status: "InActive");
           ServiceSchedule? serv = await repo.addServiceUsage(s);
@@ -440,7 +461,7 @@ Future<bool> checknumber(String phone)async{
         payments,
         userid: authctrl.ismember
             ? authctrl.getuser?.id.toString()??""
-            :_userid?.id.toString()??"",
+            :userid?.id.toString()??"",
         isonline: false,
       );
 
@@ -451,11 +472,11 @@ Future<bool> checknumber(String phone)async{
               id: 0,
               userId:  authctrl.ismember
             ? int.tryParse(authctrl.userid!) ?? 0
-            : _userid?.id??0,
+            : userid?.id??0,
               serviceId: selectedservice!.id,
               scheduleDate: DateTime.now(),
               price: authctrl.getuser != null 
-                  ? authctrl.getuser!.roleName!.toLowerCase()=='member'?selectedservice!.memberPrice:selectedservice!.nonMemberPrice
+                  ? authctrl.getuser!.roleName!.toLowerCase()=='member'?selectedservice!.memberPrice:userid!.roleName!.toLowerCase() !='member'? selectedservice!.nonMemberPrice:selectedservice!.memberPrice
                   : selectedservice!.nonMemberPrice,
               status: "Active");
           await repo.addServiceUsage(s);

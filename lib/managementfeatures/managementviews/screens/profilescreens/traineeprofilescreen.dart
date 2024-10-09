@@ -41,7 +41,7 @@ class TraineeProfile extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          pagectrl.changeviewprofile();
+                          pagectrl.changeviewprofile(false);
                         },
                         icon: const Icon(Icons.close))
                   ],

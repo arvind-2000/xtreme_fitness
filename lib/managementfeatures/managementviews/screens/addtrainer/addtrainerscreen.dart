@@ -578,7 +578,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                           CardBorder(
                                                               onpress: () {
                                                                 pagectrl
-                                                                    .changeviewprofile();
+                                                                    .changeviewprofile(true);
                                                                 _user = e;
                                                               },
                                                               color: const Color
