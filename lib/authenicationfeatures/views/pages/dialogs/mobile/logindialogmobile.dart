@@ -29,6 +29,7 @@ class _LoginDialogMobileState extends State<LoginDialogMobile> {
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, state) {
       return Scaffold(
+        resizeToAvoidBottomInset: true,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: Column(

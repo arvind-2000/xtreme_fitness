@@ -30,11 +30,13 @@ class _AuthHandlerPageState extends State<AuthHandlerPage> {
       },
     );
   }
+
   final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GetxAuthController>(builder: (authctrl) {
       return Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
         body: Center(
           child: ConstrainedBox(

@@ -37,19 +37,20 @@ class _CreateXtremersState extends State<CreateXtremers> {
     Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {
           isLoading = false;
         }));
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp){
-            arguments = Get.arguments as Map?;
-  if(arguments==null){
-    Get.offAllNamed('/home');
-  }
-        },);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        arguments = Get.arguments as Map?;
+        if (arguments == null) {
+          Get.offAllNamed('/home');
+        }
+      },
+    );
 
     // Listen for the 'beforeunload' event to show a warning when the user tries to navigate awa
   }
 
   // Function to show a custom warning dialog
   Future<bool> _showExitWarningDialog(BuildContext context) async {
- 
     return await showDialog(
             context: context,
             builder: (context) => PageDialog(
@@ -106,7 +107,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
 
   @override
   Widget build(BuildContext context) {
-      final String? phonenumber = arguments?['phonenumber']??"";
+    final String? phonenumber = arguments?['phonenumber'] ?? "";
     final ServiceEntity? services = arguments?['services'] as ServiceEntity?;
     final AddMemberController addMemberController =
         Get.put(AddMemberController());
@@ -117,6 +118,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
         _showExitWarningDialog(context);
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: isLoading
             ? const Center(
                 child: Column(
