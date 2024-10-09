@@ -29,25 +29,25 @@ class _HandlerPageState extends State<HandlerPage> {
   void initState() {
     super.initState();
 
-   
     authenticates();
   }
+
   bool reload = true;
   // Authentication logic refactored for better performance
   void authenticates() async {
-
-  await Get.find<GetxAuthController>().authenticationsForReload().then((value) {
-    setState(() {
-      reload = false;
-    });
+    await Get.find<GetxAuthController>().authenticationsForReload().then(
+      (value) {
+        setState(() {
+          reload = false;
+        });
         if (value) {
-      Get.put(AddMemberController());
-      Get.put(ManagementController());
+          Get.put(AddMemberController());
+          Get.put(ManagementController());
 
-   Get.find<GetxPageController>().onInit();
-    }
-  },);
-
+          Get.find<GetxPageController>().onInit();
+        }
+      },
+    );
   }
 
   @override
@@ -114,7 +114,7 @@ class HandlerToDashboard extends StatelessWidget {
         refresh();
       },
       child: Scaffold(
-                resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context, authCtrl, pageCtrl),
         drawer: _buildDrawer(context, authCtrl),
         body: ConstrainedBox(

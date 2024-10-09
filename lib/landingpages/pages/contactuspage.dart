@@ -22,10 +22,10 @@ class ContactUsPage extends StatelessWidget {
                 MediaQuery.sizeOf(context).width <= mobilescreen ? 16 : 100,
             vertical: 30),
         child: MediaQuery.sizeOf(context).width <= mobilescreen
-            ? Column(
+            ? const Column(
                 children: [
-                  const ContactWdget(),
-                  const SizedBox(
+                  ContactWdget(),
+                  SizedBox(
                     height: 40,
                   ),
                   SendMessageWidget()
@@ -44,7 +44,7 @@ class ContactUsPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 40),
                   // Right Section
-                  Expanded(flex: 20, child: SendMessageWidget()),
+                  const Expanded(flex: 20, child: SendMessageWidget()),
                 ],
               ),
       ),
@@ -53,8 +53,7 @@ class ContactUsPage extends StatelessWidget {
 }
 
 class SendMessageWidget extends StatefulWidget {
-
-  SendMessageWidget({super.key});
+  const SendMessageWidget({super.key});
 
   @override
   State<SendMessageWidget> createState() => _SendMessageWidgetState();
