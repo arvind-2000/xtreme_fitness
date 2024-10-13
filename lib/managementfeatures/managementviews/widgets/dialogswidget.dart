@@ -15,8 +15,8 @@ class PageDialog extends StatefulWidget {
   final bool? allignToCenter;
   final bool? iscancelreg;
   final Widget child;
-  final VoidCallback no;
-  final VoidCallback yes;
+  final VoidCallback? no;
+  final VoidCallback? yes;
 
   @override
   State<PageDialog> createState() => _PageDialogState();

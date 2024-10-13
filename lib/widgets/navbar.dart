@@ -148,32 +148,37 @@ class NavBar extends StatelessWidget {
           _toggleDrawer(context);
         }
         Get.dialog(
+          barrierDismissible: !authctrl.loginloading,
           StatefulBuilder(builder: (context, setState) {
             return PageDialog(
+              
               iscancelreg: true,
-              no: () {
+              no:authctrl.loginloading?null: () {
                 Get.back();
               },
-              yes: () {
-                Get.back();
-                authctrl.logout();
+              yes:authctrl.loginloading?null:  () {
+                  setState((){
+                      authctrl.logout();
+                  });
+                
+                    //  Get.back();
               },
               allignToCenter: true,
-              child: authctrl.loginloading
-                  ? const Center(
-                      child: CircularProgressIndicator(color: Colors.white))
-                  : const Column(
+              child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.logout),
                             SizedBox(width: 5),
                             HeadingText("Log Out", size: 20),
                           ],
                         ),
-                        SizedBox(height: 30),
-                        Center(
+                        const SizedBox(height: 30),
+                       authctrl.loginloading
+                  ? const Center(
+                      child: CircularProgressIndicator(color: Colors.white))
+                  : const Center(
                           child: Text(
                             "Are you sure you want to logout?\nPress yes to confirm",
                             style: TextStyle(fontSize: 16),

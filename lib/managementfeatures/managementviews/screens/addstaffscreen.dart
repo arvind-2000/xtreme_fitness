@@ -86,146 +86,148 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                 isStaffadd? Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                 
-                      children: [
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                                       
+                        children: [
+                               Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   const HeadingText("Add Staff",size: 30,),
+                                             CardBorder(
+                               onpress: addstaff,
+                               
+                               padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                               child: const Row(
                                children: [
-                                 const HeadingText("Add Staff",size: 30,),
-                                           CardBorder(
-                             onpress: addstaff,
-                             
-                             padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                             child: const Row(
-                             children: [
-                               Icon(Icons.person,size: 14,),
-                               SizedBox(height: 16,),
-                               Text("View Staff")
-                             ],
-                                               ))
+                                 Icon(Icons.person,size: 14,),
+                                 SizedBox(height: 16,),
+                                 Text("View Staff")
                                ],
-                             ),
-                                     Center(
-                                       child: ConstrainedBox(
-                                         constraints: const BoxConstraints(maxWidth: 500),
-                                         child: Form(
-                                            key:_globalkey,
-                                           child: Column(
-                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          
-                                           children: [
-                                            const SizedBox(height: 16,),
-                                             TextFieldWidget(hint: "Phone", controller: _phonecontroller),
-                                             const SizedBox(height: 10,),
-                                             TextFieldWidget(hint: "Full Name", controller: _fullnamecontroller),
-                                             const SizedBox(height: 10,),
-                                             TextFieldWidget(hint: "Username", controller: _usernamecontroller),
-                                             const SizedBox(height: 10,),
-                                             TextFieldWidget(hint: "Password", controller: _passwordcontroller,obscure: true,),
-                                                                                        
-                                             const SizedBox(height: 10,),
-                                              TextFieldWidget(hint: "Confirm Password", controller: _confirmpasswordcontroller,obscure: true,validator: (){
-                                               if(_confirmpasswordcontroller.text!=_passwordcontroller.text){
-                                                 return "Not same as password";
-                                               }
-                                              },),
-                                                                                        
-                                                                        const SizedBox(height: 10,),
-                                              DropdownButton(
-                                               underline: const SizedBox(),
-                                               hint: const Text("Choose",style: TextStyle(fontSize: 16),),
-                                                value: roleid,
-                                               items:rolelist.map((e) => DropdownMenuItem(
-                                                 value: e.id,
-                                                 child: Text(e.roleName,style: const TextStyle(fontSize: 16)))).toList(),  onChanged: (value) { setState(() {
-                                                                         roleid = value!;
-                                                 }); },),
-                                             const SizedBox(height: 20,),
-                                                                                        
-                                             CardwithShadow(
-                                               color: Colors.green[300],
-                                               onpress: (){
-                                                if (_globalkey.currentState!.validate()) {
-                                           Staff addstaff = Staff(uid: Random().nextInt(100).toString(), name: _fullnamecontroller.text, phone: _phonecontroller.text, username: _usernamecontroller.text, roleid:rolelist.firstWhere((element) => element.id==roleid,), isactive: true);
-                                         
-                                                                                        showDialog(context: context, builder: (context) => PageDialog(
-                                                                         no: () {
-                                                                           Navigator.pop(context);
-                                                                         },
-                                                                         yes: () async{
-                                               
-                                                                        String v = await managectrl.addStaffs(addstaff);
-                                                                        CustomSnackbar(context, v);
-                                                  _fullnamecontroller.clear();
-                                                 _confirmpasswordcontroller.clear();
-                                                 _passwordcontroller.clear();
-                                                 _usernamecontroller.clear();
-                                                 _phonecontroller.clear();
-
-                                                 Navigator.pop(context);
-                                                 setState(() {
-                                                   isStaffadd = false;
-                                                 });
-                                                                         },
-                                                                         child: Column(
-                                                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                                                         children: [
-                                                                           Row(
-                                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                             children: [
-                                                                               const TitleText("Add Staff"),
-                                                                               IconButton(onPressed: (){
-                                                                                 Navigator.pop(context);
-                                                                               }, icon: Icon(Icons.close))
-                                                                             ],
-                                                                           ),
-                                                                           const SizedBox(height: 20,),
-                                                                           const Text("Staff Name",style: TextStyle(fontSize: 14),),
-                                                                           const SizedBox(height: 5,),
-                                                                           Text(addstaff.name,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                                                                           const SizedBox(height: 16,),
-                                                                             const Text("Phone",style: TextStyle(fontSize: 14),),
-                                                                           const SizedBox(height: 5,),
-                                                                           Text(addstaff.phone.toString(),style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                                                                           const SizedBox(height: 16,),
-                                                                                 const Text("Username",style: TextStyle(fontSize: 14),),
-                                                                           const SizedBox(height: 5,),
-                                                                           Text(addstaff.username,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                                                                           const SizedBox(height: 16,),
-                                                                               const Text("Designation",style: TextStyle(fontSize: 14),),
-                                                                           const SizedBox(height: 5,),
-                                                                           Text(addstaff.roleid.roleName,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                                                                           const SizedBox(height: 16,),
+                                                 ))
+                                 ],
+                               ),
+                                       Center(
+                                         child: ConstrainedBox(
+                                           constraints: const BoxConstraints(maxWidth: 500),
+                                           child: Form(
+                                              key:_globalkey,
+                                             child: Column(
+                                             crossAxisAlignment: CrossAxisAlignment.start,
+                                            
+                                             children: [
+                                              const SizedBox(height: 16,),
+                                               TextFieldWidget(hint: "Phone", controller: _phonecontroller, ),
+                                               const SizedBox(height: 10,),
+                                               TextFieldWidget(hint: "Full Name", controller: _fullnamecontroller),
+                                               const SizedBox(height: 10,),
+                                               TextFieldWidget(hint: "Username", controller: _usernamecontroller),
+                                               const SizedBox(height: 10,),
+                                               TextFieldWidget(hint: "Password", controller: _passwordcontroller,obscure: true,),
                                                                                           
-                                                                           Row(
-                                                                             children: [
-                                                                               Expanded(child: CardwithShadow(
-                                                                                 color: Theme.of(context).colorScheme.error.withOpacity(0.6),
-                                                                                 margin: const EdgeInsets.all(16),
-                                                                                 child: const Text("Check Staff details before Adding?\nPress OK to confirm",textAlign: TextAlign.center,)))
-                                                                             ],
-                                                                           )
-                                                                         ],
-                                          )),);
-                                                }
+                                               const SizedBox(height: 10,),
+                                                TextFieldWidget(hint: "Confirm Password", controller: _confirmpasswordcontroller,obscure: true,validator: (){
+                                                 if(_confirmpasswordcontroller.text!=_passwordcontroller.text){
+                                                   return "Not same as password";
+                                                 }
+                                                },),
+                                                                                          
+                                                                          const SizedBox(height: 10,),
+                                                DropdownButton(
+                                                 underline: const SizedBox(),
+                                                 hint: const Text("Choose",style: TextStyle(fontSize: 16),),
+                                                  value: roleid,
+                                                 items:rolelist.map((e) => DropdownMenuItem(
+                                                   value: e.id,
+                                                   child: Text(e.roleName,style: const TextStyle(fontSize: 16)))).toList(),  onChanged: (value) { setState(() {
+                                                                           roleid = value!;
+                                                   }); },),
+                                               const SizedBox(height: 20,),
+                                                                                          
+                                               CardwithShadow(
+                                                 color: Colors.green[300],
+                                                 onpress: (){
+                                                  if (_globalkey.currentState!.validate()) {
+                                             Staff addstaff = Staff(uid: Random().nextInt(100).toString(), name: _fullnamecontroller.text, phone: _phonecontroller.text, username: _usernamecontroller.text, roleid:rolelist.firstWhere((element) => element.id==roleid,), isactive: true);
+                                           
+                                                                                          showDialog(context: context, builder: (context) => PageDialog(
+                                                                           no: () {
+                                                                             Navigator.pop(context);
+                                                                           },
+                                                                           yes: () async{
                                                  
-                                               },
-                                               child: const Row(
-                                                                                        
-                                               mainAxisAlignment: MainAxisAlignment.center,
-                                               children: [
-                                                 NavTiles(icon: Icons.add,title: "Add Staff",),
-                                               ],
-                                             ))
-                                                                                        
-                                           ],
-                                         )),
+                                                                          String v = await managectrl.addStaffs(addstaff);
+                                                                          CustomSnackbar(context, v);
+                                                    _fullnamecontroller.clear();
+                                                   _confirmpasswordcontroller.clear();
+                                                   _passwordcontroller.clear();
+                                                   _usernamecontroller.clear();
+                                                   _phonecontroller.clear();
+                      
+                                                   Navigator.pop(context);
+                                                   setState(() {
+                                                     isStaffadd = false;
+                                                   });
+                                                                           },
+                                                                           child: Column(
+                                                                             crossAxisAlignment: CrossAxisAlignment.start,
+                                                                           children: [
+                                                                             Row(
+                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                               children: [
+                                                                                 const TitleText("Add Staff"),
+                                                                                 IconButton(onPressed: (){
+                                                                                   Navigator.pop(context);
+                                                                                 }, icon: Icon(Icons.close))
+                                                                               ],
+                                                                             ),
+                                                                             const SizedBox(height: 20,),
+                                                                             const Text("Staff Name",style: TextStyle(fontSize: 14),),
+                                                                             const SizedBox(height: 5,),
+                                                                             Text(addstaff.name,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                                                                             const SizedBox(height: 16,),
+                                                                               const Text("Phone",style: TextStyle(fontSize: 14),),
+                                                                             const SizedBox(height: 5,),
+                                                                             Text(addstaff.phone.toString(),style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                                                                             const SizedBox(height: 16,),
+                                                                                   const Text("Username",style: TextStyle(fontSize: 14),),
+                                                                             const SizedBox(height: 5,),
+                                                                             Text(addstaff.username,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                                                                             const SizedBox(height: 16,),
+                                                                                 const Text("Designation",style: TextStyle(fontSize: 14),),
+                                                                             const SizedBox(height: 5,),
+                                                                             Text(addstaff.roleid.roleName,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                                                                             const SizedBox(height: 16,),
+                                                                                            
+                                                                             Row(
+                                                                               children: [
+                                                                                 Expanded(child: CardwithShadow(
+                                                                                   color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+                                                                                   margin: const EdgeInsets.all(16),
+                                                                                   child: const Text("Check Staff details before Adding?\nPress OK to confirm",textAlign: TextAlign.center,)))
+                                                                               ],
+                                                                             )
+                                                                           ],
+                                            )),);
+                                                  }
+                                                   
+                                                 },
+                                                 child: const Row(
+                                                                                          
+                                                 mainAxisAlignment: MainAxisAlignment.center,
+                                                 children: [
+                                                   NavTiles(icon: Icons.add,title: "Add Staff",),
+                                                 ],
+                                               ))
+                                                                                          
+                                             ],
+                                           )),
+                                         ),
                                        ),
-                                     ),
-                                  const SizedBox(height: 40,)
-                      ],
+                                    const SizedBox(height: 40,)
+                        ],
+                      ),
                     ),
                   ),
                 ):

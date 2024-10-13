@@ -11,11 +11,7 @@ class Policies extends StatelessWidget {
       body:
      
 
-        Center(
-          child: ConstrainedBox(
-           constraints: BoxConstraints(maxWidth: 800),
-            child: TermAndCondition()),
-        ),
+        TermAndCondition(),
         
     );
   }

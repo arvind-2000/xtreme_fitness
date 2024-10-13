@@ -7,6 +7,8 @@ import 'package:xtreme_fitness/landingpages/pages/network/networkcontroller.dart
 import 'package:xtreme_fitness/landingpages/pages/network/noserverpage.dart';
 import 'package:xtreme_fitness/landingpages/pages/notfoundpages/notfoundpage.dart';
 import 'package:xtreme_fitness/landingpages/sections/policies.dart';
+import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/cancelrefund.dart';
+import 'package:xtreme_fitness/landingpages/sections/privacypolicypage/privacypolicy.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/addmemberfields/paymentredirectpage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 
@@ -83,6 +85,14 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/Policies',
             page: () => const Policies(),
+            transition: Transition.noTransition),
+                  GetPage(
+            name: '/Refund',
+            page: () => const CancelrefundPage(),
+            transition: Transition.noTransition),
+                  GetPage(
+            name: '/Privacy',
+            page: () => const PrivacyPolicy(),
             transition: Transition.noTransition),
       ],
     ).animate().fadeIn();
