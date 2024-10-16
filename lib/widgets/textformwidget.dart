@@ -91,8 +91,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 return '${widget.hint} is  empty';
               }
             } else {
-              if (widget.controller.text.length > (widget.counter ?? 25)) {
-                return "Should be between 1 to ${25} characters. Exceeds limits";
+              if (widget.controller.text.length > (widget.counter ?? 50)) {
+                return "Should be between 1 to ${widget.counter??50} characters. Exceeds limits";
               } else {
                 return widget.validator!();
               }

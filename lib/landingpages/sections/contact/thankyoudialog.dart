@@ -30,14 +30,18 @@ class ThankuDialog extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             lnd.isloading
-                ? const HeadingText(
-                    'Please Wait..',
-                    size: 18,
-                  )
-                : const HeadingText(
-                    'Thank you for contacting us',
-                    size: 25,
-                  ),
+                ? Center(
+                  child: const HeadingText(
+                      'Please Wait..',
+                      size: 18,
+                    ),
+                )
+                : Center(
+                  child: const HeadingText(
+                      'Thank you for contacting us',
+                      size: 25,
+                    ),
+                ),
             const SizedBox(height: 10),
             lnd.isloading
                 ? const SizedBox()

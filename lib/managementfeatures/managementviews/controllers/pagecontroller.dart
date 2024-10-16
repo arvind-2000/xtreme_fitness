@@ -71,12 +71,8 @@ class GetxPageController extends GetxController {
     update();
   }
 
-  void changeviewprofile() {
-    if (viewprofile) {
-      viewprofile = false;
-    } else {
-      viewprofile = true;
-    }
+  void changeviewprofile(bool val) {
+    viewprofile = val;
     update();
     //print("In page control $viewprofile");
   }

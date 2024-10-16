@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymententity.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymenttrans.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
@@ -12,6 +13,7 @@ import 'package:xtreme_fitness/widgets/headingtext.dart';
 
 import '../../../../config/const.dart';
 import '../../../../widgets/titletext.dart';
+import '../../../managementdomain/entities.dart/xtremer.dart';
 import '../../widgets/scaffolds.dart';
 
 class DashboardChild4 extends StatelessWidget {
@@ -246,12 +248,14 @@ class _ListViewCardState extends State<ListViewCard> {
                               margin: EdgeInsets.zero,
                               color: Colors.blue,
                               onpress: () {
+                                String? x = managectrl.allUsers.firstWhereOrNull((element) => element.id==widget.e.userId,)?.fullName??"";
                                 createAndprintPdf(
-                                  Paymententity(
+                                  PaymentByTransaction(
                                       id: 
                       widget.e.id,
                                       userId: 
                       widget.e.userId!,
+                      fullName: x,
                                       amount:
                       widget.e.amount!,
                                       discountPercentage: 

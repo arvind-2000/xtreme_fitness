@@ -8,6 +8,7 @@ import 'package:printing/printing.dart';
 
 import '../managementdomain/entities.dart/membership.dart';
 import '../managementdomain/entities.dart/paymententity.dart';
+import '../managementdomain/entities.dart/paymenttrans.dart';
 import '../managementdomain/entities.dart/subscription.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
@@ -26,7 +27,7 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndprintPdf(Paymententity paymentDetails,{bool isprint = true}) async {
+  Future<void> createAndprintPdf(PaymentByTransaction paymentDetails,{bool isprint = true}) async {
     final pdf = pw.Document();
     //print("in //print pdf");
     final logoData = await _loadImageData('assets/logo3.png');
@@ -111,20 +112,20 @@ double percentprice(double? actualprice,double? dis){
               ),
        
               pw.SizedBox(height: 20),
-              //          pw.Row(
-              //   mainAxisAlignment: pw.MainAxisAlignment.start,
-              //   children: [
-              //     pw.Text(
-              //       'Payment received from: ',
-              //       style: pw.TextStyle(fontSize: 12),
-              //     ),
-              //     pw.Text(
-              //       '$name',
-              //       style: pw.TextStyle(fontSize: 12),
-              //     ),
-              //   ]
+                       pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    'Payment received from: ',
+                    style: pw.TextStyle(fontSize: 12),
+                  ),
+                  pw.Text(
+                    '${paymentDetails.fullName}',
+                    style: pw.TextStyle(fontSize: 12),
+                  ),
+                ]
                 
-              // ),
+              ),
  pw.SizedBox(height: 10),
                    pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.start,

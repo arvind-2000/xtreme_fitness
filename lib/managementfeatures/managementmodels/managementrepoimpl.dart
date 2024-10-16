@@ -21,6 +21,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrep
 
 import '../../authentifeatures/domain/userentity.dart';
 import '../managementdomain/entities.dart/10latestpayment.dart';
+import '../managementdomain/entities.dart/paymenttrans.dart';
 import '../managementdomain/entities.dart/roles.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 import '../managementdomain/entities.dart/xtremerwithsubs.dart';
@@ -1197,11 +1198,12 @@ class ManagementrepoImpl implements ManagementRepo {
 
   @override
   Future<Map<int, String>> addUser(
-      String username, String pass, String phone, String role) async {
+      String username, String pass, String phone, String role,String fullname) async {
     final uri = '$api/api/Users/register'; // Replace with your API endpoint
 
     // Convert the User instance to JSON
     final body = jsonEncode({
+      "fullName":fullname,
       "mobileNumber": phone,
       "userName": username,
       "passwordHash": pass,
@@ -1422,7 +1424,7 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<Paymententity?> getpayment(String transactionid) async {
+  Future<PaymentByTransaction?> getpayment(String transactionid) async {
     String uri =
         '$api/api/Payments/GetByTranId?transactionId=$transactionid'; // Replace with your API endpoint
 
@@ -1441,7 +1443,7 @@ class ManagementrepoImpl implements ManagementRepo {
       if (request.status! >= 200 && request.status! < 300) {
         //print('Payment retrieved successfully.');
         //print(request.responseText);
-        return Paymententity.fromJson(jsonDecode(request.responseText!));
+        return PaymentByTransaction.fromJson(jsonDecode(request.responseText!));
       } else {
         //print('Failed to get payment. Status code: ${request.status}');
         //print('Response body: ${request.responseText}');

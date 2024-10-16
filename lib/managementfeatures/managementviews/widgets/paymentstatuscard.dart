@@ -5,7 +5,6 @@ import 'package:xtreme_fitness/authentifeatures/models/repositoriesimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-import '../../../authentifeatures/domain/userentity.dart';
 import '../../../widgets/cardborder.dart';
 import '../../managementmodels/calculationusecase.dart';
 

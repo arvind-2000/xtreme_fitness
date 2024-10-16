@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymenttrans.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
@@ -110,8 +111,10 @@ class MemberServiceHistory extends StatelessWidget {
                                         color: Colors.grey[500],
                                         onpress: () {
                                           createAndprintPdf(
-                                            Paymententity(
+                                           
+                                            PaymentByTransaction(
                                                 id: e.id,
+                                                fullName: '${managectrl.xtremer?.firstName!} ${managectrl.xtremer?.surname}',
                                                 userId: e.userId!,
                                                 amount: e.amount!,
                                                 discountPercentage: e
@@ -129,7 +132,7 @@ class MemberServiceHistory extends StatelessWidget {
                                                 serviceUsageId:
                                                     e.serviceUsageId,
                                                 termsAndConditions: true),
-                                            // name: managectrl.xtremer!.firstName!+managectrl.xtremer!.surname!
+                                            // name: 
                                           );
                                         },
                                         child: const Text(

@@ -300,7 +300,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                         fontSize:
                                                                             12),
                                                                   ),
-                                                                  SizedBox(height: 10,),
+                                                                  const SizedBox(height: 10,),
                                                                   SizedBox(
                                                                       height:
                                                                           50,
@@ -461,7 +461,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              managectrl.searchmessage!=null?Text(managectrl.searchmessage!,style:TextStyle(color:Colors.grey[500])):SizedBox(),
+                                              managectrl.searchmessage!=null?Text(managectrl.searchmessage!,style:TextStyle(color:Colors.grey[500])):const SizedBox(),
                                             ],
                                           ),
                                         )
@@ -588,7 +588,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                         index]
                                                                     .firstName!,
                                                                 style:
-                                                                  TextStyle(
+                                                                  const TextStyle(
                                                                         fontSize:
                                                                             14),
                                                               ),
@@ -602,7 +602,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                   ? Row(
                                                                     children: [
                                                                       Icon(Icons.phone,size:10,color: Colors.grey[500]),
-                                                                      SizedBox(width: 4,),
+                                                                      const SizedBox(width: 4,),
                                                                       Text(
                                                                           managectrl
                                                                               .getsearchXtremer[
@@ -703,7 +703,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                           .getsearchXtremer[
                                                                               index].endDate?.year}',
                                                                             style:
-                                                                                TextStyle(fontSize: 14))
+                                                                                const TextStyle(fontSize: 14))
                                                                         : const SizedBox()
                                                                   ],
                                                                 )),
@@ -721,7 +721,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                               index].endDate?.month}/${  managectrl
                                                                           .getsearchXtremer[
                                                                               index].endDate?.year}',
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           fontSize:
                                                                               14))),
                                                           MediaQuery.sizeOf(
@@ -838,7 +838,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                           managectrl
                                                                               .getsearchXtremer[index]);
                                                                       pagectrl
-                                                                          .changeviewprofile();
+                                                                          .changeviewprofile(true);
                                                                     },
                                                                     icon:
                                                                         const Icon(

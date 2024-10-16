@@ -450,7 +450,7 @@ void showSessionExpiredDialog(SharedPreferences prefs) {
     int rand = Random().nextInt(9000) + 1000;
     otp = rand;
     update();
-    // print(otp.toString());
+    print(otp.toString());
     authrepo.sendOTP(rand.toString(), "10", phone);
   }
 

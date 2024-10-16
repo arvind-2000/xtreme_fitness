@@ -59,7 +59,7 @@ class _MemberProfilescreenState extends State<MemberProfilescreen> {
                   children: [
                     const HeadingText("Profile",size: 30,),
                     IconButton(onPressed: (){
-                        widget.pagectrl!.changeviewprofile();
+                        widget.pagectrl!.changeviewprofile(false);
               
                     }, icon:const Icon(Icons.close))
                   ],

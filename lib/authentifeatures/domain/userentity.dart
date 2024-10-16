@@ -1,5 +1,6 @@
 class UserEntity {
   int? id;
+  String? fullName;
   String? mobileNumber;
   String? userName;
   String? passwordHash;
@@ -10,6 +11,7 @@ class UserEntity {
   UserEntity({
     this.id,
     this.mobileNumber,
+    this.fullName,
     required this.userName,
     required this.passwordHash,
     this.roleName,
@@ -21,6 +23,7 @@ class UserEntity {
   factory UserEntity.fromJson(Map<String, dynamic> json) {
     return UserEntity(
       id: json['Id'] != null ? json['Id'] as int : null,
+      fullName: json['FullName'] != null ? json['FullName'] as String : null,
       mobileNumber: json['MobileNumber'] != null ? json['MobileNumber'] as String : null,
       userName: json['UserName'] as String? ?? '',  // Ensuring userName is not null
       passwordHash: json['PasswordHash'] as String? ?? '',  // Ensuring passwordHash is not null
@@ -34,6 +37,7 @@ class UserEntity {
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
+      'FullName':fullName,
       'MobileNumber': mobileNumber,
       'UserName': userName,
       'PasswordHash': passwordHash,

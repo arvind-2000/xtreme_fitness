@@ -106,7 +106,7 @@ class NavBar extends StatelessWidget {
     return Container(
       height: 0.5,
       width: double.infinity,
-      color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
+      color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.1),
     );
   }
 

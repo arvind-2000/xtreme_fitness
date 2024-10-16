@@ -80,7 +80,7 @@ class _GalleryDesktopCopyState extends State<GalleryDesktopCopy> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
              Responsive.isMobile(context)||Responsive.isTablet(context)?GalleryPageView(controller: _controller)
              : 
@@ -166,12 +166,12 @@ class _GalleryDesktopCopyState extends State<GalleryDesktopCopy> {
                           autoPlay: true, // Enable auto-scrolling
                           autoPlayInterval: const Duration(
                               seconds:
-                                  3), // Set the interval for auto-scrolling
+                                  3), 
                           enlargeCenterPage:
-                              false, // Optional: Enlarge the center image
-                          viewportFraction: 0.35, // Show one image at a time
-                          aspectRatio: 5 / 9, // Adjust aspect ratio
-                          initialPage: 0, // Start at the first page
+                              false, 
+                          viewportFraction: 0.35, 
+                          aspectRatio: 5 / 9, 
+                          initialPage: 0,
                         ),
                       ),
                     ),

@@ -47,7 +47,11 @@ class _MainPageState extends State<MainPage> {
         }
 
         return Scaffold(
+<<<<<<< HEAD
           resizeToAvoidBottomInset: true,
+=======
+                  resizeToAvoidBottomInset: true,
+>>>>>>> a479319cf23e7d35d810072c8e422b26c35f4d3e
           key: landctrl.key,
           backgroundColor: const Color.fromARGB(255, 15, 15, 15),
           drawer: !Responsive.isDesktop(context) ? const MobileDrawer() : null,

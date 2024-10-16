@@ -86,7 +86,10 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                       desc: "No Services to show.",
                                       onpress: null,
                                     )
-                                  : GridView(
+                                  :addmemberctrl.selectedservice!=null? SizedBox(
+                                    height: 300,
+                                    width: 300,
+                                    child: ServiceCard(e:addmemberctrl.selectedservice!)): GridView(
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -116,114 +119,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                           .asMap()
                                           .entries
                                           .map(
-                                            (e) => CardwithShadow(
-                                                // margin: const EdgeInsets.all(16),
-                                                color: addmemberctrl
-                                                            .selectedservice !=
-                                                        null
-                                                    ? addmemberctrl
-                                                                .selectedservice!
-                                                                .id ==
-                                                            e.value.id
-                                                        ? Colors.grey[700]
-                                                        : null
-                                                    : null,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    HeadingText(
-                                                      e.value.name,
-                                                      size: 24,
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Text(
-                                                              "Member Price"),
-                                                          Text(
-                                                            e.value.memberPrice
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          const Text(
-                                                              "Non Member Price"),
-                                                          Text(
-                                                            e.value.nonMemberPrice
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    CardBorder(
-                                                        onpress: () {
-                                                          addmemberctrl
-                                                              .addservices(
-                                                                  e.value);
-                                                        },
-                                                        color: Colors.green[300],
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(
-                                                              addmemberctrl.selectedservice !=
-                                                                          null &&
-                                                                      addmemberctrl
-                                                                              .selectedservice!
-                                                                              .id ==
-                                                                          e.value
-                                                                              .id
-                                                                  ? Icons.check
-                                                                  : Icons.add,
-                                                              color: Colors.white,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            addmemberctrl.selectedservice !=
-                                                                        null &&
-                                                                    addmemberctrl
-                                                                            .selectedservice!
-                                                                            .id ==
-                                                                        e.value.id
-                                                                ? const Text(
-                                                                    "Service Added",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white))
-                                                                : const Text(
-                                                                    "Add Service",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )
-                                                          ],
-                                                        ))
-                                                  ],
-                                                )),
+                                            (e) => ServiceCard(e: e.value,),
                                           )
                                           .toList()),
                               const SizedBox(
@@ -232,37 +128,38 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                               addmemberctrl.selectedservice == null
                                   ? const SizedBox()
                                   : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const NormalText(
-                                          text: "Bill Details",
-                                          size: 16,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text("Amount"),
-                                            authctrl.getuser!=null&& authctrl.ismember?Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        Divider(
-                                          color: Colors.grey[600],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text("Total Amount"),
-                                         authctrl.getuser!=null && authctrl.ismember?Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
-                                                "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
-                                          ],
-                                        ),
+                                        // const NormalText(
+                                        //   text: "Bill Details",
+                                        //   size: 16,
+                                        // ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     const Text("Amount"),
+                                        //     authctrl.getuser!=null&& authctrl.ismember?Text(
+                                        //         "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                        //         "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                        //   ],
+                                        // ),
+                                        // const SizedBox(
+                                        //   height: 16,
+                                        // ),
+                                        // Divider(
+                                        //   color: Colors.grey[600],
+                                        // ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     const Text("Total Amount"),
+                                        //  authctrl.getuser!=null && authctrl.ismember?Text(
+                                        //         "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
+                                        //         "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
+                                        //   ],
+                                        // ),
                                         const SizedBox(
                                           height: 16,
                                         ),
@@ -273,7 +170,9 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                             padding: const EdgeInsets.all(16),
                                             margin: EdgeInsets.zero,
                                             onpress: () async {
-                                              Get.dialog(StatefulBuilder(
+                                              Get.dialog(
+                                                barrierDismissible: false,
+                                                StatefulBuilder(
                                                   builder: (context, state) {
                                                 return PageDialog(
                                                   allignToCenter: true,
@@ -293,6 +192,13 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                               onPressed: () {
                                                                 Navigator.pop(
                                                                     context);
+                                                                      setState(() {
+                                                  
+                                                       showuser = null;
+                                                      _firstname.clear();
+                                                      _lastname.clear();
+                                                      _phonenumber.clear();
+                                                    });
                                                               },
                                                               icon: const Icon(
                                                                   Icons.close))
@@ -317,7 +223,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                 .spaceBetween,
                                                         children: [
                                                           const Text("Amount"),
-                                                           authctrl.getuser!=null && authctrl.ismember?Text(
+                                                           authctrl.getuser!=null && authctrl.getuser!.roleName!.toLowerCase()=='member'?Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):addmemberctrl.userid!=null && addmemberctrl.userid!.roleName!.toLowerCase()=='member'?Text(
                                                                                                   "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
                                                                                                   "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                                         ],
@@ -335,7 +242,8 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                         children: [
                                                           const Text(
                                                               "Total Amount"),
-                                                        authctrl.getuser!=null && authctrl.ismember?Text(
+                                                         authctrl.getuser!=null && authctrl.getuser!.roleName!.toLowerCase()=='member'?Text(
+                                                                                                  "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):addmemberctrl.userid!=null && addmemberctrl.userid!.roleName!.toLowerCase()=='member'?Text(
                                                                                                   "Rs . ${addmemberctrl.selectedservice!.memberPrice}"):Text(
                                                                                                   "Rs . ${addmemberctrl.selectedservice!.nonMemberPrice}")
                                                         ],
@@ -403,6 +311,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                       const SizedBox(
                                                         height: 16,
                                                       ),
+                                                      
                                                       authctrl.getuser == null ||
                                                               authctrl.ismember ==
                                                                   false
@@ -424,6 +333,11 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                           "Phone Number");
                                                                     },
                                                                   ),
+
+                                                                 showuser!=null && showuser!?const Padding(
+                                                                   padding: EdgeInsets.symmetric(vertical:8.0),
+                                                                   child: Text("User with this number exists. Continue"),
+                                                                 ):SizedBox(),
                                                           showuser==null || showuser!?SizedBox():TextFieldWidget(
                                                                       hint:
                                                                           "First Name",
@@ -456,6 +370,13 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                   ),
                                                   no: () {
                                                     Navigator.pop(context);
+                                                    setState(() {
+                                                      showuser = null;
+                                                      _firstname.clear();
+                                                      _lastname.clear();
+                                                      _phonenumber.clear();
+                                                  });
+                                                  
                                                   },
                                                   yes: () async {
                                                     bool v = true;
@@ -473,7 +394,17 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                  
                                                        await addmemberctrl.checknumber(_phonenumber.text.trim()); 
                                                             
-                                                          if(addmemberctrl.checknumberforservice){
+                                                   
+                                                            state((){
+                                                          showuser = addmemberctrl.checknumberforservice;
+                                                        });
+                                                         
+
+                                                 
+                                                          }else{
+                                                              /// for number with username and password
+                                                              
+                                                                  if(addmemberctrl.checknumberforservice){
                                                                        
                                                           Get.back();
                                                               addmemberctrl
@@ -485,21 +416,15 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                           .ispaymentcash);
 
                                                           }else{
-                                                            state((){
-                                                          showuser = addmemberctrl.checknumberforservice;
-                                                        });
-                                                          }  
-
-                                                 
-                                                          }else{
-                                                              /// for number with username and password
+                                                                       v = await addmemberctrl.createuser(
+                                                                _phonenumber.text
+                                                                    .trim(),
                                                               
-                                                                      v = await addmemberctrl.createuser(
                                                                 _phonenumber.text
                                                                     .trim(),
-                                                                '${_firstname.text.trim()}',
-                                                                _phonenumber.text
+                                                                       _phonenumber.text
                                                                     .trim(),
+                                                                    '${_firstname.text.trim()} ${_lastname.text.trim()}',
                                                                 role: authctrl.getuser ==
                                                                             null ||
                                                                         authctrl.ismember ==
@@ -527,6 +452,7 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
                                                                       "Error creating payement");
                                                            
                                                             }
+                                                             }
 
 
                                                           }  
@@ -576,5 +502,132 @@ class _AddServiceUsageState extends State<AddServiceUsage> {
         });
       });
     });
+  }
+}
+
+class ServiceCard extends StatelessWidget {
+  const ServiceCard({
+    super.key, required this.e,
+  });
+  final ServiceEntity e;
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddMemberController>(
+      builder: (addmemberctrl) {
+        return CardwithShadow(
+            // margin: const EdgeInsets.all(16),
+            // color: addmemberctrl
+            //             .selectedservice !=
+            //         null
+            //     ? addmemberctrl
+            //                 .selectedservice!
+            //                 .id ==
+            //             e.id
+            //         ? Colors.grey[700]
+            //         : null
+            //     : null,
+            child: Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
+              children: [
+                HeadingText(
+                  e.name,
+                  size: 24,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment
+                            .start,
+                    children: [
+                      const Text(
+                          "Member Price"),
+                      Text(
+                        e.memberPrice
+                            .toString(),
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight:
+                                FontWeight
+                                    .bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                          "Non Member Price"),
+                      Text(
+                        e.nonMemberPrice
+                            .toString(),
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight:
+                                FontWeight
+                                    .bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+                CardBorder(
+                    onpress: () {
+                      if(addmemberctrl.selectedservice!=null){
+                          addmemberctrl.unselectService();
+                      }else{
+                      addmemberctrl
+                          .addservices(
+                              e);
+                      }
+                  
+                    },
+                    color: Colors.green[300],
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment
+                              .center,
+                      children: [
+                        Icon(
+                          addmemberctrl.selectedservice !=
+                                      null &&
+                                  addmemberctrl
+                                          .selectedservice!
+                                          .id ==
+                                      e
+                                          .id
+                              ? Icons.check
+                              : Icons.add,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        addmemberctrl.selectedservice !=
+                                    null &&
+                                addmemberctrl
+                                        .selectedservice!
+                                        .id ==
+                                    e.id
+                            ? const Text(
+                                "Service Added",
+                                style: TextStyle(
+                                    color: Colors
+                                        .white))
+                            : const Text(
+                                "Add Service",
+                                style: TextStyle(
+                                    color: Colors
+                                        .white),
+                              )
+                      ],
+                    ))
+              ],
+            ));
+      }
+    );
   }
 }

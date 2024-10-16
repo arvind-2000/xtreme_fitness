@@ -14,6 +14,7 @@ import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/paymententity.dart';
+import '../../managementdomain/entities.dart/paymenttrans.dart';
 import '../../managementmodels/calculationusecase.dart';
 import '../widgets/scaffolds.dart';
 
@@ -991,8 +992,10 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                 margin: EdgeInsets.zero,
                                                 color: Colors.blue,
                                                 onpress: () {
+                                                    String s = managectrl.allUsers.firstWhereOrNull((element) => element.id == managectrl.getsearchpayments[i].userId,)?.fullName??"";
                                                   createAndprintPdf(
-                                                    Paymententity(
+                                                    PaymentByTransaction(
+                                                      fullName:s,
                                                         id: managectrl
                                                             .getsearchpayments[
                                                                 i]

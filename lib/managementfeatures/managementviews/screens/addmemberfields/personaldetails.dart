@@ -281,9 +281,12 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                                   size: 14,
                                 ),
                                 addmembrctrl.dob == null
-                                    ? const SizedBox()
+                                    ?  Text(
+                                        "Choose a DOB",
+                                        style: const TextStyle(fontSize: 14),
+                                      )
                                     : Text(
-                                        "${addmembrctrl.dob!.day}/${addmembrctrl.dob!.month}/${addmembrctrl.dob!.year}",
+                                        "${addmembrctrl.dob?.day??'1'}/${addmembrctrl.dob?.month??'1'}/${addmembrctrl.dob?.year??'1'}",
                                         style: const TextStyle(fontSize: 14),
                                       )
                               ],
@@ -567,10 +570,10 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         height: 6,
                       ),
                       DropdownMenu(
-                          hintText: relation[addmembrctrl.relationship] ?? "",
+                          hintText:addmembrctrl.xtremer?.relationship??"Father",
                           menuStyle: MenuStyle(
                               backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
+                            (states) =>Colors.grey[700]!,
                           )),
                           onSelected: (index) {
                             addmembrctrl.setRelation(index!);
@@ -584,7 +587,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                                       backgroundColor:
                                           WidgetStateColor.resolveWith(
                                     (states) =>
-                                        Theme.of(context).colorScheme.primary,
+                                       Colors.grey[800]!,
                                   ))))
                               .toList()),
                     ],
@@ -619,11 +622,17 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
       
               CardwithShadow(
                   color: Theme.of(context).colorScheme.secondary,
-                  onpress: () {
+                  onpress: () async{
                     if (_formkey.currentState!.validate() &&
-                        addmembrctrl.dob != null) {
-                      //print("${_firstnamecontroller.text.trim()} ${_phonecontroller.text.trim()}  ${_homephonecontroller.text.trim()} ${_emailcontroller.text.trim()} ${_addresscontroller.text.trim()} ${_pincodecontroller.text.trim()} ${_occupationcontroller.text.trim()} ${_emergencyphonecontroller.text.trim()} ${_emergencynamecontroller.text.trim()} ");
-                      addmembrctrl.addpersonaldetails(
+                        addmembrctrl.dob != null) { 
+                        if(Get.find<GetxPageController>().iseditforms){
+
+                          if(addmembrctrl.xtremer?.mobileNumber!=null &&addmembrctrl.xtremer?.mobileNumber!=_phonecontroller.text){
+                          bool v = await addmembrctrl.checknumberonly(_phonecontroller.text.trim());
+                          if(v){
+                                  CustomSnackbar(context, "The number already exists with another account.\nTry another number.");  
+                          }else{
+                        addmembrctrl.addpersonaldetails(
                         surname: _surnamecontroller.text.trim(),
                         name: _firstnamecontroller.text.trim(),
                         phone: _phonecontroller.text.trim(),
@@ -634,14 +643,73 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                         occupation: _occupationcontroller.text.trim(),
                         emergencycontact: _emergencyphonecontroller.text.trim(),
                         emergencyname: _emergencynamecontroller.text.trim(),
+                  
                       );
-                      widget.callback();
+                        widget.callback();
+                          }
+                          }else{
+                        addmembrctrl.addpersonaldetails(
+                        surname: _surnamecontroller.text.trim(),
+                        name: _firstnamecontroller.text.trim(),
+                        phone: _phonecontroller.text.trim(),
+                        homephone: _homephonecontroller.text.trim(),
+                        email: _emailcontroller.text.trim(),
+                        address: _addresscontroller.text.trim(),
+                        postalcode: _pincodecontroller.text.trim(),
+                        occupation: _occupationcontroller.text.trim(),
+                        emergencycontact: _emergencyphonecontroller.text.trim(),
+                        emergencyname: _emergencynamecontroller.text.trim(),
+                        
+                      );
+                        widget.callback();
+
+                          } 
+                      //   addmembrctrl.addpersonaldetails(
+                      //   surname: _surnamecontroller.text.trim(),
+                      //   name: _firstnamecontroller.text.trim(),
+                      //   phone: _phonecontroller.text.trim(),
+                      //   homephone: _homephonecontroller.text.trim(),
+                      //   email: _emailcontroller.text.trim(),
+                      //   address: _addresscontroller.text.trim(),
+                      //   postalcode: _pincodecontroller.text.trim(),
+                      //   occupation: _occupationcontroller.text.trim(),
+                      //   emergencycontact: _emergencyphonecontroller.text.trim(),
+                      //   emergencyname: _emergencynamecontroller.text.trim(),
+                      // );
+                      //   widget.callback();
+                        }else{
+
+                          bool v = await addmembrctrl.checknumberonly(_phonecontroller.text.trim());
+                          if(v){
+                                  CustomSnackbar(context, "The number already exists.\nTry another number.");  
+                          }else{
+                        addmembrctrl.addpersonaldetails(
+                        surname: _surnamecontroller.text.trim(),
+                        name: _firstnamecontroller.text.trim(),
+                        phone: _phonecontroller.text.trim(),
+                        homephone: _homephonecontroller.text.trim(),
+                        email: _emailcontroller.text.trim(),
+                        address: _addresscontroller.text.trim(),
+                        postalcode: _pincodecontroller.text.trim(),
+                        occupation: _occupationcontroller.text.trim(),
+                        emergencycontact: _emergencyphonecontroller.text.trim(),
+                        emergencyname: _emergencynamecontroller.text.trim(),
+                         
+                      );
+                        widget.callback();
+                          }
+                        }  
+              
+                    
                     } else {
                       if (addmembrctrl.dob == null) {
                         CustomSnackbar(context, "DOB field cannot be empty.");
                       } else {
-                        CustomSnackbar(
+                        
+                            CustomSnackbar(
                             context, "Add required fields before proceeding");
+                        
+                      
                       }
                     }
                   },
