@@ -9,6 +9,7 @@ class ServerErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

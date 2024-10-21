@@ -29,16 +29,16 @@ class _HandlerPageState extends State<HandlerPage> {
   void initState() {
     super.initState();
 
-   
     authenticates();
   }
+
   bool reload = true;
   void authenticates() async {
-
-  await Get.find<GetxAuthController>().authenticationsForReload().then((value) {
-    setState(() {
-      reload = false;
-    });
+    await Get.find<GetxAuthController>().authenticationsForReload().then(
+      (value) {
+        setState(() {
+          reload = false;
+        });
         if (value) {
       Get.put(AddMemberController());
       Get.put(ManagementController());
