@@ -103,8 +103,9 @@ class GraphsWidget extends StatelessWidget {
       ),
       primaryXAxis: NumericAxis(
         isVisible: axis,
-        majorGridLines: const MajorGridLines(width: 0),
 
+        majorGridLines: const MajorGridLines(width: 0),
+       
         axisLabelFormatter:graphaxisnames,
         interval: 1,
           //  maximum: 10,

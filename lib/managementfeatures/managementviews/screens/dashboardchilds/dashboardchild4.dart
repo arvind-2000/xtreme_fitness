@@ -15,6 +15,7 @@ import '../../../../config/const.dart';
 import '../../../../widgets/titletext.dart';
 import '../../../managementdomain/entities.dart/xtremer.dart';
 import '../../widgets/scaffolds.dart';
+import '../editcontactinfo/contactcontroller.dart';
 
 class DashboardChild4 extends StatelessWidget {
   const DashboardChild4({
@@ -287,6 +288,7 @@ class _ListViewCardState extends State<ListViewCard> {
                       widget.e
                                           .serviceUsageId,
                                       termsAndConditions: true),
+                                     
                                   // name:managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.latestpayment10[i].userId,).firstName!+managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.latestpayment10[i].userId,).surname!
                                 );
                               },

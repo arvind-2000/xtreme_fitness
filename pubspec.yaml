@@ -18,7 +18,7 @@ dependencies:
   toastification: ^2.0.0
   get: ^4.6.6
   http: ^1.2.2
-  syncfusion_flutter_charts: ^24.1.45
+  syncfusion_flutter_charts: ^27.1.53
   image: ^4.2.0
   worker_manager: ^7.0.3
 
@@ -48,7 +48,7 @@ dependencies:
   badges: ^3.1.2
   lottie: ^3.1.2
   excel: ^4.0.6
-  syncfusion_flutter_datagrid: ^24.2.9
+  syncfusion_flutter_datagrid: 27.1.53
   connectivity_plus: ^6.0.5
   pinput: ^5.0.0
 

@@ -83,7 +83,7 @@ class ContactController extends GetxController {
         withCredentials: true, // Enable credentials
       );
 
-      if (response.status == 200) {
+      if (response.status! >= 200 &&response.status!<300) {
         var allContact = getContactModalFromJson(response.responseText!);
         _contact = allContact;
         update();
@@ -102,30 +102,41 @@ class ContactController extends GetxController {
 
   void updatecontactinfo() async {
     log("Phone Controller :${phonecon.text}");
-    _isloading = true;
-    update();
-    var headers = {'Content-Type': 'application/json'};
-    var request = http.Request('PUT', Uri.parse('$api/api/Contacts/1'));
-    request.body = json.encode({
-      "id": 1,
-      "address": addresscon.text,
-      "email": mailcon.text,
-      "PhoneNumber": phonecon.text,
-      "pincode": pincodecon.text,
-      "UpdatedAt": DateTime.now().toIso8601String()
+  _isloading = true;
+  update();
+
+  var url = '$api/api/Contacts/1';
+  var body = json.encode({
+    "id": 1,
+    "address": addresscon.text,
+    "email": mailcon.text,
+    "PhoneNumber": phonecon.text,
+    "pincode": pincodecon.text,
+    "UpdatedAt": DateTime.now().toIso8601String()});
+
+try {
+    var request = html.HttpRequest();
+    request.open('PUT', url);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.withCredentials = true;
+
+    request.onLoad.listen((event) {
+      if (request.status! >= 200 && request.status!<300) {
+           getContactDetails();
+      } 
     });
-    request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+    request.onError.listen((event) {
+      log("Error: ${request.statusText}");
+    });
 
-    if (response.statusCode == 200) {
-      _isloading = false;
-      update();
-      //print(await response.stream.bytesToString());
-      getContactDetails();
-    } else {
-      //print(response.reasonPhrase);
-    }
+    request.send(body);
+  } catch (e) {
+    log("Exception: $e");
+  } finally {
+    _isloading = false;
+    update();
+  }
   }
 
   void showDialogforupdate(BuildContext context) {

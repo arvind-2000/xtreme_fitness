@@ -269,10 +269,10 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                         child: GridView(
                           shrinkWrap: true,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:4,
+                                    crossAxisCount: size<500?1:size<mobilescreen?2: size>mobilescreen && size<1200?3:420,
                                     mainAxisSpacing: 10,
                                 
-                                    childAspectRatio:  size<500?1/1.3:size<1400?3/4.2:size>1500?3/3.3 :3/3.5,
+                                    childAspectRatio:  size<500?1/1.3:size<1400?3/4.4:size>1500?3/3.3 :3/3.5,
                                 
                                     ),
                           

@@ -13,6 +13,7 @@ import '../managementdomain/entities.dart/subscription.dart';
 import '../managementdomain/entities.dart/userpaymentmodel.dart';
 import '../managementdomain/entities.dart/xtremer.dart';
 import '../managementdomain/entities.dart/xtremerwithsubs.dart';
+import '../managementviews/screens/editcontactinfo/getcontactmodel.dart';
 
 double total(double? add1,double? add2){
   return  add1! + add2!;
@@ -76,11 +77,11 @@ double percentprice(double? actualprice,double? dis){
                 ),
               ),
               pw.Text(
-                'MantriPukhri, Imphal West',
+             "MantriPukhri, Imphal West",
                 style: pw.TextStyle(fontSize: 10),
               ),
                  pw.Text(
-                '795001',
+             '795001',
                 style: pw.TextStyle(fontSize: 10),
               ),
               // pw.Text(

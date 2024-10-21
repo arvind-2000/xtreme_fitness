@@ -17,7 +17,6 @@ import 'package:xtreme_fitness/widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 import '../../managementdomain/entities.dart/xtremer.dart';
-import '../widgets/dialogswidget.dart';
 import 'nodatascreen.dart/nodatascreen.dart';
 
 class RenewalScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
   void dispose() {
     _searchcontroller.dispose();
     _searchfocus.dispose();
-    Get.find<GetxPageController>().disposes();
+    Get.find<GetxPageController>().renewaldispose();
     Get.find<AddMemberController>().onClose();
       Get.find<AddMemberController>().closeaddmembers();
     super.dispose();

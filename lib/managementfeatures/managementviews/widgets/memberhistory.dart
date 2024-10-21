@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/paymenttrans.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
@@ -132,6 +133,7 @@ class MemberServiceHistory extends StatelessWidget {
                                                 serviceUsageId:
                                                     e.serviceUsageId,
                                                 termsAndConditions: true),
+                                        
                                             // name: 
                                           );
                                         },

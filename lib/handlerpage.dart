@@ -42,6 +42,7 @@ class _HandlerPageState extends State<HandlerPage> {
         if (value) {
       Get.put(AddMemberController());
       Get.put(ManagementController());
+      Get.put(ContactController());
 
 
     }
@@ -111,6 +112,7 @@ class HandlerToDashboard extends StatelessWidget {
       onRefresh: () async {
         final manageCtrl = Get.find<ManagementController>();
         manageCtrl.onInit();
+
         refresh();
       },
       child: Scaffold(

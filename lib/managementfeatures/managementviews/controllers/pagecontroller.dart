@@ -89,4 +89,16 @@ class GetxPageController extends GetxController {
  _isfour = false;
  _isfive = false;
   }
+
+  void renewaldispose(){
+ addmemberpages = 0;
+    viewprofile = false;
+    isrenewalforms = false;
+    iseditforms = false;
+    _istwo = false;
+ _isthree = false;
+ _isfour = false;
+ _isfive = false;
+  }
+
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
@@ -1047,6 +1048,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                             .serviceUsageId,
                                                         termsAndConditions:
                                                             true),
+                                                        
                                                     // name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
                                                   );
                                                 },

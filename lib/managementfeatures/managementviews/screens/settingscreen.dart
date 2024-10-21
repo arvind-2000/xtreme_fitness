@@ -412,156 +412,160 @@ class _EditContactsState extends State<EditContacts> {
   bool isEdit = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget._formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<ContactController>(
+      builder: (_) {
+        return Form(
+          key: widget._formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              isEdit
-                  ? const HeadingText(
-                      'Edit Contact Info',
-                      size: 20,
-                    )
-                  : const HeadingText(
-                      'Contact Info',
-                      size: 20,
-                    ),
-              IconButton(
-                onPressed: () {
-                  if (isEdit) {
-                    //addroles
-                    setState(() {
-                      isEdit = false;
-                    });
-                  } else {
-                    setState(() {
-                      isEdit = true;
-                    });
-                  }
-                },
-                icon: isEdit
-                    ? const Icon(
-                        Icons.close,
-                        size: 14,
-                      )
-                    : const Icon(
-                        Icons.edit,
-                        size: 14,
-                      ),
-                tooltip: isEdit ? "Close" : "Edit Contact Info",
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          isEdit
-              ? Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 16,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  isEdit
+                      ? const HeadingText(
+                          'Edit Contact Info',
+                          size: 20,
+                        )
+                      : const HeadingText(
+                          'Contact Info',
+                          size: 20,
                         ),
-                        TextFieldWidget(
-                          enabletext: isEdit,
-                          hint: "Address",
-                          controller: widget.cntrl.addresscon,
-                          counter: 100,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFieldWidget(
-                          enabletext: isEdit,
-                          hint: "Pin Code",
-                          controller: widget.cntrl.pincodecon,
-                          counter: 50,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFieldWidget(
-                            enabletext: isEdit,
-                            hint: "Phone Number",
-                            controller: widget.cntrl.phonecon,
-                            counter: 50),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFieldWidget(
-                            enabletext: isEdit,
-                            hint: "Email",
-                            controller: widget.cntrl.mailcon,
-                            counter: 50),
-                      ],
-                    ),
-                  ),
-                ).animate().fadeIn()
-              : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const TitleText("Address", size: 16),
-                  const SizedBox(height: 5),
-                  Text(widget.cntrl.contact?.address ?? "",
-                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const TitleText("PinCode", size: 16),
-                  const SizedBox(height: 5),
-                  Text(widget.cntrl.contact?.pinCode ?? "",
-                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const TitleText("Phone Number", size: 16),
-                  const SizedBox(height: 5),
-                  Text(widget.cntrl.contact?.phoneNumber ?? "",
-                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const TitleText("Email", size: 16),
-                  const SizedBox(height: 5),
-                  Text(widget.cntrl.contact?.email ?? "",
-                      style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ]).animate().fadeIn(),
-          const SizedBox(height: 20),
-          isEdit
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CardwithShadow(
-                      isShadow: true,
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'Save',
-                        ),
-                      ),
-                      onpress: () {
-                        widget.cntrl.showDialogforupdate(context);
-                        widget.cntrl.updatecontactinfo();
+                  IconButton(
+                    onPressed: () {
+                      if (isEdit) {
+                        //addroles
                         setState(() {
                           isEdit = false;
                         });
-                      },
+                      } else {
+                        setState(() {
+                          isEdit = true;
+                        });
+                      }
+                    },
+                    icon: isEdit
+                        ? const Icon(
+                            Icons.close,
+                            size: 14,
+                          )
+                        : const Icon(
+                            Icons.edit,
+                            size: 14,
+                          ),
+                    tooltip: isEdit ? "Close" : "Edit Contact Info",
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              isEdit
+                  ? Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            TextFieldWidget(
+                              enabletext: isEdit,
+                              hint: "Address",
+                              controller: widget.cntrl.addresscon,
+                              counter: 100,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextFieldWidget(
+                              enabletext: isEdit,
+                              hint: "Pin Code",
+                              controller: widget.cntrl.pincodecon,
+                              counter: 50,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextFieldWidget(
+                                enabletext: isEdit,
+                                hint: "Phone Number",
+                                controller: widget.cntrl.phonecon,
+                                counter: 50),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextFieldWidget(
+                                enabletext: isEdit,
+                                hint: "Email",
+                                controller: widget.cntrl.mailcon,
+                                counter: 50),
+                          ],
+                        ),
+                      ),
+                    ).animate().fadeIn()
+                  : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const TitleText("Address", size: 16),
+                      const SizedBox(height: 5),
+                      Text(widget.cntrl.contact?.address ?? "",
+                          style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const TitleText("PinCode", size: 16),
+                      const SizedBox(height: 5),
+                      Text(widget.cntrl.contact?.pinCode ?? "",
+                          style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const TitleText("Phone Number", size: 16),
+                      const SizedBox(height: 5),
+                      Text(widget.cntrl.contact?.phoneNumber ?? "",
+                          style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const TitleText("Email", size: 16),
+                      const SizedBox(height: 5),
+                      Text(widget.cntrl.contact?.email ?? "",
+                          style: TextStyle(fontSize: 14, color: Colors.grey[500]!)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ]).animate().fadeIn(),
+              const SizedBox(height: 20),
+              isEdit
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CardwithShadow(
+                          isShadow: true,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              'Save',
+                            ),
+                          ),
+                          onpress: () {
+                            widget.cntrl.showDialogforupdate(context);
+                            widget.cntrl.updatecontactinfo();
+                            setState(() {
+                              isEdit = false;
+                            });
+                          },
+                        )
+                      ],
                     )
-                  ],
-                )
-              : const SizedBox()
-        ],
-      ),
+                  : const SizedBox()
+            ],
+          ),
+        );
+      }
     );
   }
 }

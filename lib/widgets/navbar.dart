@@ -72,7 +72,7 @@ class NavBar extends StatelessWidget {
                   _buildNavTile(context, 7, Icons.payment, 'Payments'),
                   _buildNavTile(context, 15, Icons.payment, 'Service Usage'),
                   _buildDivider(context),
-                  _buildNavTile(context, 8, Icons.settings, 'Setting'),
+                  _buildNavTile(context, 8, Icons.settings, 'Settings'),
                   _buildNavTileWithMessage(
                       context, 9, Icons.message, 'Message'),
                 ],
