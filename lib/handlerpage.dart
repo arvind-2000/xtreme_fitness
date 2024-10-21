@@ -33,7 +33,6 @@ class _HandlerPageState extends State<HandlerPage> {
   }
 
   bool reload = true;
-  // Authentication logic refactored for better performance
   void authenticates() async {
     await Get.find<GetxAuthController>().authenticationsForReload().then(
       (value) {
@@ -43,8 +42,6 @@ class _HandlerPageState extends State<HandlerPage> {
         if (value) {
           Get.put(AddMemberController());
           Get.put(ManagementController());
-
-          Get.find<GetxPageController>().onInit();
         }
       },
     );
@@ -54,6 +51,7 @@ class _HandlerPageState extends State<HandlerPage> {
   void dispose() {
     Get.find<AddMemberController>().onClose();
     Get.find<GetxAuthController>().disposelogin();
+    Get.find<GetxPageController>().disposes();
     super.dispose();
   }
 

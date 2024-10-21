@@ -205,19 +205,28 @@ class ManagementController extends GetxController {
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
     _allxtremer = await managementRepo.viewMemberwithSubs();
+    List<Xtremer> d  = await managementRepo.viewMember();
+
+    for(int i = 0;i<_allxtremer.length;i++){
+
+        _allxtremer[i].category = d.firstWhereOrNull((element) => _allxtremer[i].XtremerId==element.XtremerId,)?.category??"";
+        
+
+    }
   
+
   if (!authctrl.ismember) {
     _searchxtremerlist = _allxtremer;
     _allgeneralxtremer = _allxtremer
         .where(
           (element) =>
-              element.category == 'General' && element.isActive == true,
+              element.category?.toLowerCase() == 'general' && element.isActive == true,
         )
         .toList();
     _allpersonalxtremer = _allxtremer
         .where(
           (element) =>
-              element.category == 'Personal' && element.isActive == true,
+              element.category?.toLowerCase() == 'personal' && element.isActive == true,
         )
         .toList();
     _allinactivextremer = _allxtremer

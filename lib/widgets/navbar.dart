@@ -28,6 +28,8 @@ class NavBar extends StatelessWidget {
       BuildContext context, int index, IconData icon, String title) {
     final pagectrl = Get.find<GetxPageController>();
     final isSelected = pagectrl.navpage == index;
+    print("pagectrl.navpage : ${pagectrl.navpage}");
+    print("NavTileindex : $index");
     return Cardonly(
       color: isSelected
           ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
@@ -148,40 +150,48 @@ class NavBar extends StatelessWidget {
           _toggleDrawer(context);
         }
         Get.dialog(
+          barrierDismissible: !authctrl.loginloading,
           StatefulBuilder(builder: (context, setState) {
             return PageDialog(
               iscancelreg: true,
-              no: () {
-                Get.back();
-              },
-              yes: () {
-                Get.back();
-                authctrl.logout();
-              },
+              no: authctrl.loginloading
+                  ? null
+                  : () {
+                      Get.back();
+                    },
+              yes: authctrl.loginloading
+                  ? null
+                  : () {
+                      setState(() {
+                        authctrl.logout();
+                      });
+
+                      //  Get.back();
+                    },
               allignToCenter: true,
-              child: authctrl.loginloading
-                  ? const Center(
-                      child: CircularProgressIndicator(color: Colors.white))
-                  : const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.logout),
-                            SizedBox(width: 5),
-                            HeadingText("Log Out", size: 20),
-                          ],
-                        ),
-                        SizedBox(height: 30),
-                        Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.logout),
+                      SizedBox(width: 5),
+                      HeadingText("Log Out", size: 20),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  authctrl.loginloading
+                      ? const Center(
+                          child: CircularProgressIndicator(color: Colors.white))
+                      : const Center(
                           child: Text(
                             "Are you sure you want to logout?\nPress yes to confirm",
                             style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                      ],
-                    ),
+                ],
+              ),
             );
           }),
         );

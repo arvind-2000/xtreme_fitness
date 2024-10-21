@@ -35,12 +35,12 @@ class _PlansScreenState extends State<PlansScreen> {
       isactive = !isactive;
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-        Get.find<AddMemberController>().changepaymentstatuscall(0);
-
+    Get.find<AddMemberController>().changepaymentstatuscall(0);
   }
 
   @override
@@ -142,23 +142,24 @@ class _PlansScreenState extends State<PlansScreen> {
                               child: GridView(
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: size < 500
-                                        ? 1
-                                        : size < mobilescreen
-                                            ? 2
-                                            : size >= mobilescreen &&
-                                                    size < 1200
-                                                ? 3
-                                                : 4,
-                                    mainAxisSpacing: 10,
-                                    childAspectRatio: size < 500
-                                        ? 1
-                                        : size >= mobilescreen && size < 1350
-                                            ? 3 / 4.9
-                                            : size < mobilescreen
-                                                ? 3 / 4.4
-                                                : 3 / 3.8,
-                                  ),
+                                          crossAxisCount: size < 500
+                                              ? 1
+                                              : size < mobilescreen
+                                                  ? 2
+                                                  : size >= mobilescreen &&
+                                                          size < 1200
+                                                      ? 3
+                                                      : 4,
+                                          mainAxisSpacing: 10,
+                                          mainAxisExtent: 380
+                                          // childAspectRatio: size < 500
+                                          //     ? 1
+                                          //     : size >= mobilescreen && size < 1350
+                                          //         ? 3 / 4.9
+                                          //         : size < mobilescreen
+                                          //             ? 3 / 4.4
+                                          //             : 3 / 3.8,
+                                          ),
                                   shrinkWrap: true,
                                   children: managementcontroller.getallplans
                                       .asMap()
@@ -307,8 +308,7 @@ class _PlansScreenState extends State<PlansScreen> {
                                                           addmemberctrl
                                                               .addplan(e.value);
                                                         },
-                                                        color:
-                                                            Colors.grey[500],
+                                                        color: Colors.grey[500],
                                                         child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment

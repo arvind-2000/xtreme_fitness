@@ -9,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pa
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/paymentstatuscard.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'dart:html' as html;
+
 class PaymentRedirectPage extends StatefulWidget {
   const PaymentRedirectPage(
       {super.key,
@@ -43,11 +44,13 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
     super.initState();
     Get.put(AddMemberController()).checkpaymentafterpaid();
   }
+
   @override
   Widget build(BuildContext context) {
     GetxAuthController authctrl = Get.put(GetxAuthController());
     AddMemberController addmemberctrl = Get.put(AddMemberController());
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: GetBuilder<GetxPageController>(builder: (_) {
         return GetBuilder<AddMemberController>(builder: (_) {
           iscash = addmemberctrl.ispaymentcash;
@@ -58,7 +61,7 @@ class _PaymentRedirectPageState extends State<PaymentRedirectPage> {
                     constraints: const BoxConstraints(maxWidth: 600),
                     child: PaymentStatusCard(
                       callback: () async {
-                          authctrl.authentications();              
+                        authctrl.authentications();
                       },
                     )),
               ));

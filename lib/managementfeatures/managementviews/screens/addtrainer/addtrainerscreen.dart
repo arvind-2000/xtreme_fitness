@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
-
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboard.dart';
@@ -150,8 +149,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                           backgroundColor:
                                                               WidgetStateColor
                                                                   .resolveWith(
-                                                            (states) =>
-                                                                Colors.grey[800]!,
+                                                            (states) => Colors
+                                                                .grey[800]!,
                                                           )),
                                                       onSelected: (index) {
                                                         setState(() {
@@ -190,13 +189,15 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                       TrainerEntity addtrainer =
                                                           TrainerEntity(
                                                         isActive: true,
-                                                        id: Random().nextInt(100),
-                                                        name: _fullnamecontroller
-                                                            .text,
+                                                        id: Random()
+                                                            .nextInt(100),
+                                                        name:
+                                                            _fullnamecontroller
+                                                                .text,
                                                         designation: "Trainer",
                                                         timing: timing,
                                                       );
-                                      
+
                                                       showDialog(
                                                         context: context,
                                                         builder: (context) =>
@@ -257,7 +258,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                       ],
                                                                     ),
                                                                     const SizedBox(
-                                                                      height: 20,
+                                                                      height:
+                                                                          20,
                                                                     ),
                                                                     const Text(
                                                                       "Trainer Name",
@@ -278,7 +280,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                               FontWeight.bold),
                                                                     ),
                                                                     const SizedBox(
-                                                                      height: 16,
+                                                                      height:
+                                                                          16,
                                                                     ),
                                                                     const Text(
                                                                       "Designation",
@@ -300,7 +303,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                               FontWeight.bold),
                                                                     ),
                                                                     const SizedBox(
-                                                                      height: 16,
+                                                                      height:
+                                                                          16,
                                                                     ),
                                                                     const Text(
                                                                       "Timing",
@@ -339,7 +343,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                   },
                                                   child: const Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       NavTiles(
                                                         icon: Icons.add,
@@ -437,21 +442,22 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                         shrinkWrap: true,
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: size < 500
-                                              ? 1
-                                              : size < mobilescreen
-                                                  ? 2
-                                                  : size > mobilescreen &&
-                                                          size < 1200
-                                                      ? 3
-                                                      : 4,
-                                          mainAxisSpacing: 10,
-                                          childAspectRatio: size < 500
-                                              ? 1
-                                              : size > 1500
-                                                  ? 3 / 3.3
-                                                  : 3 / 4,
-                                        ),
+                                                crossAxisCount: size < 500
+                                                    ? 1
+                                                    : size < mobilescreen
+                                                        ? 2
+                                                        : size > mobilescreen &&
+                                                                size < 1200
+                                                            ? 3
+                                                            : 4,
+                                                mainAxisSpacing: 10,
+                                                mainAxisExtent: 350
+                                                // childAspectRatio: size < 500
+                                                //     ? 1
+                                                //     : size > 1500
+                                                //         ? 3 / 3.3
+                                                //         : 3 / 4.2,
+                                                ),
                                         children: managectrl.getalltrainer
                                             .where(
                                                 (e) => e.isActive == isactive)
@@ -511,86 +517,92 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                             width: 6,
                                                           ),
                                                         ]),
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const SizedBox(
-                                                            height: 20,
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        CircleAvatar(
+                                                          backgroundColor:
+                                                              Colors.grey[100],
+                                                          child: const Icon(
+                                                            Icons.person,
+                                                            size: 30,
+                                                            color: Colors.grey,
                                                           ),
-                                                          CircleAvatar(
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .grey[100],
-                                                            child: const Icon(
-                                                              Icons.person,
-                                                              size: 30,
-                                                              color:
-                                                                  Colors.grey,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        TitleText(
+                                                          e.name.toString(),
+                                                          size: size <
+                                                                  mobilescreen
+                                                              ? 18
+                                                              : null,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              e.designation,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      500]),
                                                             ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 20,
-                                                          ),
-                                                          TitleText(e.name
-                                                              .toString(),size: size<mobilescreen?18:null,),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                             
-                                                              Text(
-                                                                e.designation,
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 6,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text("Timing : ",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        500])),
+                                                            Text(e.timing,
                                                                 style: TextStyle(
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .bold,color: Colors.grey[500]),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 6,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                          Text(
-                                                                  "Timing : " ,style:  TextStyle(
-                                                                      color: Colors.grey[500])),
-                                                              Text(e.timing,
-                                                                  style:  TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,color: Colors.grey[500])),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                          CardBorder(
-                                                              onpress: () {
-                                                                pagectrl
-                                                                    .changeviewprofile(true);
-                                                                _user = e;
-                                                              },
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  255,
-                                                                  175,
-                                                                  210,
-                                                                  238),
-                                                              child: const Text(
-                                                                  "View"))
-                                                        ],
-                                                      ),
+                                                                            .bold,
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        500])),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 16,
+                                                        ),
+                                                        CardBorder(
+                                                            onpress: () {
+                                                              pagectrl
+                                                                  .changeviewprofile(
+                                                                      true);
+                                                              _user = e;
+                                                            },
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                175, 210, 238),
+                                                            child: const Text(
+                                                                "View"))
+                                                      ],
                                                     ),
                                                   ],
                                                 )))
