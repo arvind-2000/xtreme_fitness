@@ -116,7 +116,7 @@ class HandlerToDashboard extends StatelessWidget {
         refresh();
       },
       child: Scaffold(
-                resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context, authCtrl, pageCtrl),
         drawer: _buildDrawer(context, authCtrl),
         body: ConstrainedBox(

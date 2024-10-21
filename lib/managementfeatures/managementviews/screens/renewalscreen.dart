@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
-
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -11,6 +9,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editre
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editrenewxtremers/renewalforms.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profilescreens/memberprofilescreen.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/xtremertabledatagrid.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
 
@@ -35,7 +34,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
     _searchfocus.dispose();
     Get.find<GetxPageController>().renewaldispose();
     Get.find<AddMemberController>().onClose();
-      Get.find<AddMemberController>().closeaddmembers();
+    Get.find<AddMemberController>().closeaddmembers();
     super.dispose();
   }
 
@@ -111,7 +110,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         // const Text("All Members",style: TextStyle(fontSize: 20,),),
-                              
+
                                         SizedBox(
                                             height: MediaQuery.sizeOf(context)
                                                         .width <=
@@ -127,7 +126,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                               padding: const EdgeInsets.only(
                                                   left: 16, right: 8),
                                               child: DropdownButton(
-                                                borderRadius: BorderRadius.circular(8),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                                 underline: const SizedBox(),
                                                 dropdownColor: Colors.grey[800],
                                                 focusColor: Colors.transparent,
@@ -163,11 +163,12 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     } else if (pos == 2) {
                                                       managectrl
                                                           .generalxtremer();
-                                                    } else if(pos ==3){
+                                                    } else if (pos == 3) {
                                                       managectrl
                                                           .inactivextremer();
-                                                    }else{
-                                                      managectrl.tobeexpiredlist();
+                                                    } else {
+                                                      managectrl
+                                                          .tobeexpiredlist();
                                                     }
                                                   });
                                                 },
@@ -182,8 +183,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                             : Expanded(
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     SizedBox(
                                                       height: 60,
@@ -223,7 +223,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                   ],
                                                 ),
                                               ),
-                              
+
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -242,7 +242,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                       width: 500,
                                                       height: 600,
                                                       child: Cardonly(
-                                                        margin:EdgeInsets.zero,
+                                                        margin: EdgeInsets.zero,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -282,8 +282,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                 height: 16,
                                                               ),
                                                               Expanded(
-                                                                  child:
-                                                                      Column(
+                                                                  child: Column(
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
@@ -299,7 +298,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                         fontSize:
                                                                             12),
                                                                   ),
-                                                                  const SizedBox(height: 10,),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
                                                                   SizedBox(
                                                                       height:
                                                                           50,
@@ -313,24 +314,27 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                             EdgeInsets.zero,
                                                                         padding: const EdgeInsets
                                                                             .only(
-                                                                            left: 16,
-                                                                            right: 8),
+                                                                            left:
+                                                                                16,
+                                                                            right:
+                                                                                8),
                                                                         child:
                                                                             DropdownButton(
                                                                           underline:
                                                                               const SizedBox(),
                                                                           value:
                                                                               chooseXtremerxl,
-                                                                              dropdownColor: Colors.grey[700],
-                                                                            
-                                                                              borderRadius: BorderRadius.circular(16),
-                                                                          hint:
-                                                                              Text(d[pos], style: const TextStyle(overflow: TextOverflow.ellipsis)),
+                                                                          dropdownColor:
+                                                                              Colors.grey[700],
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(16),
+                                                                          hint: Text(
+                                                                              d[pos],
+                                                                              style: const TextStyle(overflow: TextOverflow.ellipsis)),
                                                                           items: d
                                                                               .asMap()
                                                                               .entries
                                                                               .map((e) => DropdownMenuItem(
-                              
                                                                                     value: e.key,
                                                                                     child: Text(
                                                                                       e.value,
@@ -347,8 +351,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                         ),
                                                                       )),
                                                                   const SizedBox(
-                                                                    height:
-                                                                        16,
+                                                                    height: 16,
                                                                   ),
                                                                 ],
                                                               )),
@@ -359,22 +362,27 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                     margin: EdgeInsets.zero,
                                                                     color: Colors.blue,
                                                                     onpress: () async {
-                                                                      bool v = await exportXtremerDataToExcel(
-                                                                          chooseXtremerxl == 0
-                                                                              ? managectrl.getallXtremer
-                                                                              : chooseXtremerxl == 1
-                                                                                  ? managectrl.allpersonalxtremer
-                                                                                  : chooseXtremerxl == 2
-                                                                                      ? managectrl.allgeneralxtremer
-                                                                                      : chooseXtremerxl == 3
-                                                                                          ? managectrl.allinactivextremer
-                                                                                          : managectrl.tobeExpired(),
-                                                                          managectrl.getallMembership,
-                                                                          "Xtremer list",
-                                                                         );
+                                                                      bool v =
+                                                                          await exportXtremerDataToExcel(
+                                                                        chooseXtremerxl ==
+                                                                                0
+                                                                            ? managectrl.getallXtremer
+                                                                            : chooseXtremerxl == 1
+                                                                                ? managectrl.allpersonalxtremer
+                                                                                : chooseXtremerxl == 2
+                                                                                    ? managectrl.allgeneralxtremer
+                                                                                    : chooseXtremerxl == 3
+                                                                                        ? managectrl.allinactivextremer
+                                                                                        : managectrl.tobeExpired(),
+                                                                        managectrl
+                                                                            .getallMembership,
+                                                                        "Xtremer list",
+                                                                      );
                                                                       CustomSnackbar(
                                                                           context,
-                                                                          v ? "Xtremer Reports exported." : "failed to export. No data");
+                                                                          v
+                                                                              ? "Xtremer Reports exported."
+                                                                              : "failed to export. No data");
                                                                     },
                                                                     child: const Center(
                                                                         child: Text(
@@ -396,9 +404,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                     .onPrimary
                                                     .withOpacity(0.4),
                                                 margin: EdgeInsets.zero,
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        left: 16, right: 16),
+                                                padding: const EdgeInsets.only(
+                                                    left: 16, right: 16),
                                                 child: Row(
                                                   children: [
                                                     SizedBox(
@@ -423,7 +430,8 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   MediaQuery.sizeOf(context).width <=
                                           mobilescreen
                                       ? Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal:16.0,vertical:8),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -451,8 +459,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                       managectrl.searchusers(
                                                           _searchcontroller
                                                               .text);
-                                                      _searchcontroller
-                                                          .clear();
+                                                      _searchcontroller.clear();
                                                     },
                                                     icon: const Icon(
                                                         Icons.search)),
@@ -460,361 +467,353 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              managectrl.searchmessage!=null?Text(managectrl.searchmessage!,style:TextStyle(color:Colors.grey[500])):const SizedBox(),
+                                              managectrl.searchmessage != null
+                                                  ? Text(
+                                                      managectrl.searchmessage!,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.grey[500]))
+                                                  : const SizedBox(),
                                             ],
                                           ),
                                         )
                                       : const SizedBox(),
-                                  managectrl.getsearchXtremer.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal:16.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                            children: [
-                                             Expanded(
-                                                  child: Text(
-                                                "Name",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold,color: Colors.grey[400]),
-                                              )),
-                                              MediaQuery.sizeOf(context)
-                                                          .width <=
-                                                      mobilescreen
-                                                  ? const SizedBox()
-                                                  :  Expanded(
-                                                      child: Text("phone",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,color: Colors.grey[400]))),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              MediaQuery.sizeOf(context)
-                                                          .width <=
-                                                      mobilescreen
-                                                  ? const SizedBox()
-                                                  : Expanded(
-                                                      child: Text("Start",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,color: Colors.grey[400]))),
-                                              MediaQuery.sizeOf(context)
-                                                          .width <=
-                                                      mobilescreen
-                                                  ? const SizedBox()
-                                                  : Expanded(
-                                                      child: Text("End",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,color: Colors.grey[400]))),
-                                              MediaQuery.sizeOf(context)
-                                                          .width <=
-                                                      mobilescreen
-                                                  ? const SizedBox():
-                                               Expanded(
-                                                      child: Text(
-                                                          "Membership",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,color: Colors.grey[400]))),
-                                              Expanded(
-                                                  flex: MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <=
-                                                          mobilescreen
-                                                      ? 2
-                                                      : 2,
-                                                  child:  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:8.0),
-                                                    child: Text("Actions",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold,color: Colors.grey[400])),
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(color: Colors.grey[500],),
+                                  // managectrl.getsearchXtremer.isEmpty
+                                  //     ? const SizedBox()
+                                  //     : Padding(
+                                  //         padding: const EdgeInsets.symmetric(
+                                  //             horizontal: 16.0),
+                                  //         child: Row(
+                                  //           mainAxisAlignment:
+                                  //               MainAxisAlignment.spaceBetween,
+                                  //           children: [
+                                  //             Expanded(
+                                  //                 child: Text(
+                                  //               "Name",
+                                  //               style: TextStyle(
+                                  //                   fontSize: 14,
+                                  //                   fontWeight: FontWeight.bold,
+                                  //                   color: Colors.grey[400]),
+                                  //             )),
+                                  //             MediaQuery.sizeOf(context)
+                                  //                         .width <=
+                                  //                     mobilescreen
+                                  //                 ? const SizedBox()
+                                  //                 : Expanded(
+                                  //                     child: Text("phone",
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 14,
+                                  //                             fontWeight:
+                                  //                                 FontWeight
+                                  //                                     .bold,
+                                  //                             color: Colors
+                                  //                                 .grey[400]))),
+                                  //             const SizedBox(
+                                  //               height: 5,
+                                  //             ),
+                                  //             MediaQuery.sizeOf(context)
+                                  //                         .width <=
+                                  //                     mobilescreen
+                                  //                 ? const SizedBox()
+                                  //                 : Expanded(
+                                  //                     child: Text("Start",
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 14,
+                                  //                             fontWeight:
+                                  //                                 FontWeight
+                                  //                                     .bold,
+                                  //                             color: Colors
+                                  //                                 .grey[400]))),
+                                  //             MediaQuery.sizeOf(context)
+                                  //                         .width <=
+                                  //                     mobilescreen
+                                  //                 ? const SizedBox()
+                                  //                 : Expanded(
+                                  //                     child: Text("End",
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 14,
+                                  //                             fontWeight:
+                                  //                                 FontWeight
+                                  //                                     .bold,
+                                  //                             color: Colors
+                                  //                                 .grey[400]))),
+                                  //             MediaQuery.sizeOf(context)
+                                  //                         .width <=
+                                  //                     mobilescreen
+                                  //                 ? const SizedBox()
+                                  //                 : Expanded(
+                                  //                     child: Text("Membership",
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 14,
+                                  //                             fontWeight:
+                                  //                                 FontWeight
+                                  //                                     .bold,
+                                  //                             color: Colors
+                                  //                                 .grey[400]))),
+                                  //             Expanded(
+                                  //                 flex:
+                                  //                     MediaQuery.sizeOf(context)
+                                  //                                 .width <=
+                                  //                             mobilescreen
+                                  //                         ? 2
+                                  //                         : 2,
+                                  //                 child: Padding(
+                                  //                   padding: const EdgeInsets
+                                  //                       .symmetric(
+                                  //                       horizontal: 8.0),
+                                  //                   child: Text("Actions",
+                                  //                       style: TextStyle(
+                                  //                           fontSize: 14,
+                                  //                           fontWeight:
+                                  //                               FontWeight.bold,
+                                  //                           color: Colors
+                                  //                               .grey[400])),
+                                  //                 )),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  // Divider(
+                                  //   color: Colors.grey[500],
+                                  // ),
                                   managectrl.getsearchXtremer.isEmpty
                                       ? const Expanded(
                                           child: NodataScreen(
                                               title: "No Xtremers",
                                               desc: "No Xtremers to show"),
                                         )
-                                      : Expanded(
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) =>
-                                                Column(
-                                                  children: [
-                                                    Cardonly(
-                                                        color: Colors.transparent,
-                                                                    
-                                                                                                      
-                                                      margin:EdgeInsets.zero,
-                                                      // padding: EdgeInsets.zero,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                                
-                                                        children: [
-                                                          Expanded(
-                                                              child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              // const SizedBox(height: 10,),
-                                                              Text(
-                                                                managectrl
-                                                                    .getsearchXtremer[
-                                                                        index]
-                                                                    .firstName!,
-                                                                style:
-                                                                  const TextStyle(
-                                                                        fontSize:
-                                                                            14),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <=
-                                                                      mobilescreen
-                                                                  ? Row(
-                                                                    children: [
-                                                                      Icon(Icons.phone,size:10,color: Colors.grey[500]),
-                                                                      const SizedBox(width: 4,),
-                                                                      Text(
-                                                                          managectrl
-                                                                              .getsearchXtremer[
-                                                                                  index]
-                                                                              .mobileNumber!,
-                                                                          style: TextStyle(
-                                                                              fontSize:
-                                                                                  12,color: Colors.grey[500])),
-                                                                    ],
-                                                                  )
-                                                                  : const SizedBox(),
-                                                              const SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              // MediaQuery.sizeOf(context)
-                                                              //                 .width <=
-                                                              //             mobilescreen &&
-                                                              //         managectrl.getsearchXtremer[index].category !=
-                                                              //             null
-                                                              //     ? CardwithShadow(
-                                                              //         margin: const EdgeInsets
-                                                              //             .only(
-                                                              //             top:
-                                                              //                 4),
-                                                              //         padding: const EdgeInsets
-                                                              //             .symmetric(
-                                                              //             vertical:
-                                                              //                 4,
-                                                              //             horizontal:
-                                                              //                 4),
-                                                                 
-                                                              //         child:
-                                                              //             Text(
-                                                              //           managectrl.getsearchXtremer[index].category !=
-                                                              //                   null
-                                                              //               ? managectrl.getsearchXtremer[index].category!
-                                                              //               : "",
-                                                              //           style: const TextStyle(
-                                                              //               fontSize:
-                                                              //                   10),
-                                                              //         ))
-                                                              //     : const SizedBox()
-                                                            ],
-                                                          )),
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width <=
-                                                                  mobilescreen
-                                                              ? const SizedBox()
-                                                              : Expanded(
-                                                                  child: Text(
-                                                                      managectrl
-                                                                          .getsearchXtremer[
-                                                                              index]
-                                                                          .mobileNumber!,
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14))),
-                                                          const SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width <=
-                                                                  mobilescreen
-                                                              ? const SizedBox()
-                                                              : Expanded(
-                                                                  child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                        '${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].startDate?.day}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].startDate?.month}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].startDate?.year}',
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                14)),
-                                                                    const SizedBox(
-                                                                      height: 5,
-                                                                    ),
-                                                                    MediaQuery.sizeOf(context).width <=
-                                                                            mobilescreen
-                                                                        ? Text(
-                                                                            '${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.day}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.month}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.year}',
-                                                                            style:
-                                                                                const TextStyle(fontSize: 14))
-                                                                        : const SizedBox()
-                                                                  ],
-                                                                )),
-                                                          MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width <=
-                                                                  mobilescreen
-                                                              ? const SizedBox()
-                                                              :  Expanded(
-                                                                  child: Text(
-                                                                       '${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.day}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.month}/${  managectrl
-                                                                          .getsearchXtremer[
-                                                                              index].endDate?.year}',
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14))),
-                                                          MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width <=
-                                                                  mobilescreen
-                                                              ? const SizedBox():
-                                                               Expanded(
-                                                                  child: Text(managectrl.getsearchXtremer[index].category != null ? managectrl.getsearchXtremer[index].category! : "", style: const TextStyle(fontSize: 14))),
-                                                          Expanded(
-                                                              flex: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <=
-                                                                      mobilescreen
-                                                                  ? 2
-                                                                  : 2,
+                                      : const XtremerDataTableWidget()
+                                  // : Expanded(
+                                  //     child: ListView.builder(
+                                  //       shrinkWrap: true,
+                                  //       itemBuilder: (context, index) =>
+                                  //           Column(
+                                  //         children: [
+                                  //           Cardonly(
+                                  //             color: Colors.transparent,
 
-                                                              child: Row(
-                                                                children: [
-                                                                  CardBorder(
-                                                                      margin: EdgeInsets
-                                                                          .zero,
-                                                                          color:Colors.grey[600],
-                                                                      onpress:
-                                                                          () {
-                                                                        pagectrl
-                                                                            .changerenewal(true);
-                                                                        addmemberctrl
-                                                                            .addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
-                                                                      },
-                                                                      child: const Text(
-                                                                          "Renewal",
-                                                                          style:
-                                                                              TextStyle(fontSize: 14))),
-                                                                  const SizedBox(
-                                                                    width: 5,
-                                                                  ),
-                                                                  IconButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      pagectrl.changeeditform(
-                                                                          true);
-                                                                      addmemberctrl
-                                                                          .addxtremersedit(
-                                                                              managectrl.getsearchXtremer[index]);
-                                                                    },
-                                                                    icon:
-                                                                        const Icon(
-                                                                      Icons
-                                                                          .edit,
-                                                                      size: 14,
-                                                                    ),
-                                                                    tooltip:
-                                                                        "Edit",
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 5,
-                                                                  ),
-                                                                  IconButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      changeuser(
-                                                                          managectrl
-                                                                              .getsearchXtremer[index]);
-                                                                      pagectrl
-                                                                          .changeviewprofile(true);
-                                                                    },
-                                                                    icon:
-                                                                        const Icon(
-                                                                      Icons
-                                                                          .person,
-                                                                      size: 14,
-                                                                    ),
-                                                                    tooltip:
-                                                                        "View Profile",
-                                                                  ),
-                                                                ],
-                                                              )),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Divider(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onPrimary
-                                                          .withOpacity(0.2),
-                                                      height: 1,
-                                                    ),
-                                                  ],
-                                                ),
-                                            itemCount: managectrl
-                                                .getsearchXtremer.length,
-                                          ),
-                                        )
+                                  //             margin: EdgeInsets.zero,
+                                  //             // padding: EdgeInsets.zero,
+                                  //             child: Row(
+                                  //               mainAxisAlignment:
+                                  //                   MainAxisAlignment
+                                  //                       .spaceBetween,
+                                  //               children: [
+                                  //                 Expanded(
+                                  //                     child: Column(
+                                  //                   crossAxisAlignment:
+                                  //                       CrossAxisAlignment
+                                  //                           .start,
+                                  //                   children: [
+                                  //                     // const SizedBox(height: 10,),
+                                  //                     Text(
+                                  //                       managectrl
+                                  //                           .getsearchXtremer[
+                                  //                               index]
+                                  //                           .firstName!,
+                                  //                       style:
+                                  //                           const TextStyle(
+                                  //                               fontSize:
+                                  //                                   14),
+                                  //                     ),
+                                  //                     const SizedBox(
+                                  //                       height: 5,
+                                  //                     ),
+                                  //                     MediaQuery.sizeOf(
+                                  //                                     context)
+                                  //                                 .width <=
+                                  //                             mobilescreen
+                                  //                         ? Row(
+                                  //                             children: [
+                                  //                               Icon(
+                                  //                                   Icons
+                                  //                                       .phone,
+                                  //                                   size:
+                                  //                                       10,
+                                  //                                   color: Colors
+                                  //                                       .grey[500]),
+                                  //                               const SizedBox(
+                                  //                                 width: 4,
+                                  //                               ),
+                                  //                               Text(
+                                  //                                   managectrl
+                                  //                                       .getsearchXtremer[
+                                  //                                           index]
+                                  //                                       .mobileNumber!,
+                                  //                                   style: TextStyle(
+                                  //                                       fontSize:
+                                  //                                           12,
+                                  //                                       color:
+                                  //                                           Colors.grey[500])),
+                                  //                             ],
+                                  //                           )
+                                  //                         : const SizedBox(),
+                                  //                     const SizedBox(
+                                  //                       height: 5,
+                                  //                     ),
+                                  //                   ],
+                                  //                 )),
+                                  //                 const SizedBox(
+                                  //                   width: 5,
+                                  //                 ),
+                                  //                 MediaQuery.sizeOf(context)
+                                  //                             .width <=
+                                  //                         mobilescreen
+                                  //                     ? const SizedBox()
+                                  //                     : Expanded(
+                                  //                         child: Text(
+                                  //                             managectrl
+                                  //                                 .getsearchXtremer[
+                                  //                                     index]
+                                  //                                 .mobileNumber!,
+                                  //                             style: const TextStyle(
+                                  //                                 fontSize:
+                                  //                                     14))),
+                                  //                 const SizedBox(
+                                  //                   height: 5,
+                                  //                 ),
+                                  //                 MediaQuery.sizeOf(context)
+                                  //                             .width <=
+                                  //                         mobilescreen
+                                  //                     ? const SizedBox()
+                                  //                     : Expanded(
+                                  //                         child: Column(
+                                  //                         crossAxisAlignment:
+                                  //                             CrossAxisAlignment
+                                  //                                 .start,
+                                  //                         children: [
+                                  //                           Text(
+                                  //                               '${managectrl.getsearchXtremer[index].startDate?.day}/${managectrl.getsearchXtremer[index].startDate?.month}/${managectrl.getsearchXtremer[index].startDate?.year}',
+                                  //                               style: const TextStyle(
+                                  //                                   fontSize:
+                                  //                                       14)),
+                                  //                           const SizedBox(
+                                  //                             height: 5,
+                                  //                           ),
+                                  //                           MediaQuery.sizeOf(context)
+                                  //                                       .width <=
+                                  //                                   mobilescreen
+                                  //                               ? Text(
+                                  //                                   '${managectrl.getsearchXtremer[index].endDate?.day}/${managectrl.getsearchXtremer[index].endDate?.month}/${managectrl.getsearchXtremer[index].endDate?.year}',
+                                  //                                   style: const TextStyle(
+                                  //                                       fontSize:
+                                  //                                           14))
+                                  //                               : const SizedBox()
+                                  //                         ],
+                                  //                       )),
+                                  //                 MediaQuery.sizeOf(context)
+                                  //                             .width <=
+                                  //                         mobilescreen
+                                  //                     ? const SizedBox()
+                                  //                     : Expanded(
+                                  //                         child: Text(
+                                  //                             '${managectrl.getsearchXtremer[index].endDate?.day}/${managectrl.getsearchXtremer[index].endDate?.month}/${managectrl.getsearchXtremer[index].endDate?.year}',
+                                  //                             style: const TextStyle(
+                                  //                                 fontSize:
+                                  //                                     14))),
+                                  //                 MediaQuery.sizeOf(context)
+                                  //                             .width <=
+                                  //                         mobilescreen
+                                  //                     ? const SizedBox()
+                                  //                     : Expanded(
+                                  //                         child: Text(
+                                  //                             managectrl.getsearchXtremer[index].category !=
+                                  //                                     null
+                                  //                                 ? managectrl
+                                  //                                     .getsearchXtremer[
+                                  //                                         index]
+                                  //                                     .category!
+                                  //                                 : "",
+                                  //                             style: const TextStyle(
+                                  //                                 fontSize:
+                                  //                                     14))),
+                                  //                 Expanded(
+                                  //                     flex: MediaQuery.sizeOf(
+                                  //                                     context)
+                                  //                                 .width <=
+                                  //                             mobilescreen
+                                  //                         ? 2
+                                  //                         : 2,
+                                  //                     child: Row(
+                                  //                       children: [
+                                  //                         CardBorder(
+                                  //                             margin:
+                                  //                                 EdgeInsets
+                                  //                                     .zero,
+                                  //                             color: Colors
+                                  //                                     .grey[
+                                  //                                 600],
+                                  //                             onpress: () {
+                                  //                               pagectrl
+                                  //                                   .changerenewal(
+                                  //                                       true);
+                                  //                               addmemberctrl
+                                  //                                   .addxtremersrenewaledit(
+                                  //                                       managectrl.getsearchXtremer[index]);
+                                  //                             },
+                                  //                             child: const Text(
+                                  //                                 "Renewal",
+                                  //                                 style: TextStyle(
+                                  //                                     fontSize:
+                                  //                                         14))),
+                                  //                         const SizedBox(
+                                  //                           width: 5,
+                                  //                         ),
+                                  //                         IconButton(
+                                  //                           onPressed: () {
+                                  //                             pagectrl
+                                  //                                 .changeeditform(
+                                  //                                     true);
+                                  //                             addmemberctrl.addxtremersedit(
+                                  //                                 managectrl
+                                  //                                         .getsearchXtremer[
+                                  //                                     index]);
+                                  //                           },
+                                  //                           icon:
+                                  //                               const Icon(
+                                  //                             Icons.edit,
+                                  //                             size: 14,
+                                  //                           ),
+                                  //                           tooltip: "Edit",
+                                  //                         ),
+                                  //                         const SizedBox(
+                                  //                           width: 5,
+                                  //                         ),
+                                  //                         IconButton(
+                                  //                           onPressed: () {
+                                  //                             changeuser(
+                                  //                                 managectrl
+                                  //                                         .getsearchXtremer[
+                                  //                                     index]);
+                                  //                             pagectrl
+                                  //                                 .changeviewprofile(
+                                  //                                     true);
+                                  //                           },
+                                  //                           icon:
+                                  //                               const Icon(
+                                  //                             Icons.person,
+                                  //                             size: 14,
+                                  //                           ),
+                                  //                           tooltip:
+                                  //                               "View Profile",
+                                  //                         ),
+                                  //                       ],
+                                  //                     )),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //           Divider(
+                                  //             color: Theme.of(context)
+                                  //                 .colorScheme
+                                  //                 .onPrimary
+                                  //                 .withOpacity(0.2),
+                                  //             height: 1,
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       itemCount: managectrl
+                                  //           .getsearchXtremer.length,
+                                  //     ),
+                                  //   )
                                 ],
                               ),
                             ),

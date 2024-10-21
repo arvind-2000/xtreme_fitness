@@ -14,7 +14,6 @@ import '../../../widgets/card.dart';
 import '../../../widgets/cardborder.dart';
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
-import '../../managementdomain/entities.dart/paymententity.dart';
 import '../../managementdomain/entities.dart/paymenttrans.dart';
 import '../../managementmodels/calculationusecase.dart';
 import '../widgets/scaffolds.dart';
@@ -76,15 +75,19 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                       Get.dialog(StatefulBuilder(
                                           builder: (context, s) {
                                         return Dialog(
-                                         
                                             child: SizedBox(
                                           width: 500,
                                           height: 600,
                                           child: Cardonly(
-                                          margin: EdgeInsets.zero,
-                                          color: Colors.grey[900],
+                                            margin: EdgeInsets.zero,
+                                            color: Colors.grey[900],
                                             child: Padding(
-                                              padding: EdgeInsets.all( MediaQuery.sizeOf(context).width<mobilescreen?16: 32),
+                                              padding: EdgeInsets.all(
+                                                  MediaQuery.sizeOf(context)
+                                                              .width <
+                                                          mobilescreen
+                                                      ? 16
+                                                      : 32),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -99,7 +102,12 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                     children: [
                                                       HeadingText(
                                                         "Payment Reports",
-                                                        size:MediaQuery.sizeOf(context).width<mobilescreen?16:20,
+                                                        size: MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width <
+                                                                mobilescreen
+                                                            ? 16
+                                                            : 20,
                                                       ),
                                                       IconButton(
                                                           onPressed: () {
@@ -131,7 +139,9 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                                     0.5),
                                                             fontSize: 12),
                                                       ),
-                                                      SizedBox(height: 10,),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
                                                       SizedBox(
                                                           height: 50,
                                                           child: CardBorder(
@@ -186,7 +196,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                               },
                                                             ),
                                                           )),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 16,
                                                       ),
                                                       Row(
@@ -282,12 +292,13 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                               ),
                                                             ],
                                                           ),
-                                                          SizedBox(width: 10),
+                                                          const SizedBox(
+                                                              width: 10),
                                                           MediaQuery.sizeOf(
                                                                           context)
                                                                       .width <=
                                                                   mobilescreen
-                                                              ? SizedBox()
+                                                              ? const SizedBox()
                                                               : Column(
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
@@ -373,7 +384,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                       MediaQuery.sizeOf(context)
                                                                   .width >
                                                               mobilescreen
-                                                          ? SizedBox()
+                                                          ? const SizedBox()
                                                           : Row(
                                                               children: [
                                                                 Column(
@@ -518,7 +529,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                             child: Image.asset(
                                               'assets/file.png',
                                             )),
-                                        Text("Export"),
+                                        const Text("Export"),
                                       ],
                                     ))),
                           ],
@@ -599,8 +610,13 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                            HeadingText(
-                                                  "Edit Payments",size:MediaQuery.sizeOf(context).width<mobilescreen?16:null),
+                                              HeadingText("Edit Payments",
+                                                  size:
+                                                      MediaQuery.sizeOf(context)
+                                                                  .width <
+                                                              mobilescreen
+                                                          ? 16
+                                                          : null),
                                               IconButton(
                                                   onPressed: () {
                                                     Navigator.pop(context);
@@ -993,10 +1009,20 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                 margin: EdgeInsets.zero,
                                                 color: Colors.blue,
                                                 onpress: () {
-                                                    String s = managectrl.allUsers.firstWhereOrNull((element) => element.id == managectrl.getsearchpayments[i].userId,)?.fullName??"";
+                                                  String s = managectrl.allUsers
+                                                          .firstWhereOrNull(
+                                                            (element) =>
+                                                                element.id ==
+                                                                managectrl
+                                                                    .getsearchpayments[
+                                                                        i]
+                                                                    .userId,
+                                                          )
+                                                          ?.fullName ??
+                                                      "";
                                                   createAndprintPdf(
                                                     PaymentByTransaction(
-                                                      fullName:s,
+                                                        fullName: s,
                                                         id: managectrl
                                                             .getsearchpayments[
                                                                 i]
@@ -1076,7 +1102,6 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
   }
 }
 
-
 class ListCard extends StatefulWidget {
   const ListCard({
     super.key,
@@ -1112,9 +1137,10 @@ class _ListCardState extends State<ListCard> {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: onhover ? Colors.grey.withOpacity(0.1): Colors.transparent, // Subtle light grey on hover
+              color: onhover
+                  ? Colors.grey.withOpacity(0.1)
+                  : Colors.transparent, // Subtle light grey on hover
               borderRadius: BorderRadius.circular(10),
-           
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1125,14 +1151,11 @@ class _ListCardState extends State<ListCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Receipt#"),
-                          TitleText(
-                            "${widget.payment.transactionId}",
-                            size: 14,
-                            color: Colors.grey[700]
-                          ),
+                          const Text("Receipt#"),
+                          TitleText("${widget.payment.transactionId}",
+                              size: 14, color: Colors.grey[700]),
                           const SizedBox(height: 10),
-                          Text("Payment Type"),
+                          const Text("Payment Type"),
                           Text(
                             widget.payment.paymentType != null
                                 ? widget.payment.paymentType!
@@ -1150,7 +1173,8 @@ class _ListCardState extends State<ListCard> {
                         // Redesigned Edit Button
                         IconButton(
                           onPressed: widget.edit,
-                          icon: const Icon(Icons.edit, size: 20, color: Colors.blueGrey),
+                          icon: const Icon(Icons.edit,
+                              size: 20, color: Colors.blueGrey),
                           tooltip: "Edit Payment",
                         ),
                         const SizedBox(height: 8),
@@ -1158,13 +1182,15 @@ class _ListCardState extends State<ListCard> {
                         ElevatedButton(
                           onPressed: widget.userss,
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 16),
                             backgroundColor: Colors.blue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: const Text("View", style: TextStyle(color: Colors.white)),
+                          child: const Text("View",
+                              style: TextStyle(color: Colors.white)),
                         ),
                         const SizedBox(height: 8),
                         Text(
