@@ -45,7 +45,7 @@ class DashboardChild3 extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: GraphsWidget(
                   charttype: ChartType.bar,
-                  // graphaxisnames: (axisLabelRenderArgs) => ChartAxisLabel(months[(managectrl.filterpayments.values.elementAt(int.tryParse(axisLabelRenderArgs.text)??0).last.paymentDate.month-1)%12],const TextStyle()),
+                  graphaxisnames: (axisLabelRenderArgs) => ChartAxisLabel(months[(managectrl.filterpayments.values.elementAt(int.tryParse(axisLabelRenderArgs.text)??0).last.paymentDate.month-1)%12],const TextStyle()),
                   tooltip: (data, point, series, pointIndex, seriesIndex) =>
               SizedBox(
                 // height: 100,

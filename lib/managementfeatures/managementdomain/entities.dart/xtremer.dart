@@ -35,6 +35,7 @@ class Xtremer {
   int? submittedBy;
   bool? isActive;
   String? category;
+  String? cardnumber;
 
   DateTime? createddate;
   Xtremer(
@@ -74,6 +75,7 @@ class Xtremer {
       this.submittedBy,
       this.isActive,
       this.category,
+      this.cardnumber,
       this.createddate});
 
   // Factory method to create a Xtremer instance from a JSON map
@@ -116,6 +118,7 @@ class Xtremer {
         declaration: json['Declaration'] ?? false,
         submittedBy: json['SubmittedBy'],
         isActive: json['IsActive'] ?? false,
+        cardnumber: json['cardNumber']??"",
         category: json['Category'] ?? "",
         createddate:
             DateTime.parse(json['CreatedAt'] ?? DateTime.now().toString()));

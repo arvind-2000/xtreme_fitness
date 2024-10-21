@@ -63,8 +63,9 @@ class _RenewalScreenState extends State<RenewalScreen> {
     _searchfocus.requestFocus();
     if (widget.pos != null) {
       pos = widget.pos!;
+     
     }
-
+ Get.find<ManagementController>().allxtremer();
     Get.put(AddMemberController());
     // WidgetsBinding.instance.addPostFrameCallback(
     //   (timeStamp) => Get.find<ManagementController>().getxtremer(),
@@ -736,58 +737,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                                       mobilescreen
                                                                   ? 2
                                                                   : 2,
-                                                                                                        
-                                                              //   child:MediaQuery.sizeOf(context).width<=mobilescreen?       Column(
-                                                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                                                              //   children: [
-                                                              //     CardBorder(
-                                                              //       margin: EdgeInsets.zero,
-                                                              //       onpress: (){
-                                                              //         pagectrl.changerenewal(true);
-                                                              //               addmemberctrl.addxtremersrenewaledit(managectrl.getsearchXtremer[index]);
-                                                                                                        
-                                                              //       },
-                                                              //       child: const Row(
-                                                              //         children: [
-                                                              //           Icon(Icons.upload,size: 12,),
-                                                              //             SizedBox(width: 5,),
-                                                              //           Text("Renewal",style:TextStyle(fontSize: 14)),
-                                                              //         ],
-                                                              //       )),
-                                                              //       const SizedBox(height: 5,),
-                                                              //       CardBorder(
-                                                              //         onpress: (){
-                                                              //               pagectrl.changeeditform(true);
-                                                              //                    addmemberctrl.addxtremersedit(managectrl.getsearchXtremer[index]);
-                                                              //         },
-                                                              //             color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                              //         margin: EdgeInsets.zero,
-                                                              //         child: const Row(
-                                                              //           children: [
-                                                              //  Icon(Icons.edit,size: 12,),
-                                                              //             SizedBox(width: 5,),
-                                                              //             Text("Edit",style:TextStyle(fontSize: 14))
-                                                              //           ],
-                                                              //         ),
-                                                              //       ),
-                                                              //          const SizedBox(height: 5,),
-                                                              //       CardBorder(
-                                                              //         onpress: (){
-                                                              //                        changeuser(managectrl.getsearchXtremer[index]);
-                                                              //                   pagectrl.changeviewprofile();
-                                                              //         },
-                                                              //         margin: EdgeInsets.zero,
-                                                              //       color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
-                                                              //         child: const Row(
-                                                              //           children: [
-                                                              //        Icon(Icons.person,size: 12,),
-                                                              //              SizedBox(width: 5,),
-                                                              //             Text("View",style:TextStyle(fontSize: 14))
-                                                              //           ],
-                                                              //         ),
-                                                              //       ),
-                                                              //   ],
-                                                              // ):
+
                                                               child: Row(
                                                                 children: [
                                                                   CardBorder(

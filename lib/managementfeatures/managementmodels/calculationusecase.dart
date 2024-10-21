@@ -28,7 +28,7 @@ double percentprice(double? actualprice,double? dis){
 
 
 
-  Future<void> createAndprintPdf(PaymentByTransaction paymentDetails,{bool isprint = true}) async {
+  Future<void> createAndprintPdf(PaymentByTransaction paymentDetails,{bool isprint = false}) async {
     final pdf = pw.Document();
     //print("in //print pdf");
     final logoData = await _loadImageData('assets/logo3.png');
@@ -121,7 +121,7 @@ double percentprice(double? actualprice,double? dis){
                     style: pw.TextStyle(fontSize: 12),
                   ),
                   pw.Text(
-                    '${paymentDetails.fullName}',
+                    '${paymentDetails.fullName??""}',
                     style: pw.TextStyle(fontSize: 12),
                   ),
                 ]

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -1537,8 +1538,9 @@ class ManagementrepoImpl implements ManagementRepo {
       // Check if the request was successful
       if (request.status! >= 200 && request.status! < 300) {
         // Convert the response (ArrayBuffer) to Uint8List
-        final Uint8List bytes =
-            Uint8List.fromList(request.response as List<int>);
+        print("Success");
+      final buffer = request.response as ByteBuffer;
+      final Uint8List bytes = Uint8List.view(buffer);
         return bytes;
       } else {
         // Handle errors or unsuccessful responses
@@ -1547,7 +1549,7 @@ class ManagementrepoImpl implements ManagementRepo {
       }
     } catch (e) {
       // Handle exceptions
-      //print('Error fetching photo: $e');
+      print('Error fetching photo: $e');
       return null;
     }
   }

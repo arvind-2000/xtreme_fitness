@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../config/const.dart';
 import '../../../widgets/cardswithshadow.dart';
 import '../../config/manageconfig.dart';
 
@@ -30,6 +29,7 @@ class GraphsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
+
       zoomPanBehavior: ZoomPanBehavior(
           enableMouseWheelZooming: false,
           enablePanning: true,
@@ -89,26 +89,28 @@ class GraphsWidget extends StatelessWidget {
         minorTickLines: const MinorTickLines(size: 0, width: 0),
         // maximum: 400,
         minimum: 0,
-     
+       
        
         axisLabelFormatter: (x) {
           return ChartAxisLabel("", const TextStyle());
         },
 
-        //  desiredIntervals: 10,
+        //  desiredIntervals: 12,
         //    decimalPlaces: 0,
-        //    minimum: 0.0,
-        //    // interval: 50,
-        //       maximum: 50,
+          
+           // interval: 50,
+            
       ),
       primaryXAxis: NumericAxis(
         isVisible: axis,
 
         majorGridLines: const MajorGridLines(width: 0),
-       
-        axisLabelFormatter:graphaxisnames,
+           axisLabelFormatter:graphaxisnames,
         interval: 1,
-          //  maximum: 10,
+        // maximum: 11,
+       minimum:0,
+    labelAlignment: LabelAlignment.center,
+        plotOffset: charttype == ChartType.bar?30:10,
       ),
 
       series: [
@@ -116,6 +118,7 @@ class GraphsWidget extends StatelessWidget {
             ? linecharts(data: seriesdata, color: Colors.green)
             : barcharts(
                 data: seriesdata,
+                // data: [10000,18992,20938,478547,37847],
                 color: Colors.grey[400]!,
               )
       ],
@@ -162,6 +165,7 @@ StackedBarSeries<double, int> barcharts({
   required Color color,
 }) {
   return StackedBarSeries(
+   
       animationDelay: 1,
       animationDuration: 500,
       enableTooltip: true,

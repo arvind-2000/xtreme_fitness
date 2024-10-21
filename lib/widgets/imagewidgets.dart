@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../managementfeatures/managementmodels/managementrepoimpl.dart';
 
@@ -26,10 +25,19 @@ class _MemoryImageWidgetState extends State<MemoryImageWidget> {
 
   Future<void> _fetchPhoto() async {
     if(widget.id!=null){
-    final bytes = await d.getImage(widget.id!);
-    setState(() {
-      _photoBytes = bytes;
+      print(widget.id);
+   await d.getImage(widget.id!).then((value) {
+if(value!=null){
+  print('not null');
+}else{
+  print("Null");
+}
+          setState(() {
+      _photoBytes = value;
+      print("in photo images");
     });
+    },);
+
     }
 
   }
@@ -37,9 +45,9 @@ class _MemoryImageWidgetState extends State<MemoryImageWidget> {
   @override
   Widget build(BuildContext context) {
     return  Center(
-        child: _photoBytes != null
-            ? Image.memory(_photoBytes!) // Display the image from memory
-            :Icon(Icons.person), // Show loading indicator while fetching
+        child: _photoBytes!=null
+            ? Image.memory(_photoBytes!) 
+            :Icon(Icons.person), 
       );
   }
 }
