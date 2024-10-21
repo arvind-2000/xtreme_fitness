@@ -43,7 +43,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-          Get.find<AddMemberController>().changepaymentstatuscall(0);
+        Get.find<AddMemberController>().changepaymentstatuscall(0);
       },
     );
   }
@@ -77,15 +77,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             "Service",
                             size: 30,
                           ),
-                          authcrl.ismember!=null && authcrl.ismember!
+                          authcrl.ismember
                               ? const SizedBox()
                               : CardBorder(
                                   onpress: () {
                                     Get.dialog(
                                         barrierDismissible: false,
                                         Dialog(
-                                            backgroundColor: Colors.grey[900],
-                                          insetPadding: const EdgeInsets.all(16),
+                                          backgroundColor: Colors.grey[900],
+                                          insetPadding:
+                                              const EdgeInsets.all(16),
                                           child: SizedBox(
                                             height: 600,
                                             width: 500,
@@ -112,7 +113,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         ],
                       ),
                     ),
-                    managementcontroller.authctrl.ismember!=null && managementcontroller.authctrl.ismember! ||
+                    managementcontroller.authctrl.ismember ||
                             managementcontroller.getallservices.isEmpty
                         ? const SizedBox()
                         : Row(
@@ -152,22 +153,24 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                 shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: size < 500
-                                      ? 1
-                                      : size < mobilescreen
-                                          ? 2
-                                          : size >= mobilescreen && size < 1200
-                                              ? 3
-                                              : 4,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: size < 500
-                                      ? 1
-                                      : size >= mobilescreen && size < 1300
-                                          ? 3 / 4.4
-                                          : size < mobilescreen
-                                              ? 3 / 4
-                                              : 3 / 3.5,
-                                ),
+                                        crossAxisCount: size < 500
+                                            ? 1
+                                            : size < mobilescreen
+                                                ? 2
+                                                : size >= mobilescreen &&
+                                                        size < 1200
+                                                    ? 3
+                                                    : 4,
+                                        mainAxisSpacing: 10,
+                                        mainAxisExtent: 330
+                                        // childAspectRatio: size < 500
+                                        //     ? 1
+                                        //     : size >= mobilescreen && size < 1300
+                                        //         ? 3 / 4.4
+                                        //         : size < mobilescreen
+                                        //             ? 3 / 4
+                                        //             : 3 / 3.5,
+                                        ),
                                 children: managementcontroller.getallservices
                                     .asMap()
                                     .entries
@@ -193,7 +196,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                       size: 24,
                                                     ),
                                                   ),
-                                                authcrl.ismember
+                                                  authcrl.ismember
                                                       ? const SizedBox()
                                                       : Row(
                                                           children: [
@@ -278,7 +281,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                                             .changeServiceUsage(
                                                                 ispage: true);
                                                       },
-                                                      color:  Colors.grey[500],
+                                                      color: Colors.grey[500],
                                                       child: const Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment

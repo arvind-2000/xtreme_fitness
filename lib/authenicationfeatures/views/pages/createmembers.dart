@@ -118,7 +118,7 @@ class _CreateXtremersState extends State<CreateXtremers> {
         _showExitWarningDialog(context);
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: isLoading
             ? const Center(
                 child: Column(

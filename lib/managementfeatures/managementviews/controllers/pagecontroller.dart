@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/config/const.dart';
@@ -29,11 +31,13 @@ class GetxPageController extends GetxController {
     navpage = page;
     controller.authenticationsForSession();
     update();
+    log("navpage :$navpage");
   }
 
   @override
   void onInit() {
     super.onInit();
+    log('onInit page con');
     navpage = 0;
     addmemberpages = 0;
   }
@@ -85,8 +89,8 @@ class GetxPageController extends GetxController {
     navpage = 0;
 
     _istwo = false;
- _isthree = false;
- _isfour = false;
- _isfive = false;
+    _isthree = false;
+    _isfour = false;
+    _isfive = false;
   }
 }

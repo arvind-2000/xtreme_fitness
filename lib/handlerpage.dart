@@ -33,7 +33,6 @@ class _HandlerPageState extends State<HandlerPage> {
   }
 
   bool reload = true;
-  // Authentication logic refactored for better performance
   void authenticates() async {
     await Get.find<GetxAuthController>().authenticationsForReload().then(
       (value) {
@@ -44,16 +43,17 @@ class _HandlerPageState extends State<HandlerPage> {
           Get.put(AddMemberController());
           Get.put(ManagementController());
 
-          Get.find<GetxPageController>().onInit();
-        }
-      },
-    );
+
+    }
+  },);
+
   }
 
   @override
   void dispose() {
     Get.find<AddMemberController>().onClose();
     Get.find<GetxAuthController>().disposelogin();
+    Get.find<GetxPageController>().disposes();
     super.dispose();
   }
 
@@ -114,7 +114,7 @@ class HandlerToDashboard extends StatelessWidget {
         refresh();
       },
       child: Scaffold(
-                resizeToAvoidBottomInset: true,
+                resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context, authCtrl, pageCtrl),
         drawer: _buildDrawer(context, authCtrl),
         body: ConstrainedBox(

@@ -13,7 +13,6 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/screens/profil
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffolds.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
-import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
