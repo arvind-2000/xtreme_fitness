@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/servicesentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
@@ -95,6 +96,8 @@ class ManagementController extends GetxController {
   Admission? _admission;
   Admission? get getAdmission => _admission;
 
+  List<XtremerWithSubscription> selectedgrid = [];
+
   /// 0 [week] 1[month]
   int servicefilter = 1;
   Map<int, List<Alluserpaymentmodel>> filterpayments = {};
@@ -108,7 +111,7 @@ class ManagementController extends GetxController {
   int membershiploadingstatus = 0;
   bool iseditpayment = false;
   bool managementloadings = false;
-
+  int templatepos = 0;
   @override
   void onInit() {
     super.onInit();
@@ -667,4 +670,45 @@ class ManagementController extends GetxController {
 
     return tobeexpiredlist;
   }
+
+  void selectedIndex(List<DataGridRow> selectedrows){
+    print("in selected row");
+    List<XtremerWithSubscription> xtremerlist = [];
+     for(DataGridRow d in selectedrows){
+      print(d.getCells()[1].value);
+      
+        for(XtremerWithSubscription v in _searchxtremerlist){
+          print(v);
+          if(v.mobileNumber == d.getCells()[1].value){
+            print("found");
+              xtremerlist.add(v);
+            break;
+          }
+        }
+     
+     }
+     
+     selectedgrid = xtremerlist;
+      update();
+  }
+
+  Future<void> sendexpirySms()async{
+        for(XtremerWithSubscription o in selectedgrid){
+          sendSMS(o.mobileNumber??"", o.firstName??"", '${o.endDate?.day}/${o.endDate?.month}/${o.endDate?.year}');
+        }
+      selectedgrid = [];
+
+      update();
+
+  }
+
+  void sendSMS(String phonenumber,String name, String enddate){
+      
+  }
+
+  void changeTemplate(int pos){
+    templatepos = pos;
+    update();
+  }
+
 }
