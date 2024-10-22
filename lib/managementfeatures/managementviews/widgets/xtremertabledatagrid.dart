@@ -114,6 +114,34 @@ class XtremerDataSource extends DataGridSource {
       }).toList(),
     );
   }
+
+  @override
+  int compare(DataGridRow? a, DataGridRow? b, SortColumnDetails sortColumn) {
+    if (sortColumn.name == 'firstName') {
+      final String? value1 = a
+          ?.getCells()
+          .firstWhereOrNull((element) => element.columnName == sortColumn.name)
+          ?.value
+          .toString();
+      final String? value2 = b
+          ?.getCells()
+          .firstWhereOrNull((element) => element.columnName == sortColumn.name)
+          ?.value
+          .toString();
+
+      if (value1 == null || value2 == null) {
+        return 0;
+      }
+
+      if (sortColumn.sortDirection == DataGridSortDirection.ascending) {
+        return value1.toLowerCase().compareTo(value2.toLowerCase());
+      } else {
+        return value2.toLowerCase().compareTo(value1.toLowerCase());
+      }
+    }
+
+    return super.compare(a, b, sortColumn);
+  }
 }
 
 class XtremerDataTableWidget extends StatelessWidget {
