@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardchilds/UserActivity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
-import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../../widgets/cardborder.dart';
-import '../dashboardchilds/dashboardchild1.dart';
 import '../dashboardchilds/dashboardchild2.dart';
 import '../dashboardchilds/dashboardchild3.dart';
 import '../dashboardchilds/dashboardchild4.dart';
@@ -107,6 +106,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.getallXtremer.length,
                                   title: "Total",
+                                  icon: 'assets/images/total.png',
                                 )),
                           ),
                           Expanded(
@@ -115,6 +115,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.allpersonalxtremer.length,
                                   title: "Personal",
+                                  icon: 'assets/images/personal.png',
                                 )),
                           ),
                           Expanded(
@@ -123,6 +124,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.allgeneralxtremer.length,
                                   title: "General",
+                                  icon: 'assets/images/general.png',
                                 )),
                           ),
                           Expanded(
@@ -134,6 +136,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                           controller.allgeneralxtremer.length +
                                           controller.allpersonalxtremer.length),
                                   title: "Others",
+                                  icon: 'assets/images/other.png',
                                 )),
                           ),
                           Expanded(
@@ -141,6 +144,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                               num: controller.allinactivextremer.length,
                               title: "Inactive",
+                              icon: 'assets/images/inactive.png',
                             )),
                           ),
                         ],
@@ -153,7 +157,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: const Row(
                           children: [
-                            Expanded(child: DashboardChild1()),
+                            Expanded(child: UserActivityChart()),
                             SizedBox(
                               width: 16,
                             ),
@@ -194,8 +198,10 @@ class OverviewMembertitle extends StatelessWidget {
     super.key,
     required this.title,
     required this.num,
+    required this.icon,
   });
   final String title;
+  final String icon;
   final int num;
   @override
   Widget build(BuildContext context) {
@@ -206,16 +212,20 @@ class OverviewMembertitle extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.person,
-                size: 14,
+              Image.asset(
+                icon,
+                height: 35,
               ),
+              //  Icon(
+              //   Icons.person,
+              //   size: 14,
+              // ),
               const SizedBox(
-                width: 6,
+                width: 10,
               ),
-              TitleText(
+              HeadingText(
                 title,
-                size: 16,
+                size: 20,
               ),
             ],
           ),
@@ -248,29 +258,29 @@ class _HoverDashboardTextState extends State<HoverDashboardText> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onHover: (v){
+      onHover: (v) {
         setState(() {
-         hover = v; 
+          hover = v;
         });
       },
-      onTap:(){},
+      onTap: () {},
       mouseCursor: MouseCursor.uncontrolled,
       child: Row(
         children: [
           Text(
             "${widget.num}",
-            style:  TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold,color:hover?null:Colors.grey[400]),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: hover ? null : Colors.grey[400]),
           ),
           const SizedBox(
             width: 5,
           ),
-      Text(
+          Text(
             "members",
-            style: TextStyle(
-              fontSize: 16,
-             color:hover?null:Colors.grey[400]
-            ),
+            style:
+                TextStyle(fontSize: 13, color: hover ? null : Colors.grey[400]),
           )
         ],
       ),

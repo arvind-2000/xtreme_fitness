@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:xtreme_fitness/landingpages/sections/home/home.dart';
-
-
 double navbarsize = 1000;
 double mobilescreen = 800;
 
@@ -56,12 +52,12 @@ const String rupee = "₹";
 List<String> months = [
   "Jan",
   "Feb",
-  "March",
-  "April",
+  "Mar",
+  "Apr",
   "May",
   "June",
   "July",
-  "August",
+  "Aug",
   "Sept",
   "Oct",
   "Nov",

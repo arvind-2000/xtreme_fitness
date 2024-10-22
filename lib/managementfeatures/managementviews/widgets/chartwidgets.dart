@@ -14,7 +14,9 @@ class GraphsWidget extends StatelessWidget {
       this.isyearly = false,
       this.axis = true,
       this.plotbands = true,
-      this.threshold, this.tooltip, this.graphaxisnames});
+      this.threshold,
+      this.tooltip,
+      this.graphaxisnames});
 
   final ChartType charttype;
   final List<double> seriesdata;
@@ -25,11 +27,15 @@ class GraphsWidget extends StatelessWidget {
   final bool axis;
   final bool plotbands;
   final double? threshold;
-  final Widget Function(dynamic data,ChartPoint<dynamic> point,ChartSeries<dynamic, dynamic> series,int pointIndex,int seriesIndex)? tooltip;
+  final Widget Function(
+      dynamic data,
+      ChartPoint<dynamic> point,
+      ChartSeries<dynamic, dynamic> series,
+      int pointIndex,
+      int seriesIndex)? tooltip;
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
-
       zoomPanBehavior: ZoomPanBehavior(
           enableMouseWheelZooming: false,
           enablePanning: true,
@@ -42,19 +48,19 @@ class GraphsWidget extends StatelessWidget {
 
       tooltipBehavior: TooltipBehavior(
           enable: true,
-          builder:tooltip??(data, point, series, pointIndex, seriesIndex) =>
-              CardwithShadow(
-                padding: const EdgeInsets.all(8),
-                child: SizedBox(
-                  // height: 100,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("$data"),
-                    ],
+          builder: tooltip ??
+              (data, point, series, pointIndex, seriesIndex) => CardwithShadow(
+                    padding: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      // height: 100,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("$data"),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
           color: Theme.of(context).colorScheme.primary,
           textStyle: TextStyle(color: Theme.of(context).colorScheme.surface)),
       borderWidth: 0,
@@ -89,28 +95,26 @@ class GraphsWidget extends StatelessWidget {
         minorTickLines: const MinorTickLines(size: 0, width: 0),
         // maximum: 400,
         minimum: 0,
-       
-       
+
         axisLabelFormatter: (x) {
           return ChartAxisLabel("", const TextStyle());
         },
 
         //  desiredIntervals: 12,
         //    decimalPlaces: 0,
-          
-           // interval: 50,
-            
+
+        // interval: 50,
       ),
       primaryXAxis: NumericAxis(
         isVisible: axis,
 
         majorGridLines: const MajorGridLines(width: 0),
-           axisLabelFormatter:graphaxisnames,
+        axisLabelFormatter: graphaxisnames,
         interval: 1,
         // maximum: 11,
-       minimum:0,
-    labelAlignment: LabelAlignment.center,
-        plotOffset: charttype == ChartType.bar?30:10,
+        minimum: 0,
+        labelAlignment: LabelAlignment.center,
+        plotOffset: charttype == ChartType.bar ? 30 : 10,
       ),
 
       series: [
@@ -119,13 +123,29 @@ class GraphsWidget extends StatelessWidget {
             : barcharts(
                 data: seriesdata,
                 // data: [10000,18992,20938,478547,37847],
-                color: Colors.grey[400]!,
-              )
+                color: Colors.orange[100]!)
       ],
     );
   }
 }
 
+final List<Color> monthColors = [
+  Colors.red[200]!, // January
+  Colors.orange[200]!, // February
+  Colors.purple[200]!, // July
+
+  Colors.green[200]!, // April
+  Colors.blue[200]!, // May
+  Colors.indigo[200]!, // June
+  Colors.purple[200]!, // July
+  Colors.yellow[200]!, // March
+
+  Colors.pink[200]!, // August
+  Colors.brown[200]!, // September
+  Colors.cyan[200]!, // October
+  Colors.lime[200]!, // November
+  Colors.teal[200]!, // December
+];
 SplineAreaSeries<double, int> linecharts({
   required List<double> data,
   required Color color,
@@ -165,7 +185,6 @@ StackedBarSeries<double, int> barcharts({
   required Color color,
 }) {
   return StackedBarSeries(
-   
       animationDelay: 1,
       animationDuration: 500,
       enableTooltip: true,
@@ -178,11 +197,16 @@ StackedBarSeries<double, int> barcharts({
       isTrackVisible: false,
       spacing: 0.0,
       color: color,
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(40),
+      ),
       dataSource: data,
       xValueMapper: (datum, index) {
         return index;
+      },
+      pointColorMapper: (datum, index) {
+        return monthColors[
+            index % 12]; // Cycle through colors if more than 12 data points.
       },
       yValueMapper: (d, i) => data[i]);
 }
