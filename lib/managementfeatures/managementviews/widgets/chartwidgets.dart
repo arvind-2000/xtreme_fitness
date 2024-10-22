@@ -197,9 +197,8 @@ StackedBarSeries<double, int> barcharts({
       isTrackVisible: false,
       spacing: 0.0,
       color: color,
-      borderRadius: const BorderRadius.all(
-        Radius.circular(40),
-      ),
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20), topRight: Radius.circular(20)),
       dataSource: data,
       xValueMapper: (datum, index) {
         return index;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardchilds/UserActivity.dart';
 import 'package:xtreme_fitness/widgets/normaltext.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
@@ -59,38 +60,47 @@ class DashboardMobileScreen extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    TitleText(controller
-                                        .allpersonalxtremer.length
-                                        .toString(),  color: Colors.grey[500],),
+                                    TitleText(
+                                      controller.allpersonalxtremer.length
+                                          .toString(),
+                                      color: Colors.grey[500],
+                                    ),
                                     const Text("Personal")
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    TitleText(controller
-                                        .allgeneralxtremer.length
-                                        .toString(),  color: Colors.grey[500],),
+                                    TitleText(
+                                      controller.allgeneralxtremer.length
+                                          .toString(),
+                                      color: Colors.grey[500],
+                                    ),
                                     const Text("General")
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    TitleText((controller.getallXtremer.length -
-                                            (controller
-                                                    .allinactivextremer.length +
-                                                controller
-                                                    .allgeneralxtremer.length +
-                                                controller
-                                                    .allpersonalxtremer.length))
-                                        .toString(),  color: Colors.grey[500],),
+                                    TitleText(
+                                      (controller.getallXtremer.length -
+                                              (controller.allinactivextremer
+                                                      .length +
+                                                  controller.allgeneralxtremer
+                                                      .length +
+                                                  controller.allpersonalxtremer
+                                                      .length))
+                                          .toString(),
+                                      color: Colors.grey[500],
+                                    ),
                                     const Text("Others")
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    TitleText(controller
-                                        .allinactivextremer.length
-                                        .toString(),  color: Colors.grey[500],),
+                                    TitleText(
+                                      controller.allinactivextremer.length
+                                          .toString(),
+                                      color: Colors.grey[500],
+                                    ),
                                     const Text("Inactive")
                                   ],
                                 ),
@@ -103,7 +113,7 @@ class DashboardMobileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    const SizedBox(height: 400, child: DashboardChild1()),
+                    const SizedBox(height: 400, child: UserActivityChart()),
                     const SizedBox(
                       height: 24,
                     ),
@@ -115,7 +125,7 @@ class DashboardMobileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const SizedBox( child: DashboardChild4()),
+                    const SizedBox(child: DashboardChild4()),
                     const SizedBox(
                       height: 24,
                     ),
