@@ -105,16 +105,13 @@ class GraphsWidget extends StatelessWidget {
 
         // interval: 50,
       ),
-      primaryXAxis: NumericAxis(
+      primaryXAxis: CategoryAxis(
         isVisible: axis,
-
         majorGridLines: const MajorGridLines(width: 0),
         axisLabelFormatter: graphaxisnames,
         interval: 1,
-        // maximum: 11,
-        minimum: 0,
         labelAlignment: LabelAlignment.center,
-        plotOffset: charttype == ChartType.bar ? 30 : 10,
+        plotOffset: charttype == ChartType.bar ? 0 : 10,
       ),
 
       series: [
