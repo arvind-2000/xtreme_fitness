@@ -23,14 +23,12 @@ class XtremerDataSource extends DataGridSource {
   // final ManagementController managectrl;
 
   List<DataGridRow> _xtremerRows = [];
-  Xtremer? _user;
-  void changeuser(Xtremer us) {
-    _user = us;
-  }
+  final Function(Xtremer) callback;
 
   XtremerDataSource(
       {required ManagementController mngctrl,
       required GetxPageController pagectrl,
+      required this.callback, 
       required AddMemberController addmemberctrl}) {
     _xtremerRows = mngctrl.getsearchXtremer
         .map<DataGridRow>((xtremer) => DataGridRow(
@@ -75,8 +73,10 @@ class XtremerDataSource extends DataGridSource {
                 ElevatedButton(
           onPressed: () {
          TextEditingController assigncard = TextEditingController();
+         FocusNode assignfocus = FocusNode();
+         assignfocus.requestFocus();
           Get.dialog(
-            
+            barrierDismissible: false,
             StatefulBuilder(
             builder: (context,state) {
               
@@ -97,7 +97,11 @@ class XtremerDataSource extends DataGridSource {
                           const HeadingText("Assign Card"),
                         ],
                       ),
-                      IconButton(onPressed: (){Get.back();}, icon: const Icon(Icons.close,size: 14,)),
+                      IconButton(onPressed: (){Get.back();
+                      assigncard.dispose();
+                      assignfocus.dispose();
+                      
+                      }, icon: const Icon(Icons.close,size: 14,)),
                  
                     ],
                   ),
@@ -106,7 +110,7 @@ class XtremerDataSource extends DataGridSource {
                       Expanded(child: Form(child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                        TextFieldWidget(hint: "Assign Card", controller: assigncard),
+                        TextFieldWidget(hint: "Assign Card", controller: assigncard,focusnode: assignfocus,),
 
                       ],)),
                       
@@ -156,7 +160,7 @@ class XtremerDataSource extends DataGridSource {
         const SizedBox(width: 5),
         IconButton(
           onPressed: () {
-            changeuser(xtremer);
+            callback(xtremer);
             pagectrl.changeviewprofile(true);
           },
           icon: const Icon(Icons.person, size: 14),
@@ -223,9 +227,10 @@ class XtremerDataSource extends DataGridSource {
 }
 
 class XtremerDataTableWidget extends StatefulWidget {
-  const XtremerDataTableWidget({super.key, required this.controller});
+  const XtremerDataTableWidget({super.key, required this.controller, required this.callback, required this.selectionMode});
   final DataGridController controller;
-
+  final Function(Xtremer) callback;
+  final SelectionMode selectionMode;
   @override
   State<XtremerDataTableWidget> createState() => _XtremerDataTableWidgetState();
 }
@@ -248,7 +253,7 @@ class _XtremerDataTableWidgetState extends State<XtremerDataTableWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal:  16.0),
                 child: SfDataGrid(
-                     selectionMode: SelectionMode.multiple,
+                     selectionMode: widget.selectionMode,
                     // onSelectionChanged: (addedRows, removedRows){
                    
                     //     managectrl.selectedIndex(controller.selectedRows);
@@ -263,7 +268,7 @@ class _XtremerDataTableWidgetState extends State<XtremerDataTableWidget> {
 
               
                   source: XtremerDataSource(    
-                    
+                      callback:widget.callback,
                       mngctrl: managectrl,
                       pagectrl: pagectrl,
                       addmemberctrl: addmemberctrl),

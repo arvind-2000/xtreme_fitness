@@ -231,7 +231,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                                     .addStaffs(
                                                                         addstaff);
                                                             CustomSnackbar(
-                                                                context, v);
+                                                              v);
                                                             _fullnamecontroller
                                                                 .clear();
                                                             _confirmpasswordcontroller
@@ -721,7 +721,7 @@ class _AddStaffScreenState extends State<AddStaffScreen> {
                                                                                 e.passwordHash));
 
                                                                         CustomSnackbar(
-                                                                            context,
+                                                                    
                                                                             "staff updated");
 
                                                                         Get.back();

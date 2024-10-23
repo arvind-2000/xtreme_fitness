@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
 
-void CustomSnackbar(BuildContext context, String message) {
+void CustomSnackbar( String message) {
   Get.dialog(
     AlertDialog(
       shape: RoundedRectangleBorder(

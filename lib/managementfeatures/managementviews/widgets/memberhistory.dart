@@ -70,7 +70,7 @@ class MemberServiceHistory extends StatelessWidget {
                                                     Clipboard.setData(ClipboardData(
                                                         text:
                                                             "${e.transactionId}"));
-                                                    CustomSnackbar(context,
+                                                    CustomSnackbar(
                                                         "Text copied to Clipboard");
                                                   },
                                                   icon: const Icon(

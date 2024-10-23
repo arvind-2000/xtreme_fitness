@@ -95,7 +95,7 @@ class _RenewalFormsState extends State<RenewalForms> {
                                     }));
                                   } else {
                                     CustomSnackbar(
-                                        context, "No Trainers Selected");
+                                       "No Trainers Selected");
                                   }
                                 } else {
                                   Get.dialog(PaymentDialogs(callback: () {

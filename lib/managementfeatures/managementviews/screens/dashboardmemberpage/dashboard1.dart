@@ -136,7 +136,7 @@ class _DashBoardMemberScreenState extends State<DashBoardMemberScreen> {
                                   membership.bmiUsed = false;
                                   String s  = await  managectrl.managementRepo.editMembership(membership);
                   
-                                  CustomSnackbar(context, s);
+                                  CustomSnackbar( s);
                                       managectrl.getMembershipbyid(managectrl.xtremer!.XtremerId!);
                                 },
                                 color: Colors.amber,

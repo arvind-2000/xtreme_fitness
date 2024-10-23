@@ -163,7 +163,7 @@ class _AdmissioncardState extends State<Admissioncard> {
                                                     .getAdmission!
                                                     .discountPercentage));
                                         CustomSnackbar(
-                                          context,
+                                         
                                           v,
                                         );
                                         admissionprice.clear();
@@ -298,7 +298,7 @@ class _RolesState extends State<Roles> {
                                                 id: 0,
                                                 roleName:
                                                     rolenamecontroller.text));
-                                        CustomSnackbar(context, v);
+                                        CustomSnackbar( v);
                                         rolenamecontroller.clear();
                                         setState(() {
                                           showroles = false;
@@ -375,7 +375,7 @@ class _RolesState extends State<Roles> {
                                                 .deleteRole(managectrl
                                                     .getallRoles[index]);
                                             Get.back();
-                                            CustomSnackbar(context, v);
+                                            CustomSnackbar(v);
                                           }));
                                     },
                                     child: const Center(

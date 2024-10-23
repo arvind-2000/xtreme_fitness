@@ -76,14 +76,14 @@ class _EditmemberFormState extends State<EditmemberForm> {
                                     pagectrl.changeeditform(false);
                                     pagectrl.changeaddMemberPage(0);
                                   }
-                                 CustomSnackbar(context, x.entries.first.key);
+                                 CustomSnackbar( x.entries.first.key);
                                  }else{
                                   Map<String,bool> x = await  addmemberctrl.updateXtremer();
                                   if(x.entries.first.value){
                                     pagectrl.changeeditform(false);
                                     pagectrl.changeaddMemberPage(0);
                                   }
-                                 CustomSnackbar(context, x.entries.first.key);
+                                 CustomSnackbar( x.entries.first.key);
                                  }
                                  
                               

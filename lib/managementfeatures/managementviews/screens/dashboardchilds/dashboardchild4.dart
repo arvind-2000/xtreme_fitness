@@ -195,7 +195,7 @@ class _ListViewCardState extends State<ListViewCard> {
                                         Clipboard.setData(ClipboardData(
                                             text:
                                                 "${widget.e.transactionId}"));
-                                        CustomSnackbar(context,
+                                        CustomSnackbar(
                                             "Text copied to Clipboard");
                                       },
                                       icon: Icon(

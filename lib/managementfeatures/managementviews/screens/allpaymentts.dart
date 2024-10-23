@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/userpaymentmodel.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/nodatascreen.dart/nodatascreen.dart';
+import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 import 'package:xtreme_fitness/widgets/titletext.dart';
 
 import '../../../config/const.dart';
@@ -24,10 +27,10 @@ class AllPaymentScreen extends StatefulWidget {
   @override
   State<AllPaymentScreen> createState() => _AllPaymentScreenState();
 }
-
+  List<String> paymetstatusList = ["Success", "Failed", "Cancel", "Initiated"];
 class _AllPaymentScreenState extends State<AllPaymentScreen> {
   String? paymentStatus;
-  List<String> paymetstatusList = ["Success", "Failed", "Cancel", "Initiated"];
+
   List<String> d = ["All", "Success", "Failed"];
   DateTime startdatexl = DateTime.now();
   DateTime enddatexl = DateTime.now();
@@ -495,7 +498,7 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                                                                   enddatexl),
                                                               "Payment list");
                                                           CustomSnackbar(
-                                                              context,
+                                                         
                                                               v
                                                                   ? "Payment Reports exported."
                                                                   : "Failed to export");
@@ -585,513 +588,623 @@ class _AllPaymentScreenState extends State<AllPaymentScreen> {
                   ),
                   managectrl.getsearchpayments.isEmpty
                       ? const NodataScreen(
-                          title: "Payments", desc: "No payment Records")
-                      : Expanded(
-                          child: ListView.builder(
-                          itemCount: managectrl.getsearchpayments.length,
-                          itemBuilder: (c, i) => ListCard(
-                              payment: managectrl.getsearchpayments[i],
-                              edit: () {
-                                Get.dialog(Dialog(
-                                  backgroundColor: Colors.grey[900],
-                                  child: SizedBox(
-                                    width: 500,
-                                    height: 600,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(32),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              HeadingText("Edit Payments",
-                                                  size:
-                                                      MediaQuery.sizeOf(context)
-                                                                  .width <
-                                                              mobilescreen
-                                                          ? 16
-                                                          : null),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.close,
-                                                    size: 16,
-                                                  ))
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          Expanded(
-                                            child: managectrl.iseditpayment
-                                                ? Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                    ),
-                                                  )
-                                                : SingleChildScrollView(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            const Text(
-                                                              "Transaction Id",
-                                                              style: TextStyle(
-                                                                  fontSize: 14),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  Clipboard.setData(
-                                                                      ClipboardData(
-                                                                          text:
-                                                                              "${managectrl.getsearchpayments[i].transactionId}"));
-                                                                  CustomSnackbar(
-                                                                      context,
-                                                                      "Text copied to Clipboard");
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons.copy,
-                                                                  size: 14,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      300],
-                                                                ))
-                                                          ],
-                                                        ),
-                                                        Text(
-                                                            "${managectrl.getsearchpayments[i].transactionId}"),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        const Text(
-                                                          "Payment Method",
-                                                          style: TextStyle(
-                                                              fontSize: 14),
-                                                        ),
-                                                        Text(
-                                                            "${managectrl.getsearchpayments[i].paymentMethod}"),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        const Text(
-                                                          "Amount",
-                                                          style: TextStyle(
-                                                              fontSize: 14),
-                                                        ),
-                                                        Text(
-                                                          "${managectrl.getsearchpayments[i].receivedAmount}",
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 16),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        DropdownMenu(
-                                                            menuStyle:
-                                                                MenuStyle(
-                                                                    shape:
-                                                                        WidgetStateProperty
-                                                                            .all(
-                                                                      RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(8),
-                                                                      ),
-                                                                    ),
-                                                                    backgroundColor:
-                                                                        WidgetStateColor
-                                                                            .resolveWith(
-                                                                      (states) =>
-                                                                          Colors
-                                                                              .grey[800]!,
-                                                                    )),
-                                                            onSelected:
-                                                                (index) {
-                                                              setState(() {
-                                                                paymentStatus =
-                                                                    paymetstatusList[(index ??
-                                                                            0) %
-                                                                        paymetstatusList
-                                                                            .length];
-                                                              });
-                                                            },
-                                                            hintText: "Status",
-                                                            dropdownMenuEntries: paymetstatusList
-                                                                .asMap()
-                                                                .entries
-                                                                .map((e) => DropdownMenuEntry(
-                                                                    value: e.key,
-                                                                    label: e.value,
-                                                                    style: ButtonStyle(
-                                                                        backgroundColor: WidgetStateColor.resolveWith(
-                                                                      (states) => Theme.of(
-                                                                              context)
-                                                                          .colorScheme
-                                                                          .primary,
-                                                                    ))))
-                                                                .toList()),
-                                                        const Text(
-                                                          "Date",
-                                                          style: TextStyle(
-                                                              fontSize: 14),
-                                                        ),
-                                                        Text(
-                                                          "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 16),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                          ),
-                                          SizedBox(
-                                            width: double.maxFinite,
-                                            child: CardBorder(
-                                                margin: EdgeInsets.zero,
-                                                color: Colors.blue,
-                                                onpress: () async {
-                                                  Alluserpaymentmodel payments = Alluserpaymentmodel(
-                                                      id: managectrl
-                                                          .getsearchpayments[i]
-                                                          .id,
-                                                      userId: managectrl
-                                                          .getsearchpayments[i]
-                                                          .userId,
-                                                      amount: managectrl
-                                                          .getsearchpayments[i]
-                                                          .amount,
-                                                      receivedAmount: managectrl
-                                                          .getsearchpayments[i]
-                                                          .receivedAmount,
-                                                      paymentDate: managectrl
-                                                          .getsearchpayments[i]
-                                                          .paymentDate,
-                                                      transactionId: managectrl
-                                                          .getsearchpayments[i]
-                                                          .transactionId,
-                                                      paymentStatus: paymentStatus ??
-                                                          managectrl
-                                                              .getsearchpayments[
-                                                                  i]
-                                                              .paymentStatus,
-                                                      paymentMethod: managectrl
-                                                          .getsearchpayments[i]
-                                                          .paymentMethod,
-                                                      paymentType: managectrl
-                                                          .getsearchpayments[i]
-                                                          .paymentType,
-                                                      discountPercentage:
-                                                          managectrl
-                                                              .getsearchpayments[
-                                                                  i]
-                                                              .discountPercentage,
-                                                      serviceUsageId: managectrl
-                                                          .getsearchpayments[i]
-                                                          .serviceUsageId,
-                                                      subscriptionId: managectrl
-                                                          .getsearchpayments[i]
-                                                          .subscriptionId);
+                          title: "Payments", desc: "No payment Records"):Expanded(child: SfDataGridTheme(
+                                      data: SfDataGridThemeData(
+                gridLineColor: Colors.grey[700],
+                filterIconColor: Colors.grey[600],
+                gridLineStrokeWidth: 0.5
+              ),
 
-                                                  String s = await managectrl
-                                                      .editpayments(payments);
-                                                  // createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
-                                                  Navigator.pop(context);
-                                                  CustomSnackbar(context, s);
-                                                },
-                                                child: const Center(
-                                                    child: Text(
-                                                  "Edit Payment",
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ))),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ));
-                              },
-                              userss: () {
-                                Get.dialog(Dialog(
-                                  backgroundColor: Colors.grey[900],
-                                  insetPadding: const EdgeInsets.all(16),
-                                  child: SizedBox(
-                                    width: 500,
-                                    height: 600,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(32),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: SfDataGrid(source: PaymentGridSource(context, managectrl: managectrl),
+                                                      allowTriStateSorting: true,
+                                                      allowSorting: true,   
+                                                      gridLinesVisibility: GridLinesVisibility.both,
+                                                        footerHeight: 50,
+                                                       columnWidthMode: ColumnWidthMode.fill,
+                                                       
+                                    
+                                      columns:  <GridColumn>[
+                              
+                                                        GridColumn(
+                                                          
+                                                            maximumWidth: 180,
+                                                            columnName: 'Receipt',
+                                                           allowSorting: false,
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Receipt',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                          GridColumn(
+                                                            allowSorting: true,
+                                                            maximumWidth: 180,
+                                                            columnName: 'Name',
+                                                          
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Name',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                         GridColumn(
+                                                            maximumWidth: 180,
+                                                            allowSorting: false,
+                                                            columnName: 'Type',
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Type',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                                        GridColumn(
+                                                            maximumWidth: 180,
+                                                            allowSorting: false,
+                                                            columnName: 'Method',
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Method',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                                        GridColumn(
+                                                            maximumWidth: 140,
+                                                            allowSorting: true,
+                                                            columnName: 'Date',
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Date',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                          
+                                                        GridColumn(
+                                                          allowSorting: false,
+                                                            maximumWidth: 140,
+                                                            columnName: 'Status',
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Status',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ))),
+                                                        // Add the Action column
+                                                        GridColumn(
+                                                            // maximumWidth: 200,
+                                                            allowSorting: false,
+                                                            columnName: 'Actions',
+                                                            label: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      alignment: Alignment.center,
+                                      child: const Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          const SizedBox(
-                                            height: 16,
+                                          Text(
+                                            'Actions',
+                                            style: TextStyle(fontWeight: FontWeight.bold),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const HeadingText(
-                                                  "Payment Details"),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.close,
-                                                    size: 16,
-                                                  ))
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          Expanded(
-                                            child: SingleChildScrollView(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Center(
-                                                    child: Container(
-                                                      height: 70,
-                                                      width: 70,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: managectrl
-                                                                    .getsearchpayments[
-                                                                        i]
-                                                                    .paymentStatus!
-                                                                    .toLowerCase() ==
-                                                                "success"
-                                                            ? Colors.green[200]
-                                                            : Colors.red[200],
-                                                      ),
-                                                      child: managectrl
-                                                                  .getsearchpayments[
-                                                                      i]
-                                                                  .paymentStatus!
-                                                                  .toLowerCase() ==
-                                                              "success"
-                                                          ? const Icon(
-                                                              Icons.check,
-                                                              color:
-                                                                  Colors.white,
-                                                              size: 40,
-                                                            )
-                                                          : const Icon(
-                                                              Icons.dangerous,
-                                                              color:
-                                                                  Colors.white,
-                                                              size: 40,
-                                                            ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  Center(
-                                                      child: TitleText(managectrl
-                                                          .getsearchpayments[i]
-                                                          .paymentStatus!
-                                                          .toUpperCase())),
-                                                  Divider(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onPrimary
-                                                        .withOpacity(0.6),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Text(
-                                                        "Transaction Id",
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      IconButton(
-                                                          onPressed: () {
-                                                            Clipboard.setData(
-                                                                ClipboardData(
-                                                                    text:
-                                                                        "${managectrl.getsearchpayments[i].transactionId}"));
-                                                            CustomSnackbar(
-                                                                context,
-                                                                "Text copied to Clipboard");
-                                                          },
-                                                          icon: Icon(
-                                                            Icons.copy,
-                                                            size: 14,
-                                                            color: Colors
-                                                                .grey[300],
-                                                          ))
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                      "${managectrl.getsearchpayments[i].transactionId}"),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  const Text(
-                                                    "Payment Method",
-                                                    style:
-                                                        TextStyle(fontSize: 14),
-                                                  ),
-                                                  Text(
-                                                      "${managectrl.getsearchpayments[i].paymentMethod}"),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  const Text(
-                                                    "Amount",
-                                                    style:
-                                                        TextStyle(fontSize: 14),
-                                                  ),
-                                                  Text(
-                                                    "${managectrl.getsearchpayments[i].receivedAmount}",
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  const Text(
-                                                    "Date",
-                                                    style:
-                                                        TextStyle(fontSize: 14),
-                                                  ),
-                                                  Text(
-                                                    "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: double.maxFinite,
-                                            child: CardBorder(
-                                                margin: EdgeInsets.zero,
-                                                color: Colors.blue,
-                                                onpress: () {
-                                                  String s = managectrl.allUsers
-                                                          .firstWhereOrNull(
-                                                            (element) =>
-                                                                element.id ==
-                                                                managectrl
-                                                                    .getsearchpayments[
-                                                                        i]
-                                                                    .userId,
-                                                          )
-                                                          ?.fullName ??
-                                                      "";
-                                                  createAndprintPdf(
-                                                    PaymentByTransaction(
-                                                        fullName: s,
-                                                        id: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .id,
-                                                        userId: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .userId!,
-                                                        amount: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .amount!,
-                                                        discountPercentage: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .discountPercentage!
-                                                            .toDouble(),
-                                                        receivedAmount: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .receivedAmount,
-                                                        paymentDate: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .paymentDate,
-                                                        transactionId: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .transactionId!,
-                                                        paymentStatus: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .paymentStatus!,
-                                                        paymentMethod: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .paymentMethod!,
-                                                        paymentType: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .paymentType!,
-                                                        subscriptionId: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .subscriptionId,
-                                                        serviceUsageId: managectrl
-                                                            .getsearchpayments[
-                                                                i]
-                                                            .serviceUsageId,
-                                                        termsAndConditions:
-                                                            true),
-                                                        
-                                                    // name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
-                                                  );
-                                                },
-                                                child: const Center(
-                                                    child: Text(
-                                                  "Print Receipt",
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ))),
-                                          ),
+                                        
+                                           
                                         ],
-                                      ),
-                                    ),
-                                  ),
-                                ));
-                              }),
-                        ).animate().slideX(begin: 1, end: 0)),
+                                      ))),
+                                                      ],),
+                            ),
+                          )),
+                      // : Expanded(
+                      //     child: ListView.builder(
+                      //     itemCount: managectrl.getsearchpayments.length,
+                      //     itemBuilder: (c, i) => ListCard(
+                      //         payment: managectrl.getsearchpayments[i],
+                      //         edit: () {
+                      //           Get.dialog(Dialog(
+                      //             backgroundColor: Colors.grey[900],
+                      //             child: SizedBox(
+                      //               width: 500,
+                      //               height: 600,
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.all(32),
+                      //                 child: Column(
+                      //                   crossAxisAlignment:
+                      //                       CrossAxisAlignment.start,
+                      //                   children: [
+                      //                     const SizedBox(
+                      //                       height: 16,
+                      //                     ),
+                      //                     Row(
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.spaceBetween,
+                      //                       children: [
+                      //                         HeadingText("Edit Payments",
+                      //                             size:
+                      //                                 MediaQuery.sizeOf(context)
+                      //                                             .width <
+                      //                                         mobilescreen
+                      //                                     ? 16
+                      //                                     : null),
+                      //                         IconButton(
+                      //                             onPressed: () {
+                      //                               Navigator.pop(context);
+                      //                             },
+                      //                             icon: const Icon(
+                      //                               Icons.close,
+                      //                               size: 16,
+                      //                             ))
+                      //                       ],
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 16,
+                      //                     ),
+                      //                     Expanded(
+                      //                       child: managectrl.iseditpayment
+                      //                           ? Center(
+                      //                               child:
+                      //                                   CircularProgressIndicator(
+                      //                                 color: Theme.of(context)
+                      //                                     .colorScheme
+                      //                                     .secondary,
+                      //                               ),
+                      //                             )
+                      //                           : SingleChildScrollView(
+                      //                               child: Column(
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment
+                      //                                         .start,
+                      //                                 children: [
+                      //                                   Row(
+                      //                                     children: [
+                      //                                       const Text(
+                      //                                         "Transaction Id",
+                      //                                         style: TextStyle(
+                      //                                             fontSize: 14),
+                      //                                       ),
+                      //                                       const SizedBox(
+                      //                                         width: 10,
+                      //                                       ),
+                      //                                       IconButton(
+                      //                                           onPressed: () {
+                      //                                             Clipboard.setData(
+                      //                                                 ClipboardData(
+                      //                                                     text:
+                      //                                                         "${managectrl.getsearchpayments[i].transactionId}"));
+                      //                                             CustomSnackbar(
+                                                                    
+                      //                                                 "Text copied to Clipboard");
+                      //                                           },
+                      //                                           icon: Icon(
+                      //                                             Icons.copy,
+                      //                                             size: 14,
+                      //                                             color: Colors
+                      //                                                     .grey[
+                      //                                                 300],
+                      //                                           ))
+                      //                                     ],
+                      //                                   ),
+                      //                                   Text(
+                      //                                       "${managectrl.getsearchpayments[i].transactionId}"),
+                      //                                   const SizedBox(
+                      //                                     height: 16,
+                      //                                   ),
+                      //                                   const SizedBox(
+                      //                                     height: 16,
+                      //                                   ),
+                      //                                   const Text(
+                      //                                     "Payment Method",
+                      //                                     style: TextStyle(
+                      //                                         fontSize: 14),
+                      //                                   ),
+                      //                                   Text(
+                      //                                       "${managectrl.getsearchpayments[i].paymentMethod}"),
+                      //                                   const SizedBox(
+                      //                                     height: 16,
+                      //                                   ),
+                      //                                   const Text(
+                      //                                     "Amount",
+                      //                                     style: TextStyle(
+                      //                                         fontSize: 14),
+                      //                                   ),
+                      //                                   Text(
+                      //                                     "${managectrl.getsearchpayments[i].receivedAmount}",
+                      //                                     style:
+                      //                                         const TextStyle(
+                      //                                             fontSize: 16),
+                      //                                   ),
+                      //                                   const SizedBox(
+                      //                                     height: 16,
+                      //                                   ),
+                      //                                   DropdownMenu(
+                      //                                       menuStyle:
+                      //                                           MenuStyle(
+                      //                                               shape:
+                      //                                                   WidgetStateProperty
+                      //                                                       .all(
+                      //                                                 RoundedRectangleBorder(
+                      //                                                   borderRadius:
+                      //                                                       BorderRadius.circular(8),
+                      //                                                 ),
+                      //                                               ),
+                      //                                               backgroundColor:
+                      //                                                   WidgetStateColor
+                      //                                                       .resolveWith(
+                      //                                                 (states) =>
+                      //                                                     Colors
+                      //                                                         .grey[800]!,
+                      //                                               )),
+                      //                                       onSelected:
+                      //                                           (index) {
+                      //                                         setState(() {
+                      //                                           paymentStatus =
+                      //                                               paymetstatusList[(index ??
+                      //                                                       0) %
+                      //                                                   paymetstatusList
+                      //                                                       .length];
+                      //                                         });
+                      //                                       },
+                      //                                       hintText: "Status",
+                      //                                       dropdownMenuEntries: paymetstatusList
+                      //                                           .asMap()
+                      //                                           .entries
+                      //                                           .map((e) => DropdownMenuEntry(
+                      //                                               value: e.key,
+                      //                                               label: e.value,
+                      //                                               style: ButtonStyle(
+                      //                                                   backgroundColor: WidgetStateColor.resolveWith(
+                      //                                                 (states) => Theme.of(
+                      //                                                         context)
+                      //                                                     .colorScheme
+                      //                                                     .primary,
+                      //                                               ))))
+                      //                                           .toList()),
+                      //                                   const Text(
+                      //                                     "Date",
+                      //                                     style: TextStyle(
+                      //                                         fontSize: 14),
+                      //                                   ),
+                      //                                   Text(
+                      //                                     "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",
+                      //                                     style:
+                      //                                         const TextStyle(
+                      //                                             fontSize: 16),
+                      //                                   ),
+                      //                                   const SizedBox(
+                      //                                     height: 16,
+                      //                                   ),
+                      //                                 ],
+                      //                               ),
+                      //                             ),
+                      //                     ),
+                      //                     SizedBox(
+                      //                       width: double.maxFinite,
+                      //                       child: CardBorder(
+                      //                           margin: EdgeInsets.zero,
+                      //                           color: Colors.blue,
+                      //                           onpress: () async {
+                      //                             Alluserpaymentmodel payments = Alluserpaymentmodel(
+                      //                                 id: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .id,
+                      //                                 userId: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .userId,
+                      //                                 amount: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .amount,
+                      //                                 receivedAmount: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .receivedAmount,
+                      //                                 paymentDate: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .paymentDate,
+                      //                                 transactionId: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .transactionId,
+                      //                                 paymentStatus: paymentStatus ??
+                      //                                     managectrl
+                      //                                         .getsearchpayments[
+                      //                                             i]
+                      //                                         .paymentStatus,
+                      //                                 paymentMethod: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .paymentMethod,
+                      //                                 paymentType: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .paymentType,
+                      //                                 discountPercentage:
+                      //                                     managectrl
+                      //                                         .getsearchpayments[
+                      //                                             i]
+                      //                                         .discountPercentage,
+                      //                                 serviceUsageId: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .serviceUsageId,
+                      //                                 subscriptionId: managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .subscriptionId);
+
+                      //                             String s = await managectrl
+                      //                                 .editpayments(payments);
+                      //                             // createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
+                      //                             Navigator.pop(context);
+                      //                             CustomSnackbar( s);
+                      //                           },
+                      //                           child: const Center(
+                      //                               child: Text(
+                      //                             "Edit Payment",
+                      //                             style:
+                      //                                 TextStyle(fontSize: 16),
+                      //                           ))),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ));
+                      //         },
+                      //         userss: () {
+                      //           Get.dialog(Dialog(
+                      //             backgroundColor: Colors.grey[900],
+                      //             insetPadding: const EdgeInsets.all(16),
+                      //             child: SizedBox(
+                      //               width: 500,
+                      //               height: 600,
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.all(32),
+                      //                 child: Column(
+                      //                   crossAxisAlignment:
+                      //                       CrossAxisAlignment.start,
+                      //                   children: [
+                      //                     const SizedBox(
+                      //                       height: 16,
+                      //                     ),
+                      //                     Row(
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.spaceBetween,
+                      //                       children: [
+                      //                         const HeadingText(
+                      //                             "Payment Details"),
+                      //                         IconButton(
+                      //                             onPressed: () {
+                      //                               Navigator.pop(context);
+                      //                             },
+                      //                             icon: const Icon(
+                      //                               Icons.close,
+                      //                               size: 16,
+                      //                             ))
+                      //                       ],
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 16,
+                      //                     ),
+                      //                     Expanded(
+                      //                       child: SingleChildScrollView(
+                      //                         child: Column(
+                      //                           crossAxisAlignment:
+                      //                               CrossAxisAlignment.start,
+                      //                           children: [
+                      //                             Center(
+                      //                               child: Container(
+                      //                                 height: 70,
+                      //                                 width: 70,
+                      //                                 alignment:
+                      //                                     Alignment.center,
+                      //                                 decoration: BoxDecoration(
+                      //                                   shape: BoxShape.circle,
+                      //                                   color: managectrl
+                      //                                               .getsearchpayments[
+                      //                                                   i]
+                      //                                               .paymentStatus!
+                      //                                               .toLowerCase() ==
+                      //                                           "success"
+                      //                                       ? Colors.green[200]
+                      //                                       : Colors.red[200],
+                      //                                 ),
+                      //                                 child: managectrl
+                      //                                             .getsearchpayments[
+                      //                                                 i]
+                      //                                             .paymentStatus!
+                      //                                             .toLowerCase() ==
+                      //                                         "success"
+                      //                                     ? const Icon(
+                      //                                         Icons.check,
+                      //                                         color:
+                      //                                             Colors.white,
+                      //                                         size: 40,
+                      //                                       )
+                      //                                     : const Icon(
+                      //                                         Icons.dangerous,
+                      //                                         color:
+                      //                                             Colors.white,
+                      //                                         size: 40,
+                      //                                       ),
+                      //                               ),
+                      //                             ),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                             Center(
+                      //                                 child: TitleText(managectrl
+                      //                                     .getsearchpayments[i]
+                      //                                     .paymentStatus!
+                      //                                     .toUpperCase())),
+                      //                             Divider(
+                      //                               color: Theme.of(context)
+                      //                                   .colorScheme
+                      //                                   .onPrimary
+                      //                                   .withOpacity(0.6),
+                      //                             ),
+                      //                             Row(
+                      //                               children: [
+                      //                                 const Text(
+                      //                                   "Transaction Id",
+                      //                                   style: TextStyle(
+                      //                                       fontSize: 14),
+                      //                                 ),
+                      //                                 const SizedBox(
+                      //                                   width: 10,
+                      //                                 ),
+                      //                                 IconButton(
+                      //                                     onPressed: () {
+                      //                                       Clipboard.setData(
+                      //                                           ClipboardData(
+                      //                                               text:
+                      //                                                   "${managectrl.getsearchpayments[i].transactionId}"));
+                      //                                       CustomSnackbar(
+                                                         
+                      //                                           "Text copied to Clipboard");
+                      //                                     },
+                      //                                     icon: Icon(
+                      //                                       Icons.copy,
+                      //                                       size: 14,
+                      //                                       color: Colors
+                      //                                           .grey[300],
+                      //                                     ))
+                      //                               ],
+                      //                             ),
+                      //                             Text(
+                      //                                 "${managectrl.getsearchpayments[i].transactionId}"),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                             const Text(
+                      //                               "Payment Method",
+                      //                               style:
+                      //                                   TextStyle(fontSize: 14),
+                      //                             ),
+                      //                             Text(
+                      //                                 "${managectrl.getsearchpayments[i].paymentMethod}"),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                             const Text(
+                      //                               "Amount",
+                      //                               style:
+                      //                                   TextStyle(fontSize: 14),
+                      //                             ),
+                      //                             Text(
+                      //                               "${managectrl.getsearchpayments[i].receivedAmount}",
+                      //                               style: const TextStyle(
+                      //                                   fontSize: 16),
+                      //                             ),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                             const Text(
+                      //                               "Date",
+                      //                               style:
+                      //                                   TextStyle(fontSize: 14),
+                      //                             ),
+                      //                             Text(
+                      //                               "${managectrl.getsearchpayments[i].paymentDate.day}/${managectrl.getsearchpayments[i].paymentDate.month}/${managectrl.getsearchpayments[i].paymentDate.year}",
+                      //                               style: const TextStyle(
+                      //                                   fontSize: 16),
+                      //                             ),
+                      //                             const SizedBox(
+                      //                               height: 16,
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                     SizedBox(
+                      //                       width: double.maxFinite,
+                      //                       child: CardBorder(
+                      //                           margin: EdgeInsets.zero,
+                      //                           color: Colors.blue,
+                      //                           onpress: () {
+                      //                             String s = managectrl.allUsers
+                      //                                     .firstWhereOrNull(
+                      //                                       (element) =>
+                      //                                           element.id ==
+                      //                                           managectrl
+                      //                                               .getsearchpayments[
+                      //                                                   i]
+                      //                                               .userId,
+                      //                                     )
+                      //                                     ?.fullName ??
+                      //                                 "";
+                      //                             createAndprintPdf(
+                      //                               PaymentByTransaction(
+                      //                                   fullName: s,
+                      //                                   id: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .id,
+                      //                                   userId: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .userId!,
+                      //                                   amount: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .amount!,
+                      //                                   discountPercentage: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .discountPercentage!
+                      //                                       .toDouble(),
+                      //                                   receivedAmount: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .receivedAmount,
+                      //                                   paymentDate: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .paymentDate,
+                      //                                   transactionId: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .transactionId!,
+                      //                                   paymentStatus: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .paymentStatus!,
+                      //                                   paymentMethod: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .paymentMethod!,
+                      //                                   paymentType: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .paymentType!,
+                      //                                   subscriptionId: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .subscriptionId,
+                      //                                   serviceUsageId: managectrl
+                      //                                       .getsearchpayments[
+                      //                                           i]
+                      //                                       .serviceUsageId,
+                      //                                   termsAndConditions:
+                      //                                       true),
+                                                        
+                      //                               // name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
+                      //                             );
+                      //                           },
+                      //                           child: const Center(
+                      //                               child: Text(
+                      //                             "Print Receipt",
+                      //                             style:
+                      //                                 TextStyle(fontSize: 16),
+                      //                           ))),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ));
+                      //         }),
+                      //   ).animate().slideX(begin: 1, end: 0)),
                   const SizedBox(
                     height: 40,
                   )
@@ -1211,104 +1324,500 @@ class _ListCardState extends State<ListCard> {
   }
 }
 
-
-// class ListCard extends StatefulWidget {
-//   const ListCard({
-//     super.key,
-//     required this.payment,
-//     required this.userss,
-//     this.edit,
-//   });
-
-//   final Alluserpaymentmodel payment;
-//   final VoidCallback userss;
-//   final VoidCallback? edit;
-
-//   @override
-//   State<ListCard> createState() => _ListCardState();
-// }
-
-// class _ListCardState extends State<ListCard> {
-//   bool onhover = false;
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetBuilder<GetxPageController>(builder: (pagectrl) {
-//       return Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 16),
-//         child: InkWell(
-//           mouseCursor: MouseCursor.uncontrolled,
-//           onTap: () {},
-//           onHover: (v) {
-//             setState(() {
-//               onhover = v;
-//             });
-//           },
-//           child: Column(
-//             children: [
-//               Container(
-//                 //  color: onhover?Colors.blueGrey.withOpacity(0.2):null,
-//                 child: Row(
-//                   children: [
-//                     Expanded(
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text("Receipt#",style:TextStyle(color:Colors.grey[700])),
-//                           TitleText(
-//                             "${widget.payment.transactionId}",
-//                             size: 14,
-//                           ),
-//                           const SizedBox(
-//                             height: 10,
-//                           ),
-//                           Text("Payment Type",style:TextStyle(color:Colors.grey[700])),
-//                           Text(
-//                               widget.payment.paymentType != null
-//                                   ? widget.payment.paymentType!
-//                                   : "",
-//                               style:
-//                                   const TextStyle()),
-//                           const SizedBox(
-//                             height: 6,
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     Column(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       crossAxisAlignment: CrossAxisAlignment.end,
-//                       children: [
-//                         IconButton(
-//                             onPressed: widget.edit,
-//                             icon: const Icon(
-//                               Icons.edit,
-//                               size: 14,
-//                             )),
-//                         CardBorder(
-//                             padding: const EdgeInsets.symmetric(
-//                                 vertical: 8, horizontal: 32),
-//                             margin: EdgeInsets.zero,
-//                             onpress: widget.userss,
-//                             color: Colors.blue,
-//                             child: const Text("View")),
-//                         const SizedBox(
-//                           height: 8,
-//                         ),
-//                         Text(
-//                             '${widget.payment.paymentDate.day}/${widget.payment.paymentDate.month}/${widget.payment.paymentDate.year}',
-//                             style: const TextStyle(fontSize: 14)),
-//                       ],
-//                     )
-//                   ],
-//                 ),
-//               ),
-//               Divider(
-//                 color: Colors.white.withOpacity(0.4),
-//               )
-//             ],
-//           ),
-//         ),
-//       );
-//     });
-//   }
-// }
+class PaymentGridSource extends DataGridSource{
+  
+  List<DataGridRow> _paymentRows = [];
+  final ManagementController managectrl;
+  final BuildContext context;
+  PaymentGridSource(this.context, {required this.managectrl}){
+    _paymentRows = managectrl.getsearchpayments.map<DataGridRow>((e) => DataGridRow(cells:[
+      DataGridCell<String>(columnName: "Receipt", value:e.transactionId),
+      DataGridCell<String>(columnName: "Name", value:managectrl.getUserbyId(e.userId??0)?.fullName??""),
+      DataGridCell<String>(columnName: "Type", value:e.paymentType),
+      DataGridCell<String>(columnName: "Method", value:e.paymentMethod),
+      DataGridCell<DateTime>(columnName: "Date", value:e.paymentDate),
+      DataGridCell<String>(columnName: "Status", value:e.paymentStatus),
+      DataGridCell<Widget>(columnName: "Actions", value:  Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          CardwithShadow(
+                       padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            onpress: (){
+              String paymentStatus = e.paymentStatus??"";
+               Get.dialog(StatefulBuilder(
+                 builder: (context,state) {
+                   return Dialog(
+                                        backgroundColor: Colors.grey[900],
+                                        child: SizedBox(
+                                          width: 500,
+                                          height: 600,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(32),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    HeadingText("Edit Payments",
+                                                        size:
+                                                            MediaQuery.sizeOf(context)
+                                                                        .width <
+                                                                    mobilescreen
+                                                                ? 16
+                                                                : null),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        icon: const Icon(
+                                                          Icons.close,
+                                                          size: 16,
+                                                        ))
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Expanded(
+                                                  child: managectrl.iseditpayment
+                                                      ? Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: Theme.of(context)
+                                                                .colorScheme
+                                                                .secondary,
+                                                          ),
+                                                        )
+                                                      : SingleChildScrollView(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  const Text(
+                                                                    "Transaction Id",
+                                                                    style: TextStyle(
+                                                                        fontSize: 14),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  IconButton(
+                                                                      onPressed: () {
+                                                                        Clipboard.setData(
+                                                                            ClipboardData(
+                                                                                text:
+                                                                                    "${e.transactionId}"));
+                                                                        CustomSnackbar(
+                                                                          
+                                                                            "Text copied to Clipboard");
+                                                                      },
+                                                                      icon: Icon(
+                                                                        Icons.copy,
+                                                                        size: 14,
+                                                                        color: Colors
+                                                                                .grey[
+                                                                            300],
+                                                                      ))
+                                                                ],
+                                                              ),
+                                                              Text(
+                                                                  "${e.transactionId}"),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const Text(
+                                                                "Payment Method",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                              Text(
+                                                                  "${e.paymentMethod}"),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const Text(
+                                                                "Amount",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                              Text(
+                                                                "${e.receivedAmount}",
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize: 16),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              DropdownMenu(
+                                                                  menuStyle:
+                                                                      MenuStyle(
+                                                                          shape:
+                                                                              WidgetStateProperty
+                                                                                  .all(
+                                                                            RoundedRectangleBorder(
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(8),
+                                                                            ),
+                                                                          ),
+                                                                          backgroundColor:
+                                                                              WidgetStateColor
+                                                                                  .resolveWith(
+                                                                            (states) =>
+                                                                                Colors
+                                                                                    .grey[800]!,
+                                                                          )),
+                                                                  onSelected:
+                                                                      (index) {
+                                                                    state(() {
+                                                                      paymentStatus =
+                                                                          paymetstatusList[(index ??
+                                                                                  0) %
+                                                                              paymetstatusList
+                                                                                  .length];
+                                                                    });
+                                                                  },
+                                                                  hintText: "Status",
+                                                                  dropdownMenuEntries: paymetstatusList
+                                                                      .asMap()
+                                                                      .entries
+                                                                      .map((e) => DropdownMenuEntry(
+                                                                          value: e.key,
+                                                                          label: e.value,
+                                                                          style: ButtonStyle(
+                                                                              backgroundColor: WidgetStateColor.resolveWith(
+                                                                            (states) => Theme.of(
+                                                                                    context)
+                                                                                .colorScheme
+                                                                                .primary,
+                                                                          ))))
+                                                                      .toList()),
+                                                              const Text(
+                                                                "Date",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                              Text(
+                                                                "${e.paymentDate.day}/${e.paymentDate.month}/${e.paymentDate.year}",
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize: 16),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                ),
+                                                SizedBox(
+                                                  width: double.maxFinite,
+                                                  child: CardBorder(
+                                                      margin: EdgeInsets.zero,
+                                                      color: Colors.blue,
+                                                      onpress: () async {
+                                                        Alluserpaymentmodel payments = Alluserpaymentmodel(
+                                                            id:e
+                                                                .id,
+                                                            userId: e.userId,
+                                                            amount: e.amount,
+                                                            receivedAmount: e.receivedAmount,
+                                                            paymentDate: e.paymentDate,
+                                                            transactionId: e.transactionId,
+                                                            paymentStatus: paymentStatus,
+                                                             
+                                                            paymentMethod:e.paymentMethod,
+                                                            paymentType: e.paymentType,
+                                                            discountPercentage:
+                                                              e.discountPercentage,
+                                                            serviceUsageId: e.serviceUsageId,
+                                                            subscriptionId: e.subscriptionId);
+                   
+                                                        String s = await managectrl
+                                                            .editpayments(payments);
+                                                        // createAndPrintPdf(Paymententity(id: managectrl.getsearchpayments[i].id, userId: managectrl.getsearchpayments[i].userId!, amount: managectrl.getsearchpayments[i].amount!, discountPercentage: managectrl.getsearchpayments[i].discountPercentage!.toDouble(), receivedAmount: managectrl.getsearchpayments[i].receivedAmount, paymentDate: managectrl.getsearchpayments[i].paymentDate, transactionId:managectrl.getsearchpayments[i].transactionId!, paymentStatus: managectrl.getsearchpayments[i].paymentStatus!, paymentMethod:managectrl.getsearchpayments[i].paymentMethod!, paymentType: managectrl.getsearchpayments[i].paymentType!, subscriptionId: managectrl.getsearchpayments[i].subscriptionId, serviceUsageId: managectrl.getsearchpayments[i].serviceUsageId, termsAndConditions: true));
+                                                        Get.back();
+                                                        CustomSnackbar( s);
+                                                      },
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Edit Payment",
+                                                        style:
+                                                            TextStyle(fontSize: 16),
+                                                      ))),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                 }
+               ));
+            },
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.edit,size: 14,),
+                SizedBox(width: 5,),
+                Text("Edit",style: TextStyle(fontSize: 14)),
+              ],
+            )),
+            const SizedBox(width: 6,),
+            CardwithShadow(
+             padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+              onpress: (){
+              Get.dialog(Dialog(
+                                    backgroundColor: Colors.grey[900],
+                                    insetPadding: const EdgeInsets.all(16),
+                                    child: SizedBox(
+                                      width: 500,
+                                      height: 600,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(32),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 16,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                const HeadingText(
+                                                    "Payment Details"),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.close,
+                                                      size: 16,
+                                                    ))
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 16,
+                                            ),
+                                            Expanded(
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Center(
+                                                      child: Container(
+                                                        height: 70,
+                                                        width: 70,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color:e.paymentStatus!
+                                                                      .toLowerCase() ==
+                                                                  "success"
+                                                              ? Colors.green[200]
+                                                              : Colors.red[200],
+                                                        ),
+                                                        child:e.paymentStatus!
+                                                                    .toLowerCase() ==
+                                                                "success"
+                                                            ? const Icon(
+                                                                Icons.check,
+                                                                color:
+                                                                    Colors.white,
+                                                                size: 40,
+                                                              )
+                                                            : const Icon(
+                                                                Icons.dangerous,
+                                                                color:
+                                                                    Colors.white,
+                                                                size: 40,
+                                                              ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Center(
+                                                        child: TitleText(e.paymentStatus!
+                                                            .toUpperCase())),
+                                                    Divider(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onPrimary
+                                                          .withOpacity(0.6),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        const Text(
+                                                          "Transaction Id",
+                                                          style: TextStyle(
+                                                              fontSize: 14),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              Clipboard.setData(
+                                                                  ClipboardData(
+                                                                      text:
+                                                                          "${e.transactionId}"));
+                                                              CustomSnackbar(
+                                                           
+                                                                  "Text copied to Clipboard");
+                                                            },
+                                                            icon: Icon(
+                                                              Icons.copy,
+                                                              size: 14,
+                                                              color: Colors
+                                                                  .grey[300],
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                        "${e.transactionId}"),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    const Text(
+                                                      "Payment Method",
+                                                      style:
+                                                          TextStyle(fontSize: 14),
+                                                    ),
+                                                    Text(
+                                                        "${e.paymentMethod}"),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    const Text(
+                                                      "Amount",
+                                                      style:
+                                                          TextStyle(fontSize: 14),
+                                                    ),
+                                                    Text(
+                                                      "${e.receivedAmount}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    const Text(
+                                                      "Date",
+                                                      style:
+                                                          TextStyle(fontSize: 14),
+                                                    ),
+                                                    Text(
+                                                      "${e.paymentDate.day}/${e.paymentDate.month}/${e.paymentDate.year}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: double.maxFinite,
+                                              child: CardBorder(
+                                                  margin: EdgeInsets.zero,
+                                                  color: Colors.blue,
+                                                  onpress: () {
+                                                    String s = managectrl.allUsers
+                                                            .firstWhereOrNull(
+                                                              (element) =>
+                                                                  element.id ==
+                                                                  e.userId,
+                                                            )
+                                                            ?.fullName ??
+                                                        "";
+                                                    createAndprintPdf(
+                                                      PaymentByTransaction(
+                                                          fullName: s,
+                                                          id:e.id,
+                                                          userId: e.userId!,
+                                                          amount: e.amount!,
+                                                          discountPercentage:e.discountPercentage!
+                                                              .toDouble(),
+                                                          receivedAmount: e.receivedAmount,
+                                                          paymentDate: e.paymentDate,
+                                                          transactionId:e.transactionId!,
+                                                          paymentStatus: e.paymentStatus!,
+                                                          paymentMethod: e.paymentMethod!,
+                                                          paymentType:e.paymentType!,
+                                                          subscriptionId:e.subscriptionId,
+                                                          serviceUsageId: e.serviceUsageId,
+                                                          termsAndConditions:
+                                                              true),
+                                                          
+                                                      // name: managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).firstName! + managectrl.getallXtremer.firstWhere((element) => element.XtremerId == managectrl.getsearchpayments[i].userId ).surname!
+                                                    );
+                                                  },
+                                                  child: const Center(
+                                                      child: Text(
+                                                    "Print Receipt",
+                                                    style:
+                                                        TextStyle(fontSize: 16),
+                                                  ))),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ));
+            },child: Text("View",style: TextStyle(fontSize: 14),))
+        ],),
+      ))
+      ] ),).toList();
+  }
+  
+   @override
+  List<DataGridRow> get rows => _paymentRows;
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+   return DataGridRowAdapter(
+      cells: row.getCells().map<Widget>((dataGridCell) {
+        if (dataGridCell.columnName == 'Actions') {
+          return dataGridCell.value as Widget; // Return action buttons
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          alignment: Alignment.center,
+          child: dataGridCell.columnName == 'Date'
+              ? Text(
+                  '${(dataGridCell.value as DateTime).day}/${(dataGridCell.value as DateTime).month}/${(dataGridCell.value as DateTime).year}',
+                  style: const TextStyle(fontSize: 14),
+                )
+              : Text(
+                  dataGridCell.value.toString(),
+                  style: const TextStyle(fontSize: 14),
+                ),
+        );
+      }).toList(),
+    );
+  }
+  
+}

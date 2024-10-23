@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .then(
                                     (value) {
                                       if (!value.entries.first.key) {
-                                        CustomSnackbar(context, "Log in Error");
+                                        CustomSnackbar( "Log in Error");
                                       }
                                     },
                                   );
