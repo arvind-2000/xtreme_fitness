@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
@@ -17,79 +16,81 @@ class UserActivityChart extends StatelessWidget {
     DateTime currentDate = DateTime.now(); // Current date for calculations
 
     return Scaffold(
-      body: CardwithShadow(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const DashboardChild1(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Sales Activity',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 37, 0, 0),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 10),
-                          child: Text(
-                            'Weekly',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+      body: GetBuilder<ManagementController>(builder: (_) {
+        return CardwithShadow(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const DashboardChild1(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Sales Activity',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  const Row(
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 5,
-                            backgroundColor: Colors.blue,
+                        Container(
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 37, 0, 0),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 10),
+                            child: Text(
+                              'Weekly',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Current',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 16),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 5,
-                            backgroundColor: Colors.red,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Previous',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    const Row(
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 5,
+                              backgroundColor: Colors.blue,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Current',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 16),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 5,
+                              backgroundColor: Colors.red,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Previous',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: SfCartesianChart(
+              Expanded(
+                  child: SfCartesianChart(
                 tooltipBehavior: TooltipBehavior(
                   enable: true,
                   color: Theme.of(context).colorScheme.primary,
@@ -97,14 +98,18 @@ class UserActivityChart extends StatelessWidget {
                       TextStyle(color: Theme.of(context).colorScheme.surface),
                   builder: (data, point, series, pointIndex, seriesIndex) {
                     ChartData chartData = data;
-                    return SizedBox(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("₹ ${chartData.value.toStringAsFixed(0)}"),
-                        ],
-                      ),
-                    );
+                    return chartData.value != null // Check if value exists
+                        ? SizedBox(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    "₹ ${chartData.value!.toStringAsFixed(0)}"),
+                              ],
+                            ),
+                          )
+                        : const SizedBox
+                            .shrink(); // If null, do not show tooltip
                   },
                 ),
                 plotAreaBorderWidth: 0,
@@ -115,7 +120,7 @@ class UserActivityChart extends StatelessWidget {
                 ),
                 primaryYAxis: const NumericAxis(
                   minimum: 0,
-                  maximum: 30000, // Adjust this range as needed
+                  maximum: 30000,
                   interval: 2000,
                   axisLine: AxisLine(width: 0),
                   majorTickLines: MajorTickLines(size: 0),
@@ -127,11 +132,10 @@ class UserActivityChart extends StatelessWidget {
                   LineSeries<ChartData, String>(
                     enableTooltip: true,
                     color: Colors.blue,
-                    dataSource: getDummyData('current'),
-
-                    //  magctrl.getCurrentWeekData(currentDate),
+                    dataSource: magctrl.getCurrentWeekData(currentDate),
                     xValueMapper: (ChartData data, _) => data.day,
-                    yValueMapper: (ChartData data, _) => data.value,
+                    yValueMapper: (ChartData data, _) =>
+                        data.value, // null values are ignored
                     width: 2,
                     markerSettings: const MarkerSettings(isVisible: true),
                   ),
@@ -139,26 +143,25 @@ class UserActivityChart extends StatelessWidget {
                   LineSeries<ChartData, String>(
                     enableTooltip: true,
                     color: Colors.red,
-                    dataSource: getDummyData('prevoius'),
-                    // magctrl.getPreviousWeekData(currentDate),
+                    dataSource: magctrl.getPreviousWeekData(currentDate),
                     xValueMapper: (ChartData data, _) => data.day,
                     yValueMapper: (ChartData data, _) => data.value,
                     width: 2,
                     markerSettings: const MarkerSettings(isVisible: true),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ),
-      ),
+              )),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
 
 class ChartData {
   final String day;
-  final double value;
+  final double? value;
 
   ChartData(this.day, this.value);
 }

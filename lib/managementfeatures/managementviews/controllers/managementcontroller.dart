@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/10latestpayment.dart';
@@ -423,16 +424,25 @@ class ManagementController extends GetxController {
     update();
   }
 
-// Get the current week data
   List<ChartData> getCurrentWeekData(DateTime currentDate) {
-    List<double> currentWeekAmounts =
+    List<double?> currentWeekAmounts =
         getCurrentWeekReceivedAmounts(currentDate);
-    log(" currentWeekAmounts : $currentWeekAmounts");
+    log("currentWeekAmounts: $currentWeekAmounts");
     List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+    // Generate data only for non-null values (i.e., past and current days)
     return List.generate(7, (index) {
-      return ChartData(days[index], currentWeekAmounts[index]);
-    });
+      double? amount = currentWeekAmounts[index];
+      if (amount != null) {
+        return ChartData(days[index], amount);
+      } else {
+        // Return a dummy ChartData or skip if needed
+        return null;
+      }
+    })
+        .where((data) => data != null)
+        .cast<ChartData>()
+        .toList(); // Filter out nulls
   }
 
 // Get the previous week data
@@ -446,29 +456,46 @@ class ManagementController extends GetxController {
     });
   }
 
-// Helper function to calculate current week's received amounts
-  List<double> getCurrentWeekReceivedAmounts(DateTime date) {
+  List<double?> getCurrentWeekReceivedAmounts(DateTime currentDate) {
     // Get the start of the current week (Monday)
-    DateTime startOfWeek = date.subtract(Duration(days: date.weekday - 1));
+    DateTime startOfWeek =
+        currentDate.subtract(Duration(days: currentDate.weekday - 1));
 
     // Generate the list of amounts for each day of the current week
     return List.generate(7, (index) {
-      DateTime day = startOfWeek.add(Duration(days: index));
+      DateTime currentDay = startOfWeek.add(Duration(days: index));
 
-      // Filter the payments for the current day and sum the received amounts
-      List<Alluserpaymentmodel> dailyPayments = _allpayments
-          .where((element) =>
-              element.paymentDate.day == day.day &&
-              element.paymentDate.month == day.month &&
-              element.paymentDate.year == day.year)
-          .toList();
-
-      if (dailyPayments.isEmpty) {
-        return 0.0; // If no payments for the day, return 0
-      } else {
-        return dailyPayments.fold(
-            0.0, (sum, item) => sum + item.receivedAmount);
+      // If the current day is in the future, return null (or 0 if preferred)
+      if (currentDay.isAfter(currentDate)) {
+        log('Future day detected: ${currentDay.toIso8601String()}');
+        return null; // or return 0.0 if you prefer to display zeros for future days
       }
+
+      log("Processing payments for: ${currentDay.toIso8601String()}");
+
+      // Filter the payments for the current day
+      List<Alluserpaymentmodel> dailyPayments = _allpayments.where((payment) {
+        return payment.paymentDate.day == currentDay.day &&
+            payment.paymentDate.month == currentDay.month &&
+            payment.paymentDate.year == currentDay.year;
+      }).toList();
+
+      // If no payments for the current day
+      if (dailyPayments.isEmpty) {
+        log('No payments found for ${currentDay.toIso8601String()}');
+        return 0.0;
+      }
+
+      // Sum only successful payments for the current day
+      double totalReceived = dailyPayments.fold(0.0, (sum, payment) {
+        if (payment.paymentStatus == "Success") {
+          return sum + payment.receivedAmount;
+        }
+        return sum;
+      });
+
+      log("Total received for ${currentDay.toIso8601String()}: ₹$totalReceived");
+      return totalReceived;
     });
   }
 
@@ -493,8 +520,13 @@ class ManagementController extends GetxController {
       if (dailyPayments.isEmpty) {
         return 0.0; // If no payments for the day, return 0
       } else {
-        return dailyPayments.fold(
-            0.0, (sum, item) => sum + item.receivedAmount);
+        double totalReceived = 0.0;
+        for (var element in dailyPayments) {
+          if (element.paymentStatus == "Success") {
+            totalReceived += element.receivedAmount;
+          }
+        }
+        return totalReceived; // Ensure that a double is always returned
       }
     });
   }
@@ -502,6 +534,8 @@ class ManagementController extends GetxController {
   void viewpayment() async {
     // _allpayments = dummypayments;
     _allpayments = await managementRepo.viewpayment();
+
+    log("Payment Day : ${_allpayments[0].paymentDate.day}");
     _searchpayments = _allpayments;
     filterpayments = groupPaymentsByMonth(
         _allpayments
@@ -725,44 +759,40 @@ class ManagementController extends GetxController {
     return tobeexpiredlist;
   }
 
-  void selectedIndex(List<DataGridRow> selectedrows){
+  void selectedIndex(List<DataGridRow> selectedrows) {
     print("in selected row");
     List<XtremerWithSubscription> xtremerlist = [];
-     for(DataGridRow d in selectedrows){
+    for (DataGridRow d in selectedrows) {
       print(d.getCells()[1].value);
-      
-        for(XtremerWithSubscription v in _searchxtremerlist){
-          print(v);
-          if(v.mobileNumber == d.getCells()[1].value){
-            print("found");
-              xtremerlist.add(v);
-            break;
-          }
+
+      for (XtremerWithSubscription v in _searchxtremerlist) {
+        print(v);
+        if (v.mobileNumber == d.getCells()[1].value) {
+          print("found");
+          xtremerlist.add(v);
+          break;
         }
-     
-     }
-     
-     selectedgrid = xtremerlist;
-      update();
-  }
+      }
+    }
 
-  Future<void> sendexpirySms()async{
-        for(XtremerWithSubscription o in selectedgrid){
-          sendSMS(o.mobileNumber??"", o.firstName??"", '${o.endDate?.day}/${o.endDate?.month}/${o.endDate?.year}');
-        }
-      selectedgrid = [];
-
-      update();
-
-  }
-
-  void sendSMS(String phonenumber,String name, String enddate){
-      
-  }
-
-  void changeTemplate(int pos){
-    templatepos = pos;
+    selectedgrid = xtremerlist;
     update();
   }
 
+  Future<void> sendexpirySms() async {
+    for (XtremerWithSubscription o in selectedgrid) {
+      sendSMS(o.mobileNumber ?? "", o.firstName ?? "",
+          '${o.endDate?.day}/${o.endDate?.month}/${o.endDate?.year}');
+    }
+    selectedgrid = [];
+
+    update();
+  }
+
+  void sendSMS(String phonenumber, String name, String enddate) {}
+
+  void changeTemplate(int pos) {
+    templatepos = pos;
+    update();
+  }
 }
