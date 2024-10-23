@@ -214,7 +214,7 @@ class OverviewMembertitle extends StatelessWidget {
             children: [
               Image.asset(
                 icon,
-                height: 35,
+                height: 30,
               ),
               //  Icon(
               //   Icons.person,

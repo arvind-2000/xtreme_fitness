@@ -1,49 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardchilds/dashboardchild1.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 class UserActivityChart extends StatelessWidget {
-  const UserActivityChart({super.key});
+  const UserActivityChart({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    ManagementController magctrl = Get.find<ManagementController>();
+    DateTime currentDate = DateTime.now(); // Current date for calculations
+
     return Scaffold(
-      // backgroundColor:
-      //     const Color(0xFF0E1E38), // Dark background like your image
       body: CardwithShadow(
-        // color: const Color(0xFF1C2D4D), // Card background similar to image
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const DashboardChild1(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'User Activity',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'This Month',
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    '16,543',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Sales Activity',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 37, 0, 0),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 10),
+                          child: Text(
+                            'Weekly',
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   const SizedBox(height: 4),
                   const Row(
@@ -82,6 +90,23 @@ class UserActivityChart extends StatelessWidget {
             ),
             Expanded(
               child: SfCartesianChart(
+                tooltipBehavior: TooltipBehavior(
+                  enable: true,
+                  color: Theme.of(context).colorScheme.primary,
+                  textStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  builder: (data, point, series, pointIndex, seriesIndex) {
+                    ChartData chartData = data;
+                    return SizedBox(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("₹ ${chartData.value.toStringAsFixed(0)}"),
+                        ],
+                      ),
+                    );
+                  },
+                ),
                 plotAreaBorderWidth: 0,
                 primaryXAxis: const CategoryAxis(
                   majorGridLines: MajorGridLines(width: 0),
@@ -90,7 +115,7 @@ class UserActivityChart extends StatelessWidget {
                 ),
                 primaryYAxis: const NumericAxis(
                   minimum: 0,
-                  maximum: 100,
+                  maximum: 100, // Adjust this range as needed
                   interval: 20,
                   axisLine: AxisLine(width: 0),
                   majorTickLines: MajorTickLines(size: 0),
@@ -98,19 +123,24 @@ class UserActivityChart extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.white),
                 ),
                 series: [
-                  // Current Data Line
+                  // Current Week Data Line
                   LineSeries<ChartData, String>(
+                    enableTooltip: true,
                     color: Colors.blue,
-                    dataSource: getCurrentData(),
+                    dataSource: getDummyData('current'),
+
+                    //  magctrl.getCurrentWeekData(currentDate),
                     xValueMapper: (ChartData data, _) => data.day,
                     yValueMapper: (ChartData data, _) => data.value,
                     width: 2,
                     markerSettings: const MarkerSettings(isVisible: true),
                   ),
-                  // Previous Data Line
+                  // Previous Week Data Line
                   LineSeries<ChartData, String>(
+                    enableTooltip: true,
                     color: Colors.red,
-                    dataSource: getPreviousData(),
+                    dataSource: getDummyData('prevoius'),
+                    // magctrl.getPreviousWeekData(currentDate),
                     xValueMapper: (ChartData data, _) => data.day,
                     yValueMapper: (ChartData data, _) => data.value,
                     width: 2,
@@ -124,30 +154,6 @@ class UserActivityChart extends StatelessWidget {
       ),
     );
   }
-
-  // Sample data for "Current"
-  List<ChartData> getCurrentData() {
-    return [
-      ChartData('Mon', 35),
-      ChartData('Tue', 28),
-      ChartData('Wed', 34),
-      ChartData('Thu', 80),
-      ChartData('Fri', 60),
-      ChartData('Sat', 50),
-    ];
-  }
-
-  // Sample data for "Previous"
-  List<ChartData> getPreviousData() {
-    return [
-      ChartData('Mon', 25),
-      ChartData('Tue', 40),
-      ChartData('Wed', 45),
-      ChartData('Thu', 55),
-      ChartData('Fri', 50),
-      ChartData('Sat', 65),
-    ];
-  }
 }
 
 class ChartData {
@@ -155,4 +161,28 @@ class ChartData {
   final double value;
 
   ChartData(this.day, this.value);
+}
+
+List<ChartData> getDummyData(String weekType) {
+  if (weekType == 'current') {
+    return [
+      ChartData('Mon', 10),
+      ChartData('Tue', 20),
+      ChartData('Wed', 15),
+      ChartData('Thu', 25),
+      ChartData('Fri', 10),
+      ChartData('Sat', 5),
+      ChartData('Sun', 8),
+    ]; // You can customize the values and labels based on what you want the dummy data to look like
+  } else {
+    return [
+      ChartData('Mon', 12),
+      ChartData('Tue', 18),
+      ChartData('Wed', 22),
+      ChartData('Thu', 30),
+      ChartData('Fri', 16),
+      ChartData('Sat', 8),
+      ChartData('Sun', 6),
+    ]; // Customize the dummy data for the previous week if no data is found
+  }
 }

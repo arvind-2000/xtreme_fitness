@@ -10,6 +10,7 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/managementrep
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/managementrepoimpl.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
+import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardchilds/UserActivity.dart';
 
 import '../../../authenicationfeatures/views/controller/authcontroller.dart';
 import '../../../authentifeatures/domain/userentity.dart';
@@ -56,7 +57,8 @@ class ManagementController extends GetxController {
   List<XtremerWithSubscription> _searchxtremerlist = [];
   List<TrainerEntity> get getalltrainer => _alltrainer;
   List<XtremerWithSubscription> get getallXtremer => _allxtremer;
-  List<XtremerWithSubscription> get getallxtremerforoverall => _allxtremerforoverall;
+  List<XtremerWithSubscription> get getallxtremerforoverall =>
+      _allxtremerforoverall;
   List<XtremerWithSubscription> get getsearchXtremer => _searchxtremerlist;
   List<XtremerWithSubscription> get allpersonalxtremer => _allpersonalxtremer;
   List<XtremerWithSubscription> get allgeneralxtremer => _allgeneralxtremer;
@@ -124,19 +126,10 @@ class ManagementController extends GetxController {
 
     // }
 
-
-
-
-
     update();
-    
   }
 
-
-  void callforAdminDashboard(){
-    
-  }
-
+  void callforAdminDashboard() {}
 
   ///for realtime data calls
   void dashboardTimer() {
@@ -205,58 +198,57 @@ class ManagementController extends GetxController {
   void getxtremer() async {
     // _allxtremer = dummyxtremer;
     _allxtremer = await managementRepo.viewMemberwithSubs();
-    List<Xtremer> d  = await managementRepo.viewMember();
+    List<Xtremer> d = await managementRepo.viewMember();
 
-    for(int i = 0;i<_allxtremer.length;i++){
-
-        _allxtremer[i].category = d.firstWhereOrNull((element) => _allxtremer[i].XtremerId==element.XtremerId,)?.category??"";
-        
-
+    for (int i = 0; i < _allxtremer.length; i++) {
+      _allxtremer[i].category = d
+              .firstWhereOrNull(
+                (element) => _allxtremer[i].XtremerId == element.XtremerId,
+              )
+              ?.category ??
+          "";
     }
-  
 
-  if (!authctrl.ismember) {
-    _searchxtremerlist = _allxtremer;
-    _allgeneralxtremer = _allxtremer
-        .where(
-          (element) =>
-              element.category?.toLowerCase() == 'general' && element.isActive == true,
-        )
-        .toList();
-    _allpersonalxtremer = _allxtremer
-        .where(
-          (element) =>
-              element.category?.toLowerCase() == 'personal' && element.isActive == true,
-        )
-        .toList();
-    _allinactivextremer = _allxtremer
-        .where(
-          (element) => element.isActive == false,
-        )
-        .toList();
-  }else{
-        getmemberxtreme();
-  }
-
+    if (!authctrl.ismember) {
+      _searchxtremerlist = _allxtremer;
+      _allgeneralxtremer = _allxtremer
+          .where(
+            (element) =>
+                element.category?.toLowerCase() == 'general' &&
+                element.isActive == true,
+          )
+          .toList();
+      _allpersonalxtremer = _allxtremer
+          .where(
+            (element) =>
+                element.category?.toLowerCase() == 'personal' &&
+                element.isActive == true,
+          )
+          .toList();
+      _allinactivextremer = _allxtremer
+          .where(
+            (element) => element.isActive == false,
+          )
+          .toList();
+    } else {
+      getmemberxtreme();
+    }
 
     update();
   }
 
-  void getmemberxtreme(){
-            if (authctrl.ismember) {
-    // print("In get xtremer");
-    xtremer = _allxtremer.firstWhereOrNull(
-      (element) => element.XtremerId == authctrl.getuser!.id,
-    );
-    if(xtremer!=null){
-       addmemberctrl.addxtremersrenewaledit(xtremer);
+  void getmemberxtreme() {
+    if (authctrl.ismember) {
+      // print("In get xtremer");
+      xtremer = _allxtremer.firstWhereOrNull(
+        (element) => element.XtremerId == authctrl.getuser!.id,
+      );
+      if (xtremer != null) {
+        addmemberctrl.addxtremersrenewaledit(xtremer);
+      }
     }
-
-  } 
-      update();
+    update();
   }
-
-
 
   Future<String> addplan(Plan plan) async {
     String v = await managementRepo.addPlans(plan: plan);
@@ -377,30 +369,18 @@ class ManagementController extends GetxController {
   }
 
   void getMemberships() async {
-    _allmembership = await managementRepo.viewMembership(); 
+    _allmembership = await managementRepo.viewMembership();
     checkmemberships();
     update();
   }
 
-
-  void checkmemberships(){
-
-
-  if (authctrl.ismember) {
-
-    currentmember = _allmembership.firstWhereOrNull(
-      (element) =>
-          element.userId == authctrl.getuser?.id,
-    );
-     
+  void checkmemberships() {
+    if (authctrl.ismember) {
+      currentmember = _allmembership.firstWhereOrNull(
+        (element) => element.userId == authctrl.getuser?.id,
+      );
+    }
   }
-
-
-  }
-
-
-
-
 
   void getStaff() async {
     // _allstaff = dummystaff;
@@ -438,6 +418,82 @@ class ManagementController extends GetxController {
   void getpaymentlastest10() async {
     _latestpayment10 = await managementRepo.viewlatest10payment();
     update();
+  }
+
+// Get the current week data
+  List<ChartData> getCurrentWeekData(DateTime currentDate) {
+    List<double> currentWeekAmounts =
+        getCurrentWeekReceivedAmounts(currentDate);
+    log(" currentWeekAmounts : $currentWeekAmounts");
+    List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    return List.generate(7, (index) {
+      return ChartData(days[index], currentWeekAmounts[index]);
+    });
+  }
+
+// Get the previous week data
+  List<ChartData> getPreviousWeekData(DateTime currentDate) {
+    List<double> previousWeekAmounts =
+        getPreviousWeekReceivedAmounts(currentDate);
+    List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    return List.generate(7, (index) {
+      return ChartData(days[index], previousWeekAmounts[index]);
+    });
+  }
+
+// Helper function to calculate current week's received amounts
+  List<double> getCurrentWeekReceivedAmounts(DateTime date) {
+    // Get the start of the current week (Monday)
+    DateTime startOfWeek = date.subtract(Duration(days: date.weekday - 1));
+
+    // Generate the list of amounts for each day of the current week
+    return List.generate(7, (index) {
+      DateTime day = startOfWeek.add(Duration(days: index));
+
+      // Filter the payments for the current day and sum the received amounts
+      List<Alluserpaymentmodel> dailyPayments = _allpayments
+          .where((element) =>
+              element.paymentDate.day == day.day &&
+              element.paymentDate.month == day.month &&
+              element.paymentDate.year == day.year)
+          .toList();
+
+      if (dailyPayments.isEmpty) {
+        return 0.0; // If no payments for the day, return 0
+      } else {
+        return dailyPayments.fold(
+            0.0, (sum, item) => sum + item.receivedAmount);
+      }
+    });
+  }
+
+// Helper function to calculate previous week's received amounts
+  List<double> getPreviousWeekReceivedAmounts(DateTime date) {
+    // Get the start of the previous week (Monday)
+    DateTime startOfPreviousWeek =
+        date.subtract(Duration(days: date.weekday + 6));
+
+    // Generate the list of amounts for each day of the previous week
+    return List.generate(7, (index) {
+      DateTime day = startOfPreviousWeek.add(Duration(days: index));
+
+      // Filter the payments for the previous day and sum the received amounts
+      List<Alluserpaymentmodel> dailyPayments = _allpayments
+          .where((element) =>
+              element.paymentDate.day == day.day &&
+              element.paymentDate.month == day.month &&
+              element.paymentDate.year == day.year)
+          .toList();
+
+      if (dailyPayments.isEmpty) {
+        return 0.0; // If no payments for the day, return 0
+      } else {
+        return dailyPayments.fold(
+            0.0, (sum, item) => sum + item.receivedAmount);
+      }
+    });
   }
 
   void viewpayment() async {
@@ -596,7 +652,7 @@ class ManagementController extends GetxController {
     update();
   }
 
-    void tobeexpiredlist() {
+  void tobeexpiredlist() {
     _searchxtremerlist = tobeExpired();
     update();
   }
@@ -652,17 +708,15 @@ class ManagementController extends GetxController {
   }
 
   List<XtremerWithSubscription> tobeExpired() {
-    List<XtremerWithSubscription > tobeexpiredlist = [];
-    DateTime dateaddSevenDays =
-        DateTime.now().add(const Duration(days: 7));
-    for (XtremerWithSubscription e in _allxtremer.where((element) => element.isActive!,)) {
-
-        if(e.endDate!.compareTo(DateTime.now())>-1 && e.endDate!.compareTo(dateaddSevenDays)<1 ){
-
-            tobeexpiredlist.add(e);
-        }
-
-
+    List<XtremerWithSubscription> tobeexpiredlist = [];
+    DateTime dateaddSevenDays = DateTime.now().add(const Duration(days: 7));
+    for (XtremerWithSubscription e in _allxtremer.where(
+      (element) => element.isActive!,
+    )) {
+      if (e.endDate!.compareTo(DateTime.now()) > -1 &&
+          e.endDate!.compareTo(dateaddSevenDays) < 1) {
+        tobeexpiredlist.add(e);
+      }
     }
 
     return tobeexpiredlist;
