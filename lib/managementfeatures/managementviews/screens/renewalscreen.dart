@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:xtreme_fitness/config/const.dart';
 import 'package:xtreme_fitness/managementfeatures/managementmodels/calculationusecase.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/addmemberscontrol.dart';
@@ -12,6 +13,7 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/scaffo
 import 'package:xtreme_fitness/managementfeatures/managementviews/widgets/xtremertabledatagrid.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/cardborder.dart';
+import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
 import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
@@ -55,7 +57,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
   void changeuser(Xtremer us) {
     _user = us;
   }
-
+  DataGridController dataGridController = DataGridController();
   @override
   void initState() {
     super.initState();
@@ -246,7 +248,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .all(32),
+                                                                  .symmetric(vertical: 8,horizontal: 16),
                                                           child: Column(
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
@@ -575,13 +577,107 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                   // Divider(
                                   //   color: Colors.grey[500],
                                   // ),
+                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                   children: [
+                                     CardwithShadow(
+                                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                                      onpress: (){
+                                         managectrl.selectedIndex(dataGridController.selectedRows);
+                                            Get.dialog(
+            
+            StatefulBuilder(
+            builder: (context,state) {
+              
+              return Dialog(
+                
+                child: SizedBox(width: 400,height: 500,child: 
+                CardwithShadow(child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const HeadingText("Send SMS"),
+                      IconButton(onPressed: (){Get.back();}, icon: const Icon(Icons.close,size: 14,)),
+                
+                    ],
+                  ),
+                  
+                       const SizedBox(height: 20,),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                            const Text("Choose Template"),
+                            const SizedBox(height: 10,),
+                             GridView.builder(
+                              shrinkWrap: true,
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                crossAxisSpacing: 10,
+                                mainAxisExtent: 150,
+                                mainAxisSpacing: 10
+                                ),
+                              itemCount: 3,
+                         itemBuilder:(context, index) => CardwithShadow(
+                          color: index == managectrl.templatepos?Colors.blue.withOpacity(0.2):null,
+                              onpress: (){
+                                   state((){
+                                    managectrl.changeTemplate(index);
+                                   });
+                              },
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [const Text("Expiry"),const SizedBox(height: 10,),
+                              Text("Your <fdfdfdgd> hfdjghjg hjdhgjhdgjh hgjdhgj",style: TextStyle(color: Colors.grey[500]),maxLines: 3,overflow: TextOverflow.ellipsis,)
+                              ],))),
+                              const SizedBox(height: 10,),
+                             managectrl.selectedgrid.isEmpty?Center(child: Text("No members added. Please add a member first.",style: TextStyle(color: Colors.grey[200]),)): Text("Send Sms to ${managectrl.selectedgrid.length} members",style: TextStyle(color: Colors.grey[500]),),
+                              ListView.builder(itemBuilder: (c,i){return CardwithShadow(
+                                padding: EdgeInsets.zero,
+                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                child: ListTile(title: HeadingText('${managectrl.selectedgrid[i].firstName}',size: 16,),subtitle: Text("${managectrl.selectedgrid[i].mobileNumber}",style: const TextStyle(fontSize: 12),),));},itemCount: managectrl.selectedgrid.length,shrinkWrap: true,),
+                                            
+                          ],),
+                        ),
+                      ),
+                      Cardonly(
+                        onpress: managectrl.selectedgrid.isEmpty?null:(){
+                          
+                          
+                          Get.back();
+                          CustomSnackbar(context, "SMS succesfully sent");
+                        },
+                        color: Colors.green[300],
+                        child: const Center(child: Text("Send SMS"),))
+                  ],)
+                  
+                  ),
+                  ),
+              );
+            }
+          ));
+
+                                      },
+                                      margin: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
+                                      child: Center(child: Row(
+                                        children: [
+
+                                            Icon(Icons.message_outlined,size: 14,color: Colors.grey[300],),
+                            const SizedBox(width: 10,),
+                                          const Text("Send SMS"),
+                                        ],
+                                      ))),
+                                   ],
+                                 ),
                                   managectrl.getsearchXtremer.isEmpty
                                       ? const Expanded(
                                           child: NodataScreen(
                                               title: "No Xtremers",
                                               desc: "No Xtremers to show"),
                                         )
-                                      : const XtremerDataTableWidget()
+                                      :  XtremerDataTableWidget(controller: dataGridController,)
                                   // : Expanded(
                                   //     child: ListView.builder(
                                   //       shrinkWrap: true,
