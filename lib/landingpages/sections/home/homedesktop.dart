@@ -56,9 +56,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                       "Your Fitness, Your Way",
                       size: MediaQuery.sizeOf(context).width < mobilescreen
                           ? 40
-                          : MediaQuery.sizeOf(context).width < 1600
-                              ? 70
-                              : 80,
+                          : 60,
                       color: Colors.white,
                       isbold: true,
                     ).animate().shimmer(

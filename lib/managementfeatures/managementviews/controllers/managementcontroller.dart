@@ -173,7 +173,9 @@ class ManagementController extends GetxController {
     _allUsers = await authctrl.authrepo.getAllUsers();
     update();
   }
-
+  UserEntity? getUserbyId(int id){
+      return _allUsers.firstWhereOrNull((element) => element.id == id,);
+  }
   Future<List<Trainee>> getAllTraineess(int id) async {
     List<Trainee> d = [];
     // _alltrainee = dummytrainees;
@@ -304,6 +306,9 @@ class ManagementController extends GetxController {
     return v;
   }
 
+  ServiceEntity? getServicebyId(int id){
+      return _allservices.firstWhereOrNull((element) => element.id == id,);
+  }
   Future<String> editservice(ServiceEntity service) async {
     String v = await managementRepo.updateServices(service: service);
     // update service

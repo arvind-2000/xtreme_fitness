@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/serviceusage.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -17,7 +19,7 @@ import '../../../widgets/headingtext.dart';
 import '../../../widgets/textformwidget.dart';
 
 import '../widgets/scaffolds.dart';
-
+  List<String> d = ["InActive","Active"];
 class ServiceUsageScreen extends StatefulWidget {
   const ServiceUsageScreen({super.key});
 
@@ -59,10 +61,10 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                       children: [
                         // const Text("All Members",style: TextStyle(fontSize: 20,),),
 
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const HeadingText("Service Usage"),
+                            HeadingText("Service Usage"),
              
                           ],
                         ),
@@ -119,191 +121,108 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
                   ),
                   managectrl.searchServicesSchedule.isEmpty
                       ? const NodataScreen(
-                          title: "Service Usage", desc: "No service records")
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: managectrl.searchServicesSchedule.length,
-                            itemBuilder: (c, i) => ListCard2(
-                              servicename: '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.searchServicesSchedule[i].serviceId,)!.name}',
-                              name:   "${managectrl.allUsers.firstWhereOrNull((element) => element.id==managectrl.searchServicesSchedule[i].userId,)?.mobileNumber}",
-                                service: managectrl.searchServicesSchedule[i],
-                                edit: () {
-                                  Get.dialog(Dialog(
-                                    child: SizedBox(
-                                      width: 500,
-                                      height: 600,
-                                      child: CardwithShadow(
-                                        margin: EdgeInsets.zero,
-                                        color: Colors.grey[900],
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const HeadingText(
-                                                    "Edit Service"),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.close,
-                                                      size: 16,
-                                                    ))
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            Expanded(
-                                              child: managectrl.iseditpayment
-                                                  ? Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color:
-                                                            Theme.of(context)
-                                                                .colorScheme
-                                                                .secondary,
-                                                      ),
-                                                    )
-                                                  : SingleChildScrollView(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              const Text(
-                                                                "Phone",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14),
-                                                              ),
+                          title: "Service Usage", desc: "No service records"):Expanded(
+                            child: SfDataGridTheme(
+                                   data: SfDataGridThemeData(
+                gridLineColor: Colors.grey[700],
+                filterIconColor: Colors.grey[600],
+                gridLineStrokeWidth: 0.5
+              ),
+
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: SfDataGrid(
+                                    
+                                                  allowTriStateSorting: true,
+                                                  allowSorting: true,   
+                                                  gridLinesVisibility: GridLinesVisibility.both,
+                                                    footerHeight: 50,
+                                                   columnWidthMode: ColumnWidthMode.fill,
+                                                   
+                                
+                                  columns:  <GridColumn>[
+
+                                                    GridColumn(
+                                                        allowSorting: true,
+                                                        maximumWidth: 180,
+                                                        columnName: 'Name',
                                                       
-                                                            ],
-                                                          ),
-                                                          Text(
-                                                              "${managectrl.allUsers.firstWhereOrNull((element) => element.id==managectrl.searchServicesSchedule[i].userId,)?.mobileNumber}"),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                             const Text(
-                                                            "Service:",
-                                                            style: TextStyle(
-                                                                fontSize: 14),
-                                                          ),
-                                                            
-                                                          Text(
-                                                             '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==managectrl.searchServicesSchedule[i].serviceId,)?.name}'),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                          const Text(
-                                                            "Date",
-                                                            style: TextStyle(
-                                                                fontSize: 14),
-                                                          ),
-                                                          Text(
-                                                              "${managectrl.searchServicesSchedule[i].scheduleDate.day}/${managectrl.searchServicesSchedule[i].scheduleDate.month}/${managectrl.searchServicesSchedule[i].scheduleDate.year}"),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                          const Text(
-                                                            "Amount",
-                                                            style: TextStyle(
-                                                                fontSize: 14),
-                                                          ),
-                                                          Text(
-                                                            "${managectrl.searchServicesSchedule[i].serviceId}",
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        16),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                          DropdownMenu(
-                                                              menuStyle:
-                                                                  MenuStyle(
-                                                                                shape: WidgetStateProperty.all(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-    ),
-                              backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => Colors.grey[800]!,
-                          )),
-                                                              onSelected:
-                                                                  (index) {
-                                                                setState(() {
-                                                                  serviceStatus = d[index!];
-                                                              });
-                                                              },
-                                                                                
-                                                              hintText:
-                                                                 managectrl.searchServicesSchedule[i].status,
-                                                              dropdownMenuEntries: 
-                                                                  d.asMap()
-                                                                  .entries
-                                                                  .map((e) => DropdownMenuEntry(
-                                                                      value: e.key,
-                                                                      label: e.value,
-                                                                      style: ButtonStyle(
-                                                                          backgroundColor: WidgetStateColor.resolveWith(
-                                                                        (states) => Theme.of(context)
-                                                                            .colorScheme
-                                                                            .primary,
-                                                                      ))))
-                                                                  .toList()),
-                                                      
-                                                          
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                            ),
-                                            SizedBox(
-                                              width: double.maxFinite,
-                                              child: CardBorder(
-                                                  margin: EdgeInsets.zero,
-                                                  color: Colors.blue,
-                                                  onpress: () async {
-                                                    ServiceSchedule d = managectrl.searchServicesSchedule[i];
-                                                    d.status = serviceStatus??d.status;
-                                                    String v = await managectrl.updateserviceschedule(d);
-                                                    // createAndPrintPdf(Paymententity(id: managectrl.searchServicesSchedule[i].id, userId: managectrl.searchServicesSchedule[i].userId!, amount: managectrl.searchServicesSchedule[i].amount!, discountPercentage: managectrl.searchServicesSchedule[i].discountPercentage!.toDouble(), receivedAmount: managectrl.searchServicesSchedule[i].receivedAmount, paymentDate: managectrl.searchServicesSchedule[i].paymentDate, transactionId:managectrl.searchServicesSchedule[i].transactionId!, paymentStatus: managectrl.searchServicesSchedule[i].paymentStatus!, paymentMethod:managectrl.searchServicesSchedule[i].paymentMethod!, paymentType: managectrl.searchServicesSchedule[i].paymentType!, subscriptionId: managectrl.searchServicesSchedule[i].subscriptionId, serviceUsageId: managectrl.searchServicesSchedule[i].serviceUsageId, termsAndConditions: true));
-                                                    Navigator.pop(context);
-                                                    CustomSnackbar(
-                                                        context, v);
-                                                  },
-                                                  child: const Center(
-                                                      child: Text(
-                                                    "Edit Service",
-                                                    style: TextStyle(
-                                                        fontSize: 16),
-                                                  ))),
-                                            ),
-                                          ],
-                                        ),
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Name',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ))),
+                                     GridColumn(
+                                                        maximumWidth: 180,
+                                                        allowSorting: false,
+                                                        columnName: 'Phone',
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Phone',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ))),
+                                                    GridColumn(
+                                                        maximumWidth: 180,
+                                                        allowSorting: false,
+                                                        columnName: 'Service',
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Service',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ))),
+                                                    GridColumn(
+                                                        maximumWidth: 140,
+                                                        allowSorting: false,
+                                                        columnName: 'Date',
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Date',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ))),
+                                      
+                                                    GridColumn(
+                                                        maximumWidth: 140,
+                                                        columnName: 'Status',
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Status',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ))),
+                                                    // Add the Action column
+                                                    GridColumn(
+                                                        maximumWidth: 200,
+                                                        allowSorting: false,
+                                                        columnName: 'Actions',
+                                                        label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Actions',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                  ));
-                                },
-                                userss: () {
-                                 
-                                }),
-                          ).animate().slideX(begin: 1, end: 0)),
+                                    
+                                       
+                                    ],
+                                  ))),
+                                                  ],source: DatagridsList(managectrl: managectrl),),
+                              ),
+                            ),
+                          ),
+  
                   const SizedBox(
                     height: 40,
                   )
@@ -314,110 +233,254 @@ class _ServiceUsageScreenState extends State<ServiceUsageScreen> {
   }
 }
 
-class ListCard2 extends StatefulWidget {
-  const ListCard2({
-    super.key,
-    required this.service,
-    required this.userss,
-    this.edit, required this.name, required this.servicename,
-  });
 
-  final ServiceSchedule service;
-  final VoidCallback userss;
-  final VoidCallback? edit;
-  final String name;
-  final String servicename;
-  @override
-  State<ListCard2> createState() => _ListCardState();
-}
-
-class _ListCardState extends State<ListCard2> {
-  bool onhover = false;
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<GetxPageController>(builder: (pagectrl) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal:16),
-        child: InkWell(
-          mouseCursor: MouseCursor.uncontrolled,
-          onTap: (){},
-          onHover: (v){
-            setState(() {
-              onhover = v;
-            });
-          },
-     
-            child: Column(
-              children: [
-                Container(
-                        //  color: onhover?Colors.blueGrey.withOpacity(0.2):null,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TitleText(
-                              "Phone: ${widget.name}",
-                              size: 14,
-                              color: Colors.grey[300],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                         
-                           
-                                 TitleText(
-                              "Service Name: ${widget.servicename}",
-                              size: 14,
-                                color: Colors.grey[300],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text("status"),
-                            Text(
-                                widget.service.status,
-                                style:  TextStyle(  color: Colors.grey[300],)),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: widget.edit,
-                              icon: const Icon(
-                                Icons.edit,
-                                size: 14,
-                              )),
-                          // CardBorder(
-                          //     padding: const EdgeInsets.symmetric(
-                          //         vertical: 8, horizontal: 32),
-                          //     margin: EdgeInsets.zero,
-                          //     onpress: widget.userss,
-                          //     color: Colors.blue,
-                          //     child: const Text("View")),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                                        
-                  
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                    Divider(color: Colors.white.withOpacity(0.4),)    
-              ],
-            ),
-          ),
+class DatagridsList extends DataGridSource{
+  List<DataGridRow> _xtremerRows = [];
+  final ManagementController managectrl;
+  DatagridsList( {
+  required this.managectrl
+  }){
+      _xtremerRows =  managectrl.searchServicesSchedule.map<DataGridRow>((services) => DataGridRow(
         
-      );
-    });
+          cells: [
+              DataGridCell<String>(
+              
+                  columnName: 'Name', value:managectrl.getUserbyId(services.userId)?.userName??""),
+                   DataGridCell<String>(
+              
+                  columnName: 'Phone', value:managectrl.getUserbyId(services.userId)?.mobileNumber??""),
+              DataGridCell<String>(
+                  columnName: 'Service',
+                  value:managectrl.getServicebyId( services.serviceId)?.name ??''),
+              DataGridCell<DateTime>(
+                  columnName: 'Date',
+                  value: services.scheduleDate ),
+            
+              DataGridCell<String>(
+                  columnName: 'Status', value: services.status),
+              DataGridCell<Widget>(
+              
+                  columnName: 'Actions',
+                  value:Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  CardwithShadow(
+                    margin: const EdgeInsets.all(4),
+                    padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                    onpress: (){ 
+                      
+                          bool serviceStatus = services.status.toLowerCase() == "active";
+                      Get.dialog(StatefulBuilder(
+                        builder: (context,state) {
+                          return Dialog(
+                                        child: SizedBox(
+                                          width: 500,
+                                          height: 600,
+                                          child: CardwithShadow(
+                                            margin: EdgeInsets.zero,
+                                            color: Colors.grey[900],
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const HeadingText(
+                                                        "Edit Service"),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                         Get.back();
+                                                        },
+                                                        icon: const Icon(
+                                                          Icons.close,
+                                                          size: 16,
+                                                        ))
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Expanded(
+                                                  child: managectrl.iseditpayment
+                                                      ? const Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color:
+                                                                Colors.grey
+                                                          ),
+                                                        )
+                                                      : SingleChildScrollView(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Phone",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            14),
+                                                                  ),
+                                                          
+                                                                ],
+                                                              ),
+                                                              Text(
+                                                                  "${managectrl.allUsers.firstWhereOrNull((element) => element.id==services.userId,)?.mobileNumber}"),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                                 const Text(
+                                                                "Service:",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                                
+                                                              Text(
+                                                                 '${managectrl.getallservices.firstWhereOrNull((element) => element.id ==services.serviceId,)?.name}'),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const Text(
+                                                                "Date",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                              Text(
+                                                                  "${services.scheduleDate.day}/${services.scheduleDate.month}/${services.scheduleDate.year}"),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const Text(
+                                                                "Amount",
+                                                                style: TextStyle(
+                                                                    fontSize: 14),
+                                                              ),
+                                                              Text(
+                                                                "${services.serviceId}",
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            16),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              DropdownMenu(
+                                                                  menuStyle:
+                                                                      MenuStyle(
+                                                                                    shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                                  backgroundColor: WidgetStateColor.resolveWith(
+                                (states) => Colors.grey[800]!,
+                              )),
+                                                                  onSelected:
+                                                                      (index) {
+                                                                    state(() {
+                                                                      serviceStatus = d[index!].toLowerCase()=='active';
+                                                                  });
+                                                                  },
+                                                                                    
+                                                                  hintText:
+                                                                     services.status,
+                                                                  dropdownMenuEntries: 
+                                                                      d.asMap()
+                                                                      .entries
+                                                                      .map((e) => DropdownMenuEntry(
+                                                                          value: e.key,
+                                                                          label: e.value,
+                                                                          style: ButtonStyle(
+                                                                              backgroundColor: WidgetStateColor.resolveWith(
+                                                                            (states) => Theme.of(context)
+                                                                                .colorScheme
+                                                                                .primary,
+                                                                          ))))
+                                                                      .toList()),
+                                                          
+                                                              
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                ),
+                                                SizedBox(
+                                                  width: double.maxFinite,
+                                                  child: CardBorder(
+                                                      margin: EdgeInsets.zero,
+                                                      color: Colors.blue,
+                                                      onpress: () async {
+                                                        ServiceSchedule d = services;
+                                                        d.status = serviceStatus?"Active":"InActive";
+                                                        String v = await managectrl.updateserviceschedule(d);
+                                                        // createAndPrintPdf(Paymententity(id: managectrl.searchServicesSchedule[i].id, userId: managectrl.searchServicesSchedule[i].userId!, amount: managectrl.searchServicesSchedule[i].amount!, discountPercentage: managectrl.searchServicesSchedule[i].discountPercentage!.toDouble(), receivedAmount: managectrl.searchServicesSchedule[i].receivedAmount, paymentDate: managectrl.searchServicesSchedule[i].paymentDate, transactionId:managectrl.searchServicesSchedule[i].transactionId!, paymentStatus: managectrl.searchServicesSchedule[i].paymentStatus!, paymentMethod:managectrl.searchServicesSchedule[i].paymentMethod!, paymentType: managectrl.searchServicesSchedule[i].paymentType!, subscriptionId: managectrl.searchServicesSchedule[i].subscriptionId, serviceUsageId: managectrl.searchServicesSchedule[i].serviceUsageId, termsAndConditions: true));
+                                                       Get.back();
+                                                        CustomSnackbar(
+                                                          v);
+                                                      },
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Edit Service",
+                                                        style: TextStyle(
+                                                            fontSize: 16),
+                                                      ))),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                        }
+                      ));},
+                    child: const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.edit,size: 14,),
+                        SizedBox(width: 6,),
+                        Text("Edit Service",style: TextStyle(fontSize: 14),),
+                      ],
+                    ))
+                    ],
+                  ))
+            ]))
+        .toList();
   }
+   @override
+  List<DataGridRow> get rows => _xtremerRows;
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+   return DataGridRowAdapter(
+      cells: row.getCells().map<Widget>((dataGridCell) {
+        if (dataGridCell.columnName == 'Actions') {
+          return dataGridCell.value as Widget; // Return action buttons
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          alignment: Alignment.center,
+          child: dataGridCell.columnName == 'Date'
+              ? Text(
+                  '${(dataGridCell.value as DateTime).day}/${(dataGridCell.value as DateTime).month}/${(dataGridCell.value as DateTime).year}',
+                  style: const TextStyle(fontSize: 14),
+                )
+              : Text(
+                  dataGridCell.value.toString(),
+                  style: const TextStyle(fontSize: 14),
+                ),
+        );
+      }).toList(),
+    );
+  }
+
 }

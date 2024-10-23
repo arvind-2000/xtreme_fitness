@@ -315,12 +315,12 @@ class _CreateMemberState extends State<CreateMember> {
                                 );
                               } else {
                                 CustomSnackbar(
-                                    context,
+                            
                                     !addmemberctrl.checkdeclaration
                                         ? "Agree declaration to proceed"
                                         : "Error");
                                 addmemberctrl.getprofile == null
-                                    ? CustomSnackbar(context, "No image choose")
+                                    ? CustomSnackbar( "No image choose")
                                     : null;
                               }
                             },

@@ -284,7 +284,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                                                   null) {
                                                 pagectrl.changeaddMemberPage(2);
                                               } else {
-                                                CustomSnackbar(context,
+                                                CustomSnackbar(
                                                     'Choose a Trainer for personal plan before proceeding');
                                                 // ScaffoldMessenger.of(context)
                                                 //     .showSnackBar(const SnackBar(
@@ -293,7 +293,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                                               }
                                             }
                                           } else {
-                                            CustomSnackbar(context,
+                                            CustomSnackbar(
                                                 'Choose a plan before proceeding');
                                             // ScaffoldMessenger.of(context)
                                             //     .showSnackBar(const SnackBar(

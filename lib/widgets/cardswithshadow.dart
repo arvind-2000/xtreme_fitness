@@ -26,7 +26,7 @@ class CardwithShadow extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: const Color.fromARGB(110, 72, 72, 72)),
-          color: Colors.black
+          color: color??const Color.fromARGB(255, 15, 15, 15)
           // boxShadow:color == Colors.transparent?null:[
           //   BoxShadow(
           //     blurRadius: 10,

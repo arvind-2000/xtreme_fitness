@@ -767,7 +767,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                             yes: () async {
                               String v =
                                   await managectrl.edittrainer(trainerss);
-                              CustomSnackbar(context, v);
+                              CustomSnackbar( v);
 
                               fullnamecontroller.clear();
 

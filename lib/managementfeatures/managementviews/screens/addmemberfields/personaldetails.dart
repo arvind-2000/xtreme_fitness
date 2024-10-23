@@ -630,7 +630,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                           if(addmembrctrl.xtremer?.mobileNumber!=null &&addmembrctrl.xtremer?.mobileNumber!=_phonecontroller.text){
                           bool v = await addmembrctrl.checknumberonly(_phonecontroller.text.trim());
                           if(v){
-                                  CustomSnackbar(context, "The number already exists with another account.\nTry another number.");  
+                                  CustomSnackbar("The number already exists with another account.\nTry another number.");  
                           }else{
                         addmembrctrl.addpersonaldetails(
                         surname: _surnamecontroller.text.trim(),
@@ -681,7 +681,7 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
 
                           bool v = await addmembrctrl.checknumberonly(_phonecontroller.text.trim());
                           if(v){
-                                  CustomSnackbar(context, "The number already exists.\nTry another number.");  
+                                  CustomSnackbar( "The number already exists.\nTry another number.");  
                           }else{
                         addmembrctrl.addpersonaldetails(
                         surname: _surnamecontroller.text.trim(),
@@ -703,11 +703,11 @@ class _PersonaldetailsFieldState extends State<PersonaldetailsField> {
                     
                     } else {
                       if (addmembrctrl.dob == null) {
-                        CustomSnackbar(context, "DOB field cannot be empty.");
+                        CustomSnackbar( "DOB field cannot be empty.");
                       } else {
                         
                             CustomSnackbar(
-                            context, "Add required fields before proceeding");
+                             "Add required fields before proceeding");
                         
                       
                       }
