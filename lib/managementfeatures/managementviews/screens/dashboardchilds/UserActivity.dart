@@ -115,8 +115,8 @@ class UserActivityChart extends StatelessWidget {
                 ),
                 primaryYAxis: const NumericAxis(
                   minimum: 0,
-                  maximum: 100, // Adjust this range as needed
-                  interval: 20,
+                  maximum: 30000, // Adjust this range as needed
+                  interval: 2000,
                   axisLine: AxisLine(width: 0),
                   majorTickLines: MajorTickLines(size: 0),
                   minorGridLines: MinorGridLines(width: 0),
@@ -166,23 +166,23 @@ class ChartData {
 List<ChartData> getDummyData(String weekType) {
   if (weekType == 'current') {
     return [
-      ChartData('Mon', 10),
-      ChartData('Tue', 20),
-      ChartData('Wed', 15),
-      ChartData('Thu', 25),
-      ChartData('Fri', 10),
-      ChartData('Sat', 5),
-      ChartData('Sun', 8),
-    ]; // You can customize the values and labels based on what you want the dummy data to look like
+      ChartData('Mon', 15000), // 15,000
+      ChartData('Tue', 22000), // 22,000
+      ChartData('Wed', 28000), // 28,000
+      ChartData('Thu', 30000), // 30,000 (Max)
+      ChartData('Fri', 12000), // 12,000
+      ChartData('Sat', 18000), // 18,000
+      ChartData('Sun', 25000), // 25,000
+    ];
   } else {
     return [
-      ChartData('Mon', 12),
-      ChartData('Tue', 18),
-      ChartData('Wed', 22),
-      ChartData('Thu', 30),
-      ChartData('Fri', 16),
-      ChartData('Sat', 8),
-      ChartData('Sun', 6),
-    ]; // Customize the dummy data for the previous week if no data is found
+      ChartData('Mon', 13000), // 13,000
+      ChartData('Tue', 24000), // 24,000
+      ChartData('Wed', 29000), // 29,000
+      ChartData('Thu', 26000), // 26,000
+      ChartData('Fri', 17000), // 17,000
+      ChartData('Sat', 30000), // 30,000 (Max)
+      ChartData('Sun', 23000), // 23,000
+    ];
   }
 }
