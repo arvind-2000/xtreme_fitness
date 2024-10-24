@@ -22,7 +22,7 @@ class TraineeProfile extends StatelessWidget {
       builder: (managectrl) {
         if(user!=null){
 
-        managectrl.getAllTraineess(user!.id);
+        managectrl.getAllTraineess(user!.id!);
         }
 
 

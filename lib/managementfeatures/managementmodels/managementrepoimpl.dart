@@ -1131,14 +1131,14 @@ class ManagementrepoImpl implements ManagementRepo {
     final uri = Uri.parse('$api/api/Trainers/${trainer.id}'); // API endpoint
 
     // Convert the Trainer instance to JSON
-    final body = jsonEncode({
-      "id": trainer.id,
-      "name": trainer.name,
-      "designation": 'Trainer',
-      "timing": trainer.timing,
-      "isActive": trainer.isActive,
-    });
-
+    // final body = jsonEncode({
+    //   "id": trainer.id,
+    //   "name": trainer.name,
+    //   "designation": 'Trainer',
+    //   "timing": trainer.timing,
+    //   "isActive": trainer.isActive,
+    // });
+    final body = jsonEncode(trainer.toJson);
     //print(body);
 
     try {
@@ -1183,15 +1183,15 @@ class ManagementrepoImpl implements ManagementRepo {
       if (request.status! >= 200 && request.status! < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(request.responseText!);
-        //print("In trainer list: ${jsonList.length}");
+        print("In trainer list: ${jsonList.length}");
         // Convert JSON data to List<TrainerEntity>
         return jsonList.map((json) => TrainerEntity.fromJson(json)).toList();
       } else {
-        //print('Failed to load trainers. Status code: ${request.status}');
+        print('Failed to load trainers. Status code: ${request.status}');
         //print('Response body: ${request.responseText}');
       }
     } catch (e) {
-      //print("Error loading trainers: $e");
+      print("Error loading trainers: $e");
     }
 
     return [];
@@ -1571,16 +1571,16 @@ class ManagementrepoImpl implements ManagementRepo {
       if (request.status! >= 200 && request.status! < 300) {
         // Parse JSON data
         final List<dynamic> jsonList = jsonDecode(request.responseText!);
-        //print("In Trainee list : ${jsonList.length}");
+        print("In Trainee list : ${jsonList.length}");
         List<Trainee> xtremelist =
             jsonList.map((json) => Trainee.fromJson(json)).toList();
 
         return xtremelist;
       } else {
-        //print('Failed to load trainees. Status code: ${request.status}');
+        print('Failed to load trainees. Status code: ${request.status}');
       }
     } catch (e) {
-      //print("Can't load Trainee: $e");
+      print("Can't load Trainee: $e");
     }
 
     return [];

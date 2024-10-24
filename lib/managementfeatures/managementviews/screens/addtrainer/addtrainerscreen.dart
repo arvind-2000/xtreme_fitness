@@ -679,8 +679,8 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    int startdatess = int.tryParse(widget.trainer.timing.split('-')[0])??0;
-    int enddates = int.tryParse(widget.trainer.timing.split('-')[1])??0;
+    int startdatess = int.tryParse(widget.trainer.timing.split('-')[0])??6;
+    int enddates = int.tryParse(widget.trainer.timing.split('-')[1])??10;
     startdate = TimeOfDay(hour: startdatess, minute: 0);
     enddate = TimeOfDay(hour: enddates, minute: 0);
     _isactive = widget.trainer.isActive;

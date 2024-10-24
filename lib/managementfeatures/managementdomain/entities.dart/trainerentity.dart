@@ -3,19 +3,21 @@ import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart
 import 'roles.dart';
 
 class TrainerEntity extends User {
-  int id;
+  int? id;
   String name;
   String designation;
   String timing;
   bool isActive;
-  String maxlimit;
+  String? maxlimit;
+  String? photo;
   TrainerEntity({
     required this.id,
     required this.name,
     required this.designation,
     required this.timing,
     required this.isActive,
-    required this.maxlimit
+    this.maxlimit,
+    this.photo
   }) : super(uid: id.toString(), name: name, phone: '', username: '', roleid:Role(id: 0, roleName: designation));
 
   // Convert a Trainer instance to a Map
@@ -27,6 +29,7 @@ class TrainerEntity extends User {
       'timing': timing,
       "isActive":isActive,
       "maxLimit":maxlimit,
+      "ProfilePhotoPath":photo
     };
   }
 
@@ -38,7 +41,8 @@ class TrainerEntity extends User {
       designation: json['Designation']??"",
       timing: json['Timing']??"",
       isActive: json['IsActive']??false,
-      maxlimit: json['MaxLimit']??"0"
+      maxlimit: json['MaxLimit']!=null?json['MaxLimit'].toString():"0",
+      photo:json["ProfilePhotoPath"]
     );
   }
 }
