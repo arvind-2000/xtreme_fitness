@@ -31,10 +31,14 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
   final GlobalKey<FormState> _globalkey = GlobalKey<FormState>();
   final TextEditingController _usernamecontroller = TextEditingController();
   final TextEditingController _fullnamecontroller = TextEditingController();
+  final TextEditingController _limitcontroller = TextEditingController();
+ 
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _confirmpasswordcontroller =
       TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
+  TimeOfDay startdate = TimeOfDay(hour: 6, minute: 0);
+  TimeOfDay enddate = TimeOfDay(hour: 10, minute: 0);
   bool istrainer = false;
   void addTrainer() {
     setState(() {
@@ -119,68 +123,101 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
+                                               SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: CardwithShadow(
+                            padding: EdgeInsets.zero,
+                            onpress: () {
+                              // addmemberctrl.pickImage();
+                            },
+                            child: const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child:
+                                              Icon(Icons.add_a_photo_outlined),
+                                        ),
+                                      )),
+                      ),
+                      const SizedBox(height: 10,),
                                               TextFieldWidget(
                                                   hint: "Full Name",
                                                   controller:
                                                       _fullnamecontroller),
                                               const SizedBox(
-                                                height: 10,
+                                                height: 20,
                                               ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text("Choose Timing"),
-                                                  const SizedBox(
-                                                    height: 6,
-                                                  ),
-                                                  DropdownMenu(
-                                                      menuStyle: MenuStyle(
-                                                          shape:
-                                                              WidgetStateProperty
-                                                                  .all(
-                                                            RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          backgroundColor:
-                                                              WidgetStateColor
-                                                                  .resolveWith(
-                                                            (states) => Colors
-                                                                .grey[800]!,
-                                                          )),
-                                                      onSelected: (index) {
-                                                        setState(() {
-                                                          timing = index!;
-                                                        });
-                                                      },
-                                                      hintText: timing,
-                                                      dropdownMenuEntries: [
-                                                        'Morning',
-                                                        'Evening'
-                                                      ]
-                                                          .map((e) =>
-                                                              DropdownMenuEntry(
-                                                                  value: e,
-                                                                  label: e,
-                                                                  style:
-                                                                      ButtonStyle(
-                                                                          backgroundColor:
-                                                                              WidgetStateColor.resolveWith(
-                                                                    (states) => Theme.of(
-                                                                            context)
-                                                                        .colorScheme
-                                                                        .primary,
-                                                                  ))))
-                                                          .toList()),
-                                                ],
-                                              ),
+                                              const Text("Choose Timing",style: TextStyle(color:Colors.grey,fontSize: 14),),
+                                              const SizedBox(height:5),
+                                            Row(children:[
+                                                Expanded(
+                                                  child:CardwithShadow(
+                                                    onpress: (){
+                                                 showTimePicker(
+                                                      
+                                                         builder: (context, child) {
+                                   
+                                    return Theme(
+                                        data: ThemeData(
+                                            colorScheme: ColorScheme.dark(
+                                                primary: Colors.blue[200]!,secondary: Colors.grey),
+                                            buttonTheme: const ButtonThemeData(
+                                                buttonColor: Colors.white)),
+                                        child: child!);
+                                  },
+                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value) {
+                                                     
+                                                
+                                                             if(value!=null){
+                                                              setState(() {
+                                                                startdate = value;
+                                                              });
+                                                          
+                                                        }
+                                                    
+                                                  
+                                                      },);
+                                                    },
+                                                    child: Text('${startdate.hourOfPeriod} ${startdate.period.name} ')),),
+                                                    SizedBox(width: 6,),
+                                               Expanded(
+                                                  child:CardwithShadow(
+                                                       onpress: (){
+                                                     showTimePicker(
+                                                              builder: (context, child) {
+                                    return Theme(
+                                        data: ThemeData(
+                                            colorScheme: ColorScheme.dark(
+                                                primary: Colors.blue[200]!),
+                                            buttonTheme: const ButtonThemeData(
+                                                buttonColor: Colors.white)),
+                                        child: child!);
+                                  },   
+                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value){
+        
+                                                
+                                                             if(value!=null){
+                                                              setState(() {
+                                                                enddate = value;
+                                                              });
+                                                          
+                                                        }
+                                                    
+                                                      });
+                                                    },
+                                                    child: Text("${enddate.hourOfPeriod} ${enddate.period.name}")),),
+                                              ]),
                                               const SizedBox(
                                                 height: 20,
                                               ),
+                                       
+                                             const Text("No. of maximum persons per session",style: TextStyle(color:Colors.grey,fontSize: 14),),
+                                              TextFieldWidget(
+                                                showhint: false,
+                                                  hint: "Trainee Limit",
+                                                  controller:
+                                                      _limitcontroller),
+                                                      SizedBox(height: 20,),
                                               CardwithShadow(
                                                   color: Colors.green[300],
                                                   onpress: () {
@@ -195,7 +232,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                             _fullnamecontroller
                                                                 .text,
                                                         designation: "Trainer",
-                                                        timing: timing,
+                                                        timing: '${startdate}-${enddate} ',
+                                                        maxlimit: _limitcontroller.text
                                                       );
 
                                                       showDialog(
@@ -634,14 +672,27 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   bool _isactive = false;
   final GlobalKey<FormState> _formkey = GlobalKey();
   final TextEditingController fullnamecontroller = TextEditingController();
+  final TextEditingController _limitcontroller = TextEditingController();
+  TimeOfDay startdate = TimeOfDay(hour: 6, minute: 0);
+  TimeOfDay enddate = TimeOfDay(hour: 10, minute: 0);
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    timing = widget.trainer.timing;
+    int startdatess = int.tryParse(widget.trainer.timing.split('-')[0])??0;
+    int enddates = int.tryParse(widget.trainer.timing.split('-')[1])??0;
+    startdate = TimeOfDay(hour: startdatess, minute: 0);
+    enddate = TimeOfDay(hour: enddates, minute: 0);
     _isactive = widget.trainer.isActive;
     fullnamecontroller.text = widget.trainer.name;
+  }
+  @override
+  void dispose() {
+  
+    // TODO: implement dispose
+    super.dispose();
+    fullnamecontroller.dispose();
+ _limitcontroller.dispose();
   }
 
   @override
@@ -687,37 +738,75 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                 const SizedBox(
                                   height: 6,
                                 ),
-                                DropdownMenu(
-                                    menuStyle: MenuStyle(
-                                        shape: WidgetStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateColor.resolveWith(
-                                          (states) => Colors.grey[800]!,
-                                        )),
-                                    onSelected: (index) {
-                                      setState(() {
-                                        timing = index!;
-                                      });
-                                    },
-                                    hintText: timing,
-                                    dropdownMenuEntries: ['Morning', 'Evening']
-                                        .map((e) => DropdownMenuEntry(
-                                            value: e,
-                                            label: e,
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateColor
-                                                        .resolveWith(
-                                              (states) => Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            ))))
-                                        .toList()),
+                                    Row(children:[
+                                                Expanded(
+                                                  child:CardwithShadow(
+                                                    onpress: (){
+                                                 showTimePicker(
+                                                      
+                                                         builder: (context, child) {
+                                   
+                                    return Theme(
+                                        data: ThemeData(
+                                            colorScheme: ColorScheme.dark(
+                                                primary: Colors.blue[200]!,secondary: Colors.grey),
+                                            buttonTheme: const ButtonThemeData(
+                                                buttonColor: Colors.white)),
+                                        child: child!);
+                                  },
+                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value) {
+                                                     
+                                                
+                                                             if(value!=null){
+                                                              setState(() {
+                                                                startdate = value;
+                                                              });
+                                                          
+                                                        }
+                                                    
+                                                  
+                                                      },);
+                                                    },
+                                                    child: Text('${startdate.hourOfPeriod} ${startdate.period.name} ')),),
+                                                    SizedBox(width: 6,),
+                                               Expanded(
+                                                  child:CardwithShadow(
+                                                       onpress: (){
+                                                     showTimePicker(
+                                                              builder: (context, child) {
+                                    return Theme(
+                                        data: ThemeData(
+                                            colorScheme: ColorScheme.dark(
+                                                primary: Colors.blue[200]!),
+                                            buttonTheme: const ButtonThemeData(
+                                                buttonColor: Colors.white)),
+                                        child: child!);
+                                  },   
+                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value){
+        
+                                                
+                                                             if(value!=null){
+                                                              setState(() {
+                                                                enddate = value;
+                                                              });
+                                                          
+                                                        }
+                                                    
+                                                      });
+                                                    },
+                                                    child: Text("${enddate.hourOfPeriod} ${enddate.period.name}")),),
+                                              ]),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                       
+                                             const Text("No. of maximum persons per session",style: TextStyle(color:Colors.grey,fontSize: 14),),
+                                              TextFieldWidget(
+                                                showhint: false,
+                                                  hint: "Trainee Limit",
+                                                  controller:
+                                                      _limitcontroller),
+                                                      SizedBox(height: 20,),
                               ],
                             ),
                             const SizedBox(
@@ -757,6 +846,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                           name: widget.trainer.name,
                           designation: widget.trainer.designation,
                           timing: timing,
+                          maxlimit: widget.trainer.maxlimit,
                           isActive: _isactive);
                       showDialog(
                         context: context,
@@ -791,6 +881,22 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                 const SizedBox(
                                   height: 20,
                                 ),
+                                 SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: CardwithShadow(
+                            padding: EdgeInsets.zero,
+                            onpress: () {
+                              // addmemberctrl.pickImage();
+                            },
+                            child:  const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child:
+                                              Icon(Icons.add_a_photo_outlined),
+                                        ),
+                                      )),
+                      ),
                                 const Text(
                                   "Trainer Name",
                                   style: TextStyle(fontSize: 14),

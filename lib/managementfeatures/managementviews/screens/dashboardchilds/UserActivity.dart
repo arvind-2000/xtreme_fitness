@@ -5,6 +5,9 @@ import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/ma
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/dashboardchilds/dashboardchild1.dart';
 import 'package:xtreme_fitness/widgets/cardswithshadow.dart';
 
+import '../../../../widgets/card.dart';
+import '../../../../widgets/titletext.dart';
+
 class UserActivityChart extends StatelessWidget {
   const UserActivityChart({
     super.key,
@@ -22,40 +25,30 @@ class UserActivityChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const DashboardChild1(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        TitleText(
                           'Sales Activity',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        size: 16,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 37, 0, 0),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 10),
-                            child: Text(
-                              'Weekly',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
+                        Cardonly(
+                          margin: EdgeInsets.zero,
+                          child: Text(
+                            'Weekly',
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 12),
                           ),
                         )
                       ],
                     ),
-                    const SizedBox(height: 4),
-                    const Row(
+                    SizedBox(height: 4),
+                    Row(
                       children: [
                         Row(
                           children: [
@@ -66,7 +59,7 @@ class UserActivityChart extends StatelessWidget {
                             SizedBox(width: 4),
                             Text(
                               'Current',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -80,7 +73,7 @@ class UserActivityChart extends StatelessWidget {
                             SizedBox(width: 4),
                             Text(
                               'Previous',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -119,6 +112,7 @@ class UserActivityChart extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.white),
                 ),
                 primaryYAxis: const NumericAxis(
+                  isVisible: false,
                   minimum: 0,
                   maximum: 30000,
                   interval: 2000,

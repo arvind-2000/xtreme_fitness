@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Xtreme Fitness',
       theme: ThemeData(
         colorScheme: darkColorSchemes,
+         fontFamily: "NotoSans",
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white, // Cursor color
           selectionColor:

@@ -119,10 +119,10 @@ class ServicesDesktop extends StatelessWidget {
                                           text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: "Rs ${e.memberPrice}",
+                                            text: "$rupee ${e.memberPrice}",
                                             style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                             
                                                 color: Colors.grey[400]),
                                           ),
                                           TextSpan(
@@ -142,10 +142,10 @@ class ServicesDesktop extends StatelessWidget {
                                           text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: "Rs ${e.nonMemberPrice}",
+                                            text: "$rupee ${e.nonMemberPrice}",
                                             style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              
                                                 color: Colors.grey[400]),
                                           ),
                                           TextSpan(

@@ -109,15 +109,16 @@ class NavTiles extends StatelessWidget {
   const NavTiles({
     super.key,
     required this.icon,
-    required this.title,
+    required this.title, this.image,
   });
   final IconData icon;
   final String title;
+  final String? image;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
+       image!=null?Image.asset(image!,height:14,width: 14,): Icon(
           icon,
           size: 14,
           color: Theme.of(context).colorScheme.onSurface,

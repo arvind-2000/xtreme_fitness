@@ -8,6 +8,7 @@ import 'package:xtreme_fitness/responsive/responsive.dart';
 import 'package:xtreme_fitness/widgets/canvasimage.dart';
 import 'package:xtreme_fitness/widgets/card.dart';
 import 'package:xtreme_fitness/widgets/headingtext.dart';
+import 'package:xtreme_fitness/widgets/titletext.dart';
 
 
 class GalleryDesktopCopy extends StatefulWidget {
@@ -74,7 +75,7 @@ class _GalleryDesktopCopyState extends State<GalleryDesktopCopy> {
                 ),
               ),
               const Center(
-                child: HeadingText(
+                child: TitleText(
                   "Gym Spaces",
                   size: 30,
                 ),

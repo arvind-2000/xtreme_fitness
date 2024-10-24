@@ -110,6 +110,7 @@ class GraphsWidget extends StatelessWidget {
         majorGridLines: const MajorGridLines(width: 0),
         axisLabelFormatter: graphaxisnames,
         interval: 1,
+        
         labelAlignment: LabelAlignment.center,
         plotOffset: charttype == ChartType.bar ? 0 : 10,
       ),

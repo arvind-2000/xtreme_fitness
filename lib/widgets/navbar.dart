@@ -25,11 +25,10 @@ class NavBar extends StatelessWidget {
   }
 
   Widget _buildNavTile(
-      BuildContext context, int index, IconData icon, String title) {
+      BuildContext context, int index, IconData icon, String title,{String? iconImage}) {
     final pagectrl = Get.find<GetxPageController>();
     final isSelected = pagectrl.navpage == index;
-    print("pagectrl.navpage : ${pagectrl.navpage}");
-    print("NavTileindex : $index");
+   
     return Cardonly(
       color: isSelected
           ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
@@ -41,7 +40,7 @@ class NavBar extends StatelessWidget {
         pagectrl.changeNavPage(index);
       },
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      child: NavTiles(icon: icon, title: title),
+      child: NavTiles(icon: icon, title: title,image:iconImage),
     );
   }
 
@@ -61,12 +60,12 @@ class NavBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(height: 16),
-                  _buildNavTile(context, 0, Icons.dashboard, 'Dashboard'),
+                  _buildNavTile(context, 0, Icons.dashboard, 'Dashboard', ),
                   _buildDivider(context),
                   _buildNavTile(context, 3, Icons.design_services, 'Services'),
                   _buildNavTile(context, 5, Icons.design_services, 'Plans'),
                   _buildDivider(context),
-                  _buildNavTile(context, 10, Icons.person_add, 'Trainer'),
+                  _buildNavTile(context, 10, Icons.person_add, 'Trainer',iconImage: 'assets/trainer.png'),
                   _buildNavTile(context, 4, Icons.person_add, 'Staff'),
                   _buildDivider(context),
                   _buildNavTile(context, 2, Icons.person_add, 'Add Member'),

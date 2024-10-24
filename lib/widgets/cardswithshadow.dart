@@ -8,13 +8,14 @@ class CardwithShadow extends StatelessWidget {
       required this.child,
       this.onpress,
       this.color,
-      this.isShadow = true,
-      this.height});
+      this.isShadow = false,
+      this.height, this.bordercolor});
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Widget child;
   final VoidCallback? onpress;
   final Color? color;
+  final Color? bordercolor;
   final bool isShadow;
   final double? height;
   @override
@@ -25,8 +26,8 @@ class CardwithShadow extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color.fromARGB(110, 72, 72, 72)),
-          color: color??const Color.fromARGB(255, 15, 15, 15)
+          border: Border.all(color: bordercolor??const Color.fromARGB(110, 72, 72, 72)),
+          color: color??const Color.fromARGB(255, 15, 15, 15),
           // boxShadow:color == Colors.transparent?null:[
           //   BoxShadow(
           //     blurRadius: 10,
@@ -42,15 +43,15 @@ class CardwithShadow extends StatelessWidget {
           //   ),
           // ],
 
-          //         boxShadow:isShadow?[
-          //   BoxShadow(
-          //     blurRadius: 10,
-          //     spreadRadius: 1,
-          //     color: Color.fromARGB(221, 5, 5, 5),
-          //     // offset: const Offset(5, 7)
-          //   ),
+                  boxShadow:isShadow?[
+            BoxShadow(
+              blurRadius: 10,
+              spreadRadius: 1,
+              color:bordercolor??Color.fromARGB(221, 5, 5, 5),
+              // offset: const Offset(5, 7)
+            ),
 
-          // ]:null,
+          ]:null,
           ),
       child: InkWell(
           borderRadius: BorderRadius.circular(16),

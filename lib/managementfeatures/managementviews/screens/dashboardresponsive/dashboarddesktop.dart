@@ -75,11 +75,11 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 CardBorder(
                                     child: Row(
                                   children: [
-                                    Icon(Icons.person,
-                                        size: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                    SizedBox(
+                                    height:20,
+                                    width:20,
+                                    child:  Image.asset(controller.authctrl.getuser != null && controller.authctrl.getuser!.roleName!.toLowerCase()=="superadmin"?'assets/admin.png':'assets/member.png',),
+                                    ),
                                     const SizedBox(
                                       width: 6,
                                     ),
@@ -106,7 +106,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.getallXtremer.length,
                                   title: "Total",
-                                  icon: 'assets/images/total.png',
+                                  icon: 'assets/groupmmeber.png',
                                 )),
                           ),
                           Expanded(
@@ -214,7 +214,8 @@ class OverviewMembertitle extends StatelessWidget {
             children: [
               Image.asset(
                 icon,
-                height: 30,
+                height: 20,
+                width:20
               ),
               //  Icon(
               //   Icons.person,
@@ -270,7 +271,7 @@ class _HoverDashboardTextState extends State<HoverDashboardText> {
           Text(
             "${widget.num}",
             style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: hover ? null : Colors.grey[400]),
           ),
@@ -280,7 +281,7 @@ class _HoverDashboardTextState extends State<HoverDashboardText> {
           Text(
             "members",
             style:
-                TextStyle(fontSize: 13, color: hover ? null : Colors.grey[400]),
+                TextStyle(fontSize: 14, color: hover ? null : Colors.grey[400]),
           )
         ],
       ),

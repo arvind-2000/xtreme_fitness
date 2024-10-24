@@ -8,13 +8,14 @@ class TrainerEntity extends User {
   String designation;
   String timing;
   bool isActive;
-
+  String maxlimit;
   TrainerEntity({
     required this.id,
     required this.name,
     required this.designation,
     required this.timing,
-    required this.isActive
+    required this.isActive,
+    required this.maxlimit
   }) : super(uid: id.toString(), name: name, phone: '', username: '', roleid:Role(id: 0, roleName: designation));
 
   // Convert a Trainer instance to a Map
@@ -24,7 +25,8 @@ class TrainerEntity extends User {
       'name': name,
       'designation': designation,
       'timing': timing,
-      "isActive":isActive
+      "isActive":isActive,
+      "maxLimit":maxlimit,
     };
   }
 
@@ -35,7 +37,8 @@ class TrainerEntity extends User {
       name: json['Name']??"",
       designation: json['Designation']??"",
       timing: json['Timing']??"",
-      isActive: json['IsActive']??false
+      isActive: json['IsActive']??false,
+      maxlimit: json['MaxLimit']??"0"
     );
   }
 }

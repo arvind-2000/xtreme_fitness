@@ -66,14 +66,14 @@ class _HomeDesktopState extends State<HomeDesktop> {
                           curve: Curves.easeIn,
                         ),
                     const SizedBox(
-                      height: 60,
+                      height: 20,
                     ),
                     RichText(
-                      text: const TextSpan(children: [
+                      text:  TextSpan(children: [
                         TextSpan(
                           text:
                               "Revolutionize Your Workout Experience with Personalised Training\n",
-                          style: TextStyle(fontSize: 16, color: Colors.white54),
+                          style: TextStyle(fontSize: MediaQuery.sizeOf(context).width < mobilescreen?14:18, color: Color.fromARGB(235, 255, 255, 255)),
                         ),
                         // TextSpan(text:"Xtreme Fitness",style:TextStyle(fontSize: MediaQuery.sizeOf(context).width<mobilescreen?30:40,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontFamily: "Montserrat") ,),
                       ]),
@@ -85,7 +85,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
                         )
                         .fadeIn(),
                     const SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                     GradientButton(
                       onpress: () {
