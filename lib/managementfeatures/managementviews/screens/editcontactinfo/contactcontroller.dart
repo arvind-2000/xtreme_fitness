@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
 import 'package:xtreme_fitness/config/apis.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/getcontactmodel.dart';
@@ -61,9 +60,6 @@ class ContactController extends GetxController {
     super.onInit();
     log(DateTime.now().toString());
     getContactDetails();
-    // getallmessageduplic();
-    // getallmessage();
-    // getstoredcount();
   }
 
   @override
@@ -83,7 +79,7 @@ class ContactController extends GetxController {
         withCredentials: true, // Enable credentials
       );
 
-      if (response.status! >= 200 &&response.status!<300) {
+      if (response.status! >= 200 && response.status! < 300) {
         var allContact = getContactModalFromJson(response.responseText!);
         _contact = allContact;
         update();
@@ -102,41 +98,42 @@ class ContactController extends GetxController {
 
   void updatecontactinfo() async {
     log("Phone Controller :${phonecon.text}");
-  _isloading = true;
-  update();
-
-  var url = '$api/api/Contacts/1';
-  var body = json.encode({
-    "id": 1,
-    "address": addresscon.text,
-    "email": mailcon.text,
-    "PhoneNumber": phonecon.text,
-    "pincode": pincodecon.text,
-    "UpdatedAt": DateTime.now().toIso8601String()});
-
-try {
-    var request = html.HttpRequest();
-    request.open('PUT', url);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.withCredentials = true;
-
-    request.onLoad.listen((event) {
-      if (request.status! >= 200 && request.status!<300) {
-           getContactDetails();
-      } 
-    });
-
-    request.onError.listen((event) {
-      log("Error: ${request.statusText}");
-    });
-
-    request.send(body);
-  } catch (e) {
-    log("Exception: $e");
-  } finally {
-    _isloading = false;
+    _isloading = true;
     update();
-  }
+
+    var url = '$api/api/Contacts/1';
+    var body = json.encode({
+      "id": 1,
+      "address": addresscon.text,
+      "email": mailcon.text,
+      "PhoneNumber": phonecon.text,
+      "pincode": pincodecon.text,
+      "UpdatedAt": DateTime.now().toIso8601String()
+    });
+
+    try {
+      var request = html.HttpRequest();
+      request.open('PUT', url);
+      request.setRequestHeader('Content-Type', 'application/json');
+      request.withCredentials = true;
+
+      request.onLoad.listen((event) {
+        if (request.status! >= 200 && request.status! < 300) {
+          getContactDetails();
+        }
+      });
+
+      request.onError.listen((event) {
+        log("Error: ${request.statusText}");
+      });
+
+      request.send(body);
+    } catch (e) {
+      log("Exception: $e");
+    } finally {
+      _isloading = false;
+      update();
+    }
   }
 
   void showDialogforupdate(BuildContext context) {

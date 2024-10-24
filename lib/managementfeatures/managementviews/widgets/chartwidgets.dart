@@ -106,13 +106,28 @@ class GraphsWidget extends StatelessWidget {
         // interval: 50,
       ),
       primaryXAxis: CategoryAxis(
-        isVisible: axis,
+        placeLabelsNearAxisLine: true,
+        isVisible: true,
         majorGridLines: const MajorGridLines(width: 0),
         axisLabelFormatter: graphaxisnames,
+        labelPosition: charttype == ChartType.bar
+            ? ChartDataLabelPosition.outside
+            : ChartDataLabelPosition.inside,
+        title: AxisTitle(
+            text: charttype == ChartType.bar ? '' : 'Most Recent 30 Sales'),
         interval: 1,
         
         labelAlignment: LabelAlignment.center,
         plotOffset: charttype == ChartType.bar ? 0 : 10,
+        labelStyle: TextStyle(
+            color: charttype == ChartType.bar
+                ? Colors.white
+                : Colors.transparent), // Hide labels
+        majorTickLines: charttype == ChartType.bar
+            ? const MajorTickLines(size: 8)
+            : const MajorTickLines(size: 0), // Hide tick marks
+        axisLine: const AxisLine(
+            color: Colors.white, width: 2), // Display a white axis line
       ),
 
       series: [

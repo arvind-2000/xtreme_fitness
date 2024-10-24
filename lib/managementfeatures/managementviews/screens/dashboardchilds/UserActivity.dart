@@ -123,7 +123,7 @@ class UserActivityChart extends StatelessWidget {
                 ),
                 series: [
                   // Current Week Data Line
-                  LineSeries<ChartData, String>(
+                  SplineSeries<ChartData, String>(
                     enableTooltip: true,
                     color: Colors.blue,
                     dataSource: magctrl.getCurrentWeekData(currentDate),
@@ -134,7 +134,7 @@ class UserActivityChart extends StatelessWidget {
                     markerSettings: const MarkerSettings(isVisible: true),
                   ),
                   // Previous Week Data Line
-                  LineSeries<ChartData, String>(
+                  SplineSeries<ChartData, String>(
                     enableTooltip: true,
                     color: Colors.red,
                     dataSource: magctrl.getPreviousWeekData(currentDate),

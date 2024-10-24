@@ -17,7 +17,7 @@ class DashboardChild2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ManagementController>(builder: (managectrl) {
       return CardwithShadow(
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(bottom: 15),
         child: managectrl.weeklypayments.isEmpty
             ? const Center(
                 child: CircularProgressIndicator(
@@ -37,7 +37,7 @@ class DashboardChild2 extends StatelessWidget {
                             const SizedBox(
                               height: 5,
                             ),
-                            Text("Earnings",
+                            Text("Recent",
                                 style: TextStyle(color: Colors.grey[500])),
                           ],
                         ),

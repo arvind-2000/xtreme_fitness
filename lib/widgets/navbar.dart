@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/authenicationfeatures/views/controller/authcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/screens/editcontactinfo/contactcontroller.dart';
@@ -62,20 +63,28 @@ class NavBar extends StatelessWidget {
                   const SizedBox(height: 16),
                   _buildNavTile(context, 0, Icons.dashboard, 'Dashboard', ),
                   _buildDivider(context),
-                  _buildNavTile(context, 3, Icons.design_services, 'Services'),
-                  _buildNavTile(context, 5, Icons.design_services, 'Plans'),
+                  _buildNavTile(
+                      context, 3, FontAwesomeIcons.briefcase, 'Services'),
+                  _buildNavTile(
+                      context, 5, FontAwesomeIcons.boxesPacking, 'Plans'),
                   _buildDivider(context),
-                  _buildNavTile(context, 10, Icons.person_add, 'Trainer',iconImage: 'assets/trainer.png'),
-                  _buildNavTile(context, 4, Icons.person_add, 'Staff'),
+                  _buildNavTile(
+                      context, 10, FontAwesomeIcons.chalkboardUser, 'Trainer'),
+                  _buildNavTile(
+                      context, 4, FontAwesomeIcons.clipboardUser, 'Staff'),
                   _buildDivider(context),
-                  _buildNavTile(context, 2, Icons.person_add, 'Add Member'),
-                  _buildNavTile(context, 6, Icons.person_2, 'Xtremers'),
-                  _buildNavTile(context, 7, Icons.payment, 'Payments'),
-                  _buildNavTile(context, 15, Icons.payment, 'Service Usage'),
+                  _buildNavTile(
+                      context, 2, FontAwesomeIcons.userPlus, 'Add Member'),
+                  _buildNavTile(
+                      context, 6, FontAwesomeIcons.solidUser, 'Xtremers'),
+                  _buildNavTile(
+                      context, 7, FontAwesomeIcons.creditCard, 'Payments'),
+                  _buildNavTile(context, 15, FontAwesomeIcons.handsHoldingChild,
+                      'Service Usage'),
                   _buildDivider(context),
-                  _buildNavTile(context, 8, Icons.settings, 'Settings'),
+                  _buildNavTile(context, 8, FontAwesomeIcons.gears, 'Settings'),
                   _buildNavTileWithMessage(
-                      context, 9, Icons.message, 'Message'),
+                      context, 9, FontAwesomeIcons.solidMessage, 'Message'),
                 ],
               ),
             ),
@@ -173,7 +182,7 @@ class NavBar extends StatelessWidget {
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.logout),
+                      Icon(FontAwesomeIcons.rightFromBracket),
                       SizedBox(width: 5),
                       HeadingText("Log Out", size: 20),
                     ],

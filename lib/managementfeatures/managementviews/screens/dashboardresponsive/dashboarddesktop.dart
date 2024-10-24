@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -106,7 +107,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.getallXtremer.length,
                                   title: "Total",
-                                  icon: 'assets/groupmmeber.png',
+                                  icon: FontAwesomeIcons.users,
                                 )),
                           ),
                           Expanded(
@@ -115,7 +116,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.allpersonalxtremer.length,
                                   title: "Personal",
-                                  icon: 'assets/images/personal.png',
+                                  icon: FontAwesomeIcons.chalkboardUser,
                                 )),
                           ),
                           Expanded(
@@ -124,7 +125,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                                   num: controller.allgeneralxtremer.length,
                                   title: "General",
-                                  icon: 'assets/images/general.png',
+                                  icon: FontAwesomeIcons.userLarge,
                                 )),
                           ),
                           Expanded(
@@ -136,7 +137,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                           controller.allgeneralxtremer.length +
                                           controller.allpersonalxtremer.length),
                                   title: "Others",
-                                  icon: 'assets/images/other.png',
+                                  icon: FontAwesomeIcons.personRunning,
                                 )),
                           ),
                           Expanded(
@@ -144,7 +145,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                                 child: OverviewMembertitle(
                               num: controller.allinactivextremer.length,
                               title: "Inactive",
-                              icon: 'assets/images/inactive.png',
+                              icon: FontAwesomeIcons.userXmark,
                             )),
                           ),
                         ],
@@ -201,7 +202,7 @@ class OverviewMembertitle extends StatelessWidget {
     required this.icon,
   });
   final String title;
-  final String icon;
+  final IconData icon;
   final int num;
   @override
   Widget build(BuildContext context) {
@@ -212,17 +213,17 @@ class OverviewMembertitle extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(
-                icon,
-                height: 20,
-                width:20
-              ),
-              //  Icon(
-              //   Icons.person,
-              //   size: 14,
+              // Image.asset(
+              //   icon,
+              //   height: 30,
               // ),
+              Icon(
+                color: const Color.fromARGB(255, 246, 247, 187),
+                icon,
+                size: icon == FontAwesomeIcons.personRunning ? 19 : 16,
+              ),
               const SizedBox(
-                width: 10,
+                width: 15,
               ),
               HeadingText(
                 title,
