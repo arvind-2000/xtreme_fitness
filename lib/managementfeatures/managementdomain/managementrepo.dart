@@ -64,10 +64,11 @@ abstract class ManagementRepo {
   Future<List<Plan>> getPlans();
 
   ///adding trainer for management
-  Future<String> addTrainer(TrainerEntity staff);
-  Future<String> updateTrainer(TrainerEntity staff);
+  Future<String> addTrainer(TrainerEntity staff,Uint8List? image);
+  Future<String> updateTrainer(TrainerEntity staff,Uint8List? image);
   Future<String> deleteTrainer(TrainerEntity staff);
   Future<List<TrainerEntity>> viewTrainer();
+  Future<Uint8List?> viewTrainerphoto(int id);
   Future<List<Xtremer>> viewPersonalTrainer();
 
   //payments api

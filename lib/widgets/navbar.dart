@@ -104,9 +104,10 @@ class NavBar extends StatelessWidget {
       onTap: () => pagectrl.changeNavPage(0),
       child: SizedBox(
         height: 70,
+        width:double.maxFinite,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Image.asset("assets/logo2.png"),
+          child: Image.asset("assets/logo2.png",fit:BoxFit.contain),
         ),
       ),
     );

@@ -118,7 +118,7 @@ class Xtremer {
         declaration: json['Declaration'] ?? false,
         submittedBy: json['SubmittedBy'],
         isActive: json['IsActive'] ?? false,
-        cardnumber: json['cardNumber']??"",
+        cardnumber: json['RFID']??"",
         category: json['Category'] ?? "",
         createddate:
             DateTime.parse(json['CreatedAt'] ?? DateTime.now().toString()));
@@ -163,6 +163,7 @@ class Xtremer {
       'submittedBy': submittedBy,
       'isActive': isActive,
       'category': category,
+      'rfid':cardnumber,
       'createddate': createddate
     };
   }

@@ -76,6 +76,7 @@ class ManagementrepoImpl implements ManagementRepo {
     formData.append('Declaration', xtremer.declaration?.toString() ?? 'false');
     formData.append('SubmittedBy', xtremer.submittedBy.toString());
     formData.append('Category', xtremer.category?.toString() ?? '');
+    formData.append('RFID', xtremer.cardnumber?.toString() ?? '');
     formData.append(
         'IsActive', xtremer.isActive?.toString() ?? false.toString());
 
@@ -172,6 +173,7 @@ class ManagementrepoImpl implements ManagementRepo {
       formData.append('SubmittedBy', xtremer.submittedBy.toString());
       formData.append('Category', xtremer.category ?? "General");
       formData.append('IsActive', xtremer.isActive.toString());
+       formData.append('RFID', xtremer.cardnumber?.toString() ?? '');
 
       // Create an XMLHttpRequest
       final xhr = html.HttpRequest();
@@ -294,74 +296,6 @@ class ManagementrepoImpl implements ManagementRepo {
     return [];
   }
 
-//   @override
-//   Future<List<Xtremer>> viewMemberforoverall() async {
-//     List<Xtremer> allxtremelist = [];
-//     List<Xtremer> todayxtremelsit = [];
-//     List<Xtremer> yesterdayxtremlist = [];
-//     try {
-//       final res = await http.get(Uri.parse("$api/api/Xtremers"));
-
-//       if (res.statusCode >= 200 && res.statusCode < 300) {
-//         // Parse JSON data
-//         final List<dynamic> jsonList = jsonDecode(res.body);
-//         //print("In Xtremer list : ${jsonList.length}");
-//         allxtremelist = jsonList.map((json) => Xtremer.fromJson(json)).toList();
-//         DateTime now = DateTime.now();
-//         DateTime today = DateTime(now.year, now.month, now.day);
-//         DateTime yesterday = today.subtract(const Duration(days: 1));
-
-// // Filter for today's elements
-//         for (var element in allxtremelist) {
-//           if (todayxtremelsit.contains(element)) {
-//             //print('already added to today list');
-//           } else {
-//             // Create a new DateTime object from createddate without time component
-//             DateTime createdDate = DateTime(element.createddate!.year,
-//                 element.createddate!.month, element.createddate!.day);
-
-//             if (createdDate.isAtSameMomentAs(today)) {
-//               // Add all elements whose createddate is today (ignoring time)
-//               todayxtremelsit.add(element);
-//             }
-//           }
-//         }
-
-// // Filter for yesterday's elements
-//         for (var element in allxtremelist) {
-//           if (yesterdayxtremlist.contains(element)) {
-//             //print('already added to today list');
-//           } else {
-//             // Create a new DateTime object from createddate without time component
-//             DateTime createdDate = DateTime(element.createddate!.year,
-//                 element.createddate!.month, element.createddate!.day);
-
-//             if (createdDate.isAtSameMomentAs(yesterday)) {
-//               // Add all elements whose createddate is today (ignoring time)
-//               yesterdayxtremlist.add(element);
-//             }
-//           }
-//         }
-
-//         //print("Today Register members :${todayxtremelsit.length}");
-//         //print("Yesterday Register members :${yesterdayxtremlist.length}");
-//         //print("Drop down index :${pgctrl.overalldropdownindex.value}");
-//         switch (pgctrl.overalldropdownindex.value) {
-//           case 0:
-//             return allxtremelist;
-//           case 1:
-//             return todayxtremelsit;
-//           case 2:
-//             return yesterdayxtremlist;
-//           default:
-//         }
-//       } else {}
-//     } catch (e) {
-//       //print("cant load Xtremer for overall : $e");
-//     }
-
-//     return [];
-//   }
 
   @override
   Future<List<Xtremer>> viewMember() async {
@@ -1067,17 +1001,26 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> addTrainer(TrainerEntity trainer) async {
+  Future<String> addTrainer(TrainerEntity trainer,Uint8List? image) async {
     final uri =
         Uri.parse('$api/api/Trainers'); // Replace with your API endpoint
+   final formData = html.FormData();
 
+    for(var v in trainer.toJson().entries){
+      if(v.key=='ProfilePhotoFile'){
+   if (image != null) {
+      formData.appendBlob(
+          'ProfilePhotoFile',
+          html.Blob([image], 'image/png'),
+          'prof${Random().nextInt(100)}.png');
+    }
+
+      }else{
+        formData.append(v.key, v.value);
+      }
+      
+    }
     // Convert the Trainer instance to JSON
-    final body = jsonEncode({
-      "name": trainer.name,
-      "designation": 'Trainer',
-      "timing": "morning",
-      'isActive': true,
-    });
 
     try {
       // Create a new XMLHttpRequest
@@ -1087,7 +1030,7 @@ class ManagementrepoImpl implements ManagementRepo {
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       // Send the request
-      xhr.send(body);
+      xhr.send(formData);
 
       // Wait for the response
       await xhr.onLoad.first;
@@ -1127,19 +1070,23 @@ class ManagementrepoImpl implements ManagementRepo {
   }
 
   @override
-  Future<String> updateTrainer(TrainerEntity trainer) async {
+  Future<String> updateTrainer(TrainerEntity trainer,Uint8List? image) async {
     final uri = Uri.parse('$api/api/Trainers/${trainer.id}'); // API endpoint
+    final formData = html.FormData();
+    for(var v in trainer.toJson().entries){
+      if(v.key=='ProfilePhotoFile'){
+   if (image != null) {
+      formData.appendBlob(
+          'ProfilePhotoFile',
+          html.Blob([image], 'image/png'),
+          'prof${Random().nextInt(100)}.png');
+    }
 
-    // Convert the Trainer instance to JSON
-    // final body = jsonEncode({
-    //   "id": trainer.id,
-    //   "name": trainer.name,
-    //   "designation": 'Trainer',
-    //   "timing": trainer.timing,
-    //   "isActive": trainer.isActive,
-    // });
-    final body = jsonEncode(trainer.toJson);
-    //print(body);
+      }else{
+        formData.append(v.key, v.value);
+      }
+      
+    }
 
     try {
       // Create a new XMLHttpRequest
@@ -1149,7 +1096,7 @@ class ManagementrepoImpl implements ManagementRepo {
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       // Send the request
-      xhr.send(body);
+      xhr.send(formData);
 
       // Wait for the response
       await xhr.onLoad.first;
@@ -1922,5 +1869,36 @@ class ManagementrepoImpl implements ManagementRepo {
     }
 
     return [];
+  }
+  
+  @override
+  Future<Uint8List?> viewTrainerphoto(int id) async{
+     String url =
+        "$api/api/Trainers/$id/photo"; // Replace with your API endpoint
+
+    try {
+      // Send the GET request using universal_html's HttpRequest
+      final request = await html.HttpRequest.request(url,
+          method: 'GET',
+          responseType: 'arraybuffer', // To handle binary data (image)
+          withCredentials: true);
+
+      // Check if the request was successful
+      if (request.status! >= 200 && request.status! < 300) {
+        // Convert the response (ArrayBuffer) to Uint8List
+        print("Success");
+      final buffer = request.response as ByteBuffer;
+      final Uint8List bytes = Uint8List.view(buffer);
+        return bytes;
+      } else {
+        // Handle errors or unsuccessful responses
+        //print('Failed to load photo. Status code: ${request.status}');
+        return null;
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error fetching photo: $e');
+      return null;
+    }
   }
 }

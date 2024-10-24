@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:xtreme_fitness/managementfeatures/managementdomain/entities.dart/trainerentity.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/managementcontroller.dart';
 import 'package:xtreme_fitness/managementfeatures/managementviews/controllers/pagecontroller.dart';
@@ -18,6 +20,7 @@ import '../../../../widgets/cardborder.dart';
 import '../../../../widgets/headingtext.dart';
 import '../../../../widgets/normaltext.dart';
 import '../../../../widgets/titletext.dart';
+import '../../../managementmodels/imageusecase.dart';
 import '../../widgets/dialogswidget.dart';
 
 class AddTrainerScreen extends StatefulWidget {
@@ -29,16 +32,18 @@ class AddTrainerScreen extends StatefulWidget {
 
 class _AddTrainerScreenState extends State<AddTrainerScreen> {
   final GlobalKey<FormState> _globalkey = GlobalKey<FormState>();
-  final TextEditingController _usernamecontroller = TextEditingController();
+
   final TextEditingController _fullnamecontroller = TextEditingController();
+  final TextEditingController _designationcontroller = TextEditingController();
   final TextEditingController _limitcontroller = TextEditingController();
  
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _confirmpasswordcontroller =
       TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
-  TimeOfDay startdate = TimeOfDay(hour: 6, minute: 0);
-  TimeOfDay enddate = TimeOfDay(hour: 10, minute: 0);
+  TimeOfDay startdate = const TimeOfDay(hour: 6, minute: 0);
+  TimeOfDay enddate = const TimeOfDay(hour: 10, minute: 0);
+    Uint8List? _image;
   bool istrainer = false;
   void addTrainer() {
     setState(() {
@@ -56,11 +61,25 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
     setState(() {
       isactive = !isactive;
     });
-  }
+  } 
+
+
+
+
 
   String timing = 'morning';
   TrainerEntity? _user;
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+   
+    _fullnamecontroller.dispose();
+    _designationcontroller.dispose();
+    _limitcontroller.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.sizeOf(context).width;
@@ -128,10 +147,24 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                         width: 100,
                         child: CardwithShadow(
                             padding: EdgeInsets.zero,
-                            onpress: () {
-                              // addmemberctrl.pickImage();
+                            onpress: () async{
+                              final result = await ImagePickerWeb.getImageAsBytes();
+                             if (result != null && recognizeImageFormat(result) != "Unknown format") {
+                               setState(() {
+                                 _image = result;
+                               });
+
+      } else {
+        setState(() {
+            _image = null;          
+        });
+        
+        CustomSnackbar("Unrecognized Format. Choose JPEG or PNG");
+     
+      
+      }
                             },
-                            child: const Padding(
+                            child:_image!=null?Image.memory(_image!):const Padding(
                                         padding: EdgeInsets.all(16.0),
                                         child: Center(
                                           child:
@@ -139,11 +172,16 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                         ),
                                       )),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 20,),
                                               TextFieldWidget(
                                                   hint: "Full Name",
                                                   controller:
                                                       _fullnamecontroller),
+                                                      const SizedBox(height: 10,),
+                                                       TextFieldWidget(
+                                                  hint: "Designation",
+                                                  controller:
+                                                      _designationcontroller),
                                               const SizedBox(
                                                 height: 20,
                                               ),
@@ -165,7 +203,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                 buttonColor: Colors.white)),
                                         child: child!);
                                   },
-                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value) {
+                                                      context: context, initialTime: const TimeOfDay(hour: 6, minute:0)).then((value) {
                                                      
                                                 
                                                              if(value!=null){
@@ -178,8 +216,13 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                   
                                                       },);
                                                     },
-                                                    child: Text('${startdate.hourOfPeriod} ${startdate.period.name} ')),),
-                                                    SizedBox(width: 6,),
+                                                    child: Row(
+                                                      children: [
+                                                        const Text("From: ",style: TextStyle(color: Colors.grey),),
+                                                        Text('${startdate.hourOfPeriod}:${startdate.minute} ${startdate.period.name} '),
+                                                      ],
+                                                    )),),
+                                                    const SizedBox(width: 6,),
                                                Expanded(
                                                   child:CardwithShadow(
                                                        onpress: (){
@@ -193,7 +236,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                 buttonColor: Colors.white)),
                                         child: child!);
                                   },   
-                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value){
+                                                      context: context, initialTime: const TimeOfDay(hour: 6, minute:0)).then((value){
         
                                                 
                                                              if(value!=null){
@@ -205,7 +248,12 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                     
                                                       });
                                                     },
-                                                    child: Text("${enddate.hourOfPeriod} ${enddate.period.name}")),),
+                                                    child: Row(
+                                                      children: [
+                                                         const Text("To: ",style: TextStyle(color: Colors.grey),),
+                                                        Text("${enddate.hourOfPeriod} ${enddate.period.name}"),
+                                                      ],
+                                                    )),),
                                               ]),
                                               const SizedBox(
                                                 height: 20,
@@ -217,7 +265,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                   hint: "Trainee Limit",
                                                   controller:
                                                       _limitcontroller),
-                                                      SizedBox(height: 20,),
+                                                      const SizedBox(height: 20,),
                                               CardwithShadow(
                                                   color: Colors.green[300],
                                                   onpress: () {
@@ -231,8 +279,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                         name:
                                                             _fullnamecontroller
                                                                 .text,
-                                                        designation: "Trainer",
-                                                        timing: '${startdate}-${enddate} ',
+                                                        designation: _designationcontroller.text,
+                                                        timing:'${startdate.hour}:${startdate.minute} - ${enddate.hour}:${enddate.minute}',
                                                         maxlimit: _limitcontroller.text
                                                       );
 
@@ -249,7 +297,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                   // widget.onpress();
                                                                   managectrl
                                                                       .addTrainer(
-                                                                          addtrainer);
+                                                                          addtrainer,_image);
                                                                   ScaffoldMessenger.of(
                                                                           context)
                                                                       .showSnackBar(
@@ -266,8 +314,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                                       .clear();
                                                                   _passwordcontroller
                                                                       .clear();
-                                                                  _usernamecontroller
-                                                                      .clear();
+                                                              
                                                                   _phonecontroller
                                                                       .clear();
                                                                   addTrainer();
@@ -385,6 +432,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                                             .center,
                                                     children: [
                                                       NavTiles(
+                                                      
                                                         icon: Icons.add,
                                                         title: "Add Trainer",
                                                       ),
@@ -653,6 +701,8 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
       });
     });
   }
+
+
 }
 
 class AddEditTrainer extends StatefulWidget {
@@ -672,9 +722,11 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   bool _isactive = false;
   final GlobalKey<FormState> _formkey = GlobalKey();
   final TextEditingController fullnamecontroller = TextEditingController();
+  final TextEditingController designationcontroller = TextEditingController();
   final TextEditingController _limitcontroller = TextEditingController();
-  TimeOfDay startdate = TimeOfDay(hour: 6, minute: 0);
-  TimeOfDay enddate = TimeOfDay(hour: 10, minute: 0);
+  TimeOfDay startdate = const TimeOfDay(hour: 6, minute: 0);
+  TimeOfDay enddate = const TimeOfDay(hour: 10, minute: 0);
+  Uint8List? _image;
   @override
   void initState() {
     // TODO: implement initState
@@ -685,6 +737,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
     enddate = TimeOfDay(hour: enddates, minute: 0);
     _isactive = widget.trainer.isActive;
     fullnamecontroller.text = widget.trainer.name;
+    designationcontroller.text = widget.trainer.designation;
   }
   @override
   void dispose() {
@@ -725,9 +778,46 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                              SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: CardwithShadow(
+                            padding: EdgeInsets.zero,
+                            onpress: () async{
+                              final result = await ImagePickerWeb.getImageAsBytes();
+                             if (result != null && recognizeImageFormat(result) != "Unknown format") {
+                               setState(() {
+                                 _image = result;
+                               });
+
+      } else {
+        setState(() {
+            _image = null;          
+        });
+        
+        CustomSnackbar("Unrecognized Format. Choose JPEG or PNG");
+     
+      
+      }
+                            },
+                            child:_image!=null?Image.memory(_image!):const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child:
+                                              Icon(Icons.add_a_photo_outlined),
+                                        ),
+                                      )),
+                      ),
+                      const SizedBox(height: 20,),
                             TextFieldWidget(
                                 hint: "Full Name",
                                 controller: fullnamecontroller),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                               TextFieldWidget(
+                                hint: "Designation",
+                                controller: designationcontroller),
                             const SizedBox(
                               height: 10,
                             ),
@@ -754,7 +844,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                                 buttonColor: Colors.white)),
                                         child: child!);
                                   },
-                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value) {
+                                                      context: context, initialTime: const TimeOfDay(hour: 6, minute:0)).then((value) {
                                                      
                                                 
                                                              if(value!=null){
@@ -767,8 +857,13 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                                   
                                                       },);
                                                     },
-                                                    child: Text('${startdate.hourOfPeriod} ${startdate.period.name} ')),),
-                                                    SizedBox(width: 6,),
+                                                    child: Row(
+                                                      children: [
+                                                         Text("From: ",style: TextStyle(color: Colors.grey),),
+                                                        Text('${startdate.hourOfPeriod}:${startdate.minute} ${startdate.period.name} '),
+                                                      ],
+                                                    )),),
+                                                    const SizedBox(width: 6,),
                                                Expanded(
                                                   child:CardwithShadow(
                                                        onpress: (){
@@ -782,7 +877,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                                 buttonColor: Colors.white)),
                                         child: child!);
                                   },   
-                                                      context: context, initialTime: TimeOfDay(hour: 6, minute:0)).then((value){
+                                                      context: context, initialTime: const TimeOfDay(hour: 6, minute:0)).then((value){
         
                                                 
                                                              if(value!=null){
@@ -794,7 +889,12 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                                     
                                                       });
                                                     },
-                                                    child: Text("${enddate.hourOfPeriod} ${enddate.period.name}")),),
+                                                    child: Row(
+                                                      children: [
+                                                         Text("To: ",style: TextStyle(color: Colors.grey),),
+                                                        Text("${enddate.hourOfPeriod}:${enddate.minute} ${enddate.period.name}"),
+                                                      ],
+                                                    )),),
                                               ]),
                                               const SizedBox(
                                                 height: 20,
@@ -806,7 +906,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                                                   hint: "Trainee Limit",
                                                   controller:
                                                       _limitcontroller),
-                                                      SizedBox(height: 20,),
+                                                      const SizedBox(height: 20,),
                               ],
                             ),
                             const SizedBox(
@@ -844,8 +944,8 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                       TrainerEntity trainerss = TrainerEntity(
                           id: widget.trainer.id,
                           name: widget.trainer.name,
-                          designation: widget.trainer.designation,
-                          timing: timing,
+                          designation: designationcontroller.text,
+                          timing: '${startdate.hour}:${startdate.minute} - ${enddate.hour}:${enddate.minute}',
                           maxlimit: widget.trainer.maxlimit,
                           isActive: _isactive);
                       showDialog(
@@ -856,7 +956,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                             },
                             yes: () async {
                               String v =
-                                  await managectrl.edittrainer(trainerss);
+                                  await managectrl.edittrainer(trainerss,_image);
                               CustomSnackbar( v);
 
                               fullnamecontroller.clear();

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -27,7 +28,7 @@ import '../../managementdomain/entities.dart/xtremer.dart';
 import '../../managementdomain/entities.dart/xtremerwithsubs.dart';
 
 class ManagementController extends GetxController {
-  final ManagementRepo managementRepo = ManagementrepoImpl();
+  final ManagementrepoImpl managementRepo = ManagementrepoImpl();
 
   List<Plan> _allplans = [];
   List<Plan> _allactiveplans = [];
@@ -213,6 +214,12 @@ class ManagementController extends GetxController {
               )
               ?.category ??
           "";
+               _allxtremer[i].cardnumber = d
+              .firstWhereOrNull(
+                (element) => _allxtremer[i].XtremerId == element.XtremerId,
+              )
+              ?.cardnumber ??
+          "";
     }
 
     if (!authctrl.ismember) {
@@ -282,8 +289,8 @@ class ManagementController extends GetxController {
     return d;
   }
 
-  Future<String> edittrainer(TrainerEntity trainerentity) async {
-    String d = await managementRepo.updateTrainer(trainerentity);
+  Future<String> edittrainer(TrainerEntity trainerentity,Uint8List? image) async {
+    String d = await managementRepo.updateTrainer(trainerentity,image);
     // update plans
     getTrainer();
     return d;
@@ -413,8 +420,8 @@ class ManagementController extends GetxController {
     update();
   }
 
-  void addTrainer(TrainerEntity trainer) async {
-    await managementRepo.addTrainer(trainer);
+  void addTrainer(TrainerEntity trainer,Uint8List? image) async {
+    await managementRepo.addTrainer(trainer,image);
     getTrainer();
   }
 
