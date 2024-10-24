@@ -17,12 +17,12 @@ class NetworkController extends GetxController {
   bool _isserverok = true;
   bool get isserverok => _isserverok;
   @override
-  // void onInit() {
-  //   super.onInit();
-  //   // _checkInitialConnection();
-  //   // getContactDetails();
-  //   // _connectivity.onConnectivityChanged.listen(updateConnectionStatus);
-  // }
+  void onInit() {
+    super.onInit();
+    _checkInitialConnection();
+    getContactDetails();
+    _connectivity.onConnectivityChanged.listen(updateConnectionStatus);
+  }
 
   Future<void> _checkInitialConnection() async {
     var status = await _connectivity.checkConnectivity();
